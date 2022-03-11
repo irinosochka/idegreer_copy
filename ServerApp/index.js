@@ -14,7 +14,6 @@ app.use(
     })
 )
 app.use(express.json())
-app.use('/auth', authRouter)
 
 const start = () => {
     try {
