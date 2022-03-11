@@ -1,27 +1,19 @@
-const express = require("express")
-const authRouter = require("./routers/authRouter");
+const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors")
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5000;
 
-const app = express()
+const app = express();
 
-app.use(
-    cors({
-        origin: '*',
-        credentials: true
-    })
-)
-app.use(express.json())
+app.use(express.json());
 
-const start = () => {
+const startApp = () => {
     try {
-        mongoose.connect('mongodb+srv://admin:admin@cluster0.e5knj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority');
+        mongoose.connect('mongodb+srv://admin:admin@cluster0.e5knj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
         app.listen(PORT, () => console.log("SERVER WORK"))
-    } catch (e) {
-        console.log(e)
+    } catch(e) {
+        console.log(e);
     }
 }
 
-start()
+startApp();
