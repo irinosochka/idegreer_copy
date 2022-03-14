@@ -1,10 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import Login from './Components/Login/Login'
+import Store from "./store/store";
+
+interface State {
+    store: Store
+}
+const store = new Store();
+export const Context = React.createContext<State>({
+    store
+})
 
 ReactDOM.render(
-    <Login/>,
+    <Context.Provider value={{store}}>
+        <App/>
+    </Context.Provider>,
     document.getElementById('root')
 );
 

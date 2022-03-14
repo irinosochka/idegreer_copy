@@ -1,34 +1,35 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import "./index.css"
+import {Context} from "../../index";
 
 export default function Login(){
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const onsubmit = (event:any) => {
+    const {store} = useContext(Context);
+
+    const handleSubmit = (event: React.FormEvent<EventTarget>): void => {
         event.preventDefault();
-        console.log(email, password);
+        store.login(username, password)
     }
 
     return(
         <div className="container">
             <span>Sign in</span>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <input
-                    onChange={(event) => setEmail(event.target.value)}
+                    onChange={(event) => setUsername(event.target.value)}
+                    value={username}
                     type="text"
                     placeholder="Email"
                 />
-            </form>
-            <form>
                 <input
                     onChange={(event) => setPassword(event.target.value)}
+                    value={password}
                     type="password"
                     placeholder="Password"
                 />
-            </form>
-            <form>
-                <button onClick={onsubmit}  type="submit"> Login </button>
+                <button  type="submit"> Login </button>
             </form>
         </div>
     )
