@@ -1,7 +1,8 @@
-import {useContext, useState} from 'react';
+import React, {useContext, useState} from 'react'
+import "./index.css"
 import {Context} from "../../index";
 
-const Registration = () => {
+export default function Registration(){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -9,7 +10,7 @@ const Registration = () => {
 
     const handleSubmit = (event: React.FormEvent<EventTarget>): void => {
         event.preventDefault();
-        store.registration(username, password)
+        store.registration(username, password);
     }
 
     return(
@@ -20,7 +21,7 @@ const Registration = () => {
                     onChange={(event) => setUsername(event.target.value)}
                     value={username}
                     type="text"
-                    placeholder="Email"
+                    placeholder="Login"
                 />
                 <input
                     onChange={(event) => setPassword(event.target.value)}
@@ -31,7 +32,6 @@ const Registration = () => {
                 <button  type="submit"> Registration </button>
             </form>
         </div>
-    );
-};
+    )
+}
 
-export default Registration;
