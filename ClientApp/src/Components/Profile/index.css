@@ -1,4 +1,4 @@
-input{
+input {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -15,28 +15,6 @@ button {
     border: none;
     cursor: pointer;
     width: 100%;
-}
-
-.reg__btn, .login__btn{
-    margin: 0;
-    background-color: #fff;
-    color: #4d6243;
-    width: 120px;
-    text-align: center;
-    padding: 10px 15px;
-    border: 1px solid #4d6243;
-}
-
-.login__btn{
-    background-color: #fff;
-    color: #4d6243;
-}
-
-.btn__block{
-    margin-right: 20px;
-    margin-top: 20px;
-    display: block;
-    float: right;
 }
 
 button:hover {
@@ -57,9 +35,4 @@ button:hover {
 span{
     color: #4d6243;
     font-size: x-large;
-}
-
-.active {
-    background-color: #4d6243;
-    color: #fff;
 }
