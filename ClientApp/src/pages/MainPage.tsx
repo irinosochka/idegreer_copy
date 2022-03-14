@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
 import {Context} from "../index";
-import AdminPanel from "../Components/AdminPanel/AdminPanel";
+import AdminPanel from "../components/AdminPanel/AdminPanel";
 import {observer} from "mobx-react-lite";
-import Profile from "../Components/Profile/Profile";
+import Profile from "../components/Profile/Profile";
 
 const MainPage = () => {
 

@@ -5,11 +5,11 @@ class AuthController {
     async login(req, res) {
         try {
             const {username, password} = req.body;
-            const userData = await authService.login(username, password);
-            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60* 1000, httpOnly: true})
-            return res.json(userData)
+            const data = await authService.login(username, password);
+            res.cookie('refreshToken', data.refreshToken, {maxAge: 30 * 24 * 60 * 60* 1000, httpOnly: true})
+            return res.json({data, resultCode: 1})
         } catch (e) {
-            res.status(505).json({message: "User error"})
+            return res.json({message: "Login error", resultCode: 0})
         }
     }
 
