@@ -4,15 +4,15 @@ const UserDto = require('../dtos/user-dto');
 const bcrypt = require('bcrypt');
 
 class AuthService {
-    async registration(username, password) {
+    async registration(username, password, name) {
         const candidate = await UserModel.findOne({username})
         if(candidate) {
             throw new Error(`User with username ${username} actually exist`)
         }
         const hashPassword  = await bcrypt.hash(password, 3)
 
-        const user = await UserModel.create({username, password: hashPassword, roles: ['STUDENT']})
-        const userDto = new UserDto(user); //id, username, roles
+        const user = await UserModel.create({username, password: hashPassword, name, roles: ['STUDENT']})
+        const userDto = new UserDto(user); //id, username, name, roles
         const tokens = tokenService.generateTokens({...userDto})
         await tokenService.saveToken(userDto.id, tokens.refreshToken)
 

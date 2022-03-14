@@ -2,18 +2,25 @@ import React, {useContext, useState} from 'react';
 import {Context} from "../../../index";
 import '../index.css'
 import ErrorMessage from "../../../common/Messages/ErrorMessage";
+import {observer} from "mobx-react-lite";
 
 const Registration = () => {
     const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [firstPassword, setFirstPassword] = useState('');
+    const [secondPassword, setSecondPassword] = useState('');
+    const [name, setName] = useState('');
     const [emptyError, setEmptyError] = useState(false);
-
+    const [repeatPasswordError, setRepeatPasswordError] = useState(false);
     const {store} = useContext(Context);
 
     const handleSubmit = (event: React.FormEvent<EventTarget>): void => {
         event.preventDefault();
-        if(username.length !== 0 && password.length !== 0) {
-            store.registration(username, password)
+        if(username.length !== 0 && secondPassword.length !== 0 && firstPassword.length !== 0 && name.length !== 0) {
+            if (secondPassword === firstPassword) {
+                store.registration(username, firstPassword, name)
+            } else {
+                setRepeatPasswordError(true)
+            }
         } else {
             setEmptyError(true)
         }
@@ -25,8 +32,19 @@ const Registration = () => {
             <form onSubmit={handleSubmit}>
                 <input
                     onChange={(event) => {
+                        setName(event.target.value);
+                        setEmptyError(false);
+                        store.setRegistrationError(false);
+                    }}
+                    value={name}
+                    type="text"
+                    placeholder="Name"
+                />
+                <input
+                    onChange={(event) => {
                         setUsername(event.target.value);
                         setEmptyError(false);
+                        store.setRegistrationError(false);
                     }}
                     value={username}
                     type="text"
@@ -34,18 +52,33 @@ const Registration = () => {
                 />
                 <input
                     onChange={(event) => {
-                        setPassword(event.target.value);
+                        setFirstPassword(event.target.value);
                         setEmptyError(false);
+                        setRepeatPasswordError(false);
+                        store.setRegistrationError(false);
                     }}
-                    value={password}
+                    value={firstPassword}
                     type="password"
                     placeholder="Password"
                 />
+                <input
+                    onChange={(event) => {
+                        setSecondPassword(event.target.value);
+                        setEmptyError(false);
+                        setRepeatPasswordError(false);
+                        store.setRegistrationError(false);
+                    }}
+                    value={secondPassword}
+                    type="password"
+                    placeholder="Repeat password"
+                />
                 <button  type="submit">Sign up</button>
                 {emptyError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
+                {!emptyError && repeatPasswordError && <ErrorMessage>Password should be the same</ErrorMessage>}
+                {store.registrationError && <ErrorMessage>User exists</ErrorMessage>}
             </form>
         </div>
     );
 };
 
-export default Registration;
+export default observer(Registration);

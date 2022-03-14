@@ -10,7 +10,10 @@ export default class Store {
     isAuth = false;
     isLoading = false;
     usersList = [] as any;
+
+    /* Errors */
     loginError = false;
+    registrationError = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -22,6 +25,10 @@ export default class Store {
 
     setLoginError(bool: boolean) {
         this.loginError = bool
+    }
+
+    setRegistrationError(bool: boolean) {
+        this.registrationError = bool
     }
 
     setLoading(bool: boolean) {
@@ -44,14 +51,16 @@ export default class Store {
         }
     }
 
-    async registration(username: string, password: string) {
-        try {
-            const response = await AuthService.registration(username, password);
-            localStorage.setItem('token', response.data.accessToken);
+    async registration(username: string, password: string, name: string) {
+        const response = await AuthService.registration(username, password, name);
+        console.log(response)
+        if (response.data.resultCode === 1) {
+            localStorage.setItem('token', response.data.data.accessToken);
             this.setAuth(true);
-            this.setUser(response.data.user)
-        } catch (e) {
-            console.log(e)
+            this.setUser(response.data.data.user)
+        }
+        if (response.data.resultCode === 0) {
+            this.setRegistrationError(true)
         }
     }
 
@@ -85,7 +94,7 @@ export default class Store {
         try {
             const response = await AuthService.getAllUsers();
             this.usersList = response.data;
-        } catch(e) {
+        } catch (e) {
 
         }
     }

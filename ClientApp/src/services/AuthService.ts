@@ -9,8 +9,10 @@ export default class AuthService {
         }).catch(e => console.log(e))
     }
 
-    static async registration(username: string, password: string): Promise<AxiosResponse<AuthResponse>> {
-        return $auth.post<AuthResponse>('/registration', {username, password})
+    static registration(username: string, password: string, name: string): Promise<any> {
+        return $auth.post<AuthResponse>('/registration', {username, password, name}).then(res => {
+            return res
+        }).catch(e => console.log(e))
     }
 
     static async logout(): Promise<AxiosResponse<AuthResponse>> {
