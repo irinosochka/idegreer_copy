@@ -6,7 +6,7 @@
 git clone https://github.com/vadimhv/idegreer.git
 
 # Start aplikacji
-W pierwszym terminalu otworzyć foldzer ServerApp  - npm run dev (start backend'u)
+W pierwszym terminalu otworzyć foldzer ServerApp  - npm run dev (start backend'u)  
 W drugim terminalu otworzyć folder ClientApp - npm start (start front-end'u)
 
 # Domyślne dostępy
