@@ -14,4 +14,9 @@ export default class AuthService {
     static async logout(): Promise<AxiosResponse<AuthResponse>> {
         return $auth.post<AuthResponse>('/logout')
     }
+
+    static async getAllUsers(): Promise<AxiosResponse<AuthResponse>> {
+        return $auth.get<AuthResponse>('/users')
+    }
+
 }

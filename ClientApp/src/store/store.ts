@@ -9,6 +9,7 @@ export default class Store {
     user = {} as IUser;
     isAuth = false;
     isLoading = false;
+    usersList = [] as any;
 
     constructor() {
         makeAutoObservable(this);
@@ -48,7 +49,6 @@ export default class Store {
         try {
             this.setLoading(true);
             const response = await axios.get<AuthResponse>(`http://localhost:5000/auth/refresh`, {withCredentials: true});
-            console.log(response);
             localStorage.setItem('token', response.data.accessToken);
             this.setAuth(true);
             this.setUser(response.data.user)
@@ -68,6 +68,15 @@ export default class Store {
             this.setUser({} as IUser)
         } catch (e) {
             console.log(e)
+        }
+    }
+
+    async getAllUsers() {
+        try {
+            const response = await AuthService.getAllUsers();
+            this.usersList = response.data;
+        } catch(e) {
+
         }
     }
 }

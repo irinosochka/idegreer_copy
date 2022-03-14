@@ -3,6 +3,7 @@ import Login from "./Components/Login/Login";
 import {Context} from "./index";
 import {observer} from "mobx-react-lite";
 import './App.css'
+import AdminPanel from "./Components/AdminPanel/AdminPanel";
 
 const App: FC = observer(() => {
 
@@ -18,9 +19,10 @@ const App: FC = observer(() => {
             store.logout();
         }
 
-        if(store.isLoading) {
+        if (store.isLoading) {
             return <div>Loading...</div>
         }
+
 
         return (
             <div>
@@ -35,6 +37,7 @@ const App: FC = observer(() => {
                         <button onClick={logout}>Logout</button>
                     </div>
                 ) : <Login/>}
+                {store.user.roles?.includes('ADMIN') && <AdminPanel />}
             </div>
         );
     }
