@@ -1,13 +1,15 @@
 import React, {FC, useContext, useEffect} from 'react';
-import Login from "./Components/Login/Login";
 import {Context} from "./index";
 import {observer} from "mobx-react-lite";
 import './App.css'
-import AdminPanel from "./Components/AdminPanel/AdminPanel";
+import {Route, Routes, useNavigate} from 'react-router-dom';
+import MainPage from "./pages/MainPage";
+import AuthPage from "./pages/AuthPage";
 
 const App: FC = observer(() => {
 
         const {store} = useContext(Context)
+        const navigate = useNavigate()
 
         useEffect(() => {
             if (localStorage.getItem('token')) {
@@ -15,30 +17,19 @@ const App: FC = observer(() => {
             }
         }, []);
 
-        const logout = () => {
-            store.logout();
-        }
-
-        if (store.isLoading) {
-            return <div>Loading...</div>
-        }
-
+        useEffect(() => {
+            if (store.isAuth) {
+                navigate('/')
+            } else if (!store.isAuth) {
+                navigate('/auth')
+            }
+        }, [store.isAuth]);
 
         return (
-            <div>
-                {store.isAuth ? (
-                    <div style={{
-                        width: '100%',
-                        background: 'black',
-                        color: 'white',
-                        padding: '15px'
-                    }}>
-                        <h1>User <b>{store.user.username}</b> with roles {store.user.roles} was logged</h1>
-                        <button onClick={logout}>Logout</button>
-                    </div>
-                ) : <Login/>}
-                {store.user.roles?.includes('ADMIN') && <AdminPanel />}
-            </div>
+            <Routes>
+                <Route path={'/'} element={<MainPage/>}/>
+                <Route path={'/auth'} element={<AuthPage/>}/>
+            </Routes>
         );
     }
 )

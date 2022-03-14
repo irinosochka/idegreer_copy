@@ -1,5 +1,6 @@
 import {useContext, useState} from 'react';
 import {Context} from "../../index";
+import './index.css'
 
 const Registration = () => {
     const [username, setUsername] = useState('');
@@ -14,13 +15,13 @@ const Registration = () => {
 
     return(
         <div className="container">
-            <span>Registration</span>
+            <span>Sign up</span>
             <form onSubmit={handleSubmit}>
                 <input
                     onChange={(event) => setUsername(event.target.value)}
                     value={username}
                     type="text"
-                    placeholder="Email"
+                    placeholder="Username"
                 />
                 <input
                     onChange={(event) => setPassword(event.target.value)}
@@ -28,7 +29,13 @@ const Registration = () => {
                     type="password"
                     placeholder="Password"
                 />
-                <button  type="submit"> Registration </button>
+                <input
+                    onChange={(event) => setPassword(event.target.value)}
+                    value={password}
+                    type="password"
+                    placeholder="Password"
+                />
+                <button  type="submit">Sign up</button>
             </form>
         </div>
     );
