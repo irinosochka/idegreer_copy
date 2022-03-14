@@ -7,6 +7,10 @@ input{
     box-sizing: border-box;
 }
 
+input::placeholder {
+    font-size: 16px;
+}
+
 button {
     background-color: #4d6243;
     color: white;
@@ -15,6 +19,8 @@ button {
     border: none;
     cursor: pointer;
     width: 100%;
+    font-size: 16px;
+    text-transform: uppercase;
 }
 
 .reg__btn, .login__btn{
@@ -43,14 +49,19 @@ button:hover {
     opacity: 0.8;
 }
 
+.auth__title {
+    margin-bottom: 15px;
+}
+
 .container {
-    padding: 16px;
+    padding: 25px;
     margin: 0;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
     border: 3px solid darkolivegreen;
+    border-radius: 30px;
     text-align: center;
 }
 

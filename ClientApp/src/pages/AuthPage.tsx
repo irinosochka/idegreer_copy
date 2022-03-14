@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import Login from "../Components/Login/Login";
-import Registration from "../Components/Registration/Registration";
+import Login from "../components/AuthComponents/Login/Login";
+import Registration from "../components/AuthComponents/Registration/Registration";
+import {observer} from "mobx-react-lite";
 
 const AuthPage = () => {
     const [isLogin, setLogin] = useState(true);
@@ -16,4 +17,4 @@ const AuthPage = () => {
     );
 };
 
-export default AuthPage;
+export default observer(AuthPage)

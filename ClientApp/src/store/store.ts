@@ -10,6 +10,7 @@ export default class Store {
     isAuth = false;
     isLoading = false;
     usersList = [] as any;
+    loginError = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -17,6 +18,10 @@ export default class Store {
 
     setAuth(bool: boolean) {
         this.isAuth = bool
+    }
+
+    setLoginError(bool: boolean) {
+        this.loginError = bool
     }
 
     setLoading(bool: boolean) {
@@ -29,9 +34,14 @@ export default class Store {
 
     async login(username: string, password: string) {
         const response = await AuthService.login(username, password)
-        localStorage.setItem('token', response.data.accessToken);
-        this.setAuth(true);
-        this.setUser(response.data.user)
+        if (response.data.resultCode === 1) {
+            localStorage.setItem('token', response.data.data.accessToken);
+            this.setAuth(true);
+            this.setUser(response.data.data.user)
+        }
+        if (response.data.resultCode === 0) {
+            this.setLoginError(true);
+        }
     }
 
     async registration(username: string, password: string) {

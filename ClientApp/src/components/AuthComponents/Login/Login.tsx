@@ -1,37 +1,38 @@
-import React, {useContext, useState} from 'react'
-import "../Registration/index.css"
-import {Context} from "../../index";
-import {useNavigate} from "react-router-dom";
+import React, {useContext, useEffect, useState} from 'react'
+import "../index.css"
+import {Context} from "../../../index";
+import {observer} from "mobx-react-lite";
+import ErrorMessage from "../../../common/Messages/ErrorMessage";
 
-export default function Login(){
+const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
     const [isError, setError] = useState(false);
 
     const {store} = useContext(Context);
 
-    const navigate = useNavigate()
-
+    useEffect(() => {
+        store.setLoginError(false)
+    }, []);
 
     const handleSubmit = (event: React.FormEvent<EventTarget>): void => {
         event.preventDefault();
-
-        if(username.length !== 0 && password.length !== 0) {
-            store.login(username, password).then(_ => navigate('/'))
+        if (password.length !== 0 && username.length !== 0) {
+            store.login(username, password)
         } else {
-            setError(true)
+            setError(true);
         }
     }
 
-    return(
+    return (
         <div className="container">
-            <span>Sign in</span>
+            <h1 className={'auth__title'}>Sign in</h1>
             <form onSubmit={handleSubmit}>
                 <input
                     onChange={(event) => {
                         setUsername(event.target.value);
                         setError(false);
+                        store.setLoginError(false);
                     }}
                     value={username}
                     type="text"
@@ -40,15 +41,19 @@ export default function Login(){
                 <input
                     onChange={(event) => {
                         setPassword(event.target.value);
-                        setError(false)
+                        setError(false);
+                        store.setLoginError(false);
                     }}
                     value={password}
                     type="password"
                     placeholder="Password"
                 />
-                <button  type="submit" >Sign in</button>
-                {isError ? <span style={{color: 'red'}}>Username or password can't be empty</span> : null}
+                <button type="submit">Sign in</button>
+                {isError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
+                {store.loginError && <ErrorMessage>Username or password are wrong</ErrorMessage>}
             </form>
         </div>
     )
 }
+
+export default observer(Login)
