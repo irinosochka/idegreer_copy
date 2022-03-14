@@ -1,33 +1,35 @@
-import React, {FC, useContext, useEffect, useState} from 'react';
-import Login from "./Components/Login/Login";
+import React, {FC, useContext, useEffect} from 'react';
 import {Context} from "./index";
 import {observer} from "mobx-react-lite";
 import './App.css'
-import Registration from "./Components/Registration/Registration";
-
+import {Route, Routes, useNavigate} from 'react-router-dom';
+import MainPage from "./pages/MainPage";
+import AuthPage from "./pages/AuthPage";
 
 const App: FC = observer(() => {
-    const [isLogin, setLogin] = useState(true);
-    const {store} = useContext(Context)
 
-         useEffect(() => {
+        const {store} = useContext(Context)
+        const navigate = useNavigate()
+
+        useEffect(() => {
             if (localStorage.getItem('token')) {
                 store.checkAuth()
             }
         }, []);
 
-        if (store.isLoading) {
-            return <div>Loading...</div>
-        }
+        useEffect(() => {
+            if (store.isAuth) {
+                navigate('/')
+            } else if (!store.isAuth) {
+                navigate('/auth')
+            }
+        }, [store.isAuth]);
 
         return (
-            <div>
-                <div className="btn__block">
-                    <button className="reg__btn" onClick={()=> setLogin(false)}>Zarejestruj się</button>
-                    <button className="login__btn" onClick={()=> setLogin(true)}>Zaloguj się</button>
-                </div>
-                {isLogin ? <Login/>: <Registration/>}
-            </div>
+            <Routes>
+                <Route path={'/'} element={<MainPage/>}/>
+                <Route path={'/auth'} element={<AuthPage/>}/>
+            </Routes>
         );
     }
 )
