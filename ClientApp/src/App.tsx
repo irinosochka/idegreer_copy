@@ -20,7 +20,8 @@ const App: FC = observer(() => {
         useEffect(() => {
             if (store.isAuth) {
                 navigate('/')
-            } else if (!store.isAuth) {
+            }
+            if (!store.isAuth && !store.isLoading) {
                 navigate('/auth')
             }
         }, [store.isAuth]);
