@@ -19,13 +19,13 @@ class AuthController {
             if(!errors.isEmpty()) {
                 return res.status(400).json({message: "Registration error", errors})
             }
-            const {username, password} = req.body;
-            const userData = await authService.registration(username, password);
+            const {username, password, name} = req.body;
+            const data = await authService.registration(username, password, name);
 
-            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60* 1000, httpOnly: true})
-            return res.json(userData)
+            res.cookie('refreshToken', data.refreshToken, {maxAge: 30 * 24 * 60 * 60* 1000, httpOnly: true})
+            return res.json({data, resultCode: 1})
         } catch (e) {
-            res.status(505).json({message: "Registration error " + e})
+            return res.json({message: "Registration error ", resultCode: 0})
         }
     }
 
