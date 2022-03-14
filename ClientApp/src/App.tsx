@@ -1,43 +1,32 @@
-import React, {FC, useContext, useEffect} from 'react';
+import React, {FC, useContext, useEffect, useState} from 'react';
 import Login from "./Components/Login/Login";
 import {Context} from "./index";
 import {observer} from "mobx-react-lite";
 import './App.css'
-import AdminPanel from "./Components/AdminPanel/AdminPanel";
+import Registration from "./Components/Registration/Registration";
+
 
 const App: FC = observer(() => {
+    const [isLogin, setLogin] = useState(true);
+    const {store} = useContext(Context)
 
-        const {store} = useContext(Context)
-
-        useEffect(() => {
+         useEffect(() => {
             if (localStorage.getItem('token')) {
                 store.checkAuth()
             }
         }, []);
 
-        const logout = () => {
-            store.logout();
-        }
-
         if (store.isLoading) {
             return <div>Loading...</div>
         }
 
-
         return (
             <div>
-                {store.isAuth ? (
-                    <div style={{
-                        width: '100%',
-                        background: 'black',
-                        color: 'white',
-                        padding: '15px'
-                    }}>
-                        <h1>User <b>{store.user.username}</b> with roles {store.user.roles} was logged</h1>
-                        <button onClick={logout}>Logout</button>
-                    </div>
-                ) : <Login/>}
-                {store.user.roles?.includes('ADMIN') && <AdminPanel />}
+                <div className="btn__block">
+                    <button className="reg__btn" onClick={()=> setLogin(false)}>Zarejestruj się</button>
+                    <button className="login__btn" onClick={()=> setLogin(true)}>Zaloguj się</button>
+                </div>
+                {isLogin ? <Login/>: <Registration/>}
             </div>
         );
     }
