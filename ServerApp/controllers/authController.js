@@ -13,6 +13,16 @@ class AuthController {
         }
     }
 
+    async userDataChanging(req, res) {
+        try {
+            const {username, password, newUsername, newName, newEmail} = req.body;
+            const data = await authService.userDataChanging(username, password, newUsername, newName, newEmail);
+            return res.json({data, resultCode: 1})
+        } catch(e) {
+            return res.json({message: "Login error", resultCode: 0})
+        }
+    }
+
     async registration(req, res) {
         try {
             const errors = validationResult(req);

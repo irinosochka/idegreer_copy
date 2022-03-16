@@ -85,6 +85,42 @@ class AuthService {
         }
     }
 
+    async userDataChanging(username, password, newUsername, newName, newEmail) {
+        const user = await UserModel.findOne({username})
+        if (!user) {
+            throw new Error('User with this email dont exist')
+        }
+        const isPassEquals = await bcrypt.compare(password, user.password);
+        if (!isPassEquals) {
+            throw new Error('Bad password')
+        }
+        console.log(newUsername, newName, newEmail);
+        const userWithNewPassword = await UserModel.updateOne({
+            username,
+            password: user.password
+        }, {
+            $set: {
+                username: newUsername.length !== 0 ? newUsername : user.username,
+                name: newName.length !== 0 ? newName : user.name,
+                email: newEmail.length !== 0 ? newEmail : user.email
+            }
+        });
+
+        const updatedUser = await UserModel.findOne({username: newUsername.length !== 0 ? newUsername : user.username})
+        if (!updatedUser) {
+            throw new Error('User with this email dont exist')
+        }
+        const userDto = new UserDto(updatedUser); //id, username, name, email, roles
+        const tokens = tokenService.generateTokens({...userDto})
+        await tokenService.saveToken(userDto.id, tokens.refreshToken)
+
+        return {
+            userWithNewPassword,
+            ...tokens,
+            user: userDto
+        }
+    }
+
     async getAllUsers() {
         return UserModel.find();
     }
