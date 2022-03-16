@@ -9,8 +9,8 @@ export default class AuthService {
         }).catch(e => console.log(e))
     }
 
-    static registration(username: string, password: string, name: string): Promise<any> {
-        return $auth.post<AuthResponse>('/registration', {username, password, name}).then(res => {
+    static registration(username: string, password: string, name: string, email: string): Promise<any> {
+        return $auth.post<AuthResponse>('/registration', {username, password, name, email}).then(res => {
             return res
         }).catch(e => console.log(e))
     }

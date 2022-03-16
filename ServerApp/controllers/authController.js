@@ -19,8 +19,8 @@ class AuthController {
             if(!errors.isEmpty()) {
                 return res.status(400).json({message: "Registration error", errors})
             }
-            const {username, password, name} = req.body;
-            const data = await authService.registration(username, password, name);
+            const {username, password, name, email} = req.body;
+            const data = await authService.registration(username, password, name, email);
 
             res.cookie('refreshToken', data.refreshToken, {maxAge: 30 * 24 * 60 * 60* 1000, httpOnly: true})
             return res.json({data, resultCode: 1})
@@ -48,6 +48,16 @@ class AuthController {
             return res.json(token);
         } catch(e) {
             res.status(505).json({message: "Logout error " + e})
+        }
+    }
+
+    async passwordChanging(req, res) {
+        try {
+            const {username, password, newPassword} = req.body;
+            const data = await authService.passwordChanging(username, password, newPassword);
+            return res.json({data, resultCode: 1})
+        } catch(e) {
+            res.status(505).json({message: "Password changing error", resultCode: 0})
         }
     }
 

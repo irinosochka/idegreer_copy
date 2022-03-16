@@ -4,15 +4,15 @@ const UserDto = require('../dtos/user-dto');
 const bcrypt = require('bcrypt');
 
 class AuthService {
-    async registration(username, password, name) {
+    async registration(username, password, name, email) {
         const candidate = await UserModel.findOne({username})
-        if(candidate) {
+        if (candidate) {
             throw new Error(`User with username ${username} actually exist`)
         }
-        const hashPassword  = await bcrypt.hash(password, 3)
+        const hashPassword = await bcrypt.hash(password, 3)
 
-        const user = await UserModel.create({username, password: hashPassword, name, roles: ['STUDENT']})
-        const userDto = new UserDto(user); //id, username, name, roles
+        const user = await UserModel.create({username, password: hashPassword, name, email: email, roles: ['STUDENT']})
+        const userDto = new UserDto(user); //id, username, name, email, roles
         const tokens = tokenService.generateTokens({...userDto})
         await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
@@ -46,12 +46,12 @@ class AuthService {
     }
 
     async refresh(refreshToken) {
-        if(!refreshToken) {
+        if (!refreshToken) {
             throw new Error('User wa not authorized')
         }
         const userData = await tokenService.validateRefreshToken(refreshToken)
         const tokenFromDb = await tokenService.findToken(refreshToken)
-        if(!userData || !tokenFromDb) {
+        if (!userData || !tokenFromDb) {
             throw new Error('User was not authorized')
         }
         const user = await UserModel.findById(userData.id)
@@ -62,6 +62,26 @@ class AuthService {
         return {
             ...tokens,
             user: userDto
+        }
+    }
+
+    async passwordChanging(username, lastPassword, newPassword) {
+        const user = await UserModel.findOne({username})
+        if (!user) {
+            throw new Error('User with this email dont exist')
+        }
+        const isPassEquals = await bcrypt.compare(lastPassword, user.password);
+        if (!isPassEquals) {
+            throw new Error('Bad last password')
+        }
+        const hashNewPassword = await bcrypt.hash(newPassword, 3)
+        const userWithNewPassword = await UserModel.updateOne({
+            username,
+            password: user.password
+        }, {$set: {password: hashNewPassword}})
+
+        return {
+            userWithNewPassword
         }
     }
 

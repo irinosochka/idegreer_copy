@@ -9,6 +9,9 @@ const Registration = () => {
     const [firstPassword, setFirstPassword] = useState('');
     const [secondPassword, setSecondPassword] = useState('');
     const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+
+    /* ERRORS */
     const [emptyError, setEmptyError] = useState(false);
     const [repeatPasswordError, setRepeatPasswordError] = useState(false);
     const {store} = useContext(Context);
@@ -17,7 +20,7 @@ const Registration = () => {
         event.preventDefault();
         if(username.length !== 0 && secondPassword.length !== 0 && firstPassword.length !== 0 && name.length !== 0) {
             if (secondPassword === firstPassword) {
-                store.registration(username, firstPassword, name)
+                store.registration(username, firstPassword, name, email)
             } else {
                 setRepeatPasswordError(true)
             }
@@ -39,6 +42,16 @@ const Registration = () => {
                     value={name}
                     type="text"
                     placeholder="Name"
+                />
+                <input
+                    onChange={(event) => {
+                        setEmail(event.target.value);
+                        setEmptyError(false);
+                        store.setRegistrationError(false);
+                    }}
+                    value={email}
+                    type="email"
+                    placeholder="Email"
                 />
                 <input
                     onChange={(event) => {
