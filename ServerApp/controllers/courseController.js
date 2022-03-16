@@ -3,8 +3,8 @@ const courseService = require('../service/course-service');
 class CourseController {
     async addCourse(req, res) {
         try {
-            const {username, password, title, theme, description} = req.body;
-            const data = await courseService.addCourse(username, password, title, theme, description);
+            const {username, title, theme, description} = req.body;
+            const data = await courseService.addCourse(username, title, theme, description);
             return res.json({data, resultCode: 1})
         } catch (e) {
             res.status(505).json({message: 'Adding course error', resultCode: 0})

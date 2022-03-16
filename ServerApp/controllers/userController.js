@@ -3,8 +3,8 @@ const userService = require("../service/user-service");
 class UserController {
     async userDataChanging(req, res) {
         try {
-            const {username, password, newUsername, newName, newEmail} = req.body;
-            const data = await userService.userDataChanging(username, password, newUsername, newName, newEmail);
+            const {username, newUsername, newName, newEmail} = req.body;
+            const data = await userService.userDataChanging(username, newUsername, newName, newEmail);
             return res.json({data, resultCode: 1})
         } catch(e) {
             return res.json({message: "Login error", resultCode: 0})

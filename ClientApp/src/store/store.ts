@@ -1,8 +1,10 @@
 import {IUser} from "../models/IUser";
 import {makeAutoObservable} from "mobx";
 import AuthService from "../services/AuthService";
+import CourseService from "../services/CourseService";
 import axios from "axios";
 import {AuthResponse} from "../models/response/AuthResponse";
+import UserService from "../services/UserService";
 
 
 export default class Store {
@@ -10,6 +12,7 @@ export default class Store {
     isAuth = false;
     isLoading = false;
     usersList = [] as any;
+    courses = [] as any;
 
     /* Errors */
     loginError = false;
@@ -53,7 +56,6 @@ export default class Store {
 
     async registration(username: string, password: string, name: string, email: string) {
         const response = await AuthService.registration(username, password, name, email);
-        console.log(response)
         if (response.data.resultCode === 1) {
             localStorage.setItem('token', response.data.data.accessToken);
             this.setAuth(true);
@@ -95,6 +97,38 @@ export default class Store {
             const response = await AuthService.getAllUsers();
             this.usersList = response.data;
         } catch (e) {
+
+        }
+    }
+
+    async passwordChanging(lastPassword: string, newPassword: string) {
+        try {
+            return await UserService.passwordChanging(this.user.username, lastPassword, newPassword)
+        } catch(e) {
+
+        }
+    }
+
+    async userDataChanging(newUsername: string, newName: string, newEmail: string) {
+        try {
+            return await UserService.userDataChanging(this.user.username, newUsername, newName, newEmail)
+        } catch(e) {
+
+        }
+    }
+
+    async addCourse(title: string, theme: string, description: string) {
+        try {
+            return await CourseService.addCourse(this.user.username, title, theme, description)
+        } catch(e) {
+            
+        }
+    }
+
+    async getAllCourses() {
+        try {
+            return await CourseService.getCourses()
+        } catch(e) {
 
         }
     }

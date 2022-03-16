@@ -1,14 +1,15 @@
 import {$course} from "../http";
+import {CourseResponse} from "../models/response/CourseResponse";
 
 export default class CourseService {
-    static addCourse(username: string, password: string, title: string, theme: string, description: string): Promise<any> {
-        return $course.post('/add', {username, password, title, theme, description}).then(res => {
+    static addCourse(username: string, title: string, theme: string, description: string): Promise<any> {
+        return $course.post<CourseResponse>('/add', {username, title, theme, description}).then(res => {
             return res
         }).catch(e => console.log(e))
     }
 
     static getCourses(): Promise<any> {
-        return $course.get('/getAllCourses').then(res => {
+        return $course.get<Array<CourseResponse>>('/getAllCourses').then(res => {
             return res
         }).catch(e => console.log(e))
     }
