@@ -16,7 +16,7 @@ class UserController {
             const data = await userService.passwordChanging(username, password, newPassword);
             return res.json({data, resultCode: 1})
         } catch(e) {
-            res.status(505).json({message: "Password changing error", resultCode: 0})
+            return res.json({message: "Password changing error", resultCode: 0})
         }
     }
 }

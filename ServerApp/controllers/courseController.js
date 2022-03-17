@@ -7,7 +7,7 @@ class CourseController {
             const data = await courseService.addCourse(username, title, theme, description);
             return res.json({data, resultCode: 1})
         } catch (e) {
-            res.status(505).json({message: 'Adding course error', resultCode: 0})
+            return res.json({message: 'Adding course error', resultCode: 0})
         }
     }
 
@@ -16,7 +16,7 @@ class CourseController {
             const data = await courseService.getAllCourses();
             return res.json({data, resultCode: 1});
         } catch(e) {
-            res.status(505).json({message: 'Get all courses error', resultCode: 0})
+            return res.json({message: 'Get all courses error', resultCode: 0})
         }
     }
 }
