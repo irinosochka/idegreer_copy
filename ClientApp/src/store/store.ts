@@ -1,8 +1,10 @@
 import {IUser} from "../models/IUser";
 import {makeAutoObservable} from "mobx";
 import AuthService from "../services/AuthService";
+import CourseService from "../services/CourseService";
 import axios from "axios";
 import {AuthResponse} from "../models/response/AuthResponse";
+import UserService from "../services/UserService";
 
 
 export default class Store {
@@ -10,10 +12,15 @@ export default class Store {
     isAuth = false;
     isLoading = false;
     usersList = [] as any;
+    courses = [] as any;
 
     /* Errors */
     loginError = false;
     registrationError = false;
+    passwordChangingError = false;
+    userDataChangingError = false;
+    getAllCourseError = false;
+    addCourseError = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -39,6 +46,35 @@ export default class Store {
         this.user = user;
     }
 
+    setUserList(users: any) {
+        this.usersList = users
+    }
+
+    setUserDataChangingError(bool: boolean) {
+        this.userDataChangingError = bool
+    }
+
+
+    setPasswordChangingError(bool: boolean) {
+        this.passwordChangingError = bool;
+    }
+
+    setGetAllCourseError(bool: boolean) {
+        this.getAllCourseError =  bool
+    }
+
+    setCourses(courses: any) {
+        this.courses = courses
+    }
+
+    setAddCourseError(bool: boolean) {
+        this.addCourseError = bool
+    }
+
+    addNewCourse(course: any) {
+        this.courses = [...this.courses, course]
+    }
+
     async login(username: string, password: string) {
         const response = await AuthService.login(username, password)
         if (response.data.resultCode === 1) {
@@ -51,9 +87,8 @@ export default class Store {
         }
     }
 
-    async registration(username: string, password: string, name: string) {
-        const response = await AuthService.registration(username, password, name);
-        console.log(response)
+    async registration(username: string, password: string, name: string, email: string) {
+        const response = await AuthService.registration(username, password, name, email);
         if (response.data.resultCode === 1) {
             localStorage.setItem('token', response.data.data.accessToken);
             this.setAuth(true);
@@ -93,9 +128,65 @@ export default class Store {
     async getAllUsers() {
         try {
             const response = await AuthService.getAllUsers();
-            this.usersList = response.data;
+            this.setUserList(response.data);
         } catch (e) {
+            console.log(e);
+        }
+    }
 
+    async passwordChanging(lastPassword: string, newPassword: string) {
+        try {
+            const response = await UserService.passwordChanging(this.user.username, lastPassword, newPassword);
+            if (response.resultCode === 1) {
+                return response
+            }
+            if (response.resultCode === 0) {
+                this.setPasswordChangingError(true);
+            }
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
+    async userDataChanging(newUsername: string, newName: string, newEmail: string) {
+        try {
+            const response = await UserService.userDataChanging(this.user.username, newUsername, newName, newEmail);
+            if(response.resultCode === 1) {
+                return response
+            }
+            if(response.resultCode === 0) {
+                this.setUserDataChangingError(true)
+            }
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
+    async addCourse(title: string, theme: string, description: string) {
+        try {
+            const response = await CourseService.addCourse(this.user.username, title, theme, description);
+            if(response.resultCode === 1) {
+                this.addNewCourse(response.data)
+            }
+            if(response.resultCode === 0) {
+                this.setAddCourseError(true)
+            }
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
+    async getAllCourses() {
+        try {
+            const response = await CourseService.getCourses();
+            if(response.resultCode === 0) {
+                this.setGetAllCourseError(true)
+            }
+            if(response.resultCode === 1) {
+                this.setCourses(response.data);
+            }
+        } catch(e) {
+            console.log(e);
         }
     }
 }

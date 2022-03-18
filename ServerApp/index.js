@@ -1,6 +1,8 @@
 require('dotenv').config()
 const express = require("express")
 const authRouter = require("./routers/authRouter");
+const courseRouter = require("./routers/courseRouter");
+const userRouter = require("./routers/userRouter");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieparser = require("cookie-parser");
@@ -16,6 +18,8 @@ app.use(cors({
 app.use(express.json())
 app.use(cookieparser())
 app.use('/auth', authRouter)
+app.use('/course', courseRouter)
+app.use('/user', userRouter)
 
 const start = async () => {
     try {
