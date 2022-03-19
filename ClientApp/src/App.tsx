@@ -12,7 +12,6 @@ import Loader from "./common/Loader";
 const App: FC = observer(() => {
         const {store} = useContext(Context)
         const [courses, setCourses] = useState([])
-        console.log(courses);
   
         const navigate = useNavigate()
 

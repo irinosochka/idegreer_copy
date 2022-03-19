@@ -16,15 +16,17 @@ const Navbar = () => {
     }
 
     function ini(){
-        var splits = store.user.name.split(" ");
-        var stringItog = "";
+        if (store.isAuth && store.user.name) {
+            var splits = store.user.name.split(" ");
+            var stringItog = "";
 
-        for(let i = 0; i < splits.length; i++) {
-            let Name = splits[i];
-            let First = Name.substr(0,1).toUpperCase();
-            stringItog += First;
+            for(let i = 0; i < splits.length; i++) {
+                let Name = splits[i];
+                let First = Name.substr(0,1).toUpperCase();
+                stringItog += First;
+            }
+            return stringItog;
         }
-        return stringItog;
     }
 
     return (
