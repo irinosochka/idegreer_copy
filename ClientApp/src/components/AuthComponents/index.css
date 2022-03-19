@@ -81,3 +81,20 @@ span{
     background-color: #4d6243;
     color: #fff;
 }
+
+.course__item {
+    margin: 20px auto;
+    width: 1000px;
+    border: 1px solid black;
+    border-radius: 2px;
+    padding: 10px 20px;
+}
+
+h2, h3, p, .course__item{
+    text-align: left;
+}
+
+.course__name {
+    font-size: large;
+}
+

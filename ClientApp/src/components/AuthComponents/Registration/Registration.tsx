@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {Context} from "../../../index";
-import '../index.css'
+import '../index.css';
 import ErrorMessage from "../../../common/Messages/ErrorMessage";
 import {observer} from "mobx-react-lite";
 

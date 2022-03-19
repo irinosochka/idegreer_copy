@@ -9,11 +9,11 @@ import UserPage from "./pages/UserPage";
 import Navbar from "./components/Navbar/Navbar";
 
 const App: FC = observer(() => {
-
         const {store} = useContext(Context)
         const [courses, setCourses] = useState([])
+        console.log(courses);
 
-    useEffect(() => {
+        useEffect(() => {
             if (localStorage.getItem('token')) {
                 store.checkAuth()
             }
@@ -23,10 +23,11 @@ const App: FC = observer(() => {
             <div>
                 {store.isAuth && <Navbar/>}
                 <Routes>
-                    <Route path={'/'} element={<MainPage setCourses={setCourses} course={courses}/>}/>
-                    <Route path={'/auth'} element={<AuthPage/>}/>
-                    <Route path={'/profile'} element={<UserPage/>}/>
+                    <Route path={'/'} element={<MainPage courses={courses} />}/>
+                    <Route path={'/auth'} element={<AuthPage />}/>
+                    <Route path={'/profile'} element={<UserPage setCourses={setCourses} courses={courses} />}/>
                 </Routes>
+
             </div>
         );
     }
