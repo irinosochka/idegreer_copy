@@ -1,4 +1,4 @@
-import React, {FC, useContext, useEffect} from 'react';
+import React, {FC, useContext, useEffect, useState} from 'react';
 import {Context} from "./index";
 import {observer} from "mobx-react-lite";
 import './App.css'
@@ -10,8 +10,10 @@ const App: FC = observer(() => {
 
         const {store} = useContext(Context)
         const navigate = useNavigate()
+        const [courses, setCourses] = useState([])
+        console.log(courses);
 
-        useEffect(() => {
+    useEffect(() => {
             if (localStorage.getItem('token')) {
                 store.checkAuth()
             }
@@ -28,7 +30,7 @@ const App: FC = observer(() => {
 
         return (
             <Routes>
-                <Route path={'/'} element={<MainPage/>}/>
+                <Route path={'/'} element={<MainPage setCourses={setCourses} course={courses}/>}/>
                 <Route path={'/auth'} element={<AuthPage/>}/>
             </Routes>
         );
