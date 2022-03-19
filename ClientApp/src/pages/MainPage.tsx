@@ -10,9 +10,6 @@ interface MainPageProps{
 const MainPage: FC<MainPageProps> = ({courses}) => {
 
     const {store} = useContext(Context);
-    if (store.isLoading) {
-        return <div>Loading...</div>
-    }
 
     return (
         <div>
