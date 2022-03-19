@@ -1,0 +1,40 @@
+.edit__btn, .password__btn{
+  display: inline;
+  margin: 0;
+  background-color: #fff;
+  color: #4d6243;
+  width: auto;
+  padding: 10px 15px;
+}
+
+.active {
+
+}
+
+.edit__container{
+  width: 600px;
+  padding: 60px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn__menu{
+  border-bottom: 1px solid #4d6243;
+  line-height: 10px;
+}
+
+.save__btn, .reset__btn{
+  width: 50%;
+}
+
+
+
+
+
+
+
+
+
+
+

@@ -5,6 +5,7 @@ import './App.css'
 import {Route, Routes, useNavigate} from 'react-router-dom';
 import MainPage from "./pages/MainPage";
 import AuthPage from "./pages/AuthPage";
+import UserPage from "./pages/UserPage";
 
 const App: FC = observer(() => {
 
@@ -19,7 +20,7 @@ const App: FC = observer(() => {
 
         useEffect(() => {
             if (store.isAuth) {
-                navigate('/')
+                navigate('/profile')
             }
             if (!store.isAuth && !store.isLoading) {
                 navigate('/auth')
@@ -30,6 +31,7 @@ const App: FC = observer(() => {
             <Routes>
                 <Route path={'/'} element={<MainPage/>}/>
                 <Route path={'/auth'} element={<AuthPage/>}/>
+                <Route path={'/profile'} element={<UserPage/>}/>
             </Routes>
         );
     }
