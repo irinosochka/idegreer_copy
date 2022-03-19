@@ -15,6 +15,18 @@ const Navbar = () => {
         store.logout();
     }
 
+    function ini(){
+        var splits = store.user.name.split(" ");
+        var stringItog = "";
+
+        for(let i = 0; i < splits.length; i++) {
+            let Name = splits[i];
+            let First = Name.substr(0,1).toUpperCase();
+            stringItog += First;
+        }
+        return stringItog;
+    }
+
     return (
         <div  style={{
             display: 'flex',
@@ -30,6 +42,11 @@ const Navbar = () => {
                 </NavLink>
             </div>
             <div style={{display: 'flex', alignItems: 'center'}}>
+                <div style={{borderRadius: '50%', backgroundColor: 'white', width: '45px', height: '45px', cursor: 'pointer', display: 'flex', marginRight: '10px'}}>
+                    <h2 style={{margin: 'auto', color: '#4d6243', fontWeight: 400}}>
+                        {ini()}
+                    </h2>
+                </div>
                 <div>
                     <NavLink to={'/profile'}>
                         <h1 style={{fontSize: '20px'}}><b>{store.user.name}</b></h1>
