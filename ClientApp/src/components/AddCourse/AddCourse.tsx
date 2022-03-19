@@ -2,10 +2,10 @@ import React, {FC, useState} from 'react';
 import ErrorMessage from "../../common/Messages/ErrorMessage";
 interface AddCourseProps {
     setCourses: (course: any) => void,
-    course: any
+    courses: any
 }
 
-const AddCourse: FC<AddCourseProps> = ({setCourses, course}) => {
+const AddCourse: FC<AddCourseProps> = ({setCourses, courses}) => {
     const [courseName, setCourseName] = useState('');
     const [courseTopic, setCourseTopic] = useState('');
     const [courseDescription, setCourseDescription] = useState('');
@@ -16,10 +16,12 @@ const AddCourse: FC<AddCourseProps> = ({setCourses, course}) => {
         const newCourse = {
             courseName: courseName,
             courseTopic: courseTopic,
-            courseDescription: courseDescription
+            courseAuthor: 'Palianytsia',
+            courseDescription: courseDescription,
+            courseDate: new Date()
         };
         if (courseName.length !==0 && courseTopic.length !== 0 && courseDescription.length !==0) {
-            setCourses([...course, newCourse]);
+            setCourses([...courses, newCourse]);
             setCourseName('');
             setCourseTopic('');
             setCourseDescription('');
@@ -29,7 +31,7 @@ const AddCourse: FC<AddCourseProps> = ({setCourses, course}) => {
     }
 
     return (
-        <div className="container" style={{marginTop: '30px', margin: 'auto',
+        <div className="add_courses_container" style={{marginTop: '30px', margin: 'auto',
             width: '50%'}}>
             <h2 style={{marginBottom:'20px'}}>Create a new course</h2>
             <form onSubmit={onAddCourseHandler}>
@@ -74,10 +76,9 @@ const AddCourse: FC<AddCourseProps> = ({setCourses, course}) => {
                 {/*    value={courseImg}*/}
                 {/*/>*/}
                 {/*<button>Add course</button>*/}
-                <button type="submit">Add course</button>
+                <button type="submit" style={{width: '50%', margin: "0 auto"}}>Add course</button>
                 {emptyError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
             </form>
-            <button>List of courses</button>
         </div>
     );
 };

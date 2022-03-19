@@ -1,9 +1,14 @@
-import React, {useState} from 'react';
+import React, {FC, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import EditProfile from "../components/EditProfile/EditProfile";
 import ChangePassword from "../components/EditProfile/ChangePassword";
+import AddCourse from "../components/AddCourse/AddCourse";
+interface UserPageProps{
+    setCourses: (course: any) => void,
+    courses: any
+}
 
-const UserPage = () => {
+const UserPage:FC<UserPageProps> = ({setCourses, courses}) => {
     const [isEdit, setEdit] = useState(false);
 
     return (
@@ -15,7 +20,9 @@ const UserPage = () => {
                 </div>
                 {isEdit ? <ChangePassword /> : <EditProfile/>}
             </div>
-
+            <div>
+                <AddCourse setCourses={setCourses} courses={courses} />
+            </div>
         </div>
     );
 };

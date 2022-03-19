@@ -10,10 +10,10 @@ import Navbar from "./components/Navbar/Navbar";
 import Loader from "./common/Loader";
 
 const App: FC = observer(() => {
-
         const {store} = useContext(Context)
         const [courses, setCourses] = useState([])
-
+        console.log(courses);
+  
         const navigate = useNavigate()
 
         useEffect(() => {
@@ -35,10 +35,11 @@ const App: FC = observer(() => {
             <div>
                 {store.isAuth && <Navbar/>}
                 <Routes>
-                    <Route path={'/'} element={<MainPage setCourses={setCourses} course={courses}/>}/>
-                    <Route path={'/auth'} element={<AuthPage/>}/>
-                    <Route path={'/profile'} element={<UserPage/>}/>
+                    <Route path={'/'} element={<MainPage courses={courses} />}/>
+                    <Route path={'/auth'} element={<AuthPage />}/>
+                    <Route path={'/profile'} element={<UserPage setCourses={setCourses} courses={courses} />}/>
                 </Routes>
+
             </div>
         );
     }
