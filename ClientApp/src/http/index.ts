@@ -1,11 +1,23 @@
 import axios from "axios";
 import {AuthResponse} from "../models/response/AuthResponse";
 
-const baseURL = `http://localhost:5000/auth`
+const baseAuthURL = `http://localhost:5000/auth`
+const baseUserURL = `http://localhost:5000/user`
+const baseCourseURL = `http://localhost:5000/course`
 
-const $auth = axios.create({
+export const $auth = axios.create({
     withCredentials: true,
-    baseURL:  baseURL
+    baseURL:  baseAuthURL
+})
+
+export const $user = axios.create({
+    withCredentials: true,
+    baseURL: baseUserURL
+})
+
+export const $course = axios.create({
+    withCredentials: true,
+    baseURL: baseCourseURL
 })
 
 $auth.interceptors.request.use((config) => {
@@ -28,5 +40,3 @@ $auth.interceptors.response.use((config) => {
         }
     }
 }))
-
-export default $auth

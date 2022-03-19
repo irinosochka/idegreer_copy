@@ -1,27 +1,41 @@
-import React, {useContext, useState} from 'react';
-import {Context} from "../../../index";
-import '../index.css'
-import ErrorMessage from "../../../common/Messages/ErrorMessage";
-import {observer} from "mobx-react-lite";
+import React, {useContext, useEffect, useState} from 'react';
+import {Context} from "../../index";
+import ErrorMessage from "../../common/Messages/ErrorMessage";
 
-const Registration = () => {
-    const [username, setUsername] = useState('');
+import "./index.css"
+import {observer} from "mobx-react-lite";
+import InfoMessage from "../../common/Messages/InfoMessage";
+
+const ChangePassword = () => {
+
+    const [currentPassword, setCurrentPassword] = useState('');
     const [firstPassword, setFirstPassword] = useState('');
     const [secondPassword, setSecondPassword] = useState('');
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-
-    /* ERRORS */
-    const [emptyError, setEmptyError] = useState(false);
     const [repeatPasswordError, setRepeatPasswordError] = useState(false);
+    const [emptyError, setEmptyError] = useState(false);
+    const [passwordSuccess, setPasswordSuccess] = useState(false);
     const {store} = useContext(Context);
+
+    useEffect(() => {
+        console.log('+');
+    }, []);
+
+    const clearFields = () => {
+        setFirstPassword('');
+        setSecondPassword('');
+        setCurrentPassword('');
+    }
 
     const handleSubmit = (event: React.FormEvent<EventTarget>): void => {
         event.preventDefault();
-        if(username.length !== 0 && secondPassword.length !== 0 && firstPassword.length !== 0 && name.length !== 0) {
-            if (secondPassword === firstPassword) {
-                store.registration(username, firstPassword, name, email)
-            } else {
+        if(currentPassword.length !== 0 && firstPassword.length !== 0 && secondPassword.length !== 0) {
+            if(firstPassword === secondPassword){
+                store.passwordChanging(currentPassword, firstPassword);
+                clearFields();
+                if(store.passwordChangingSuccess) {
+                    setPasswordSuccess(true);
+                }
+            }else{
                 setRepeatPasswordError(true)
             }
         } else {
@@ -29,39 +43,19 @@ const Registration = () => {
         }
     }
 
-    return(
-        <div className="container">
-            <h1 className={'auth__title'}>Sign up</h1>
+    return (
+        <div>
             <form onSubmit={handleSubmit}>
                 <input
                     onChange={(event) => {
-                        setName(event.target.value);
+                        setCurrentPassword(event.target.value);
                         setEmptyError(false);
+                        setRepeatPasswordError(false);
                         store.setRegistrationError(false);
                     }}
-                    value={name}
-                    type="text"
-                    placeholder="Name"
-                />
-                <input
-                    onChange={(event) => {
-                        setEmail(event.target.value);
-                        setEmptyError(false);
-                        store.setRegistrationError(false);
-                    }}
-                    value={email}
-                    type="email"
-                    placeholder="Email"
-                />
-                <input
-                    onChange={(event) => {
-                        setUsername(event.target.value);
-                        setEmptyError(false);
-                        store.setRegistrationError(false);
-                    }}
-                    value={username}
-                    type="text"
-                    placeholder="Username"
+                    value={currentPassword}
+                    type="password"
+                    placeholder="Current password"
                 />
                 <input
                     onChange={(event) => {
@@ -85,13 +79,14 @@ const Registration = () => {
                     type="password"
                     placeholder="Repeat password"
                 />
-                <button  type="submit">Sign up</button>
+                <button type="submit">Change password</button>
                 {emptyError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
                 {!emptyError && repeatPasswordError && <ErrorMessage>Password should be the same</ErrorMessage>}
-                {store.registrationError && <ErrorMessage>User exists</ErrorMessage>}
+                {passwordSuccess && <InfoMessage>Success</InfoMessage>}
+
             </form>
         </div>
     );
 };
 
-export default observer(Registration);
+export default observer(ChangePassword);
