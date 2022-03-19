@@ -22,6 +22,9 @@ export default class Store {
     getAllCourseError = false;
     addCourseError = false;
 
+    /* Success */
+    passwordChangingSuccess = false;
+
     constructor() {
         makeAutoObservable(this);
     }
@@ -108,7 +111,7 @@ export default class Store {
             this.setUser(response.data.user)
             this.setLoading(false);
         } catch (e) {
-            console.log(e);
+            throw new Error('No auth')
         } finally {
             this.setLoading(false);
         }
@@ -137,10 +140,11 @@ export default class Store {
     async passwordChanging(lastPassword: string, newPassword: string) {
         try {
             const response = await UserService.passwordChanging(this.user.username, lastPassword, newPassword);
-            if (response.resultCode === 1) {
+            if (response.data.resultCode === 1) {
+                this.passwordChangingSuccess = true
                 return response
             }
-            if (response.resultCode === 0) {
+            if (response.data.resultCode === 0) {
                 this.setPasswordChangingError(true);
             }
         } catch(e) {
@@ -151,10 +155,11 @@ export default class Store {
     async userDataChanging(newUsername: string, newName: string, newEmail: string) {
         try {
             const response = await UserService.userDataChanging(this.user.username, newUsername, newName, newEmail);
-            if(response.resultCode === 1) {
+            if(response.data.resultCode === 1) {
+                this.setUser(response.data.data.user);
                 return response
             }
-            if(response.resultCode === 0) {
+            if(response.data.resultCode === 0) {
                 this.setUserDataChangingError(true)
             }
         } catch(e) {
@@ -165,10 +170,10 @@ export default class Store {
     async addCourse(title: string, theme: string, description: string) {
         try {
             const response = await CourseService.addCourse(this.user.username, title, theme, description);
-            if(response.resultCode === 1) {
+            if(response.data.resultCode === 1) {
                 this.addNewCourse(response.data)
             }
-            if(response.resultCode === 0) {
+            if(response.data.resultCode === 0) {
                 this.setAddCourseError(true)
             }
         } catch(e) {
@@ -179,10 +184,10 @@ export default class Store {
     async getAllCourses() {
         try {
             const response = await CourseService.getCourses();
-            if(response.resultCode === 0) {
+            if(response.data.resultCode === 0) {
                 this.setGetAllCourseError(true)
             }
-            if(response.resultCode === 1) {
+            if(response.data.resultCode === 1) {
                 this.setCourses(response.data);
             }
         } catch(e) {

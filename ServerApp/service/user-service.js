@@ -2,6 +2,7 @@ const UserModel = require("../models/user-model");
 const bcrypt = require("bcrypt");
 const UserDto = require("../dtos/user-dto");
 const tokenService = require("./token-service");
+const authService = require("./auth-service");
 
 class UserService {
     async passwordChanging(username, lastPassword, newPassword) {
@@ -45,6 +46,7 @@ class UserService {
         }
         const userDto = new UserDto(updatedUser); //id, username, name, email, roles
         const tokens = tokenService.generateTokens({...userDto})
+        await authService.refresh(tokens.refreshToken)
         await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
         return {
