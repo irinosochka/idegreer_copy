@@ -50,10 +50,7 @@ class AuthService {
             throw new Error('User wa not authorized')
         }
         const userData = await tokenService.validateRefreshToken(refreshToken)
-        const tokenFromDb = await tokenService.findToken(refreshToken)
-        if (!userData || !tokenFromDb) {
-            throw new Error('User was not authorized')
-        }
+        // const tokenFromDb = await tokenService.findToken(refreshToken)
         const user = await UserModel.findById(userData.id)
         const userDto = new UserDto(user);
         const tokens = tokenService.generateTokens({...userDto});
