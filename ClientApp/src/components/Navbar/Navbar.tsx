@@ -1,21 +1,18 @@
 import React, {useContext} from 'react';
 import {Context} from "../../index";
+import {NavLink} from "react-router-dom";
+import {observer} from "mobx-react-lite";
 
 /* IMG */
 // @ts-ignore
 import logoutIcon from '../../assets/img/logout.png'
-import {NavLink, useNavigate} from "react-router-dom";
-import {observer} from "mobx-react-lite";
 
 const Navbar = () => {
 
     const {store} = useContext(Context);
 
-    const navigate = useNavigate()
-
     const logout = () => {
         store.logout();
-        navigate('/auth');
     }
 
     return (

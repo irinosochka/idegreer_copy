@@ -13,10 +13,6 @@ const MainPage: FC<MainPageProps> = ({setCourses, course}) => {
 
     const {store} = useContext(Context);
 
-    if (store.isLoading) {
-        return <div>Loading...</div>
-    }
-
     return (
         <div>
             {store.isAuth && <AddCourse setCourses={setCourses} course={course}/>}
