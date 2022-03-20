@@ -1,3 +1,16 @@
+input{
+    width: 100%;
+    padding: 12px 0;
+    margin: 20px 0;
+    display: inline-block;
+    border: none;
+    box-sizing: border-box;
+    background: none;
+    border-bottom: 1px solid #a8a8a8;
+    font-size: 18px;
+    color: #8d8d8d;
+}
+
 .edit__btn, .password__btn{
     display: inline;
     margin: 0;
@@ -7,8 +20,9 @@
     padding: 10px 15px;
 }
 
-.active {
-
+.edit__btn.active,  .password__btn.active{
+    color: #000;
+    border-bottom: 3px solid #ee9a46;
 }
 
 .edit__container{
@@ -20,7 +34,6 @@
 }
 
 .btn__menu{
-    border-bottom: 1px solid #4d6243;
     line-height: 10px;
 }
 

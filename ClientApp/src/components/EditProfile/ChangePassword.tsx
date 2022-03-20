@@ -5,6 +5,7 @@ import ErrorMessage from "../../common/Messages/ErrorMessage";
 import "./index.css"
 import {observer} from "mobx-react-lite";
 import InfoMessage from "../../common/Messages/InfoMessage";
+import Button from "../../common/button/Button";
 
 const ChangePassword = () => {
 
@@ -79,7 +80,7 @@ const ChangePassword = () => {
                     type="password"
                     placeholder="Repeat password"
                 />
-                <button type="submit">Change password</button>
+                <Button width={260}>Change password</Button>
                 {emptyError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
                 {!emptyError && repeatPasswordError && <ErrorMessage>Password should be the same</ErrorMessage>}
                 {passwordSuccess && <InfoMessage>Success</InfoMessage>}

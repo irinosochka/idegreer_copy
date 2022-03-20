@@ -4,6 +4,7 @@ import ErrorMessage from "../../common/Messages/ErrorMessage";
 
 import "./index.css"
 import {observer} from "mobx-react-lite";
+import Button from "../../common/button/Button";
 
 const EditProfile = () => {
     const {store} = useContext(Context);
@@ -64,7 +65,7 @@ const EditProfile = () => {
                     accept="image/png, image/jpeg, image/jpg"
                 />
                 <div className="save-reset__btn">
-                    <button className="save__btn" type="submit"> Submit changes </button>
+                    <Button width={240}>Submit changes</Button>
                 </div>
 
                 {isError && <ErrorMessage>Fields can't be empty</ErrorMessage>}

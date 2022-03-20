@@ -15,14 +15,14 @@ const Navbar = () => {
         store.logout();
     }
 
-    function ini(){
+    function ini() {
         if (store.isAuth && store.user.name) {
             var splits = store.user.name.split(" ");
             var stringItog = "";
 
-            for(let i = 0; i < splits.length; i++) {
+            for (let i = 0; i < splits.length; i++) {
                 let Name = splits[i];
-                let First = Name.substr(0,1).toUpperCase();
+                let First = Name.substr(0, 1).toUpperCase();
                 stringItog += First;
             }
             return stringItog;
@@ -30,7 +30,7 @@ const Navbar = () => {
     }
 
     return (
-        <div  style={{
+        <div style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -39,22 +39,31 @@ const Navbar = () => {
             padding: '20px'
         }}>
             <div>
-                <NavLink to={'/'}>
+                <NavLink to={'/'} style={{fontSize: '28px'}}>
                     iDegreer
                 </NavLink>
             </div>
             <div style={{display: 'flex', alignItems: 'center'}}>
-                <div style={{borderRadius: '50%', backgroundColor: 'white', width: '45px', height: '45px', cursor: 'pointer', display: 'flex', marginRight: '10px'}}>
-                    <h2 style={{margin: 'auto', color: '#4d6243', fontWeight: 400}}>
-                        {ini()}
-                    </h2>
-                </div>
-                <div>
-                    <NavLink to={'/profile'}>
+                <NavLink to={'/profile'} style={{display: 'flex', alignItems: 'center'}}>
+                    <div style={{
+                        borderRadius: '50%',
+                        backgroundColor: 'white',
+                        width: '45px',
+                        height: '45px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        marginRight: '10px'
+                    }}>
+                        <h2 style={{margin: 'auto', color: '#4d6243', fontWeight: 400}}>
+                            {ini()}
+                        </h2>
+                    </div>
+                    <div>
                         <h1 style={{fontSize: '20px'}}><b>{store.user.name}</b></h1>
                         <div style={{fontSize: '14px'}}>{store.user.email}</div>
-                    </NavLink>
-                </div>
+
+                    </div>
+                </NavLink>
                 <img src={logoutIcon} style={{width: '20px', height: '20px', cursor: 'pointer', marginLeft: '10px'}}
                      onClick={logout} alt="logout"/>
             </div>

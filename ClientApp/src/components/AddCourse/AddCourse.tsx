@@ -1,5 +1,6 @@
 import React, {FC, useState} from 'react';
 import ErrorMessage from "../../common/Messages/ErrorMessage";
+import Button from "../../common/button/Button";
 interface AddCourseProps {
     setCourses: (course: any) => void,
     courses: any
@@ -31,11 +32,8 @@ const AddCourse: FC<AddCourseProps> = ({setCourses, courses}) => {
     }
 
     return (
-        <div className="add_courses_container" style={{marginTop: '30px', margin: 'auto',
-            width: '50%'}}>
-            <h2 style={{marginBottom:'20px'}}>Create a new course</h2>
+        <div style={{marginTop: '30px', margin: 'auto'}}>
             <form onSubmit={onAddCourseHandler}>
-                <label htmlFor="course_name">Enter the name of the course</label>
                 <input
                     onChange={(event)=> {
                         setCourseName(event.target.value);
@@ -44,8 +42,8 @@ const AddCourse: FC<AddCourseProps> = ({setCourses, courses}) => {
                     type="text"
                     id="course_name"
                     value={courseName}
+                    placeholder='Enter the name of the course'
                 />
-                <label htmlFor="course_topic">Enter the topic of the course</label>
                 <input
                     onChange={(event)=> {
                         setCourseTopic(event.target.value);
@@ -54,9 +52,8 @@ const AddCourse: FC<AddCourseProps> = ({setCourses, courses}) => {
                     type="text"
                     id="course_topic"
                     value={courseTopic}
+                    placeholder='Enter the topic of the course'
                 />
-                <label htmlFor="course_description">Enter a description of the course</label>
-                {/*<input type="text" id="course_description" style={{height: '200px', textAlign: "justify"}}/>*/}
                 <textarea
                     onChange={(event)=> {
                         setCourseDescription(event.target.value);
@@ -65,9 +62,8 @@ const AddCourse: FC<AddCourseProps> = ({setCourses, courses}) => {
                     value={courseDescription}
                     name="textarea"
                     id="course_description"
-                    rows={5}
-                    cols={90}
-                    style={{resize: "none", padding: '15px'}}/>
+                    placeholder='Enter a description of the course'
+                    style={{resize: "none", padding: '15px', width: 'calc(100% - 32px)'}}/>
                 {/*<label htmlFor="course_image">Add an image of the course</label>*/}
                 {/*<input*/}
                 {/*    type="file"*/}
@@ -76,7 +72,7 @@ const AddCourse: FC<AddCourseProps> = ({setCourses, courses}) => {
                 {/*    value={courseImg}*/}
                 {/*/>*/}
                 {/*<button>Add course</button>*/}
-                <button type="submit" style={{width: '50%', margin: "0 auto"}}>Add course</button>
+                <Button width={300}>Add course</Button>
                 {emptyError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
             </form>
         </div>
