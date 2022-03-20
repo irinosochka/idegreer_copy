@@ -21,9 +21,12 @@ export default class Store {
     userDataChangingError = false;
     getAllCourseError = false;
     addCourseError = false;
+    roleExistInThisUser = false;
 
     /* Success */
     passwordChangingSuccess = false;
+    roleAdded = false;
+    roleRemoved = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -31,6 +34,14 @@ export default class Store {
 
     setAuth(bool: boolean) {
         this.isAuth = bool
+    }
+
+    setRoleRemoved(bool: boolean) {
+        this.roleRemoved = bool
+    }
+
+    setRoleAdded(bool: boolean) {
+        this.roleAdded = bool
     }
 
     setLoginError(bool: boolean) {
@@ -62,8 +73,12 @@ export default class Store {
         this.passwordChangingError = bool;
     }
 
+    setRoleExistInThisUser(bool: boolean) {
+        this.roleExistInThisUser = bool
+    }
+
     setGetAllCourseError(bool: boolean) {
-        this.getAllCourseError =  bool
+        this.getAllCourseError = bool
     }
 
     setCourses(courses: any) {
@@ -147,7 +162,7 @@ export default class Store {
             if (response.data.resultCode === 0) {
                 this.setPasswordChangingError(true);
             }
-        } catch(e) {
+        } catch (e) {
             console.log(e);
         }
     }
@@ -155,14 +170,14 @@ export default class Store {
     async userDataChanging(newUsername: string, newName: string, newEmail: string) {
         try {
             const response = await UserService.userDataChanging(this.user.username, newUsername, newName, newEmail);
-            if(response.data.resultCode === 1) {
+            if (response.data.resultCode === 1) {
                 this.setUser(response.data.data.user);
                 return response
             }
-            if(response.data.resultCode === 0) {
+            if (response.data.resultCode === 0) {
                 this.setUserDataChangingError(true)
             }
-        } catch(e) {
+        } catch (e) {
             console.log(e);
         }
     }
@@ -170,13 +185,13 @@ export default class Store {
     async addCourse(title: string, theme: string, description: string) {
         try {
             const response = await CourseService.addCourse(this.user.username, title, theme, description);
-            if(response.data.resultCode === 1) {
+            if (response.data.resultCode === 1) {
                 this.addNewCourse(response.data.data)
             }
-            if(response.data.resultCode === 0) {
+            if (response.data.resultCode === 0) {
                 this.setAddCourseError(true)
             }
-        } catch(e) {
+        } catch (e) {
             console.log(e);
         }
     }
@@ -184,13 +199,43 @@ export default class Store {
     async getAllCourses() {
         try {
             const response = await CourseService.getCourses();
-            if(response.data.resultCode === 0) {
+            if (response.data.resultCode === 0) {
                 this.setGetAllCourseError(true)
             }
-            if(response.data.resultCode === 1) {
+            if (response.data.resultCode === 1) {
                 this.setCourses(response.data.data);
             }
-        } catch(e) {
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    async removeRoleFromUser(roleToRemove: string) {
+        try {
+            const response = await UserService.removeRoleFromUser(this.user.username, roleToRemove);
+            if (response.data.resultCode === 1) {
+                this.setRoleRemoved(true)
+            } else {
+                console.log('no this role on this user')
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    async setRoleToUser(newRole: string) {
+        try {
+            if (!this.user.roles.includes(newRole)) {
+                const response = await UserService.setRoleToUser(this.user.username, newRole);
+                if (response.data.resultCode === 1) {
+                    this.setRoleAdded(true)
+                } else {
+                    console.log('Role was not added')
+                }
+            } else {
+                this.setRoleExistInThisUser(true);
+            }
+        } catch (e) {
             console.log(e);
         }
     }
