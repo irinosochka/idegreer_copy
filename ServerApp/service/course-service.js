@@ -2,10 +2,10 @@ const CourseModel = require('../models/course-model');
 const UserModel = require("../models/user-model")
 
 class CourseService {
-    async addCourse(username, title, theme, description) {
+    async addCourse(username, title, theme, description, price) {
         const user = await UserModel.findOne({username});
-        const course = await CourseModel.create({title, theme, description, author: user});
-        // const courseDto = new CourseDto(course) //id, title, theme, desc, author
+        const course = await CourseModel.create({title, theme, description, price, author: user});
+        // const courseDto = new CourseDto(course) //id, title, theme, desc, price, author
         return {
             course
         }

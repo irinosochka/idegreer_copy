@@ -30,42 +30,45 @@ const Navbar = () => {
     }
 
     return (
-        <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            background: '#4d6243',
-            color: 'white',
-            padding: '20px'
-        }}>
-            <div>
-                <NavLink to={'/'} style={{fontSize: '28px'}}>
-                    iDegreer
-                </NavLink>
-            </div>
-            <div style={{display: 'flex', alignItems: 'center'}}>
-                <NavLink to={'/profile'} style={{display: 'flex', alignItems: 'center'}}>
-                    <div style={{
-                        borderRadius: '50%',
-                        backgroundColor: 'white',
-                        width: '45px',
-                        height: '45px',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        marginRight: '10px'
-                    }}>
-                        <h2 style={{margin: 'auto', color: '#4d6243', fontWeight: 400}}>
-                            {ini()}
-                        </h2>
-                    </div>
-                    <div>
-                        <h1 style={{fontSize: '20px'}}><b>{store.authUser.name}</b></h1>
-                        <div style={{fontSize: '14px'}}>{store.authUser.email}</div>
+        <div style={{background: '#4d6243'}}>
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                color: 'white',
+                padding: '20px',
+                width: '1460px',
+                margin: '0 auto'
+            }}>
+                <div>
+                    <NavLink to={'/'} style={{fontSize: '28px'}}>
+                        iDegreer
+                    </NavLink>
+                </div>
+                <div style={{display: 'flex', alignItems: 'center'}}>
+                    <NavLink to={'/profile'} style={{display: 'flex', alignItems: 'center'}}>
+                        <div style={{
+                            borderRadius: '50%',
+                            backgroundColor: 'white',
+                            width: '45px',
+                            height: '45px',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            marginRight: '10px'
+                        }}>
+                            <h2 style={{margin: 'auto', color: '#4d6243', fontWeight: 400}}>
+                                {ini()}
+                            </h2>
+                        </div>
+                        <div>
+                            <h1 style={{fontSize: '20px'}}><b>{store.authUser.name}</b></h1>
+                            <div style={{fontSize: '14px'}}>{store.authUser.email}</div>
 
-                    </div>
-                </NavLink>
-                <img src={logoutIcon} style={{width: '20px', height: '20px', cursor: 'pointer', marginLeft: '10px'}}
-                     onClick={logout} alt="logout"/>
+                        </div>
+                    </NavLink>
+                    <img src={logoutIcon} style={{width: '20px', height: '20px', cursor: 'pointer', marginLeft: '10px'}}
+                         onClick={logout} alt="logout"/>
+                </div>
             </div>
         </div>
     );

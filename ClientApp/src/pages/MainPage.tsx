@@ -18,9 +18,9 @@ const MainPage: FC<MainPageProps> = () => {
 
 
     return (
-        <div style={{width: '1200px', display: 'block', margin: '0 auto'}}>
+        <div style={{width: '1460px', display: 'block', margin: '0 auto'}}>
             <h1 style={{textAlign: 'left', marginTop: '20px', fontSize: '20px', marginLeft: '30px'}}>All courses</h1>
-            <div style={{display: 'flex', width: '1000px'}}>
+            <div style={{display: 'flex', flexWrap: 'wrap', width: '1460px', justifyContent: 'space-between'}}>
                 {store.courses.map((course: ICourse) =>
                     <CourseItem course={course} key={course._id}/>
                 )}

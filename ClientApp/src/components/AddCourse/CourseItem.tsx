@@ -23,7 +23,7 @@ const CourseItem: FC<CourseItemProps> = ({course}) => {
     }, [])
 
     return (
-        <div style={{marginLeft: '30px'}}>
+        <div className={'item__wrapper'}>
             <div style={{width: '100%', textAlign: 'center'}} >
                 <img style={{width: '150px', borderRadius: '10px 10px 0 0', position: 'relative', top: '50px'}} src={reactLogo} alt=""/>
             </div>
@@ -34,7 +34,7 @@ const CourseItem: FC<CourseItemProps> = ({course}) => {
                     <p className="course__author" style={{marginBottom: '10px', color: '#9f9f9f', fontSize: '12px'}}>{author!.name}</p>
                 </div>}
                 <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    <p className="course__description" style={{textAlign: 'center', fontWeight: 'bold', fontSize: '24px'}}>{course.price}$</p>
+                    <p className="course__description" style={{textAlign: 'center', fontWeight: 'bold', fontSize: '24px'}}>{course.price !== '0' ? '$' + course.price : 'Free'}</p>
                     <div style={{cursor: 'pointer', background: '#ee9a46', padding: '10px', borderRadius: '50px', height: '20px', width: '20px', textAlign: 'center', color: '#fff'}}>+</div>
                 </div>
             </div>
