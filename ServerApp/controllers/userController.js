@@ -37,6 +37,16 @@ class UserController {
             return res.json({message: "Password changing error", resultCode: 0})
         }
     }
+
+    async getUserUsingId(req, res) {
+        try {
+           const id = req.params.id;
+           const data = await userService.getUserUsingId(id);
+           return res.json({data, resultCode: 1})
+        } catch {
+           return res.json({message: "Getting user using id error", resultCode: 0})
+        }
+    }
 }
 
 module.exports = new UserController()

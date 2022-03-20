@@ -24,4 +24,10 @@ export default class UserService {
             return res
         }).catch(e => console.log('err ' + e))
     }
+
+    static getUserUsingId(id: string): Promise<any> {
+        return $user.get(`/getUser/${id}`).then(res => {
+            return res
+        }).catch(e => console.log('err ' + e))
+    }
 }
