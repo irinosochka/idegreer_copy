@@ -24,7 +24,61 @@ class UserService {
             userWithNewPassword
         }
     }
+    async removeRoleFromUser(username, roleToRemove) {
+        const user = await UserModel.findOne({username})
+        if (!user) {
+            throw new Error('User with this username dont exist')
+        }
+        const userWithNewRole = await UserModel.updateOne({
+            username
+        }, {
+            $set: {
+                roles: user.roles.filter(role => role !== roleToRemove)
+            }
+        });
+        const updatedUser = await UserModel.findOne({username})
+        if (!updatedUser) {
+            throw new Error('User with this username dont exist')
+        }
+        const userDto = new UserDto(updatedUser); //id, username, name, email, roles
+        const tokens = tokenService.generateTokens({...userDto})
+        await authService.refresh(tokens.refreshToken)
+        await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
+        return {
+            userWithNewRole,
+            ...tokens,
+            user: userDto
+        }
+    }
+
+    async setRoleToUser(username, roleToAdd) {
+        const user = await UserModel.findOne({username})
+        if (!user) {
+            throw new Error('User with this username dont exist')
+        }
+        const userWithNewRole = await UserModel.updateOne({
+            username
+        }, {
+            $set: {
+                roles: [...user.roles, roleToAdd]
+            }
+        });
+        const updatedUser = await UserModel.findOne({username})
+        if (!updatedUser) {
+            throw new Error('User with this username dont exist')
+        }
+        const userDto = new UserDto(updatedUser); //id, username, name, email, roles
+        const tokens = tokenService.generateTokens({...userDto})
+        await authService.refresh(tokens.refreshToken)
+        await tokenService.saveToken(userDto.id, tokens.refreshToken)
+
+        return {
+            userWithNewRole,
+            ...tokens,
+            user: userDto
+        }
+    }
     async userDataChanging(username, newUsername, newName, newEmail) {
         const user = await UserModel.findOne({username})
         if (!user) {
@@ -39,7 +93,6 @@ class UserService {
                 email: newEmail.length !== 0 ? newEmail : user.email
             }
         });
-
         const updatedUser = await UserModel.findOne({username: newUsername.length !== 0 ? newUsername : user.username})
         if (!updatedUser) {
             throw new Error('User with this username dont exist')
@@ -53,6 +106,16 @@ class UserService {
             userWithNewPassword,
             ...tokens,
             user: userDto
+        }
+    }
+
+    async getUserUsingId(id) {
+        const user = await UserModel.findOne({_id: id})
+        if (!user) {
+            throw new Error('User with this username dont exist')
+        }
+        return {
+            user
         }
     }
 }

@@ -16,8 +16,8 @@ const Navbar = () => {
     }
 
     function ini() {
-        if (store.isAuth && store.user.name) {
-            var splits = store.user.name.split(" ");
+        if (store.isAuth && store.authUser.name) {
+            var splits = store.authUser.name.split(" ");
             var stringItog = "";
 
             for (let i = 0; i < splits.length; i++) {
@@ -59,8 +59,8 @@ const Navbar = () => {
                         </h2>
                     </div>
                     <div>
-                        <h1 style={{fontSize: '20px'}}><b>{store.user.name}</b></h1>
-                        <div style={{fontSize: '14px'}}>{store.user.email}</div>
+                        <h1 style={{fontSize: '20px'}}><b>{store.authUser.name}</b></h1>
+                        <div style={{fontSize: '14px'}}>{store.authUser.email}</div>
 
                     </div>
                 </NavLink>
