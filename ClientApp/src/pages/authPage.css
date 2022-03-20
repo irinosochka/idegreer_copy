@@ -1,0 +1,16 @@
+.auth__wrapper {
+    background: url('https://www.itprotoday.com/sites/itprotoday.com/files/styles/article_featured_retina/public/JavaScript-code.jpg?itok=1Wia7hH0');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn__block {
+    padding: 0;
+    margin: 0;
+    width: 50%;
+    background: #4d6243;
+    box-shadow: 2px -5px 10px 10px #4d6243;
+}

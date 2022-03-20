@@ -1,27 +1,38 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useContext, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import EditProfile from "../components/EditProfile/EditProfile";
 import ChangePassword from "../components/EditProfile/ChangePassword";
 import AddCourse from "../components/AddCourse/AddCourse";
+import {Context} from "../index";
+
 interface UserPageProps{
     setCourses: (course: any) => void,
     courses: any
 }
 
+export enum UserPageSlidesItems {
+    EDIT_PROFILE = 'editProfile',
+    CHANGE_PASSWORD = 'changePassword',
+    ADD_COURSE = 'addCourse'
+}
+
 const UserPage:FC<UserPageProps> = ({setCourses, courses}) => {
-    const [isEdit, setEdit] = useState(false);
+
+    const {store} = useContext(Context)
+
+    const [slideItem, setSlideItem] = useState('editProfile');
 
     return (
         <div>
             <div className="edit__container">
                 <div className="btn__menu">
-                    <button className={`edit__btn ${!isEdit && 'active'}`} onClick={()=> setEdit(false)}>Edit Profile</button>
-                    <button className={`password__btn ${isEdit && 'active'}`} onClick={()=> setEdit(true)}>Change password</button>
+                    <button className={`edit__btn ${slideItem === UserPageSlidesItems.EDIT_PROFILE && 'active'}`} onClick={()=> setSlideItem(UserPageSlidesItems.EDIT_PROFILE)}>Edit Profile</button>
+                    <button className={`password__btn ${slideItem === UserPageSlidesItems.CHANGE_PASSWORD && 'active'}`} onClick={()=> setSlideItem(UserPageSlidesItems.CHANGE_PASSWORD)}>Change password</button>
+                    {store.user.roles && store.user.roles.includes('PROFESSOR') && <button className={`password__btn ${slideItem === UserPageSlidesItems.ADD_COURSE && 'active'}`} onClick={()=> setSlideItem(UserPageSlidesItems.ADD_COURSE)}>Add course</button>}
                 </div>
-                {isEdit ? <ChangePassword /> : <EditProfile/>}
-            </div>
-            <div>
-                <AddCourse setCourses={setCourses} courses={courses} />
+                {slideItem === UserPageSlidesItems.EDIT_PROFILE && <EditProfile/>}
+                {slideItem === UserPageSlidesItems.CHANGE_PASSWORD && <ChangePassword />}
+                {slideItem === UserPageSlidesItems.ADD_COURSE && store.user && store.user.roles.includes('PROFESSOR') && <AddCourse setCourses={setCourses} courses={courses} />}
             </div>
         </div>
     );

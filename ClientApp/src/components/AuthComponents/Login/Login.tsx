@@ -1,8 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react'
-import "../index.css"
+import "../index.scss"
 import {Context} from "../../../index";
 import {observer} from "mobx-react-lite";
 import ErrorMessage from "../../../common/Messages/ErrorMessage";
+import Button from "../../../common/button/Button";
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -17,7 +18,6 @@ const Login = () => {
     }, []);
 
 
-
     const handleSubmit = (event: React.FormEvent<EventTarget>): void => {
         event.preventDefault();
         if (password.length !== 0 && username.length !== 0) {
@@ -28,9 +28,8 @@ const Login = () => {
     }
 
     return (
-        <div className="container">
-            <h1 className={'auth__title'}>Sign in</h1>
-            <form onSubmit={handleSubmit}>
+        <>
+            <form onSubmit={handleSubmit} className={'auth__form'}>
                 <input
                     onChange={(event) => {
                         setUsername(event.target.value);
@@ -51,11 +50,11 @@ const Login = () => {
                     type="password"
                     placeholder="Password"
                 />
-                <button type="submit">Sign in</button>
+                <Button>SIGN IN</Button>
                 {isError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
                 {store.loginError && <ErrorMessage>Username or password are wrong</ErrorMessage>}
             </form>
-        </div>
+        </>
     )
 }
 

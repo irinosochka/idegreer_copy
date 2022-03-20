@@ -1,8 +1,9 @@
 import React, {useContext, useState} from 'react';
 import {Context} from "../../../index";
-import '../index.css';
+import '../index.scss';
 import ErrorMessage from "../../../common/Messages/ErrorMessage";
 import {observer} from "mobx-react-lite";
+import Button from "../../../common/button/Button";
 
 const Registration = () => {
     const [username, setUsername] = useState('');
@@ -30,8 +31,7 @@ const Registration = () => {
     }
 
     return(
-        <div className="container">
-            <h1 className={'auth__title'}>Sign up</h1>
+        <>
             <form onSubmit={handleSubmit}>
                 <input
                     onChange={(event) => {
@@ -85,12 +85,12 @@ const Registration = () => {
                     type="password"
                     placeholder="Repeat password"
                 />
-                <button  type="submit">Sign up</button>
+                <Button>Sign Up</Button>
                 {emptyError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
                 {!emptyError && repeatPasswordError && <ErrorMessage>Password should be the same</ErrorMessage>}
                 {store.registrationError && <ErrorMessage>User exists</ErrorMessage>}
             </form>
-        </div>
+        </>
     );
 };
 
