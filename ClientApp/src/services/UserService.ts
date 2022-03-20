@@ -12,4 +12,16 @@ export default class UserService {
             return res
         }).catch(e => console.log('err ' + e))
     }
+
+    static setRoleToUser(username: string, newRole: string): Promise<any> {
+        return $user.post('/addNewRoleToUser', {username, newRole}).then(res => {
+            return res
+        }).catch(e => console.log('err ' + e))
+    }
+
+    static removeRoleFromUser(username: string, roleToRemove: string): Promise<any> {
+        return $user.post('/removeRoleFromUser', {username, roleToRemove}).then(res => {
+            return res
+        }).catch(e => console.log('err ' + e))
+    }
 }
