@@ -22,7 +22,7 @@ const CourseItem: FC<CourseItemProps> = ({course}) => {
                     <p className="course__author" style={{marginBottom: '10px', color: '#9f9f9f', fontSize: '12px'}}>{course.author}</p>
                 </div>
                 <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    <p className="course__description" style={{textAlign: 'center', fontWeight: 'bold', fontSize: '24px'}}>$100</p>
+                    <p className="course__description" style={{textAlign: 'center', fontWeight: 'bold', fontSize: '24px'}}>{course.price}$</p>
                     <div style={{cursor: 'pointer', background: '#ee9a46', padding: '10px', borderRadius: '50px', height: '20px', width: '20px', textAlign: 'center', color: '#fff'}}>+</div>
                 </div>
             </div>
