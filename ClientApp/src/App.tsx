@@ -1,4 +1,4 @@
-import React, {FC, useContext, useEffect, useState} from 'react';
+import React, {FC, useContext, useEffect} from 'react';
 import {Context} from "./index";
 import {observer} from "mobx-react-lite";
 import './App.css'
@@ -11,7 +11,6 @@ import Loader from "./common/Loader";
 
 const App: FC = observer(() => {
         const {store} = useContext(Context)
-        const [courses, setCourses] = useState([])
   
         const navigate = useNavigate()
 
@@ -34,9 +33,9 @@ const App: FC = observer(() => {
             <div>
                 {store.isAuth && <Navbar/>}
                 <Routes>
-                    <Route path={'/'} element={<MainPage courses={courses} />}/>
+                    <Route path={'/'} element={<MainPage/>}/>
                     <Route path={'/auth'} element={<AuthPage />}/>
-                    <Route path={'/profile'} element={<UserPage setCourses={setCourses} courses={courses} />}/>
+                    <Route path={'/profile'} element={<UserPage/>}/>
                 </Routes>
 
             </div>

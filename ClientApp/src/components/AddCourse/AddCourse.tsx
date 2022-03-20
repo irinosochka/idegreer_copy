@@ -1,28 +1,22 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useContext, useState} from 'react';
 import ErrorMessage from "../../common/Messages/ErrorMessage";
 import Button from "../../common/button/Button";
+import {Context} from "../../index";
 interface AddCourseProps {
-    setCourses: (course: any) => void,
-    courses: any
 }
 
-const AddCourse: FC<AddCourseProps> = ({setCourses, courses}) => {
+const AddCourse: FC<AddCourseProps> = () => {
     const [courseName, setCourseName] = useState('');
     const [courseTopic, setCourseTopic] = useState('');
     const [courseDescription, setCourseDescription] = useState('');
     const [emptyError, setEmptyError] = useState(false);
 
+    const {store} = useContext(Context)
+
     const onAddCourseHandler = (event:React.FormEvent<EventTarget>) => {
         event.preventDefault();
-        const newCourse = {
-            courseName: courseName,
-            courseTopic: courseTopic,
-            courseAuthor: 'Palianytsia',
-            courseDescription: courseDescription,
-            courseDate: new Date()
-        };
         if (courseName.length !==0 && courseTopic.length !== 0 && courseDescription.length !==0) {
-            setCourses([...courses, newCourse]);
+            store.addCourse(courseName, courseTopic, courseDescription);
             setCourseName('');
             setCourseTopic('');
             setCourseDescription('');

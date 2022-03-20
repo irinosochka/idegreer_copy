@@ -171,7 +171,7 @@ export default class Store {
         try {
             const response = await CourseService.addCourse(this.user.username, title, theme, description);
             if(response.data.resultCode === 1) {
-                this.addNewCourse(response.data)
+                this.addNewCourse(response.data.data)
             }
             if(response.data.resultCode === 0) {
                 this.setAddCourseError(true)
@@ -188,7 +188,7 @@ export default class Store {
                 this.setGetAllCourseError(true)
             }
             if(response.data.resultCode === 1) {
-                this.setCourses(response.data);
+                this.setCourses(response.data.data);
             }
         } catch(e) {
             console.log(e);

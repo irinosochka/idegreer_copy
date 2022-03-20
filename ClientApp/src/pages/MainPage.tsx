@@ -1,18 +1,26 @@
-import React, {FC} from 'react';
+import React, {FC, useContext, useEffect} from 'react';
 import {observer} from "mobx-react-lite";
 import CourseItem from "../components/AddCourse/CourseItem";
+import {Context} from "../index";
+import {ICourse} from "../models/ICourse";
 
 interface MainPageProps{
-    courses: any
 }
 
-const MainPage: FC<MainPageProps> = ({courses}) => {
+const MainPage: FC<MainPageProps> = () => {
+
+    const {store} = useContext(Context)
+
+    useEffect(() => {
+        store.getAllCourses()
+    }, [])
+
     return (
         <div style={{width: '1200px', display: 'block', margin: '0 auto'}}>
             <h1 style={{textAlign: 'left', marginTop: '20px', fontSize: '20px', marginLeft: '30px'}}>All courses</h1>
             <div style={{display: 'flex', width: '1000px'}}>
-                {courses.map((course: any) =>
-                    <CourseItem course={course} key={course.courseName.length}/>
+                {store.courses.map((course: ICourse) =>
+                    <CourseItem course={course} key={course._id}/>
                 )}
             </div>
         </div>

@@ -6,8 +6,6 @@ import AddCourse from "../components/AddCourse/AddCourse";
 import {Context} from "../index";
 
 interface UserPageProps{
-    setCourses: (course: any) => void,
-    courses: any
 }
 
 export enum UserPageSlidesItems {
@@ -16,7 +14,7 @@ export enum UserPageSlidesItems {
     ADD_COURSE = 'addCourse'
 }
 
-const UserPage:FC<UserPageProps> = ({setCourses, courses}) => {
+const UserPage:FC<UserPageProps> = () => {
 
     const {store} = useContext(Context)
 
@@ -32,7 +30,7 @@ const UserPage:FC<UserPageProps> = ({setCourses, courses}) => {
                 </div>
                 {slideItem === UserPageSlidesItems.EDIT_PROFILE && <EditProfile/>}
                 {slideItem === UserPageSlidesItems.CHANGE_PASSWORD && <ChangePassword />}
-                {slideItem === UserPageSlidesItems.ADD_COURSE && store.user && store.user.roles.includes('PROFESSOR') && <AddCourse setCourses={setCourses} courses={courses} />}
+                {slideItem === UserPageSlidesItems.ADD_COURSE && store.user && store.user.roles.includes('PROFESSOR') && <AddCourse/>}
             </div>
         </div>
     );
