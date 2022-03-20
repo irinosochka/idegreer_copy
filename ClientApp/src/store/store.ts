@@ -8,6 +8,7 @@ import UserService from "../services/UserService";
 
 
 export default class Store {
+    authUser = {} as IUser;
     user = {} as IUser;
     isAuth = false;
     isLoading = false;
@@ -56,8 +57,12 @@ export default class Store {
         this.isLoading = bool;
     }
 
-    setUser(user: IUser) {
-        this.user = user;
+    setAuthUser(user: IUser) {
+        this.authUser = user;
+    }
+
+    setUser(user: any) {
+        this.user = user.user
     }
 
     setUserList(users: any) {
@@ -98,7 +103,7 @@ export default class Store {
         if (response.data.resultCode === 1) {
             localStorage.setItem('token', response.data.data.accessToken);
             this.setAuth(true);
-            this.setUser(response.data.data.user)
+            this.setAuthUser(response.data.data.user)
         }
         if (response.data.resultCode === 0) {
             this.setLoginError(true);
@@ -110,7 +115,7 @@ export default class Store {
         if (response.data.resultCode === 1) {
             localStorage.setItem('token', response.data.data.accessToken);
             this.setAuth(true);
-            this.setUser(response.data.data.user)
+            this.setAuthUser(response.data.data.user)
         }
         if (response.data.resultCode === 0) {
             this.setRegistrationError(true)
@@ -123,7 +128,7 @@ export default class Store {
             const response = await axios.get<AuthResponse>(`http://localhost:5000/auth/refresh`, {withCredentials: true});
             localStorage.setItem('token', response.data.accessToken);
             this.setAuth(true);
-            this.setUser(response.data.user)
+            this.setAuthUser(response.data.user)
             this.setLoading(false);
         } catch (e) {
             throw new Error('No auth')
@@ -137,7 +142,7 @@ export default class Store {
             await AuthService.logout();
             localStorage.removeItem('token');
             this.setAuth(false);
-            this.setUser({} as IUser)
+            this.setAuthUser({} as IUser)
         } catch (e) {
             console.log(e)
         }
@@ -154,7 +159,7 @@ export default class Store {
 
     async passwordChanging(lastPassword: string, newPassword: string) {
         try {
-            const response = await UserService.passwordChanging(this.user.username, lastPassword, newPassword);
+            const response = await UserService.passwordChanging(this.authUser.username, lastPassword, newPassword);
             if (response.data.resultCode === 1) {
                 this.passwordChangingSuccess = true
                 return response
@@ -169,9 +174,9 @@ export default class Store {
 
     async userDataChanging(newUsername: string, newName: string, newEmail: string) {
         try {
-            const response = await UserService.userDataChanging(this.user.username, newUsername, newName, newEmail);
+            const response = await UserService.userDataChanging(this.authUser.username, newUsername, newName, newEmail);
             if (response.data.resultCode === 1) {
-                this.setUser(response.data.data.user);
+                this.setAuthUser(response.data.data.user);
                 return response
             }
             if (response.data.resultCode === 0) {
@@ -184,7 +189,7 @@ export default class Store {
 
     async addCourse(title: string, theme: string, description: string) {
         try {
-            const response = await CourseService.addCourse(this.user.username, title, theme, description);
+            const response = await CourseService.addCourse(this.authUser.username, title, theme, description);
             if (response.data.resultCode === 1) {
                 this.addNewCourse(response.data.data)
             }
@@ -212,7 +217,7 @@ export default class Store {
 
     async removeRoleFromUser(roleToRemove: string) {
         try {
-            const response = await UserService.removeRoleFromUser(this.user.username, roleToRemove);
+            const response = await UserService.removeRoleFromUser(this.authUser.username, roleToRemove);
             if (response.data.resultCode === 1) {
                 this.setRoleRemoved(true)
             } else {
@@ -225,8 +230,8 @@ export default class Store {
 
     async setRoleToUser(newRole: string) {
         try {
-            if (!this.user.roles.includes(newRole)) {
-                const response = await UserService.setRoleToUser(this.user.username, newRole);
+            if (!this.authUser.roles.includes(newRole)) {
+                const response = await UserService.setRoleToUser(this.authUser.username, newRole);
                 if (response.data.resultCode === 1) {
                     this.setRoleAdded(true)
                 } else {
@@ -237,6 +242,19 @@ export default class Store {
             }
         } catch (e) {
             console.log(e);
+        }
+    }
+
+    async getUser(id: string) {
+        try {
+           const response = await UserService.getUserUsingId(id)
+           if(response.data.resultCode === 1) {
+               this.setUser(response.data.data)
+           } else {
+               console.log('get user by id error')
+           }
+        } catch(e) {
+           console.log(e)
         }
     }
 }

@@ -108,6 +108,16 @@ class UserService {
             user: userDto
         }
     }
+
+    async getUserUsingId(id) {
+        const user = await UserModel.findOne({_id: id})
+        if (!user) {
+            throw new Error('User with this username dont exist')
+        }
+        return {
+            user
+        }
+    }
 }
 
 module.exports = new UserService()

@@ -9,9 +9,9 @@ import Button from "../../common/button/Button";
 const EditProfile = () => {
     const {store} = useContext(Context);
 
-    const [name, setName] = useState(store.user.name);
-    const [username, setUsername] = useState(store.user.username);
-    const [email, setEmail] = useState(store.user.email);
+    const [name, setName] = useState(store.authUser.name);
+    const [username, setUsername] = useState(store.authUser.username);
+    const [email, setEmail] = useState(store.authUser.email);
     const [isError, setError] = useState(false);
     const [image, setImage] = useState('')
 
@@ -35,7 +35,7 @@ const EditProfile = () => {
                     }}
                     value={name}
                     type="text"
-                    placeholder ={store.user.name}
+                    placeholder ={store.authUser.name}
                 />
                 <input
                     onChange={(event) => {
@@ -44,7 +44,7 @@ const EditProfile = () => {
                     }}
                     value={username}
                     type="text"
-                    placeholder={store.user.username}
+                    placeholder={store.authUser.username}
                 />
                 <input
                     onChange={(event) => {
@@ -53,7 +53,7 @@ const EditProfile = () => {
                     }}
                     value={email}
                     type="email"
-                    placeholder={store.user.email}
+                    placeholder={store.authUser.email}
                 />
                 <input
                     onChange={(event) => {

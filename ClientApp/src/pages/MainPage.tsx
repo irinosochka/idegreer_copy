@@ -13,7 +13,9 @@ const MainPage: FC<MainPageProps> = () => {
 
     useEffect(() => {
         store.getAllCourses()
+        store.getUser('622f2197891645961de8026d');
     }, [])
+
 
     return (
         <div style={{width: '1200px', display: 'block', margin: '0 auto'}}>
