@@ -187,10 +187,10 @@ export default class Store {
         }
     }
 
-    async addCourse(title: string, theme: string, description: string) {
+    async addCourse(title: string, theme: string, description: string, price: string) {
         try {
-            const response = await CourseService.addCourse(this.authUser.username, title, theme, description);
-            if (response.data.resultCode === 1) {
+            const response = await CourseService.addCourse(this.user.username, title, theme, description, price);
+            if(response.data.resultCode === 1) {
                 this.addNewCourse(response.data.data)
             }
             if (response.data.resultCode === 0) {

@@ -10,16 +10,21 @@ const AddCourse: FC<AddCourseProps> = () => {
     const [courseTopic, setCourseTopic] = useState('');
     const [courseDescription, setCourseDescription] = useState('');
     const [emptyError, setEmptyError] = useState(false);
+    const [coursePrice, setCoursePrice] = useState('');
 
     const {store} = useContext(Context)
 
     const onAddCourseHandler = (event:React.FormEvent<EventTarget>) => {
         event.preventDefault();
         if (courseName.length !==0 && courseTopic.length !== 0 && courseDescription.length !==0) {
-            store.addCourse(courseName, courseTopic, courseDescription);
+            if (coursePrice.length !== 0) {
+                setCoursePrice('FREE');
+            }
+            store.addCourse(courseName, courseTopic, courseDescription, coursePrice);
             setCourseName('');
             setCourseTopic('');
             setCourseDescription('');
+            setCoursePrice('');
         } else {
             setEmptyError(true);
         }
@@ -47,6 +52,16 @@ const AddCourse: FC<AddCourseProps> = () => {
                     id="course_topic"
                     value={courseTopic}
                     placeholder='Enter the topic of the course'
+                />
+                <input
+                    onChange={(event)=> {
+                        setCoursePrice(event.target.value);
+                        setEmptyError(false);
+                    }}
+                    type="number"
+                    id="course_price"
+                    value={coursePrice}
+                    placeholder='Enter the price of the course'
                 />
                 <textarea
                     onChange={(event)=> {
