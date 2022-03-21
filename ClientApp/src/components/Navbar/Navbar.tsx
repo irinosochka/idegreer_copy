@@ -16,8 +16,8 @@ const Navbar = () => {
     }
 
     function initial() {
-        if (store.isAuth && store.user.name) {
-            var splits = store.user.name.split(" ");
+        if (store.isAuth && store.authUser.name) {
+            var splits = store.authUser.name.split(" ");
             var stringResult = "";
 
             for (let i = 0; i < splits.length; i++) {
@@ -28,7 +28,6 @@ const Navbar = () => {
             return stringResult;
         }
     }
-
 
     return (
         <div style={{background: '#4d6243'}}>
@@ -46,7 +45,7 @@ const Navbar = () => {
                         iDegreer
                     </NavLink>
                 </div>
-                <div style={{display: 'flex'}}>
+                <div style={{display: 'flex', alignItems: 'center'}}>
                     <NavLink to={'/profile'} style={{display: 'flex', alignItems: 'center'}}>
                         <div style={{
                             borderRadius: '50%',
@@ -57,13 +56,13 @@ const Navbar = () => {
                             display: 'flex',
                             marginRight: '10px'
                         }}>
-                            <h2 style={{margin: 'auto', color: '#4d6243', fontWeight: 500}}>
+                            <h2 style={{margin: 'auto', color: '#4d6243', fontWeight: 400}}>
                                 {initial()}
                             </h2>
                         </div>
                         <div>
-                            <h1 style={{fontSize: '20px'}}><b>{store.user.name}</b></h1>
-                            <div style={{fontSize: '14px'}}>{store.user.email}</div>
+                            <h1 style={{fontSize: '20px'}}><b>{store.authUser.name}</b></h1>
+                            <div style={{fontSize: '14px'}}>{store.authUser.email}</div>
 
                         </div>
                     </NavLink>

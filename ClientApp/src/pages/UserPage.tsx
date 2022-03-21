@@ -20,7 +20,7 @@ const UserPage:FC<UserPageProps> = () => {
 
     const {store} = useContext(Context)
 
-    const [slideItem, setSlideItem] = useState('editProfile');
+    const [slideItem, setSlideItem] = useState('infoProfile');
 
     return (
         <div>
