@@ -8,8 +8,8 @@ const Profile = () => {
     const {store} = useContext(Context);
 
     function initial() {
-        if (store.isAuth && store.user.name) {
-            var splits = store.user.name.split(" ");
+        if (store.isAuth && store.authUser.name) {
+            var splits = store.authUser.name.split(" ");
             var stringResult = "";
 
             for (let i = 0; i < splits.length; i++) {
@@ -32,7 +32,7 @@ const Profile = () => {
                 </div>
             </div>
 
-            <p className="profile__title" style={{paddingTop: '20px'}}>{store.user.name}</p>
+            <p className="profile__title" style={{paddingTop: '20px'}}>{store.authUser.name}</p>
 
             <div style={{background: '#4d6243', color: 'white', display: 'inline-block', padding: '20px', margin: '20px 0'}}>
 
@@ -42,9 +42,9 @@ const Profile = () => {
             </div>
 
             <p className="profile__subtitle">Email:</p>
-            <p className="profile__info">{store.user.email}</p>
+            <p className="profile__info">{store.authUser.email}</p>
             <p className="profile__subtitle">Username:</p>
-            <p className="profile__info">{store.user.username}</p>
+            <p className="profile__info">{store.authUser.username}</p>
 
 
         </div>
