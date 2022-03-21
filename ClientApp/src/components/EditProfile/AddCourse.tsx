@@ -1,8 +1,8 @@
 import React, {FC, useContext, useState} from 'react';
-import ErrorMessage from "../../common/Messages/ErrorMessage";
 import Button from "../../common/button/Button";
 import {Context} from "../../index";
-import SuccessMessage from "../../common/Messages/SuccessMessage";
+import Message, {MessageType} from "../../common/Messages/Message";
+
 interface AddCourseProps {
 }
 
@@ -36,7 +36,8 @@ const AddCourse: FC<AddCourseProps> = () => {
     return (
         <div style={{marginTop: '30px', margin: 'auto'}}>
             <form onSubmit={onAddCourseHandler}>
-                {successAddCourse && <SuccessMessage>The course was successfully added</SuccessMessage>}
+                {emptyError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
+                {successAddCourse && <Message type={MessageType.SUCCESS}>The course was successfully added</Message>}
                 <input
                     onChange={(event)=> {
                         setCourseName(event.target.value);
@@ -86,7 +87,6 @@ const AddCourse: FC<AddCourseProps> = () => {
                 {/*/>*/}
                 {/*<button>Add course</button>*/}
                 <Button width={300}>Add course</Button>
-                {emptyError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
 
             </form>
         </div>

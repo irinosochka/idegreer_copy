@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../index";
-import ErrorMessage from "../../common/Messages/ErrorMessage";
 
 import "./index.css"
 import {observer} from "mobx-react-lite";
 import Button from "../../common/button/Button";
+import Message, {MessageType} from "../../common/Messages/Message";
 
 const EditProfile = () => {
     const {store} = useContext(Context);
@@ -31,9 +31,9 @@ const EditProfile = () => {
 
     return (
         <div className="editProfileContainer">
-            {isError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
-            {store.userDataChangingError && <ErrorMessage>User with this username or email actually exists</ErrorMessage>}
-            {store.userDataChangedSuccess && <ErrorMessage>Success data changing</ErrorMessage>}
+            {isError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
+            {store.userDataChangingError && <Message type={MessageType.ERROR}>User with this username or email actually exists</Message>}
+            {store.userDataChangedSuccess && <Message type={MessageType.SUCCESS}>Success data changing</Message>}
             <form onSubmit={handleSubmit}>
                 <input
                     onChange={(event) => {

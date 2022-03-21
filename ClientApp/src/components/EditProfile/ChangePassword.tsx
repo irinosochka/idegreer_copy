@@ -1,11 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../index";
-import ErrorMessage from "../../common/Messages/ErrorMessage";
 
 import "./index.css"
 import {observer} from "mobx-react-lite";
-import InfoMessage from "../../common/Messages/InfoMessage";
 import Button from "../../common/button/Button";
+import Message, {MessageType} from "../../common/Messages/Message";
 
 const ChangePassword = () => {
 
@@ -51,10 +50,10 @@ const ChangePassword = () => {
 
     return (
         <div>
-            {emptyError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
-            {!emptyError && repeatPasswordError && <ErrorMessage>Password should be the same</ErrorMessage>}
-            {badPasswordLengthError && <ErrorMessage>Password length should be more than 8 signs</ErrorMessage>}
-            {passwordSuccess && <InfoMessage>Success</InfoMessage>}
+            {emptyError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
+            {!emptyError && repeatPasswordError && <Message type={MessageType.ERROR}>Password should be the same</Message>}
+            {badPasswordLengthError && <Message type={MessageType.ERROR}>Password length should be more than 8 signs</Message>}
+            {passwordSuccess && <Message type={MessageType.SUCCESS}>Success</Message>}
             <form onSubmit={handleSubmit}>
                 <input
                     onChange={(event) => {
