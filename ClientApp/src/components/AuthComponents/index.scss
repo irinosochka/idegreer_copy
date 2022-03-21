@@ -42,7 +42,7 @@ button {
     display: flex;
 }
 
-.reg__btn, .login__btn{
+.reg__btn{
     margin: 15px 0;
     color: #b8b8b8;
     text-align: center;
@@ -50,7 +50,7 @@ button {
     border: 1px solid #4d6243;
 }
 
-.reg__btn.active, .login__btn.active {
+.reg__btn.active {
     color: #fff;
     border-bottom: 3px solid #ee9a46;
 }

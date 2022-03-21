@@ -12,11 +12,9 @@ const Login = () => {
 
     const {store} = useContext(Context);
 
-
     useEffect(() => {
         store.setLoginError(false)
     }, []);
-
 
     const handleSubmit = (event: React.FormEvent<EventTarget>): void => {
         event.preventDefault();

@@ -31,6 +31,7 @@ const EditProfile = () => {
 
     return (
         <div className="editProfileContainer">
+            {isError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
             {store.userDataChangingError && <ErrorMessage>User with this username or email actually exists</ErrorMessage>}
             {store.userDataChangedSuccess && <ErrorMessage>Success data changing</ErrorMessage>}
             <form onSubmit={handleSubmit}>
@@ -39,6 +40,7 @@ const EditProfile = () => {
                         setName(event.target.value);
                         setError(false);
                         store.setUserDataChangingError(false);
+                        store.setUserDataChangingSuccess(false);
                     }}
                     value={name}
                     type="text"
@@ -49,6 +51,7 @@ const EditProfile = () => {
                         setUsername(event.target.value);
                         setError(false);
                         store.setUserDataChangingError(false);
+                        store.setUserDataChangingSuccess(false);
                     }}
                     value={username}
                     type="text"
@@ -59,6 +62,7 @@ const EditProfile = () => {
                         setEmail(event.target.value);
                         setError(false);
                         store.setUserDataChangingError(false);
+                        store.setUserDataChangingSuccess(false);
                     }}
                     value={email}
                     type="email"
@@ -69,6 +73,7 @@ const EditProfile = () => {
                         setImage(event.target.value);
                         setError(false);
                         store.setUserDataChangingError(false);
+                        store.setUserDataChangingSuccess(false);
                     }}
                     value={image}
                     type="file"
@@ -77,7 +82,6 @@ const EditProfile = () => {
                 <div>
                     <Button width={240}>Submit changes</Button>
                 </div>
-                {isError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
             </form>
         </div>
     );

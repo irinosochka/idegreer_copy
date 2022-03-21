@@ -51,6 +51,10 @@ const ChangePassword = () => {
 
     return (
         <div>
+            {emptyError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
+            {!emptyError && repeatPasswordError && <ErrorMessage>Password should be the same</ErrorMessage>}
+            {badPasswordLengthError && <ErrorMessage>Password length should be more than 8 signs</ErrorMessage>}
+            {passwordSuccess && <InfoMessage>Success</InfoMessage>}
             <form onSubmit={handleSubmit}>
                 <input
                     onChange={(event) => {
@@ -88,11 +92,6 @@ const ChangePassword = () => {
                     placeholder="Repeat password"
                 />
                 <Button width={260}>Change password</Button>
-                {emptyError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
-                {!emptyError && repeatPasswordError && <ErrorMessage>Password should be the same</ErrorMessage>}
-                {badPasswordLengthError && <ErrorMessage>Password length should be more than 8 signs</ErrorMessage>}
-                {passwordSuccess && <InfoMessage>Success</InfoMessage>}
-
             </form>
         </div>
     );

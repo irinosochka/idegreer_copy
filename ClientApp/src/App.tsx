@@ -11,7 +11,7 @@ import Loader from "./common/Loader";
 
 const App: FC = observer(() => {
         const {store} = useContext(Context)
-  
+
         const navigate = useNavigate()
 
         useEffect(() => {
@@ -21,20 +21,21 @@ const App: FC = observer(() => {
         }, []);
 
         useEffect(() => {
-            if(!store.isAuth && !store.isLoading) {
+            if (!store.isAuth && !store.isLoading) {
                 navigate('/auth');
             }
         }, [store.isAuth]);
 
-    if (store.isLoading) {
-        return <div><Loader /></div>
-    }
+        if (store.isLoading) {
+            return <div><Loader/></div>
+        }
+
         return (
             <div>
                 {store.isAuth && <Navbar/>}
                 <Routes>
                     <Route path={'/'} element={<MainPage/>}/>
-                    <Route path={'/auth'} element={<AuthPage />}/>
+                    <Route path={'/auth'} element={<AuthPage/>}/>
                     <Route path={'/profile'} element={<UserPage/>}/>
                 </Routes>
 
