@@ -1,9 +1,9 @@
 import React, {useContext, useState} from 'react';
 import {Context} from "../../../index";
 import '../index.scss';
-import ErrorMessage from "../../../common/Messages/ErrorMessage";
 import {observer} from "mobx-react-lite";
 import Button from "../../../common/button/Button";
+import Message, {MessageType} from "../../../common/Messages/Message";
 
 const Registration = () => {
     const [username, setUsername] = useState('');
@@ -15,13 +15,19 @@ const Registration = () => {
     /* ERRORS */
     const [emptyError, setEmptyError] = useState(false);
     const [repeatPasswordError, setRepeatPasswordError] = useState(false);
+    const [badPasswordLengthError, setBadPasswordLengthError] = useState(false);
+
     const {store} = useContext(Context);
 
     const handleSubmit = (event: React.FormEvent<EventTarget>): void => {
         event.preventDefault();
         if(username.length !== 0 && secondPassword.length !== 0 && firstPassword.length !== 0 && name.length !== 0) {
             if (secondPassword === firstPassword) {
-                store.registration(username, firstPassword, name, email)
+                if (firstPassword.length < 9) {
+                    setBadPasswordLengthError(true)
+                } else {
+                    store.registration(username, firstPassword, name, email)
+                }
             } else {
                 setRepeatPasswordError(true)
             }
@@ -69,6 +75,7 @@ const Registration = () => {
                         setEmptyError(false);
                         setRepeatPasswordError(false);
                         store.setRegistrationError(false);
+                        setBadPasswordLengthError(false);
                     }}
                     value={firstPassword}
                     type="password"
@@ -80,15 +87,17 @@ const Registration = () => {
                         setEmptyError(false);
                         setRepeatPasswordError(false);
                         store.setRegistrationError(false);
+                        setBadPasswordLengthError(false);
                     }}
                     value={secondPassword}
                     type="password"
                     placeholder="Repeat password"
                 />
                 <Button>Sign Up</Button>
-                {emptyError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
-                {!emptyError && repeatPasswordError && <ErrorMessage>Password should be the same</ErrorMessage>}
-                {store.registrationError && <ErrorMessage>User exists</ErrorMessage>}
+                {emptyError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
+                {!emptyError && repeatPasswordError && <Message type={MessageType.ERROR}>Password should be the same</Message>}
+                {badPasswordLengthError && <Message type={MessageType.ERROR}>Password length should be more than 8 signs</Message>}
+                {store.registrationError && <Message type={MessageType.ERROR}>User exists</Message>}
             </form>
         </>
     );

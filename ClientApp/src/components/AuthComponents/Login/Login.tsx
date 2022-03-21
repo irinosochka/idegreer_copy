@@ -2,8 +2,8 @@ import React, {useContext, useEffect, useState} from 'react'
 import "../index.scss"
 import {Context} from "../../../index";
 import {observer} from "mobx-react-lite";
-import ErrorMessage from "../../../common/Messages/ErrorMessage";
 import Button from "../../../common/button/Button";
+import Message, {MessageType} from "../../../common/Messages/Message";
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -12,11 +12,9 @@ const Login = () => {
 
     const {store} = useContext(Context);
 
-
     useEffect(() => {
         store.setLoginError(false)
     }, []);
-
 
     const handleSubmit = (event: React.FormEvent<EventTarget>): void => {
         event.preventDefault();
@@ -51,8 +49,8 @@ const Login = () => {
                     placeholder="Password"
                 />
                 <Button>SIGN IN</Button>
-                {isError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
-                {store.loginError && <ErrorMessage>Username or password are wrong</ErrorMessage>}
+                {isError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
+                {store.loginError && <Message type={MessageType.ERROR}>Username or password are wrong</Message>}
             </form>
         </>
     )

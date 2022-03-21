@@ -1,7 +1,8 @@
 import React, {FC, useContext, useState} from 'react';
-import ErrorMessage from "../../common/Messages/ErrorMessage";
 import Button from "../../common/button/Button";
 import {Context} from "../../index";
+import Message, {MessageType} from "../../common/Messages/Message";
+
 interface AddCourseProps {
 }
 
@@ -9,8 +10,9 @@ const AddCourse: FC<AddCourseProps> = () => {
     const [courseName, setCourseName] = useState('');
     const [courseTopic, setCourseTopic] = useState('');
     const [courseDescription, setCourseDescription] = useState('');
-    const [emptyError, setEmptyError] = useState(false);
     const [coursePrice, setCoursePrice] = useState('');
+    const [emptyError, setEmptyError] = useState(false);
+    const [successAddCourse, setSuccessAddCourse] = useState(false);
 
     const {store} = useContext(Context)
 
@@ -18,9 +20,10 @@ const AddCourse: FC<AddCourseProps> = () => {
         event.preventDefault();
         if (courseName.length !==0 && courseTopic.length !== 0 && courseDescription.length !==0) {
             if (coursePrice.length !== 0) {
-                setCoursePrice('FREE');
+                setCoursePrice('Free');
             }
             store.addCourse(courseName, courseTopic, courseDescription, coursePrice);
+            setSuccessAddCourse(true);
             setCourseName('');
             setCourseTopic('');
             setCourseDescription('');
@@ -33,6 +36,8 @@ const AddCourse: FC<AddCourseProps> = () => {
     return (
         <div style={{marginTop: '30px', margin: 'auto'}}>
             <form onSubmit={onAddCourseHandler}>
+                {emptyError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
+                {successAddCourse && <Message type={MessageType.SUCCESS}>The course was successfully added</Message>}
                 <input
                     onChange={(event)=> {
                         setCourseName(event.target.value);
@@ -82,7 +87,7 @@ const AddCourse: FC<AddCourseProps> = () => {
                 {/*/>*/}
                 {/*<button>Add course</button>*/}
                 <Button width={300}>Add course</Button>
-                {emptyError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
+
             </form>
         </div>
     );

@@ -1,11 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../index";
-import ErrorMessage from "../../common/Messages/ErrorMessage";
 
 import "./index.css"
 import {observer} from "mobx-react-lite";
-import InfoMessage from "../../common/Messages/InfoMessage";
 import Button from "../../common/button/Button";
+import Message, {MessageType} from "../../common/Messages/Message";
 
 const ChangePassword = () => {
 
@@ -14,6 +13,7 @@ const ChangePassword = () => {
     const [secondPassword, setSecondPassword] = useState('');
     const [repeatPasswordError, setRepeatPasswordError] = useState(false);
     const [emptyError, setEmptyError] = useState(false);
+    const [badPasswordLengthError, setBadPasswordLengthError] = useState(false);
     const [passwordSuccess, setPasswordSuccess] = useState(false);
     const {store} = useContext(Context);
 
@@ -31,8 +31,12 @@ const ChangePassword = () => {
         event.preventDefault();
         if(currentPassword.length !== 0 && firstPassword.length !== 0 && secondPassword.length !== 0) {
             if(firstPassword === secondPassword){
-                store.passwordChanging(currentPassword, firstPassword);
-                clearFields();
+                if(firstPassword.length < 9) {
+                    setBadPasswordLengthError(true)
+                } else {
+                    store.passwordChanging(currentPassword, firstPassword);
+                    clearFields();
+                }
                 if(store.passwordChangingSuccess) {
                     setPasswordSuccess(true);
                 }
@@ -46,6 +50,10 @@ const ChangePassword = () => {
 
     return (
         <div>
+            {emptyError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
+            {!emptyError && repeatPasswordError && <Message type={MessageType.ERROR}>Password should be the same</Message>}
+            {badPasswordLengthError && <Message type={MessageType.ERROR}>Password length should be more than 8 signs</Message>}
+            {passwordSuccess && <Message type={MessageType.SUCCESS}>Success</Message>}
             <form onSubmit={handleSubmit}>
                 <input
                     onChange={(event) => {
@@ -64,6 +72,7 @@ const ChangePassword = () => {
                         setEmptyError(false);
                         setRepeatPasswordError(false);
                         store.setRegistrationError(false);
+                        setBadPasswordLengthError(false);
                     }}
                     value={firstPassword}
                     type="password"
@@ -75,16 +84,13 @@ const ChangePassword = () => {
                         setEmptyError(false);
                         setRepeatPasswordError(false);
                         store.setRegistrationError(false);
+                        setBadPasswordLengthError(false);
                     }}
                     value={secondPassword}
                     type="password"
                     placeholder="Repeat password"
                 />
                 <Button width={260}>Change password</Button>
-                {emptyError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
-                {!emptyError && repeatPasswordError && <ErrorMessage>Password should be the same</ErrorMessage>}
-                {passwordSuccess && <InfoMessage>Success</InfoMessage>}
-
             </form>
         </div>
     );

@@ -1,10 +1,10 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../index";
-import ErrorMessage from "../../common/Messages/ErrorMessage";
 
 import "./index.css"
 import {observer} from "mobx-react-lite";
 import Button from "../../common/button/Button";
+import Message, {MessageType} from "../../common/Messages/Message";
 
 const EditProfile = () => {
     const {store} = useContext(Context);
@@ -14,6 +14,10 @@ const EditProfile = () => {
     const [email, setEmail] = useState(store.authUser.email);
     const [isError, setError] = useState(false);
     const [image, setImage] = useState('')
+
+    useEffect(() => {
+        return () => store.setUserDataChangingSuccess(false)
+    }, [])
 
     const handleSubmit = (event :any) => {
         event.preventDefault();
@@ -27,11 +31,16 @@ const EditProfile = () => {
 
     return (
         <div className="editProfileContainer">
+            {isError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
+            {store.userDataChangingError && <Message type={MessageType.ERROR}>User with this username or email actually exists</Message>}
+            {store.userDataChangedSuccess && <Message type={MessageType.SUCCESS}>Success data changing</Message>}
             <form onSubmit={handleSubmit}>
                 <input
                     onChange={(event) => {
                         setName(event.target.value);
                         setError(false);
+                        store.setUserDataChangingError(false);
+                        store.setUserDataChangingSuccess(false);
                     }}
                     value={name}
                     type="text"
@@ -41,6 +50,8 @@ const EditProfile = () => {
                     onChange={(event) => {
                         setUsername(event.target.value);
                         setError(false);
+                        store.setUserDataChangingError(false);
+                        store.setUserDataChangingSuccess(false);
                     }}
                     value={username}
                     type="text"
@@ -50,6 +61,8 @@ const EditProfile = () => {
                     onChange={(event) => {
                         setEmail(event.target.value);
                         setError(false);
+                        store.setUserDataChangingError(false);
+                        store.setUserDataChangingSuccess(false);
                     }}
                     value={email}
                     type="email"
@@ -59,16 +72,16 @@ const EditProfile = () => {
                     onChange={(event) => {
                         setImage(event.target.value);
                         setError(false);
+                        store.setUserDataChangingError(false);
+                        store.setUserDataChangingSuccess(false);
                     }}
                     value={image}
                     type="file"
                     accept="image/png, image/jpeg, image/jpg"
                 />
-                <div className="save-reset__btn">
+                <div>
                     <Button width={240}>Submit changes</Button>
                 </div>
-
-                {isError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
             </form>
         </div>
     );

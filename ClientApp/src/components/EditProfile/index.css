@@ -11,7 +11,7 @@ input{
     color: #8d8d8d;
 }
 
-.edit__btn, .password__btn{
+.edit__btn{
     display: inline;
     margin: 0;
     background-color: #fff;
@@ -20,7 +20,7 @@ input{
     padding: 10px 15px;
 }
 
-.edit__btn.active,  .password__btn.active{
+.edit__btn.active{
     color: #000;
     border-bottom: 3px solid #ee9a46;
 }

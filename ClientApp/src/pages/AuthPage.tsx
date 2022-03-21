@@ -13,11 +13,10 @@ const AuthPage = () => {
     const navigator = useNavigate()
 
     useEffect(() => {
-        if(store.isAuth) {
+        if (store.isAuth) {
             navigator('/')
         }
     }, [store.isAuth]);
-
 
     return (
         <div className={'auth__wrapper'}>
@@ -26,8 +25,13 @@ const AuthPage = () => {
             </div>
             <div className="btn__block">
                 <div className={"btns__wrapper"}>
-                    <button className={`login__btn ${isLogin && 'active'}`} onClick={()=> setLogin(true)}>Login</button>
-                    <button className={`reg__btn ${!isLogin && 'active'}`} onClick={()=> setLogin(false)}>Registration</button>
+                    <button className={`reg__btn ${isLogin && 'active'}`} onClick={() => setLogin(true)}>
+                        Login
+                    </button>
+                    <button className={`reg__btn ${!isLogin && 'active'}`}
+                            onClick={() => setLogin(false)}>
+                        Registration
+                    </button>
                 </div>
                 <div className="container">
                     <div className={'auth__title_wrapper'}>

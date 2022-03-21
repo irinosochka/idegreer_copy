@@ -6,6 +6,7 @@ import {observer} from "mobx-react-lite";
 /* IMG */
 // @ts-ignore
 import logoutIcon from '../../assets/img/logout.png'
+import PhotoMockup, {sizeTypes} from "../../common/photoMockup/PhotoMockup";
 
 const Navbar = () => {
 
@@ -13,20 +14,6 @@ const Navbar = () => {
 
     const logout = () => {
         store.logout();
-    }
-
-    function initial() {
-        if (store.isAuth && store.authUser.name) {
-            var splits = store.authUser.name.split(" ");
-            var stringResult = "";
-
-            for (let i = 0; i < splits.length; i++) {
-                let Name = splits[i];
-                let First = Name.substr(0, 1).toUpperCase();
-                stringResult += First;
-            }
-            return stringResult;
-        }
     }
 
     return (
@@ -47,23 +34,10 @@ const Navbar = () => {
                 </div>
                 <div style={{display: 'flex', alignItems: 'center'}}>
                     <NavLink to={'/profile'} style={{display: 'flex', alignItems: 'center'}}>
-                        <div style={{
-                            borderRadius: '50%',
-                            backgroundColor: '#ee9a46',
-                            width: '45px',
-                            height: '45px',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            marginRight: '10px'
-                        }}>
-                            <h2 style={{margin: 'auto', color: '#4d6243', fontWeight: 400}}>
-                                {initial()}
-                            </h2>
-                        </div>
+                        <PhotoMockup size={sizeTypes.small}/>
                         <div>
                             <h1 style={{fontSize: '20px'}}><b>{store.authUser.name}</b></h1>
                             <div style={{fontSize: '14px'}}>{store.authUser.email}</div>
-
                         </div>
                     </NavLink>
                     <img src={logoutIcon} style={{width: '20px', height: '20px', cursor: 'pointer', marginLeft: '10px'}}

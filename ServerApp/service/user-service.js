@@ -80,10 +80,14 @@ class UserService {
         }
     }
     async userDataChanging(username, newUsername, newName, newEmail) {
-        const user = await UserModel.findOne({username})
-        if (!user) {
-            throw new Error('User with this username dont exist')
-        }
+        // const user = await UserModel.findOne({username: newUsername})
+        // if (user) {
+        //     throw new Error('User with this username exists')
+        // }
+        // const userWithEmail = await UserModel.findOne({email: newEmail});
+        // if (userWithEmail) {
+        //     throw new Error('This email exists')
+        // }
         const userWithNewPassword = await UserModel.updateOne({
             username
         }, {
