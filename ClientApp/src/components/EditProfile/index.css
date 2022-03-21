@@ -41,6 +41,37 @@ input{
     width: 50%;
 }
 
+.profile__icon{
+    border-radius: 50%;
+    background-color: #ee9a46;
+    width: 140px;
+    height: 140px;
+    cursor: default;
+    display: flex;
+    margin-right: 10px;
+    color: #4d6243;
+    font-weight: 400;
+    font-size: 60px;
+}
+
+.profile__title{
+    text-align: center;
+    font-weight: lighter;
+    font-size: 22px;
+}
+
+.profile__subtitle{
+    text-align: center;
+    font-weight:  inherit;
+    font-size: 18px;
+    padding: 10px;
+}
+
+.profile__info{
+    text-align: center;
+    font-size: 16px;
+    font-weight: lighter;
+}
 
 
 

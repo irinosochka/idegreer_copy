@@ -15,19 +15,20 @@ const Navbar = () => {
         store.logout();
     }
 
-    function ini() {
-        if (store.isAuth && store.authUser.name) {
-            var splits = store.authUser.name.split(" ");
-            var stringItog = "";
+    function initial() {
+        if (store.isAuth && store.user.name) {
+            var splits = store.user.name.split(" ");
+            var stringResult = "";
 
             for (let i = 0; i < splits.length; i++) {
                 let Name = splits[i];
                 let First = Name.substr(0, 1).toUpperCase();
-                stringItog += First;
+                stringResult += First;
             }
-            return stringItog;
+            return stringResult;
         }
     }
+
 
     return (
         <div style={{background: '#4d6243'}}>
@@ -45,24 +46,24 @@ const Navbar = () => {
                         iDegreer
                     </NavLink>
                 </div>
-                <div style={{display: 'flex', alignItems: 'center'}}>
+                <div style={{display: 'flex'}}>
                     <NavLink to={'/profile'} style={{display: 'flex', alignItems: 'center'}}>
                         <div style={{
                             borderRadius: '50%',
-                            backgroundColor: 'white',
+                            backgroundColor: '#ee9a46',
                             width: '45px',
                             height: '45px',
                             cursor: 'pointer',
                             display: 'flex',
                             marginRight: '10px'
                         }}>
-                            <h2 style={{margin: 'auto', color: '#4d6243', fontWeight: 400}}>
-                                {ini()}
+                            <h2 style={{margin: 'auto', color: '#4d6243', fontWeight: 500}}>
+                                {initial()}
                             </h2>
                         </div>
                         <div>
-                            <h1 style={{fontSize: '20px'}}><b>{store.authUser.name}</b></h1>
-                            <div style={{fontSize: '14px'}}>{store.authUser.email}</div>
+                            <h1 style={{fontSize: '20px'}}><b>{store.user.name}</b></h1>
+                            <div style={{fontSize: '14px'}}>{store.user.email}</div>
 
                         </div>
                     </NavLink>
