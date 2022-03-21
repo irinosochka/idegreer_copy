@@ -84,7 +84,7 @@ class UserService {
         if (user) {
             throw new Error('User with this username exists')
         }
-        const userWithEmail = await UserModel.findOne({email: newEmail})
+        const userWithEmail = await UserModel.findOne({email: newEmail});
         if (userWithEmail) {
             throw new Error('This email exists')
         }

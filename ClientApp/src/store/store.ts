@@ -28,6 +28,7 @@ export default class Store {
     passwordChangingSuccess = false;
     roleAdded = false;
     roleRemoved = false;
+    userDataChangedSuccess = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -47,6 +48,10 @@ export default class Store {
 
     setLoginError(bool: boolean) {
         this.loginError = bool
+    }
+
+    setUserDataChangingSuccess(bool: boolean) {
+        this.userDataChangedSuccess = bool
     }
 
     setRegistrationError(bool: boolean) {
@@ -176,6 +181,7 @@ export default class Store {
         const response = await UserService.userDataChanging(this.authUser.username, newUsername, newName, newEmail);
         if (response.data.resultCode === 1) {
             this.setAuthUser(response.data.data.user);
+            this.setUserDataChangingSuccess(true);
             return response
         } else {
             this.setUserDataChangingError(true)

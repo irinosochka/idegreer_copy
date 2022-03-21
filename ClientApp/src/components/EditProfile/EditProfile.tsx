@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../index";
 import ErrorMessage from "../../common/Messages/ErrorMessage";
 
@@ -15,6 +15,10 @@ const EditProfile = () => {
     const [isError, setError] = useState(false);
     const [image, setImage] = useState('')
 
+    useEffect(() => {
+        return () => store.setUserDataChangingSuccess(false)
+    }, [])
+
     const handleSubmit = (event :any) => {
         event.preventDefault();
 
@@ -28,11 +32,13 @@ const EditProfile = () => {
     return (
         <div className="editProfileContainer">
             {store.userDataChangingError && <ErrorMessage>User with this username or email actually exists</ErrorMessage>}
+            {store.userDataChangedSuccess && <ErrorMessage>Success data changing</ErrorMessage>}
             <form onSubmit={handleSubmit}>
                 <input
                     onChange={(event) => {
                         setName(event.target.value);
                         setError(false);
+                        store.setUserDataChangingError(false);
                     }}
                     value={name}
                     type="text"
@@ -42,6 +48,7 @@ const EditProfile = () => {
                     onChange={(event) => {
                         setUsername(event.target.value);
                         setError(false);
+                        store.setUserDataChangingError(false);
                     }}
                     value={username}
                     type="text"
@@ -51,6 +58,7 @@ const EditProfile = () => {
                     onChange={(event) => {
                         setEmail(event.target.value);
                         setError(false);
+                        store.setUserDataChangingError(false);
                     }}
                     value={email}
                     type="email"
@@ -60,6 +68,7 @@ const EditProfile = () => {
                     onChange={(event) => {
                         setImage(event.target.value);
                         setError(false);
+                        store.setUserDataChangingError(false);
                     }}
                     value={image}
                     type="file"
