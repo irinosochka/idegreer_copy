@@ -37,7 +37,7 @@ const Navbar = () => {
                 justifyContent: 'space-between',
                 color: 'white',
                 padding: '20px',
-                width: '1460px',
+                width: '1200px',
                 margin: '0 auto'
             }}>
                 <div>
