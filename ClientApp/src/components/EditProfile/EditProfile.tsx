@@ -27,6 +27,7 @@ const EditProfile = () => {
 
     return (
         <div className="editProfileContainer">
+            {store.userDataChangingError && <ErrorMessage>User with this username or email actually exists</ErrorMessage>}
             <form onSubmit={handleSubmit}>
                 <input
                     onChange={(event) => {
@@ -64,10 +65,9 @@ const EditProfile = () => {
                     type="file"
                     accept="image/png, image/jpeg, image/jpg"
                 />
-                <div className="save-reset__btn">
+                <div>
                     <Button width={240}>Submit changes</Button>
                 </div>
-
                 {isError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
             </form>
         </div>

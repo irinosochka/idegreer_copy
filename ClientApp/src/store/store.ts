@@ -173,24 +173,19 @@ export default class Store {
     }
 
     async userDataChanging(newUsername: string, newName: string, newEmail: string) {
-        try {
-            const response = await UserService.userDataChanging(this.authUser.username, newUsername, newName, newEmail);
-            if (response.data.resultCode === 1) {
-                this.setAuthUser(response.data.data.user);
-                return response
-            }
-            if (response.data.resultCode === 0) {
-                this.setUserDataChangingError(true)
-            }
-        } catch (e) {
-            console.log(e);
+        const response = await UserService.userDataChanging(this.authUser.username, newUsername, newName, newEmail);
+        if (response.data.resultCode === 1) {
+            this.setAuthUser(response.data.data.user);
+            return response
+        } else {
+            this.setUserDataChangingError(true)
         }
     }
 
     async addCourse(title: string, theme: string, description: string, price: string) {
         try {
             const response = await CourseService.addCourse(this.user.username, title, theme, description, price);
-            if(response.data.resultCode === 1) {
+            if (response.data.resultCode === 1) {
                 this.addNewCourse(response.data.data)
             }
             if (response.data.resultCode === 0) {
@@ -247,14 +242,14 @@ export default class Store {
 
     async getUser(id: string) {
         try {
-           const response = await UserService.getUserUsingId(id)
-           if(response.data.resultCode === 1) {
-               this.setUser(response.data.data)
-           } else {
-               console.log('get user by id error')
-           }
-        } catch(e) {
-           console.log(e)
+            const response = await UserService.getUserUsingId(id)
+            if (response.data.resultCode === 1) {
+                this.setUser(response.data.data)
+            } else {
+                console.log('get user by id error')
+            }
+        } catch (e) {
+            console.log(e)
         }
     }
 }

@@ -7,7 +7,7 @@ class UserController {
             const data = await userService.userDataChanging(username, newUsername, newName, newEmail);
             return res.json({data, resultCode: 1})
         } catch(e) {
-            return res.json({message: "Login error", resultCode: 0})
+            return res.json({status: e.status, message: `User with this username or email actually exists` , resultCode: 0})
         }
     }
     async addNewRoleToUser(req,res) {
