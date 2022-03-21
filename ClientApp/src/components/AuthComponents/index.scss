@@ -124,6 +124,16 @@ h2, h3, p, .course__item{
     font-size: large;
 }
 
-.item__wrapper:first-child {
+.item__wrapper{
+    margin-left: 30px;
+}
+
+.courses__container{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.courses__container:nth-child(5n){
     margin-left: 0;
 }
+
