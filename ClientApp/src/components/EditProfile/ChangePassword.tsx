@@ -14,6 +14,7 @@ const ChangePassword = () => {
     const [secondPassword, setSecondPassword] = useState('');
     const [repeatPasswordError, setRepeatPasswordError] = useState(false);
     const [emptyError, setEmptyError] = useState(false);
+    const [badPasswordLengthError, setBadPasswordLengthError] = useState(false);
     const [passwordSuccess, setPasswordSuccess] = useState(false);
     const {store} = useContext(Context);
 
@@ -31,8 +32,12 @@ const ChangePassword = () => {
         event.preventDefault();
         if(currentPassword.length !== 0 && firstPassword.length !== 0 && secondPassword.length !== 0) {
             if(firstPassword === secondPassword){
-                store.passwordChanging(currentPassword, firstPassword);
-                clearFields();
+                if(firstPassword.length < 9) {
+                    setBadPasswordLengthError(true)
+                } else {
+                    store.passwordChanging(currentPassword, firstPassword);
+                    clearFields();
+                }
                 if(store.passwordChangingSuccess) {
                     setPasswordSuccess(true);
                 }
@@ -64,6 +69,7 @@ const ChangePassword = () => {
                         setEmptyError(false);
                         setRepeatPasswordError(false);
                         store.setRegistrationError(false);
+                        setBadPasswordLengthError(false);
                     }}
                     value={firstPassword}
                     type="password"
@@ -75,6 +81,7 @@ const ChangePassword = () => {
                         setEmptyError(false);
                         setRepeatPasswordError(false);
                         store.setRegistrationError(false);
+                        setBadPasswordLengthError(false);
                     }}
                     value={secondPassword}
                     type="password"
@@ -83,6 +90,7 @@ const ChangePassword = () => {
                 <Button width={260}>Change password</Button>
                 {emptyError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
                 {!emptyError && repeatPasswordError && <ErrorMessage>Password should be the same</ErrorMessage>}
+                {badPasswordLengthError && <ErrorMessage>Password length should be more than 8 signs</ErrorMessage>}
                 {passwordSuccess && <InfoMessage>Success</InfoMessage>}
 
             </form>

@@ -15,13 +15,19 @@ const Registration = () => {
     /* ERRORS */
     const [emptyError, setEmptyError] = useState(false);
     const [repeatPasswordError, setRepeatPasswordError] = useState(false);
+    const [badPasswordLengthError, setBadPasswordLengthError] = useState(false);
+
     const {store} = useContext(Context);
 
     const handleSubmit = (event: React.FormEvent<EventTarget>): void => {
         event.preventDefault();
         if(username.length !== 0 && secondPassword.length !== 0 && firstPassword.length !== 0 && name.length !== 0) {
             if (secondPassword === firstPassword) {
-                store.registration(username, firstPassword, name, email)
+                if (firstPassword.length < 9) {
+                    setBadPasswordLengthError(true)
+                } else {
+                    store.registration(username, firstPassword, name, email)
+                }
             } else {
                 setRepeatPasswordError(true)
             }
@@ -69,6 +75,7 @@ const Registration = () => {
                         setEmptyError(false);
                         setRepeatPasswordError(false);
                         store.setRegistrationError(false);
+                        setBadPasswordLengthError(false);
                     }}
                     value={firstPassword}
                     type="password"
@@ -80,6 +87,7 @@ const Registration = () => {
                         setEmptyError(false);
                         setRepeatPasswordError(false);
                         store.setRegistrationError(false);
+                        setBadPasswordLengthError(false);
                     }}
                     value={secondPassword}
                     type="password"
@@ -88,6 +96,7 @@ const Registration = () => {
                 <Button>Sign Up</Button>
                 {emptyError && <ErrorMessage>Fields can't be empty</ErrorMessage>}
                 {!emptyError && repeatPasswordError && <ErrorMessage>Password should be the same</ErrorMessage>}
+                {badPasswordLengthError && <ErrorMessage>Password length should be more than 8 signs</ErrorMessage>}
                 {store.registrationError && <ErrorMessage>User exists</ErrorMessage>}
             </form>
         </>
