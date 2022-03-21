@@ -3,7 +3,7 @@ import {Context} from "../../index";
 
 import "./index.css"
 import {observer} from "mobx-react-lite";
-import Button from "../../common/button/Button";
+import Button from "../../common/Button/Button";
 import Message, {MessageType} from "../../common/Messages/Message";
 
 const ChangePassword = () => {

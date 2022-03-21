@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {Context} from "../../../index";
 import '../index.scss';
 import {observer} from "mobx-react-lite";
-import Button from "../../../common/button/Button";
+import Button from "../../../common/Button/Button";
 import Message, {MessageType} from "../../../common/Messages/Message";
 
 const Registration = () => {

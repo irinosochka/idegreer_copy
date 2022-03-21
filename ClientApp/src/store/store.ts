@@ -234,6 +234,7 @@ export default class Store {
             if (!this.authUser.roles.includes(newRole)) {
                 const response = await UserService.setRoleToUser(this.authUser.username, newRole);
                 if (response.data.resultCode === 1) {
+                    this.authUser.roles = response.data.data.user.roles
                     this.setRoleAdded(true)
                 } else {
                     console.log('Role was not added')

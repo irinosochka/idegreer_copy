@@ -1,5 +1,5 @@
 import React, {FC, useContext, useState} from 'react';
-import Button from "../../common/button/Button";
+import Button from "../../common/Button/Button";
 import {Context} from "../../index";
 import Message, {MessageType} from "../../common/Messages/Message";
 
@@ -85,7 +85,7 @@ const AddCourse: FC<AddCourseProps> = () => {
                 {/*    accept="image/png, image/jpeg"*/}
                 {/*    value={courseImg}*/}
                 {/*/>*/}
-                {/*<button>Add course</button>*/}
+                {/*<Button>Add course</Button>*/}
                 <Button width={300}>Add course</Button>
 
             </form>

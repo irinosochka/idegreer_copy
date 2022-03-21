@@ -8,14 +8,11 @@ import PhotoMockup, {sizeTypes} from "../../common/photoMockup/PhotoMockup";
 const Profile = () => {
     const {store} = useContext(Context);
 
-
-    function profMode(){
+    const profMode = () => {
         if(store.authUser.roles.includes('STUDENT')){
             store.setRoleToUser('PROFESSOR')
-        } else {
-            //do nothing
         }
-    }
+    };
     return (
         <div className="profile" style={{textAlign: 'center', verticalAlign: 'middle', paddingTop: '20px'}}>
             <div style={{display: 'inline-block'}}>
@@ -36,15 +33,7 @@ const Profile = () => {
 
             {store.authUser.roles && !store.authUser.roles.includes('PROFESSOR') &&
             <div >
-                <form onClick={profMode} style={{display: 'inline-block'}}>
-                    <p className="profile__subtitle" >Check if you want to be a professor:</p>
-                    <input
-                        onClick={profMode}
-                        type="checkbox"
-                        name=""
-                        style={{margin: '0'}}
-                    />
-                </form>
+                <button onClick={profMode}>To be as professor</button>
             </div>
             }
 
