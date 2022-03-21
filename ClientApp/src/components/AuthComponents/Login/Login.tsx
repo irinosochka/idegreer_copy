@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react'
 import "../index.scss"
 import {Context} from "../../../index";
 import {observer} from "mobx-react-lite";
-import Button from "../../../common/Button/Button";
+import Button from "../../../common/button/Button";
 import Message, {MessageType} from "../../../common/Messages/Message";
 
 const Login = () => {
