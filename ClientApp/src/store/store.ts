@@ -151,7 +151,7 @@ export default class Store {
             await AuthService.logout();
             localStorage.removeItem('token');
             this.setAuth(false);
-            this.setAuthUser({} as IUser)
+            this.setAuthUser({} as IUser);
         } catch (e) {
             console.log(e)
         }
@@ -194,9 +194,9 @@ export default class Store {
 
     async addCourse(title: string, theme: string, description: string, price: string) {
         try {
-            const response = await CourseService.addCourse(this.user.username, title, theme, description, price);
+            const response = await CourseService.addCourse(this.authUser.username, title, theme, description, price);
             if (response.data.resultCode === 1) {
-                this.addNewCourse(response.data.data)
+                return response.data.data
             }
             if (response.data.resultCode === 0) {
                 this.setAddCourseError(true)
@@ -209,11 +209,10 @@ export default class Store {
     async getAllCourses() {
         try {
             const response = await CourseService.getCourses();
-            if (response.data.resultCode === 0) {
-                this.setGetAllCourseError(true)
-            }
             if (response.data.resultCode === 1) {
                 this.setCourses(response.data.data);
+            } else {
+                this.setGetAllCourseError(true)
             }
         } catch (e) {
             console.log(e);
@@ -256,6 +255,7 @@ export default class Store {
             const response = await UserService.getUserUsingId(id)
             if (response.data.resultCode === 1) {
                 this.setUser(response.data.data)
+                return response.data.data
             } else {
                 console.log('get user by id error')
             }

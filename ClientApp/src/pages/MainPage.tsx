@@ -4,7 +4,7 @@ import CourseItem from "../components/CourseItem/CourseItem";
 import {Context} from "../index";
 import {ICourse} from "../models/ICourse";
 
-interface MainPageProps{
+interface MainPageProps {
 }
 
 const MainPage: FC<MainPageProps> = () => {
@@ -19,8 +19,9 @@ const MainPage: FC<MainPageProps> = () => {
         <div style={{width: '1200px', display: 'block', margin: '0 auto', marginBottom: '20xp'}}>
             <h1 style={{textAlign: 'left', marginTop: '20px', fontSize: '20px'}}>All courses</h1>
             <div className="courses__container">
-                {store.courses.map((course: ICourse) =>
-                    <CourseItem course={course} key={course._id}/>
+                {store.courses.map((course: ICourse) => {
+                        return <CourseItem course={course} key={course._id}/>
+                    }
                 )}
             </div>
         </div>

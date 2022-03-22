@@ -6,6 +6,7 @@ import reactLogo from '../../assets/img/react-logo.png'
 import {ICourse} from "../../models/ICourse";
 import {Context} from "../../index";
 import {IUser} from "../../models/IUser";
+import {observer} from "mobx-react-lite";
 
 interface CourseItemProps {
     course: ICourse
@@ -18,9 +19,13 @@ const CourseItem: FC<CourseItemProps> = ({course}) => {
     const [author, setAuthor] = useState<IUser>()
 
     useEffect(() => {
-        store.getUser(course.author)
-        setAuthor(store.user)
+        authorIdConvert(course.author)
     }, [])
+
+    const authorIdConvert = async (id: string) => {
+        const response = await store.getUser(id);
+        setAuthor(response.user)
+    }
 
     return (
         <div className={'item__wrapper'}>
@@ -42,4 +47,4 @@ const CourseItem: FC<CourseItemProps> = ({course}) => {
     );
 };
 
-export default CourseItem;
+export default observer(CourseItem);
