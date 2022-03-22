@@ -125,7 +125,7 @@ h2, h3, p, .course__item{
 }
 
 .item__wrapper{
-    margin-left: 30px;
+    margin-right: 50px;
 }
 
 .courses__container{
@@ -133,7 +133,7 @@ h2, h3, p, .course__item{
     flex-wrap: wrap;
 }
 
-.courses__container:nth-child(5n){
-    margin-left: 0;
+.item__wrapper:nth-child(4n) {
+    margin-right: 0;
 }
 
