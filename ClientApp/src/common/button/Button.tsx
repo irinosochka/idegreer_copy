@@ -3,12 +3,13 @@ import './button.scss'
 
 interface ButtonProps {
     width?: number
+    onClick?: () => void
 }
 
-const Button: FC<ButtonProps> = ({children, width}) => {
+const Button: FC<ButtonProps> = ({children, width, onClick}) => {
     return (
         <div className="buttons" style={{width: width + 'px'}}>
-            <button type="submit" className={'blob-btn '}>
+            <button type="submit" className={'blob-btn '} onClick={onClick}>
                 {children}
                 <span className="blob-btn__inner">
                   <span className="blob-btn__blobs">
