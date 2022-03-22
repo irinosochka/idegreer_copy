@@ -83,6 +83,10 @@ export default class Store {
         this.passwordChangingError = bool;
     }
 
+    setPasswordChangingSuccess(bool: boolean) {
+        this.passwordChangingSuccess = bool;
+    }
+
     setRoleExistInThisUser(bool: boolean) {
         this.roleExistInThisUser = bool
     }
@@ -166,7 +170,7 @@ export default class Store {
         try {
             const response = await UserService.passwordChanging(this.authUser.username, lastPassword, newPassword);
             if (response.data.resultCode === 1) {
-                this.passwordChangingSuccess = true
+                this.setPasswordChangingSuccess(true);
                 return response
             }
             if (response.data.resultCode === 0) {

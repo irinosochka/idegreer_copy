@@ -14,11 +14,10 @@ const ChangePassword = () => {
     const [repeatPasswordError, setRepeatPasswordError] = useState(false);
     const [emptyError, setEmptyError] = useState(false);
     const [badPasswordLengthError, setBadPasswordLengthError] = useState(false);
-    const [passwordSuccess, setPasswordSuccess] = useState(false);
     const {store} = useContext(Context);
 
     useEffect(() => {
-        console.log('+');
+        return () => store.setPasswordChangingSuccess(false);
     }, []);
 
     const clearFields = () => {
@@ -37,9 +36,6 @@ const ChangePassword = () => {
                     store.passwordChanging(currentPassword, firstPassword);
                     clearFields();
                 }
-                if(store.passwordChangingSuccess) {
-                    setPasswordSuccess(true);
-                }
             }else{
                 setRepeatPasswordError(true)
             }
@@ -53,7 +49,7 @@ const ChangePassword = () => {
             {emptyError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
             {!emptyError && repeatPasswordError && <Message type={MessageType.ERROR}>Password should be the same</Message>}
             {badPasswordLengthError && <Message type={MessageType.ERROR}>Password length should be more than 8 signs</Message>}
-            {passwordSuccess && <Message type={MessageType.SUCCESS}>Success</Message>}
+            {store.passwordChangingSuccess && <Message type={MessageType.SUCCESS}>Success</Message>}
             <form onSubmit={handleSubmit}>
                 <input
                     onChange={(event) => {
@@ -61,6 +57,7 @@ const ChangePassword = () => {
                         setEmptyError(false);
                         setRepeatPasswordError(false);
                         store.setRegistrationError(false);
+                        store.setPasswordChangingSuccess(false);
                     }}
                     value={currentPassword}
                     type="password"
@@ -73,6 +70,7 @@ const ChangePassword = () => {
                         setRepeatPasswordError(false);
                         store.setRegistrationError(false);
                         setBadPasswordLengthError(false);
+                        store.setPasswordChangingSuccess(false);
                     }}
                     value={firstPassword}
                     type="password"
@@ -85,6 +83,7 @@ const ChangePassword = () => {
                         setRepeatPasswordError(false);
                         store.setRegistrationError(false);
                         setBadPasswordLengthError(false);
+                        store.setPasswordChangingSuccess(false);
                     }}
                     value={secondPassword}
                     type="password"
