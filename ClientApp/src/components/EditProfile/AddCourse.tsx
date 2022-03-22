@@ -18,10 +18,7 @@ const AddCourse: FC<AddCourseProps> = () => {
 
     const onAddCourseHandler = (event:React.FormEvent<EventTarget>) => {
         event.preventDefault();
-        if (courseName.length !==0 && courseTopic.length !== 0 && courseDescription.length !==0) {
-            if (coursePrice.length !== 0) {
-                setCoursePrice('Free');
-            }
+        if (courseName.length !==0 && courseTopic.length !== 0 && courseDescription.length !==0 && coursePrice.length !== 0) {
             store.addCourse(courseName, courseTopic, courseDescription, coursePrice);
             setSuccessAddCourse(true);
             setCourseName('');
