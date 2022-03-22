@@ -5,7 +5,7 @@ const CourseModel = new Schema({
     theme: {type: String},
     description: {type: String},
     price: {type: String},
-    author: { type: Schema.Types.ObjectId, ref: 'UserModel' }
+    author: { type: Object }
 })
 
 module.exports = model('CourseModel', CourseModel)
