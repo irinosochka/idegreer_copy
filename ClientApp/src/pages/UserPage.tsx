@@ -49,10 +49,10 @@ const UserPage: FC<UserPageProps> = () => {
                         </NavLink>
                     </div>
                     <div className="btn__menu">
-                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.INFO_PROFILE} icon={profileIcon} slideItem={UserPageSlidesItems.INFO_PROFILE} onClick={() => setSlideItem(UserPageSlidesItems.INFO_PROFILE)}>PROFILE</EditProfileButton>
-                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.EDIT_PROFILE} icon={editIcon} slideItem={UserPageSlidesItems.EDIT_PROFILE} onClick={() => setSlideItem(UserPageSlidesItems.EDIT_PROFILE)}>EDIT PROFILE</EditProfileButton>
-                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.CHANGE_PASSWORD} icon={passwordIcon} slideItem={UserPageSlidesItems.CHANGE_PASSWORD} onClick={() => setSlideItem(UserPageSlidesItems.CHANGE_PASSWORD)}>CHANGE PASSWORD</EditProfileButton>
-                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_COURSE} icon={addCourseIcon} slideItem={UserPageSlidesItems.ADD_COURSE} onClick={() => setSlideItem(UserPageSlidesItems.ADD_COURSE)}>ADD COURSE</EditProfileButton>
+                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.INFO_PROFILE} icon={profileIcon}  onClick={() => setSlideItem(UserPageSlidesItems.INFO_PROFILE)}>PROFILE</EditProfileButton>
+                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.EDIT_PROFILE} icon={editIcon} onClick={() => setSlideItem(UserPageSlidesItems.EDIT_PROFILE)}>EDIT PROFILE</EditProfileButton>
+                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.CHANGE_PASSWORD} icon={passwordIcon} onClick={() => setSlideItem(UserPageSlidesItems.CHANGE_PASSWORD)}>CHANGE PASSWORD</EditProfileButton>
+                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_COURSE} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ADD_COURSE)}>ADD COURSE</EditProfileButton>
                     </div>
                 </div>
             </div>
