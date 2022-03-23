@@ -8,7 +8,18 @@ import Profile from "../components/EditProfile/Profile";
 import {NavLink} from "react-router-dom";
 import PhotoMockup, {sizeTypes} from "../common/photoMockup/PhotoMockup";
 
-interface UserPageProps{
+/* IMG */
+// @ts-ignore
+import profileIcon from '../assets/img/user-profile-svgrepo-com.svg'
+// @ts-ignore
+import editIcon from '../assets/img/edit-svgrepo-com.svg'
+// @ts-ignore
+import passwordIcon from '../assets/img/password-svgrepo-com.svg'
+// @ts-ignore
+import addCourseIcon from '../assets/img/add-svgrepo-com.svg'
+import EditProfileButton from "../components/EditProfile/EditProfileButton";
+
+interface UserPageProps {
 }
 
 export enum UserPageSlidesItems {
@@ -18,7 +29,7 @@ export enum UserPageSlidesItems {
     INFO_PROFILE = 'infoProfile'
 }
 
-const UserPage:FC<UserPageProps> = () => {
+const UserPage: FC<UserPageProps> = () => {
 
     const {store} = useContext(Context)
 
@@ -32,15 +43,16 @@ const UserPage:FC<UserPageProps> = () => {
                         <NavLink to={'/profile'} style={{}}>
                             <div style={{margin: '0 auto'}}><PhotoMockup size={sizeTypes.small}/></div>
                             <div>
-                                <h1 style={{fontSize: '20px', textAlign: 'center', marginTop: '20px'}}><b>{store.authUser.name}</b></h1>
+                                <h1 style={{fontSize: '20px', textAlign: 'center', marginTop: '20px'}}>
+                                    <b>{store.authUser.name}</b></h1>
                             </div>
                         </NavLink>
                     </div>
                     <div className="btn__menu">
-                        <div><button className={`edit__btn ${slideItem === UserPageSlidesItems.INFO_PROFILE && 'active'}`} onClick={()=> setSlideItem(UserPageSlidesItems.INFO_PROFILE)}> Profile </button></div>
-                        <div><button className={`edit__btn ${slideItem === UserPageSlidesItems.EDIT_PROFILE && 'active'}`} onClick={()=> setSlideItem(UserPageSlidesItems.EDIT_PROFILE)}>Edit Profile</button></div>
-                        <div><button className={`edit__btn ${slideItem === UserPageSlidesItems.CHANGE_PASSWORD && 'active'}`} onClick={()=> setSlideItem(UserPageSlidesItems.CHANGE_PASSWORD)}>Change password</button></div>
-                        <div>{store.authUser.roles && store.authUser.roles.includes('PROFESSOR') && <button className={`edit__btn ${slideItem === UserPageSlidesItems.ADD_COURSE && 'active'}`} onClick={()=> setSlideItem(UserPageSlidesItems.ADD_COURSE)}>Add course</button>}</div>
+                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.INFO_PROFILE} icon={profileIcon} slideItem={UserPageSlidesItems.INFO_PROFILE} onClick={() => setSlideItem(UserPageSlidesItems.INFO_PROFILE)}>PROFILE</EditProfileButton>
+                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.EDIT_PROFILE} icon={editIcon} slideItem={UserPageSlidesItems.EDIT_PROFILE} onClick={() => setSlideItem(UserPageSlidesItems.EDIT_PROFILE)}>EDIT PROFILE</EditProfileButton>
+                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.CHANGE_PASSWORD} icon={passwordIcon} slideItem={UserPageSlidesItems.CHANGE_PASSWORD} onClick={() => setSlideItem(UserPageSlidesItems.CHANGE_PASSWORD)}>CHANGE PASSWORD</EditProfileButton>
+                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_COURSE} icon={addCourseIcon} slideItem={UserPageSlidesItems.ADD_COURSE} onClick={() => setSlideItem(UserPageSlidesItems.ADD_COURSE)}>ADD COURSE</EditProfileButton>
                     </div>
                 </div>
             </div>
@@ -49,8 +61,9 @@ const UserPage:FC<UserPageProps> = () => {
                     <div className="edit__container">
                         {slideItem === UserPageSlidesItems.INFO_PROFILE && <Profile/>}
                         {slideItem === UserPageSlidesItems.EDIT_PROFILE && <EditProfile/>}
-                        {slideItem === UserPageSlidesItems.CHANGE_PASSWORD && <ChangePassword />}
-                        {slideItem === UserPageSlidesItems.ADD_COURSE && store.authUser && store.authUser.roles.includes('PROFESSOR') && <AddCourse/>}
+                        {slideItem === UserPageSlidesItems.CHANGE_PASSWORD && <ChangePassword/>}
+                        {slideItem === UserPageSlidesItems.ADD_COURSE && store.authUser && store.authUser.roles.includes('PROFESSOR') &&
+                            <AddCourse/>}
                     </div>
                 </div>
             </div>
