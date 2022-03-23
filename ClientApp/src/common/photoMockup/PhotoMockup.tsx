@@ -2,7 +2,7 @@ import React, {FC, useContext} from 'react';
 import {Context} from "../../index";
 
 export enum sizeTypes {
-    small = '45px',
+    small = '65px',
     large = '140px'
 }
 
@@ -37,6 +37,7 @@ const PhotoMockup: FC<PhotoMockupProps> = ({size}) => {
             cursor: 'pointer',
             display: 'flex',
             marginRight: '10px',
+            margin: '0 auto',
             fontSize: size === sizeTypes.large ? '40px' : 'normal'
         }}>
             <h2 style={{margin: 'auto', color: '#4d6243', fontWeight: 400}}>

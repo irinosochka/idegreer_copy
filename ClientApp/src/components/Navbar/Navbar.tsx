@@ -1,47 +1,59 @@
 import React, {useContext} from 'react';
 import {Context} from "../../index";
-import {NavLink} from "react-router-dom";
+import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 
 /* IMG */
 // @ts-ignore
-import logoutIcon from '../../assets/img/logout.png'
-import PhotoMockup, {sizeTypes} from "../../common/photoMockup/PhotoMockup";
+import logoutIcon from '../../assets/img/logout-svgrepo-com.svg'
+// @ts-ignore
+import homeIcon from '../../assets/img/home-svgrepo-com.svg'
+// @ts-ignore
+import profileIcon from '../../assets/img/user-profile-svgrepo-com.svg'
 
 const Navbar = () => {
 
     const {store} = useContext(Context);
+    const navigator = useNavigate();
 
     const logout = () => {
         store.logout();
     }
+
+    const location = useLocation();
+    console.log(location)
 
     return (
         <div style={{background: '#4d6243'}}>
             <div style={{
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'space-between',
+                justifyContent: `${location.pathname === '/' ? 'space-between' : 'end'}`,
                 color: 'white',
                 padding: '20px',
-                width: '1200px',
-                margin: '0 auto'
+                textAlign: 'left'
             }}>
-                <div>
+                {location.pathname === '/' && <div>
                     <NavLink to={'/'} style={{fontSize: '28px'}}>
                         iDegreer
                     </NavLink>
-                </div>
-                <div style={{display: 'flex', alignItems: 'center'}}>
-                    <NavLink to={'/profile'} style={{display: 'flex', alignItems: 'center'}}>
-                        <PhotoMockup size={sizeTypes.small}/>
-                        <div>
-                            <h1 style={{fontSize: '20px'}}><b>{store.authUser.name}</b></h1>
-                            <div style={{fontSize: '14px'}}>{store.authUser.email}</div>
-                        </div>
-                    </NavLink>
-                    <img src={logoutIcon} style={{width: '20px', height: '20px', cursor: 'pointer', marginLeft: '10px'}}
-                         onClick={logout} alt="logout"/>
+                </div>}
+
+                <div style={{display: 'flex', alignItems: 'center', textAlign: 'right', padding: '5px 0'}}>
+                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#fff', borderRadius: '50px', width: '35px', height: '35px', marginRight: '10px', cursor: 'pointer'}} onClick={() => {
+                        navigator('/')
+                    }}>
+                        <img src={homeIcon} style={{color: '#fff', width: '15px', height: '15px'}}  alt=""/>
+                    </div>
+                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#fff', borderRadius: '50px', width: '35px', height: '35px', marginRight: '10px', cursor: 'pointer'}} onClick={() => {
+                        navigator('/profile')
+                    }}>
+                        <img src={profileIcon} style={{color: '#fff', width: '15px', height: '15px'}}  alt=""/>
+                    </div>
+                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'rgb(217 115 115)', borderRadius: '50px', width: '35px', height: '35px', cursor: 'pointer'}} onClick={logout}>
+                        <img src={logoutIcon} style={{width: '15px', height: '15px'}}
+                              alt="logout"/>
+                    </div>
                 </div>
             </div>
         </div>
