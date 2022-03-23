@@ -17,12 +17,12 @@ const EditProfileButton: FC<EditProfileButtonProps> = ({icon, isActive, onClick,
                 alignItems: 'center',
                 justifyContent: 'center',
                 borderRadius: '50px',
-                padding: '15px',
+                padding: '16px',
                 background: '#fff',
             }}>
                 <img src={icon} style={{width: '20px', height: '20px'}} alt=""/>
             </div>
-            <button>{children}</button>
+            <button style={{textAlign: 'left', fontSize: '15px', paddingLeft: '30px', textTransform: 'initial'}}>{children}</button>
         </div>
     );
 };

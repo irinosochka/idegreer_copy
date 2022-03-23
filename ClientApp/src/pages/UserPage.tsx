@@ -49,10 +49,10 @@ const UserPage: FC<UserPageProps> = () => {
                         </NavLink>
                     </div>
                     <div className="btn__menu">
-                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.INFO_PROFILE} icon={profileIcon}  onClick={() => setSlideItem(UserPageSlidesItems.INFO_PROFILE)}>PROFILE</EditProfileButton>
-                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.EDIT_PROFILE} icon={editIcon} onClick={() => setSlideItem(UserPageSlidesItems.EDIT_PROFILE)}>EDIT PROFILE</EditProfileButton>
-                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.CHANGE_PASSWORD} icon={passwordIcon} onClick={() => setSlideItem(UserPageSlidesItems.CHANGE_PASSWORD)}>CHANGE PASSWORD</EditProfileButton>
-                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_COURSE} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ADD_COURSE)}>ADD COURSE</EditProfileButton>
+                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.INFO_PROFILE} icon={profileIcon}  onClick={() => setSlideItem(UserPageSlidesItems.INFO_PROFILE)}>Profile</EditProfileButton>
+                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.EDIT_PROFILE} icon={editIcon} onClick={() => setSlideItem(UserPageSlidesItems.EDIT_PROFILE)}>Edit profile</EditProfileButton>
+                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.CHANGE_PASSWORD} icon={passwordIcon} onClick={() => setSlideItem(UserPageSlidesItems.CHANGE_PASSWORD)}>Change password</EditProfileButton>
+                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_COURSE} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ADD_COURSE)}>Add course</EditProfileButton>
                     </div>
                 </div>
             </div>
