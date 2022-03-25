@@ -4,16 +4,16 @@ import {Context} from "../../index";
 import "./index.css"
 import {observer} from "mobx-react-lite";
 import PhotoMockup, {sizeTypes} from "../../common/photoMockup/PhotoMockup";
-import Button from "../../common/button/Button";
 
 const Profile = () => {
     const {store} = useContext(Context);
 
-    const profMode = () => {
-        if(store.authUser.roles.includes('STUDENT')){
-            store.setRoleToUser('PROFESSOR')
-        }
-    };
+    // const profMode = () => {
+    //     if(store.authUser.roles.includes('STUDENT')){
+    //         store.setRoleToUser('PROFESSOR')
+    //     }
+    // };
+
     return (
         <div className="profile" style={{textAlign: 'center', verticalAlign: 'middle', paddingTop: '20px'}}>
             <div style={{display: 'inline-block'}}>
@@ -32,11 +32,11 @@ const Profile = () => {
             <p className="profile__info">{store.authUser.username}</p>
 
 
-            {store.authUser.roles && !store.authUser.roles.includes('PROFESSOR') &&
-            <div >
-                <Button width={300} onClick={profMode}>To be as professor</Button>
-            </div>
-            }
+            {/*{store.authUser.roles && !store.authUser.roles.includes('PROFESSOR') &&*/}
+            {/*<div >*/}
+            {/*    <Button width={300} onClick={profMode}>To be as professor</Button>*/}
+            {/*</div>*/}
+            {/*}*/}
 
         </div>
     );
