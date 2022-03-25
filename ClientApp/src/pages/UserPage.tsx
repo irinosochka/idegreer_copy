@@ -18,6 +18,7 @@ import passwordIcon from '../assets/img/password-svgrepo-com.svg'
 // @ts-ignore
 import addCourseIcon from '../assets/img/add-svgrepo-com.svg'
 import EditProfileButton from "../components/EditProfile/EditProfileButton";
+import Loader from "../common/Loader";
 
 interface UserPageProps {
 }
@@ -34,6 +35,11 @@ const UserPage: FC<UserPageProps> = () => {
     const {store} = useContext(Context)
 
     const [slideItem, setSlideItem] = useState('infoProfile');
+
+    if (store.isLoading) {
+        return <div><Loader/></div>
+    }
+
 
     return (
         <div style={{display: 'flex'}}>

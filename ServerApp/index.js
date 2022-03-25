@@ -3,9 +3,10 @@ const express = require("express")
 const authRouter = require("./routers/authRouter");
 const courseRouter = require("./routers/courseRouter");
 const userRouter = require("./routers/userRouter");
+const imageRouter = require("./routers/imageRouter");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const cookieparser = require("cookie-parser");
+const cookieParser = require("cookie-parser");
 
 const PORT = process.env.PORT || 5000
 
@@ -16,10 +17,11 @@ app.use(cors({
     origin: 'http://localhost:3000'
 }))
 app.use(express.json())
-app.use(cookieparser())
+app.use(cookieParser())
 app.use('/auth', authRouter)
 app.use('/course', courseRouter)
 app.use('/user', userRouter)
+app.use('/', imageRouter)
 
 const start = async () => {
     try {

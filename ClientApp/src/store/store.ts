@@ -5,6 +5,7 @@ import CourseService from "../services/CourseService";
 import axios from "axios";
 import {AuthResponse} from "../models/response/AuthResponse";
 import UserService from "../services/UserService";
+import ImageService from "../services/ImageService";
 
 
 export default class Store {
@@ -14,6 +15,7 @@ export default class Store {
     isLoading = false;
     usersList = [] as any;
     courses = [] as any;
+    photo = '' as any;
 
     /* Errors */
     loginError = false;
@@ -189,6 +191,32 @@ export default class Store {
             return response
         } else {
             this.setUserDataChangingError(true)
+        }
+    }
+
+    async changePhoto(formData: FormData) {
+        const response = await ImageService.addPhoto(formData);
+        if (response.data.resultCode === 1) {
+            this.setAuthUser(response.data.data.user);
+            this.setUserDataChangingSuccess(true);
+            return response
+        } else {
+            this.setUserDataChangingError(true)
+        }
+    }
+
+    async getPhoto(name: string) {
+        try {
+            const response = await axios.get(`http://localhost:5000/files/${name}`, {responseType: 'arraybuffer'});
+            let binary = '';
+            const bytes = new Uint8Array(response.data);
+            const len = bytes.byteLength;
+            for (let i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            this.photo = window.btoa(binary)
+        } catch (e) {
+            console.log(e)
         }
     }
 

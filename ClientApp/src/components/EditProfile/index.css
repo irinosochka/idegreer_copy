@@ -73,6 +73,18 @@ input{
     font-weight: lighter;
 }
 
-
-
-
+.uploadButton {
+    display: block;
+    width: 140px;
+    background: #ee9a46;
+    padding: 10px;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.uploadButton div{
+    color: #00097d;
+}
