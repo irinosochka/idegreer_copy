@@ -1,4 +1,4 @@
-import React, {FC, useContext, useEffect} from 'react';
+import React, {FC, useContext} from 'react';
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
 
@@ -15,9 +15,7 @@ const PhotoMockup: FC<PhotoMockupProps> = ({size}) => {
 
     const {store} = useContext(Context)
 
-    useEffect(() => {
-        store.getPhoto('1648214443802-idegreer-visuals_produktlinie_men_560x420.jpg')
-    }, [])
+
 
     const initial = () => {
         if (store.isAuth && store.authUser.name) {
