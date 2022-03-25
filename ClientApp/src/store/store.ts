@@ -195,14 +195,7 @@ export default class Store {
     }
 
     async changePhoto(formData: FormData) {
-        const response = await ImageService.addPhoto(formData);
-        if (response.data.resultCode === 1) {
-            this.setAuthUser(response.data.data.user);
-            this.setUserDataChangingSuccess(true);
-            return response
-        } else {
-            this.setUserDataChangingError(true)
-        }
+        return await ImageService.addPhoto(formData)
     }
 
     async getPhoto(name: string) {
@@ -260,10 +253,10 @@ export default class Store {
         }
     }
 
-    async setRoleToUser(newRole: string) {
+    async setRoleToUser(userId: string, newRole: string) {
         try {
             if (!this.authUser.roles.includes(newRole)) {
-                const response = await UserService.setRoleToUser(this.authUser.username, newRole);
+                const response = await UserService.setRoleToUser(userId, newRole);
                 if (response.data.resultCode === 1) {
                     this.authUser.roles = response.data.data.user.roles
                     this.setRoleAdded(true)

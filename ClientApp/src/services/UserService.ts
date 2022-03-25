@@ -13,8 +13,8 @@ export default class UserService {
         }).catch(e => console.log('err ' + e))
     }
 
-    static setRoleToUser(username: string, newRole: string): Promise<any> {
-        return $user.post('/addNewRoleToUser', {username, newRole}).then(res => {
+    static setRoleToUser(userId: string, newRole: string): Promise<any> {
+        return $user.post('/addNewRoleToUser', {userId, newRole}).then(res => {
             return res
         }).catch(e => console.log('err ' + e))
     }

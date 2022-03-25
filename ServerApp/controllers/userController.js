@@ -12,8 +12,8 @@ class UserController {
     }
     async addNewRoleToUser(req,res) {
         try {
-            const {username, newRole} = req.body;
-            const data = await userService.setRoleToUser(username, newRole);
+            const {userId, newRole} = req.body;
+            const data = await userService.setRoleToUser(userId, newRole);
             return res.json({data, resultCode: 1})
         } catch (e) {
             return res.json({message: "Role adding error", resultCode: 0})

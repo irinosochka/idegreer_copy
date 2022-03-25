@@ -52,19 +52,19 @@ class UserService {
         }
     }
 
-    async setRoleToUser(username, roleToAdd) {
-        const user = await UserModel.findOne({username})
+    async setRoleToUser(userId, roleToAdd) {
+        const user = await UserModel.findOne({_id: userId})
         if (!user) {
             throw new Error('User with this username dont exist')
         }
         const userWithNewRole = await UserModel.updateOne({
-            username
+            _id: userId
         }, {
             $set: {
                 roles: [...user.roles, roleToAdd]
             }
         });
-        const updatedUser = await UserModel.findOne({username})
+        const updatedUser = await UserModel.findOne({_id: userId})
         if (!updatedUser) {
             throw new Error('User with this username dont exist')
         }
