@@ -5,6 +5,7 @@ import CourseService from "../services/CourseService";
 import axios from "axios";
 import {AuthResponse} from "../models/response/AuthResponse";
 import UserService from "../services/UserService";
+import ImageService from "../services/ImageService";
 
 
 export default class Store {
@@ -14,6 +15,7 @@ export default class Store {
     isLoading = false;
     usersList = [] as any;
     courses = [] as any;
+    photo = '' as any;
 
     /* Errors */
     loginError = false;
@@ -192,6 +194,25 @@ export default class Store {
         }
     }
 
+    async changePhoto(formData: FormData) {
+        return await ImageService.addPhoto(formData)
+    }
+
+    async getPhoto(name: string) {
+        try {
+            const response = await axios.get(`http://localhost:5000/files/${name}`, {responseType: 'arraybuffer'});
+            let binary = '';
+            const bytes = new Uint8Array(response.data);
+            const len = bytes.byteLength;
+            for (let i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            this.photo = window.btoa(binary)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     async addCourse(title: string, theme: string, description: string, price: string) {
         try {
             const response = await CourseService.addCourse(this.authUser.username, title, theme, description, price);
@@ -232,10 +253,10 @@ export default class Store {
         }
     }
 
-    async setRoleToUser(newRole: string) {
+    async setRoleToUser(userId: string, newRole: string) {
         try {
             if (!this.authUser.roles.includes(newRole)) {
-                const response = await UserService.setRoleToUser(this.authUser.username, newRole);
+                const response = await UserService.setRoleToUser(userId, newRole);
                 if (response.data.resultCode === 1) {
                     this.authUser.roles = response.data.data.user.roles
                     this.setRoleAdded(true)

@@ -1,8 +1,9 @@
-import React, {FC, useContext} from 'react';
+import React, {FC, useContext, useEffect} from 'react';
 import {Context} from "../../index";
+import {observer} from "mobx-react-lite";
 
 export enum sizeTypes {
-    small = '65px',
+    small = '90px',
     large = '140px'
 }
 
@@ -13,6 +14,10 @@ interface PhotoMockupProps {
 const PhotoMockup: FC<PhotoMockupProps> = ({size}) => {
 
     const {store} = useContext(Context)
+
+    useEffect(() => {
+        store.getPhoto('1648214443802-idegreer-visuals_produktlinie_men_560x420.jpg')
+    }, [])
 
     const initial = () => {
         if (store.isAuth && store.authUser.name) {
@@ -28,23 +33,27 @@ const PhotoMockup: FC<PhotoMockupProps> = ({size}) => {
         }
     };
 
+
     return (
-        <div style={{
-            borderRadius: '50%',
-            backgroundColor: '#ee9a46',
-            width: size,
-            height: size,
-            cursor: 'pointer',
-            display: 'flex',
-            marginRight: '10px',
-            margin: '0 auto',
-            fontSize: size === sizeTypes.large ? '40px' : 'normal'
-        }}>
-            <h2 style={{margin: 'auto', color: '#4d6243', fontWeight: 400}}>
-                {initial()}
-            </h2>
-        </div>
+        <>
+            <div style={{
+                borderRadius: '50%',
+                backgroundColor: '#ee9a46',
+                width: size,
+                height: size,
+                cursor: 'pointer',
+                display: 'flex',
+                marginRight: '10px',
+                margin: '0 auto',
+                fontSize: size === sizeTypes.large ? '40px' : 'normal'
+            }}>
+                {store.photo ? <img src={"data:image/png;base64," + store.photo} alt="avatar" style={{borderRadius: '50%', height: size, width: size}}/> :
+                    <h2 style={{margin: 'auto', color: '#4d6243', fontWeight: 400}}>
+                        {initial()}
+                    </h2>}
+            </div>
+        </>
     );
 };
 
-export default PhotoMockup;
+export default observer(PhotoMockup);

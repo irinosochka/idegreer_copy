@@ -21,7 +21,6 @@ const Navbar = () => {
     }
 
     const location = useLocation();
-    console.log(location)
 
     return (
         <div style={{background: '#4d6243'}}>
