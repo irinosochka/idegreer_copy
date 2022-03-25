@@ -109,6 +109,10 @@ export default class Store {
         this.courses = [...this.courses, course]
     }
 
+    setPhoto(photo: string) {
+        this.photo = photo
+    }
+
     async login(username: string, password: string) {
         const response = await AuthService.login(username, password)
         if (response.data.resultCode === 1) {
@@ -207,7 +211,7 @@ export default class Store {
             for (let i = 0; i < len; i++) {
                 binary += String.fromCharCode(bytes[i]);
             }
-            this.photo = window.btoa(binary)
+            this.setPhoto(window.btoa(binary))
         } catch (e) {
             console.log(e)
         }

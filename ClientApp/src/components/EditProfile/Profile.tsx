@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Context} from "../../index";
 
 import "./index.css"
@@ -13,7 +13,9 @@ const Profile = () => {
     //         store.setRoleToUser('PROFESSOR')
     //     }
     // };
-
+    useEffect(() => {
+        store.getPhoto('1648243003706-idegreer-visuals_produktlinie_men_560x420.jpg')
+    }, [])
     return (
         <div className="profile" style={{textAlign: 'center', verticalAlign: 'middle', paddingTop: '20px'}}>
             <div style={{display: 'inline-block'}}>
