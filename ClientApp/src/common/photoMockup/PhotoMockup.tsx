@@ -15,8 +15,6 @@ const PhotoMockup: FC<PhotoMockupProps> = ({size}) => {
 
     const {store} = useContext(Context)
 
-
-
     const initial = () => {
         if (store.isAuth && store.authUser.name) {
             const splits = store.authUser.name.split(" ");

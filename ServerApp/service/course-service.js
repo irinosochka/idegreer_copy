@@ -11,8 +11,27 @@ class CourseService {
         }
     }
 
-    async getAllCourses() {
-        return CourseModel.find()
+    async getAllCourses(limit = 0) {
+        return CourseModel.find().limit(limit)
+    }
+
+    async changeCourseData(courseId, newTitle, newTheme, newDescription, newPrice) {
+        const courseWithNewData = await CourseModel.updateOne({
+            _id: courseId
+        }, {
+            $set: {
+                title: newTitle,
+                theme: newTheme,
+                description: newDescription,
+                price: newPrice
+            }
+        });
+        const course = await CourseModel.findOne({_id: courseId})
+        // const courseDto = new CourseDto(course) //id, title, theme, desc, price, author
+        return {
+            courseWithNewData,
+            course
+        }
     }
 }
 

@@ -3,6 +3,7 @@ module.exports = class UserDto {
     id;
     name;
     email;
+    isRoleRequest;
     roles;
 
     constructor(model) {
@@ -10,6 +11,7 @@ module.exports = class UserDto {
         this.id = model._id;
         this.name = model.name;
         this.email = model.email;
+        this.isRoleRequest = model.isRoleRequest;
         this.roles = model.roles;
     }
 }

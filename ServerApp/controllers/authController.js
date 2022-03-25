@@ -53,7 +53,8 @@ class AuthController {
 
     async getUsers(req, res) {
         try {
-            return res.json(await authService.getAllUsers())
+            let users = await authService.getAllUsers(req.query.limit)
+            return res.json(users)
         } catch (e) {
             res.status(505).json({message: "No users"})
         }

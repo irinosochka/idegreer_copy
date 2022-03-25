@@ -28,6 +28,15 @@ class UserController {
             return res.json({message: "Role removing error", resultCode: 0})
         }
     }
+    async requestRoleFromAdmin(req, res) {
+        try {
+           const {userId} = req.body;
+           const data = await userService.requestRoleFromAdmin(userId);
+           return res.json({data, resultCode: 1})
+        } catch {
+           return res.json({message: "Request role error", resultCode: 0})
+        }
+    }
     async passwordChanging(req, res) {
         try {
             const {username, password, newPassword} = req.body;
@@ -37,7 +46,6 @@ class UserController {
             return res.json({message: "Password changing error", resultCode: 0})
         }
     }
-
     async getUserUsingId(req, res) {
         try {
            const id = req.params.id;

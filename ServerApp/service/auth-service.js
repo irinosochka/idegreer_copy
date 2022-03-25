@@ -62,8 +62,8 @@ class AuthService {
         }
     }
 
-    async getAllUsers() {
-        return UserModel.find();
+    async getAllUsers(limit = 0) {
+        return UserModel.find().limit(limit);
     }
 }
 

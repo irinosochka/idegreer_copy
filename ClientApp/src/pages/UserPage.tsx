@@ -54,8 +54,8 @@ const UserPage: FC<UserPageProps> = () => {
                         <EditProfileButton isActive={slideItem === UserPageSlidesItems.INFO_PROFILE} icon={profileIcon}  onClick={() => setSlideItem(UserPageSlidesItems.INFO_PROFILE)}>Profile</EditProfileButton>
                         <EditProfileButton isActive={slideItem === UserPageSlidesItems.EDIT_PROFILE} icon={editIcon} onClick={() => setSlideItem(UserPageSlidesItems.EDIT_PROFILE)}>Edit profile</EditProfileButton>
                         <EditProfileButton isActive={slideItem === UserPageSlidesItems.CHANGE_PASSWORD} icon={passwordIcon} onClick={() => setSlideItem(UserPageSlidesItems.CHANGE_PASSWORD)}>Change password</EditProfileButton>
-                        {store.authUser && store.authUser.roles.includes('PROFESSOR') &&<EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_COURSE} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ADD_COURSE)}>Add course</EditProfileButton>}
-                        {store.authUser && store.authUser.roles.includes('ADMIN') && <EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_ROLE} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ADD_ROLE)}>Add role</EditProfileButton>}
+                        {store.authUser && store.authUser.roles && store.authUser.roles.includes('PROFESSOR') &&<EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_COURSE} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ADD_COURSE)}>Add course</EditProfileButton>}
+                        {store.authUser && store.authUser.roles && store.authUser.roles.includes('ADMIN') && <EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_ROLE} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ADD_ROLE)}>Add role</EditProfileButton>}
                     </div>
                 </div>
             </div>

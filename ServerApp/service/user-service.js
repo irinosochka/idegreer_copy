@@ -79,6 +79,33 @@ class UserService {
             user: userDto
         }
     }
+    async requestRoleFromAdmin(userId) {
+        const user = await UserModel.findOne({_id: userId})
+        if (!user) {
+            throw new Error('User with this username not exists')
+        }
+        const userWithNewPassword = await UserModel.updateOne({
+            _id: userId
+        }, {
+            $set: {
+                isRoleRequest: true
+            }
+        });
+        const updatedUser = await UserModel.findOne({_id: userId})
+        if (!updatedUser) {
+            throw new Error('User with this username dont exist')
+        }
+        const userDto = new UserDto(updatedUser); //id, username, name, email, isRoleRequest, roles
+        const tokens = tokenService.generateTokens({...userDto})
+        await authService.refresh(tokens.refreshToken)
+        await tokenService.saveToken(userDto.id, tokens.refreshToken)
+
+        return {
+            userWithNewPassword,
+            ...tokens,
+            user: userDto
+        }
+    }
     async userDataChanging(username, newUsername, newName, newEmail) {
         // const user = await UserModel.findOne({username: newUsername})
         // if (user) {

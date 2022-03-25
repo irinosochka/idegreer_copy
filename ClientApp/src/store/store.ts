@@ -231,6 +231,20 @@ export default class Store {
         }
     }
 
+    async changeCourseData(courseId: string, newTitle: string, newTheme: string, newDescription: string, newPrice: string) {
+        try {
+           const response = await CourseService.changeCourseData(courseId, newTitle, newTheme, newDescription, newPrice)
+            if (response.data.resultCode === 1) {
+                return response.data.data
+            }
+            if (response.data.resultCode === 0) {
+                console.log('error')
+            }
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
     async getAllCourses() {
         try {
             const response = await CourseService.getCourses();
@@ -256,6 +270,19 @@ export default class Store {
             console.log(e)
         }
     }
+
+    async roleRequest(userId: string) {
+            try {
+                const response = await UserService.roleRequest(this.authUser._id);
+                if (response.data.resultCode === 1) {
+                    return response
+                } else {
+                    console.log('no this role on this user')
+                }
+            } catch (e) {
+                console.log(e)
+            }
+        }
 
     async setRoleToUser(userId: string, newRole: string) {
         try {
