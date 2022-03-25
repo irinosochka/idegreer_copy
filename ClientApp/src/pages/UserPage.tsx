@@ -18,7 +18,7 @@ import passwordIcon from '../assets/img/password-svgrepo-com.svg'
 // @ts-ignore
 import addCourseIcon from '../assets/img/add-svgrepo-com.svg'
 import EditProfileButton from "../components/EditProfile/EditProfileButton";
-import Loader from "../common/Loader";
+import AddRole from "../components/AdminPanel/AddRole";
 
 interface UserPageProps {
 }
@@ -27,7 +27,8 @@ export enum UserPageSlidesItems {
     EDIT_PROFILE = 'editProfile',
     CHANGE_PASSWORD = 'changePassword',
     ADD_COURSE = 'addCourse',
-    INFO_PROFILE = 'infoProfile'
+    INFO_PROFILE = 'infoProfile',
+    ADD_ROLE = 'addRole'
 }
 
 const UserPage: FC<UserPageProps> = () => {
@@ -35,11 +36,6 @@ const UserPage: FC<UserPageProps> = () => {
     const {store} = useContext(Context)
 
     const [slideItem, setSlideItem] = useState('infoProfile');
-
-    if (store.isLoading) {
-        return <div><Loader/></div>
-    }
-
 
     return (
         <div style={{display: 'flex'}}>
@@ -58,7 +54,8 @@ const UserPage: FC<UserPageProps> = () => {
                         <EditProfileButton isActive={slideItem === UserPageSlidesItems.INFO_PROFILE} icon={profileIcon}  onClick={() => setSlideItem(UserPageSlidesItems.INFO_PROFILE)}>Profile</EditProfileButton>
                         <EditProfileButton isActive={slideItem === UserPageSlidesItems.EDIT_PROFILE} icon={editIcon} onClick={() => setSlideItem(UserPageSlidesItems.EDIT_PROFILE)}>Edit profile</EditProfileButton>
                         <EditProfileButton isActive={slideItem === UserPageSlidesItems.CHANGE_PASSWORD} icon={passwordIcon} onClick={() => setSlideItem(UserPageSlidesItems.CHANGE_PASSWORD)}>Change password</EditProfileButton>
-                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_COURSE} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ADD_COURSE)}>Add course</EditProfileButton>
+                        {store.authUser && store.authUser.roles.includes('PROFESSOR') &&<EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_COURSE} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ADD_COURSE)}>Add course</EditProfileButton>}
+                        {store.authUser && store.authUser.roles.includes('ADMIN') && <EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_ROLE} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ADD_ROLE)}>Add role</EditProfileButton>}
                     </div>
                 </div>
             </div>
@@ -70,6 +67,8 @@ const UserPage: FC<UserPageProps> = () => {
                         {slideItem === UserPageSlidesItems.CHANGE_PASSWORD && <ChangePassword/>}
                         {slideItem === UserPageSlidesItems.ADD_COURSE && store.authUser && store.authUser.roles.includes('PROFESSOR') &&
                             <AddCourse/>}
+                        {slideItem === UserPageSlidesItems.ADD_ROLE && store.authUser && store.authUser.roles.includes('ADMIN') &&
+                        <AddRole/>}
                     </div>
                 </div>
             </div>
