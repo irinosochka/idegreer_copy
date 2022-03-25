@@ -22,7 +22,7 @@ const EditProfile = () => {
     const handleSubmit = (event: any) => {
         event.preventDefault();
         const formData = new FormData();
-        formData.append('file', image!, store.authUser.id + '-' + image?.name)
+        formData.append('file', image!)
         if (username.length !== 0 && name.length !== 0 && email.length !== 0) {
             store.userDataChanging(username, name, email);
             store.changePhoto(formData)
