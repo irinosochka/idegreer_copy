@@ -9,13 +9,19 @@ type ThunkType = BaseThunkType<ActionsType>
 
 const INITIAL_STATE = {
     roleExistInThisUser: false,
-    roleAdded: false,
+    roleAdded: null as boolean | null,
     roleRemoved: false,
     rolePleaserSuccess: false
 }
 
 const roleReducer = (state = INITIAL_STATE, action: ActionsType): InitialStateType => {
     switch (action.type) {
+        case "SET_ROLE_ADDED": {
+            return {
+                ...state,
+                roleAdded: action.payload
+            }
+        }
         case "SET_ROLE_PLEASER_SUCCESS": {
             return {
                 ...state,
@@ -69,8 +75,7 @@ export const setRoleToUser = (user: IUser, newRole: string): ThunkType =>
             if (!user.roles.includes(newRole)) {
                 const response = await UserService.setRoleToUser(user._id, newRole);
                 if (response.data.resultCode === 1) {
-                    // this.authUser.roles = response.data.data.user.roles
-                    // this.setRoleAdded(true)
+                    dispatch(actions.setRoleAdded(true))
                     return response;
                 } else {
                     console.log('Role was not added')
