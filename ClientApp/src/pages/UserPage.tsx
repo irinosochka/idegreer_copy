@@ -20,6 +20,7 @@ import AddRole from "../components/AdminPanel/AddRole";
 import {AppStateType} from "../reduxStore/store";
 import {connect} from "react-redux";
 import {IUser} from "../models/IUser";
+import RoleRequestList from "../components/EditProfile/RoleRequestList";
 
 interface UserPageProps {
     authUser: IUser
@@ -30,7 +31,8 @@ export enum UserPageSlidesItems {
     CHANGE_PASSWORD = 'changePassword',
     ADD_COURSE = 'addCourse',
     INFO_PROFILE = 'infoProfile',
-    ADD_ROLE = 'addRole'
+    ADD_ROLE = 'addRole',
+    ROLE_REQUEST = 'roleRequest'
 }
 
 const UserPage: FC<UserPageProps> = ({authUser}) => {
@@ -56,6 +58,7 @@ const UserPage: FC<UserPageProps> = ({authUser}) => {
                         <EditProfileButton isActive={slideItem === UserPageSlidesItems.CHANGE_PASSWORD} icon={passwordIcon} onClick={() => setSlideItem(UserPageSlidesItems.CHANGE_PASSWORD)}>Change password</EditProfileButton>
                         {authUser && authUser.roles && authUser.roles.includes('PROFESSOR') &&<EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_COURSE} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ADD_COURSE)}>Add course</EditProfileButton>}
                         {authUser && authUser.roles && authUser.roles.includes('ADMIN') && <EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_ROLE} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ADD_ROLE)}>Add role</EditProfileButton>}
+                        {authUser && authUser.roles && authUser.roles.includes('ADMIN') && <EditProfileButton isActive={slideItem === UserPageSlidesItems.ROLE_REQUEST} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ROLE_REQUEST)}>Role request</EditProfileButton>}
                     </div>
                 </div>
             </div>
@@ -69,6 +72,10 @@ const UserPage: FC<UserPageProps> = ({authUser}) => {
                             <AddCourse/>}
                         {slideItem === UserPageSlidesItems.ADD_ROLE && authUser && authUser.roles.includes('ADMIN') &&
                         <AddRole/>}
+                        <div style={{marginTop: '30px', marginLeft: '50px', justifyContent: 'start'}}>
+                            {slideItem === UserPageSlidesItems.ROLE_REQUEST && authUser && authUser.roles.includes('ADMIN') &&
+                                <RoleRequestList/>}
+                        </div>
                     </div>
                 </div>
             </div>

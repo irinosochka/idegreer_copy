@@ -111,5 +111,18 @@ export const passwordChanging = (user: IUser, lastPassword: string, newPassword:
         }
     }
 
+export const changeUserRoleRequest = (userId: string): ThunkType =>
+    async () => {
+        try {
+            const response = await UserService.changeUserRoleRequest(userId);
+            if (response.data.resultCode === 1) {
+                return response
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
 
 export default userReducer;

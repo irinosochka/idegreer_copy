@@ -105,7 +105,8 @@ export const getAllCourses = (): ThunkType =>
             console.log(e);
         }
     }
-export const getOneCourses = (courseId: string): ThunkType =>
+
+export const getOneCourse = (courseId: string): ThunkType =>
     async (dispatch: Dispatch<any>) => {
         try {
             const response = await CourseService.getCourse(courseId);

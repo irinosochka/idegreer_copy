@@ -46,6 +46,15 @@ class UserController {
             return res.json({message: "Password changing error", resultCode: 0})
         }
     }
+    async changeUserRoleRequest(req, res) {
+        try {
+            const {userId} = req.body;
+            const data = await userService.changeUserRoleRequest(userId);
+            return res.json({data, resultCode: 1})
+        } catch (e) {
+            return res.json({message: "Change user role request", resultCode: 0})
+        }
+    }
     async getUserUsingId(req, res) {
         try {
            const id = req.params.id;

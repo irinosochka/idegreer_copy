@@ -3,5 +3,6 @@ export interface IUser {
     _id: string;
     email: string;
     name: string;
+    isRoleRequest: boolean;
     roles: Array<string>
 }

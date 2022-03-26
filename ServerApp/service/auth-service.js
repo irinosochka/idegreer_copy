@@ -14,7 +14,7 @@ class AuthService {
         const user = await UserModel.create({username, password: hashPassword, name, email: email, roles: ['STUDENT']})
         const userDto = new UserDto(user); //id, username, name, email, roles
         const tokens = tokenService.generateTokens({...userDto})
-        await tokenService.saveToken(userDto.id, tokens.refreshToken)
+        await tokenService.saveToken(userDto._id, tokens.refreshToken)
 
         return {
             ...tokens,
@@ -33,7 +33,7 @@ class AuthService {
         }
         const userDto = new UserDto(user);
         const tokens = tokenService.generateTokens({...userDto});
-        await tokenService.saveToken(userDto.id, tokens.refreshToken)
+        await tokenService.saveToken(userDto._id, tokens.refreshToken)
 
         return {
             ...tokens,
@@ -51,10 +51,10 @@ class AuthService {
         }
         const userData = await tokenService.validateRefreshToken(refreshToken)
         // const tokenFromDb = await tokenService.findToken(refreshToken)
-        const user = await UserModel.findById(userData.id)
+        const user = await UserModel.findById(userData._id)
         const userDto = new UserDto(user);
         const tokens = tokenService.generateTokens({...userDto});
-        await tokenService.saveToken(userDto.id, tokens.refreshToken)
+        await tokenService.saveToken(userDto._id, tokens.refreshToken)
 
         return {
             ...tokens,

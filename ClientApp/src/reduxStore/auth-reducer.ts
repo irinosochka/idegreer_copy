@@ -120,7 +120,6 @@ export const logout = (): ThunkType => {
     }
 }
 
-
 export const userDataChanging = (user: IUser, newUsername: string, newName: string, newEmail: string): ThunkType =>
     async (dispatch: Dispatch<any>) => {
         const response = await UserService.userDataChanging(user.username, newUsername, newName, newEmail);

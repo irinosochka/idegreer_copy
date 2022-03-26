@@ -43,7 +43,7 @@ class UserService {
         const userDto = new UserDto(updatedUser); //id, username, name, email, roles
         const tokens = tokenService.generateTokens({...userDto})
         await authService.refresh(tokens.refreshToken)
-        await tokenService.saveToken(userDto.id, tokens.refreshToken)
+        await tokenService.saveToken(userDto._id, tokens.refreshToken)
 
         return {
             userWithNewRole,
@@ -71,7 +71,7 @@ class UserService {
         const userDto = new UserDto(updatedUser); //id, username, name, email, roles
         const tokens = tokenService.generateTokens({...userDto})
         await authService.refresh(tokens.refreshToken)
-        await tokenService.saveToken(userDto.id, tokens.refreshToken)
+        await tokenService.saveToken(userDto._id, tokens.refreshToken)
 
         return {
             userWithNewRole,
@@ -84,7 +84,7 @@ class UserService {
         if (!user) {
             throw new Error('User with this username not exists')
         }
-        const userWithNewPassword = await UserModel.updateOne({
+        const userWithNewRoleRequest = await UserModel.updateOne({
             _id: userId
         }, {
             $set: {
@@ -95,15 +95,10 @@ class UserService {
         if (!updatedUser) {
             throw new Error('User with this username dont exist')
         }
-        const userDto = new UserDto(updatedUser); //id, username, name, email, isRoleRequest, roles
-        const tokens = tokenService.generateTokens({...userDto})
-        await authService.refresh(tokens.refreshToken)
-        await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
         return {
-            userWithNewPassword,
-            ...tokens,
-            user: userDto
+            userWithNewRoleRequest,
+            user: updatedUser
         }
     }
     async userDataChanging(username, newUsername, newName, newEmail) {
@@ -131,7 +126,7 @@ class UserService {
         const userDto = new UserDto(updatedUser); //id, username, name, email, roles
         const tokens = tokenService.generateTokens({...userDto})
         await authService.refresh(tokens.refreshToken)
-        await tokenService.saveToken(userDto.id, tokens.refreshToken)
+        await tokenService.saveToken(userDto._id, tokens.refreshToken)
 
         return {
             userWithNewPassword,
@@ -147,6 +142,26 @@ class UserService {
         }
         return {
             user
+        }
+    }
+
+    async changeUserRoleRequest(id) {
+        const user = await UserModel.findOne({_id: id})
+        if (!user) {
+            throw new Error('User with this username dont exist')
+        }
+        const userWithNewPassword = await UserModel.updateOne({
+            _id: id
+        }, {
+            $set: {
+                isRoleRequest: false
+            }
+        });
+        const updatedUser = await UserModel.findOne({_id: id})
+
+        return {
+            userWithNewPassword,
+            updatedUser
         }
     }
 }
