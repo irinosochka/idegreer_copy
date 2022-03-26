@@ -1,6 +1,4 @@
-import React, {FC, useContext, useEffect} from 'react';
-import {Context} from "./index";
-import {observer} from "mobx-react-lite";
+import React, {FC, useEffect} from 'react';
 import './App.css'
 import {Route, Routes, useNavigate} from 'react-router-dom';
 import MainPage from "./pages/MainPage";
@@ -8,31 +6,39 @@ import AuthPage from "./pages/AuthPage";
 import UserPage from "./pages/UserPage";
 import Navbar from "./components/Navbar/Navbar";
 import Loader from "./common/Loader";
+import {connect} from "react-redux";
+import {AppStateType} from "./reduxStore/store";
+import {checkAuth} from "./reduxStore/auth-reducer";
 
-const App: FC = observer(() => {
-        const {store} = useContext(Context)
+interface AppProps {
+    isAuth: boolean,
+    isLoading: boolean,
+    checkAuth: () => void
+}
+
+const App: FC<AppProps> = ({isAuth, isLoading, checkAuth}) => {
 
         const navigate = useNavigate()
 
         useEffect(() => {
             if (localStorage.getItem('token')) {
-                store.checkAuth()
+                checkAuth()
             }
         }, []);
 
         useEffect(() => {
-            if (!store.isAuth && !store.isLoading) {
+            if (!isAuth && !isLoading) {
                 navigate('/auth');
             }
-        }, [store.isAuth]);
+        }, [isAuth]);
 
-        if (store.isLoading) {
+        if (isLoading) {
             return <div><Loader/></div>
         }
 
         return (
             <div>
-                {store.isAuth && <Navbar/>}
+                {isAuth && <Navbar/>}
                 <Routes>
                     <Route path={'/'} element={<MainPage/>}/>
                     <Route path={'/auth'} element={<AuthPage/>}/>
@@ -42,6 +48,13 @@ const App: FC = observer(() => {
             </div>
         );
     }
-)
 
-export default App;
+
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        isAuth: state.auth.isAuth,
+        isLoading: state.auth.isLoading
+    }
+}
+
+export default connect(mapStateToProps, {checkAuth})(App);

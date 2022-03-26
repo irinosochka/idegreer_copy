@@ -1,12 +1,23 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {Context} from "../../index";
+import React, {FC, useEffect, useState} from 'react';
 
 import "./index.css"
-import {observer} from "mobx-react-lite";
 import Button from "../../common/button/Button";
 import Message, {MessageType} from "../../common/Messages/Message";
+import {connect} from "react-redux";
+import {AppStateType} from "../../reduxStore/store";
+import {actions} from "../../reduxStore/auth-reducer";
+import {actions as userActions, passwordChanging} from "../../reduxStore/user-reducer";
+import {IUser} from "../../models/IUser";
 
-const ChangePassword = () => {
+interface ChangePasswordProps {
+    authUser: IUser,
+    passwordChanging: (user: IUser, currentPassword: string, firstPassword: string) => Promise<void>,
+    passwordChangingSuccess: boolean,
+    setPasswordChangingSuccess: (bool: boolean) => void,
+    setRegistrationError:  (bool: boolean) => void
+}
+
+const ChangePassword: FC<ChangePasswordProps> = ({authUser, passwordChanging, setPasswordChangingSuccess, passwordChangingSuccess, setRegistrationError}) => {
 
     const [currentPassword, setCurrentPassword] = useState('');
     const [firstPassword, setFirstPassword] = useState('');
@@ -14,10 +25,9 @@ const ChangePassword = () => {
     const [repeatPasswordError, setRepeatPasswordError] = useState(false);
     const [emptyError, setEmptyError] = useState(false);
     const [badPasswordLengthError, setBadPasswordLengthError] = useState(false);
-    const {store} = useContext(Context);
 
     useEffect(() => {
-        return () => store.setPasswordChangingSuccess(false);
+        return () => setPasswordChangingSuccess(false);
     }, []);
 
     const clearFields = () => {
@@ -33,7 +43,7 @@ const ChangePassword = () => {
                 if(firstPassword.length < 9) {
                     setBadPasswordLengthError(true)
                 } else {
-                    store.passwordChanging(currentPassword, firstPassword);
+                    passwordChanging(authUser, currentPassword, firstPassword);
                     clearFields();
                 }
             }else{
@@ -49,15 +59,15 @@ const ChangePassword = () => {
             {emptyError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
             {!emptyError && repeatPasswordError && <Message type={MessageType.ERROR}>Password should be the same</Message>}
             {badPasswordLengthError && <Message type={MessageType.ERROR}>Password length should be more than 8 signs</Message>}
-            {store.passwordChangingSuccess && <Message type={MessageType.SUCCESS}>Success</Message>}
+            {passwordChangingSuccess && <Message type={MessageType.SUCCESS}>Success</Message>}
             <form onSubmit={handleSubmit}>
                 <input
                     onChange={(event) => {
                         setCurrentPassword(event.target.value);
                         setEmptyError(false);
                         setRepeatPasswordError(false);
-                        store.setRegistrationError(false);
-                        store.setPasswordChangingSuccess(false);
+                        setRegistrationError(false);
+                        setPasswordChangingSuccess(false);
                     }}
                     value={currentPassword}
                     type="password"
@@ -68,9 +78,9 @@ const ChangePassword = () => {
                         setFirstPassword(event.target.value);
                         setEmptyError(false);
                         setRepeatPasswordError(false);
-                        store.setRegistrationError(false);
+                        setRegistrationError(false);
                         setBadPasswordLengthError(false);
-                        store.setPasswordChangingSuccess(false);
+                        setPasswordChangingSuccess(false);
                     }}
                     value={firstPassword}
                     type="password"
@@ -81,9 +91,9 @@ const ChangePassword = () => {
                         setSecondPassword(event.target.value);
                         setEmptyError(false);
                         setRepeatPasswordError(false);
-                        store.setRegistrationError(false);
+                        setRegistrationError(false);
                         setBadPasswordLengthError(false);
-                        store.setPasswordChangingSuccess(false);
+                        setPasswordChangingSuccess(false);
                     }}
                     value={secondPassword}
                     type="password"
@@ -95,4 +105,10 @@ const ChangePassword = () => {
     );
 };
 
-export default observer(ChangePassword);
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        authUser: state.auth.authUser,
+        passwordChangingSuccess: state.user.passwordChangingSuccess,
+    }
+}
+export default connect(mapStateToProps, {passwordChanging, setPasswordChangingSuccess: userActions.setPasswordChangingSuccess, setPasswordChangingError: userActions.setPasswordChangingError ,setRegistrationError: actions.setRegistrationError})(ChangePassword);

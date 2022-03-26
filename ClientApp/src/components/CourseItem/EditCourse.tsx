@@ -1,26 +1,26 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
-import {observer} from "mobx-react-lite";
 import "../AdminPanel/index.css";
 // @ts-ignore
 import editIcon from "../../assets/img/edit-svgrepo-com.svg"
-import {Context} from "../../index";
+import {AppStateType} from "../../reduxStore/store";
+import {connect} from "react-redux";
+import {getAllCourses} from "../../reduxStore/course-reducer";
+import {ICourse} from "../../models/ICourse";
 
 
+interface EditCourseProps {
+    courses: ICourse[],
+    getAllCourses: () => void
+}
 
-const EditCourse: React.FC = () => {
+const EditCourse: React.FC<EditCourseProps> = ({courses, getAllCourses}) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [showCourse, setShowCourse] = useState(false);
 
     useEffect(() => {
-        store.getAllCourses()
+        getAllCourses()
     }, []);
-
-    const {store} = useContext(Context);
-
-    // const addRole = () => {
-    //     //
-    // };
 
     return (
         <div>
@@ -38,11 +38,11 @@ const EditCourse: React.FC = () => {
             </div>
 
             <div className="body">
-                {showCourse && store.courses.length?.length === 0 && (
+                {showCourse && courses.length === 0 && (
                     <div className="notFound">No Courses Found</div>
                 )}
 
-                {store.courses?.filter((course: any ) => {
+                {courses?.filter((course: any ) => {
                     if (searchTerm == "") {
                         return course;
                     } else if(course.title.toLowerCase().includes(searchTerm.toLowerCase())){
@@ -67,5 +67,9 @@ const EditCourse: React.FC = () => {
         </div>
     )
 }
-
-export default observer(EditCourse);
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        courses: state.course.courses
+    }
+}
+export default connect(mapStateToProps, {getAllCourses})(EditCourse);

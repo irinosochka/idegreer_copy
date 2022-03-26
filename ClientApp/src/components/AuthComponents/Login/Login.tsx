@@ -1,25 +1,31 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {FC, useEffect, useState} from 'react'
 import "../index.scss"
-import {Context} from "../../../index";
-import {observer} from "mobx-react-lite";
 import Button from "../../../common/button/Button";
 import Message, {MessageType} from "../../../common/Messages/Message";
+import {connect} from "react-redux";
+import {AppStateType} from "../../../reduxStore/store";
+import {actions, login} from "../../../reduxStore/auth-reducer";
 
-const Login = () => {
+
+interface LoginProps {
+    loginError: boolean,
+    setLoginError: (bool: boolean) => void,
+    login: (username: string, password: string) => void
+}
+
+const Login: FC<LoginProps> = ({login, setLoginError, loginError}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [isError, setError] = useState(false);
 
-    const {store} = useContext(Context);
-
     useEffect(() => {
-        store.setLoginError(false)
+        setLoginError(false)
     }, []);
 
     const handleSubmit = (event: React.FormEvent<EventTarget>): void => {
         event.preventDefault();
         if (password.length !== 0 && username.length !== 0) {
-            store.login(username, password)
+            login(username, password)
         } else {
             setError(true);
         }
@@ -32,7 +38,7 @@ const Login = () => {
                     onChange={(event) => {
                         setUsername(event.target.value);
                         setError(false);
-                        store.setLoginError(false);
+                        setLoginError(false);
                     }}
                     value={username}
                     type="text"
@@ -42,7 +48,7 @@ const Login = () => {
                     onChange={(event) => {
                         setPassword(event.target.value);
                         setError(false);
-                        store.setLoginError(false);
+                        setLoginError(false);
                     }}
                     value={password}
                     type="password"
@@ -50,10 +56,16 @@ const Login = () => {
                 />
                 <Button>SIGN IN</Button>
                 {isError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
-                {store.loginError && <Message type={MessageType.ERROR}>Username or password are wrong</Message>}
+                {loginError && <Message type={MessageType.ERROR}>Username or password are wrong</Message>}
             </form>
         </>
     )
 }
 
-export default observer(Login)
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        loginError: state.auth.loginError,
+    }
+}
+
+export default connect(mapStateToProps, {setLoginError: actions.setLoginError, login})(Login)

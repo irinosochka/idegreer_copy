@@ -1,21 +1,28 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {Context} from "../../index";
+import React, {FC, useEffect, useState} from 'react';
+import {AppStateType} from "../../reduxStore/store";
+import {connect} from "react-redux";
+import {getAllUsers} from "../../reduxStore/user-reducer";
+import {IUser} from "../../models/IUser";
 
-const AdminPanel = () => {
+interface AdminPanelProps {
+    usersList: IUser[],
+    getAllUsers: () => void
+}
+
+const AdminPanel: FC<AdminPanelProps> = ({getAllUsers, usersList}) => {
 
     const [showUsers, setShowUsers] = useState(false);
 
     useEffect(() => {
-        store.getAllUsers()
+        getAllUsers()
     }, []);
 
-    const {store} = useContext(Context);
 
     return (
         <>
             <button onClick={() => setShowUsers(!showUsers)}>Show users</button>
-            {showUsers && store.usersList.length > 0 && <ul>
-                {store.usersList.map((user: any, index: number) => {
+            {showUsers && usersList.length > 0 && <ul>
+                {usersList.map((user: any, index: number) => {
                     return <li key={index}>{user.username}</li>
                 })}
             </ul>}
@@ -23,4 +30,10 @@ const AdminPanel = () => {
     );
 };
 
-export default AdminPanel;
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        usersList: state.user.usersList
+    }
+}
+
+export default connect(mapStateToProps, {getAllUsers})(AdminPanel);

@@ -1,22 +1,25 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import Login from "../components/AuthComponents/Login/Login";
 import Registration from "../components/AuthComponents/Registration/Registration";
-import {observer} from "mobx-react-lite";
 import {useNavigate} from "react-router-dom";
-import {Context} from "../index";
 import './authPage.css'
+import {AppStateType} from "../reduxStore/store";
+import {connect} from "react-redux";
 
-const AuthPage = () => {
+interface AuthPageProps {
+    isAuth: boolean
+}
+
+const AuthPage: FC<AuthPageProps> = ({isAuth}) => {
     const [isLogin, setLogin] = useState(true);
 
-    const {store} = useContext(Context);
     const navigator = useNavigate()
 
     useEffect(() => {
-        if (store.isAuth) {
+        if (isAuth) {
             navigator('/')
         }
-    }, [store.isAuth]);
+    }, [isAuth]);
 
     return (
         <div className={'auth__wrapper'}>
@@ -47,4 +50,10 @@ const AuthPage = () => {
     );
 };
 
-export default observer(AuthPage)
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        isAuth: state.auth.isAuth
+    }
+}
+
+export default connect(mapStateToProps, {})(AuthPage)

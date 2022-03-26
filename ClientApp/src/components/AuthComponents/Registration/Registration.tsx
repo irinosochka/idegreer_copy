@@ -1,11 +1,18 @@
-import React, {useContext, useState} from 'react';
-import {Context} from "../../../index";
+import React, {FC, useState} from 'react';
 import '../index.scss';
-import {observer} from "mobx-react-lite";
 import Button from "../../../common/button/Button";
 import Message, {MessageType} from "../../../common/Messages/Message";
+import {connect} from "react-redux";
+import {AppStateType} from "../../../reduxStore/store";
+import {actions, registration} from "../../../reduxStore/auth-reducer";
 
-const Registration = () => {
+interface RegistrationProps {
+    registration: (username: string, firstPassword: string, name: string, email: string) => void,
+    setRegistrationError: (bool:boolean) => void,
+    registrationError: boolean
+}
+
+const Registration: FC<RegistrationProps> = ({registration, setRegistrationError, registrationError}) => {
     const [username, setUsername] = useState('');
     const [firstPassword, setFirstPassword] = useState('');
     const [secondPassword, setSecondPassword] = useState('');
@@ -17,7 +24,6 @@ const Registration = () => {
     const [repeatPasswordError, setRepeatPasswordError] = useState(false);
     const [badPasswordLengthError, setBadPasswordLengthError] = useState(false);
 
-    const {store} = useContext(Context);
 
     const handleSubmit = (event: React.FormEvent<EventTarget>): void => {
         event.preventDefault();
@@ -26,7 +32,7 @@ const Registration = () => {
                 if (firstPassword.length < 9) {
                     setBadPasswordLengthError(true)
                 } else {
-                    store.registration(username, firstPassword, name, email)
+                    registration(username, firstPassword, name, email)
                 }
             } else {
                 setRepeatPasswordError(true)
@@ -43,7 +49,7 @@ const Registration = () => {
                     onChange={(event) => {
                         setName(event.target.value);
                         setEmptyError(false);
-                        store.setRegistrationError(false);
+                        setRegistrationError(false);
                     }}
                     value={name}
                     type="text"
@@ -53,7 +59,7 @@ const Registration = () => {
                     onChange={(event) => {
                         setEmail(event.target.value);
                         setEmptyError(false);
-                        store.setRegistrationError(false);
+                        setRegistrationError(false);
                     }}
                     value={email}
                     type="email"
@@ -63,7 +69,7 @@ const Registration = () => {
                     onChange={(event) => {
                         setUsername(event.target.value);
                         setEmptyError(false);
-                        store.setRegistrationError(false);
+                        setRegistrationError(false);
                     }}
                     value={username}
                     type="text"
@@ -74,7 +80,7 @@ const Registration = () => {
                         setFirstPassword(event.target.value);
                         setEmptyError(false);
                         setRepeatPasswordError(false);
-                        store.setRegistrationError(false);
+                        setRegistrationError(false);
                         setBadPasswordLengthError(false);
                     }}
                     value={firstPassword}
@@ -86,7 +92,7 @@ const Registration = () => {
                         setSecondPassword(event.target.value);
                         setEmptyError(false);
                         setRepeatPasswordError(false);
-                        store.setRegistrationError(false);
+                        setRegistrationError(false);
                         setBadPasswordLengthError(false);
                     }}
                     value={secondPassword}
@@ -97,10 +103,16 @@ const Registration = () => {
                 {emptyError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
                 {!emptyError && repeatPasswordError && <Message type={MessageType.ERROR}>Password should be the same</Message>}
                 {badPasswordLengthError && <Message type={MessageType.ERROR}>Password length should be more than 8 signs</Message>}
-                {store.registrationError && <Message type={MessageType.ERROR}>User exists</Message>}
+                {registrationError && <Message type={MessageType.ERROR}>User exists</Message>}
             </form>
         </>
     );
 };
 
-export default observer(Registration);
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        registrationError: state.auth.registrationError
+    }
+}
+
+export default connect(mapStateToProps, {setRegistrationError: actions.setRegistrationError, registration})(Registration);

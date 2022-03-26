@@ -1,6 +1,7 @@
-import React, {FC, useContext} from 'react';
-import {Context} from "../../index";
-import {observer} from "mobx-react-lite";
+import React, {FC} from 'react';
+import {connect} from "react-redux";
+import {AppStateType} from "../../reduxStore/store";
+import {IUser} from "../../models/IUser";
 
 export enum sizeTypes {
     small = '90px',
@@ -8,16 +9,18 @@ export enum sizeTypes {
 }
 
 interface PhotoMockupProps {
-    size: sizeTypes
+    size: sizeTypes,
+    isAuth: boolean,
+    authUser: IUser,
+    photo: string
 }
 
-const PhotoMockup: FC<PhotoMockupProps> = ({size}) => {
+const PhotoMockup: FC<PhotoMockupProps> = ({size, photo, authUser, isAuth}) => {
 
-    const {store} = useContext(Context)
 
     const initial = () => {
-        if (store.isAuth && store.authUser.name) {
-            const splits = store.authUser.name.split(" ");
+        if (isAuth && authUser.name) {
+            const splits = authUser.name.split(" ");
             let stringResult = "";
 
             for (let i = 0; i < splits.length; i++) {
@@ -43,7 +46,7 @@ const PhotoMockup: FC<PhotoMockupProps> = ({size}) => {
                 margin: '0 auto',
                 fontSize: size === sizeTypes.large ? '40px' : 'normal'
             }}>
-                {store.photo ? <img src={"data:image/png;base64," + store.photo} alt="avatar" style={{borderRadius: '50%', height: size, width: size}}/> :
+                {photo ? <img src={"data:image/png;base64," + photo} alt="avatar" style={{borderRadius: '50%', height: size, width: size}}/> :
                     <h2 style={{margin: 'auto', color: '#4d6243', fontWeight: 400}}>
                         {initial()}
                     </h2>}
@@ -52,4 +55,12 @@ const PhotoMockup: FC<PhotoMockupProps> = ({size}) => {
     );
 };
 
-export default observer(PhotoMockup);
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        isAuth: state.auth.isAuth,
+        authUser: state.auth.authUser,
+        photo: state.file.photo
+    }
+}
+
+export default connect(mapStateToProps, {})(PhotoMockup);

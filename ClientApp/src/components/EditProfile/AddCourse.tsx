@@ -1,12 +1,17 @@
-import React, {FC, useContext, useState} from 'react';
+import React, {FC, useState} from 'react';
 import Button from "../../common/button/Button";
-import {Context} from "../../index";
 import Message, {MessageType} from "../../common/Messages/Message";
+import {connect} from "react-redux";
+import {addCourse} from "../../reduxStore/course-reducer";
+import {IUser} from "../../models/IUser";
+import {AppStateType} from "../../reduxStore/store";
 
 interface AddCourseProps {
+    authUser: IUser,
+    addCourse: (user: string, courseName: string, courseTopic: string, courseDescription: string, coursePrice: string) => Promise<void>
 }
 
-const AddCourse: FC<AddCourseProps> = () => {
+const AddCourse: FC<AddCourseProps> = ({authUser, addCourse}) => {
     const [courseName, setCourseName] = useState('');
     const [courseTopic, setCourseTopic] = useState('');
     const [courseDescription, setCourseDescription] = useState('');
@@ -14,12 +19,11 @@ const AddCourse: FC<AddCourseProps> = () => {
     const [emptyError, setEmptyError] = useState(false);
     const [successAddCourse, setSuccessAddCourse] = useState(false);
 
-    const {store} = useContext(Context)
 
     const onAddCourseHandler = (event:React.FormEvent<EventTarget>) => {
         event.preventDefault();
         if (courseName.length !==0 && courseTopic.length !== 0 && courseDescription.length !==0 && coursePrice.length !== 0) {
-            store.addCourse(courseName, courseTopic, courseDescription, coursePrice);
+            addCourse(authUser._id, courseName, courseTopic, courseDescription, coursePrice);
             setSuccessAddCourse(true);
             setCourseName('');
             setCourseTopic('');
@@ -90,4 +94,10 @@ const AddCourse: FC<AddCourseProps> = () => {
     );
 };
 
-export default AddCourse;
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        authUser: state.auth.authUser
+    }
+}
+
+export default connect(mapStateToProps, {addCourse})(AddCourse);

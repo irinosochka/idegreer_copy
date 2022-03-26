@@ -1,7 +1,5 @@
-import React, {useContext} from 'react';
-import {Context} from "../../index";
+import React, {FC} from 'react';
 import {NavLink, useLocation, useNavigate} from "react-router-dom";
-import {observer} from "mobx-react-lite";
 
 /* IMG */
 // @ts-ignore
@@ -10,15 +8,16 @@ import logoutIcon from '../../assets/img/logout-svgrepo-com.svg'
 import homeIcon from '../../assets/img/home-svgrepo-com.svg'
 // @ts-ignore
 import profileIcon from '../../assets/img/user-profile-svgrepo-com.svg'
+import {connect} from "react-redux";
+import {logout} from "../../reduxStore/auth-reducer";
 
-const Navbar = () => {
+interface NavbarProps {
+    logout: () => void
+}
 
-    const {store} = useContext(Context);
+const Navbar: FC<NavbarProps> = ({logout}) => {
+
     const navigator = useNavigate();
-
-    const logout = () => {
-        store.logout();
-    }
 
     const location = useLocation();
 
@@ -59,4 +58,4 @@ const Navbar = () => {
     );
 };
 
-export default observer(Navbar);
+export default connect(null, {logout})(Navbar);

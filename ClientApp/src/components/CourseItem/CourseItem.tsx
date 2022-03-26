@@ -1,31 +1,15 @@
-import React, {FC, useContext, useEffect, useState} from 'react';
+import React, {FC} from 'react';
 import '../AuthComponents/index.scss';
 
 // @ts-ignore
 import reactLogo from '../../assets/img/react-logo.png'
 import {ICourse} from "../../models/ICourse";
-import {Context} from "../../index";
-import {IUser} from "../../models/IUser";
-import {observer} from "mobx-react-lite";
 
 interface CourseItemProps {
     course: ICourse
 }
 
 const CourseItem: FC<CourseItemProps> = ({course}) => {
-
-    const {store} = useContext(Context)
-
-    // const [author, setAuthor] = useState<IUser>()
-    //
-    // useEffect(() => {
-    //     authorIdConvert(course.author)
-    // }, [])
-    //
-    // const authorIdConvert = async (id: string) => {
-    //     const response = await store.getUser(id);
-    //     setAuthor(response.user)
-    // }
 
     return (
         <div className={'item__wrapper'}>
@@ -47,4 +31,4 @@ const CourseItem: FC<CourseItemProps> = ({course}) => {
     );
 };
 
-export default observer(CourseItem);
+export default CourseItem;

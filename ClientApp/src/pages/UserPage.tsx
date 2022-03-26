@@ -1,9 +1,7 @@
-import React, {FC, useContext, useState} from 'react';
-import {observer} from "mobx-react-lite";
+import React, {FC, useState} from 'react';
 import EditProfile from "../components/EditProfile/EditProfile";
 import ChangePassword from "../components/EditProfile/ChangePassword";
 import AddCourse from "../components/EditProfile/AddCourse";
-import {Context} from "../index";
 import Profile from "../components/EditProfile/Profile";
 import {NavLink} from "react-router-dom";
 import PhotoMockup, {sizeTypes} from "../common/photoMockup/PhotoMockup";
@@ -19,8 +17,12 @@ import passwordIcon from '../assets/img/password-svgrepo-com.svg'
 import addCourseIcon from '../assets/img/add-svgrepo-com.svg'
 import EditProfileButton from "../components/EditProfile/EditProfileButton";
 import AddRole from "../components/AdminPanel/AddRole";
+import {AppStateType} from "../reduxStore/store";
+import {connect} from "react-redux";
+import {IUser} from "../models/IUser";
 
 interface UserPageProps {
+    authUser: IUser
 }
 
 export enum UserPageSlidesItems {
@@ -31,9 +33,7 @@ export enum UserPageSlidesItems {
     ADD_ROLE = 'addRole'
 }
 
-const UserPage: FC<UserPageProps> = () => {
-
-    const {store} = useContext(Context)
+const UserPage: FC<UserPageProps> = ({authUser}) => {
 
     const [slideItem, setSlideItem] = useState('infoProfile');
 
@@ -46,7 +46,7 @@ const UserPage: FC<UserPageProps> = () => {
                             <div style={{margin: '0 auto'}}><PhotoMockup size={sizeTypes.small}/></div>
                             <div>
                                 <h1 style={{fontSize: '20px', textAlign: 'center', marginTop: '20px'}}>
-                                    <b>{store.authUser.name}</b></h1>
+                                    <b>{authUser.name}</b></h1>
                             </div>
                         </NavLink>
                     </div>
@@ -54,8 +54,8 @@ const UserPage: FC<UserPageProps> = () => {
                         <EditProfileButton isActive={slideItem === UserPageSlidesItems.INFO_PROFILE} icon={profileIcon}  onClick={() => setSlideItem(UserPageSlidesItems.INFO_PROFILE)}>Profile</EditProfileButton>
                         <EditProfileButton isActive={slideItem === UserPageSlidesItems.EDIT_PROFILE} icon={editIcon} onClick={() => setSlideItem(UserPageSlidesItems.EDIT_PROFILE)}>Edit profile</EditProfileButton>
                         <EditProfileButton isActive={slideItem === UserPageSlidesItems.CHANGE_PASSWORD} icon={passwordIcon} onClick={() => setSlideItem(UserPageSlidesItems.CHANGE_PASSWORD)}>Change password</EditProfileButton>
-                        {store.authUser && store.authUser.roles && store.authUser.roles.includes('PROFESSOR') &&<EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_COURSE} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ADD_COURSE)}>Add course</EditProfileButton>}
-                        {store.authUser && store.authUser.roles && store.authUser.roles.includes('ADMIN') && <EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_ROLE} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ADD_ROLE)}>Add role</EditProfileButton>}
+                        {authUser && authUser.roles && authUser.roles.includes('PROFESSOR') &&<EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_COURSE} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ADD_COURSE)}>Add course</EditProfileButton>}
+                        {authUser && authUser.roles && authUser.roles.includes('ADMIN') && <EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_ROLE} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ADD_ROLE)}>Add role</EditProfileButton>}
                     </div>
                 </div>
             </div>
@@ -65,9 +65,9 @@ const UserPage: FC<UserPageProps> = () => {
                         {slideItem === UserPageSlidesItems.INFO_PROFILE && <Profile/>}
                         {slideItem === UserPageSlidesItems.EDIT_PROFILE && <EditProfile/>}
                         {slideItem === UserPageSlidesItems.CHANGE_PASSWORD && <ChangePassword/>}
-                        {slideItem === UserPageSlidesItems.ADD_COURSE && store.authUser && store.authUser.roles.includes('PROFESSOR') &&
+                        {slideItem === UserPageSlidesItems.ADD_COURSE && authUser && authUser.roles.includes('PROFESSOR') &&
                             <AddCourse/>}
-                        {slideItem === UserPageSlidesItems.ADD_ROLE && store.authUser && store.authUser.roles.includes('ADMIN') &&
+                        {slideItem === UserPageSlidesItems.ADD_ROLE && authUser && authUser.roles.includes('ADMIN') &&
                         <AddRole/>}
                     </div>
                 </div>
@@ -76,4 +76,10 @@ const UserPage: FC<UserPageProps> = () => {
     );
 };
 
-export default observer(UserPage);
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        authUser: state.auth.authUser
+    }
+}
+
+export default connect(mapStateToProps, {})(UserPage);
