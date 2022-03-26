@@ -9,7 +9,7 @@ type ThunkType = BaseThunkType<ActionsType>
 
 const INITIAL_STATE = {
     roleExistInThisUser: false,
-    roleAdded: null as boolean | null,
+    roleAdded: false,
     roleRemoved: false,
     rolePleaserSuccess: false
 }
