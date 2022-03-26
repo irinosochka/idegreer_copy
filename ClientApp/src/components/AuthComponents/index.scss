@@ -125,7 +125,7 @@ h2, h3, p, .course__item{
 }
 
 .item__wrapper{
-    margin-right: 50px;
+    margin-right: 38px;
 }
 
 .courses__container{
@@ -138,3 +138,65 @@ h2, h3, p, .course__item{
     margin-right: 0;
 }
 
+// Course page
+.course-page{
+    height: 100%;
+    display: block;
+    margin: 50px;
+    justify-content: center;
+    border: 1px black solid;
+    color: #00097d;
+}
+
+.course__title {
+    border-bottom: 2px solid #4d6243;
+    margin-bottom: 30px;
+}
+
+.about-course-wrapper {
+    display: flex;
+    align-content: center;
+}
+
+.course__desc {
+    width: 55%;
+    padding: 0 15px 10px;
+    position: relative;
+}
+
+.course__desc p{
+    text-align: justify;
+
+}
+
+.course-details {
+    width: 45%;
+    margin: 0 10px;
+}
+
+.video-lesson-content {
+    display: flex;
+    align-content: center;
+    margin: 0 10px;
+}
+
+.video-player-container {
+    width: 55%;
+}
+
+.lessons-container {
+    width: 45%;
+}
+
+.content-header {
+    background-color: #a8a8a8;
+}
+
+.lesson {
+    display: flex;
+    padding: 5px;
+    border: 1px solid #4d6243;
+    margin: 5px 0;
+    justify-content: space-between;
+    align-items: center;
+}
