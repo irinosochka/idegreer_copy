@@ -17,7 +17,6 @@ const AdminPanel: FC<AdminPanelProps> = ({getAllUsers, usersList}) => {
         getAllUsers()
     }, []);
 
-
     return (
         <>
             <button onClick={() => setShowUsers(!showUsers)}>Show users</button>

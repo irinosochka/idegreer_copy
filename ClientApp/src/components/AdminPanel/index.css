@@ -31,9 +31,9 @@
   justify-content: space-between;
   text-align: left !important;
   border: 1px solid lightgray;
-  padding: 20px;
-  width: 520px;
+  padding: 10px;
   margin: 10px auto;
+  cursor: pointer;
 }
 
 .notFound {
@@ -42,4 +42,26 @@
   padding: 20px;
   border: 1px solid lightgray;
   text-align: center;
+}
+
+.user__btn{
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user__container{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user__title{
+  font-weight:  inherit;
+}
+
+.user__info{
+  font-weight: lighter;
 }
