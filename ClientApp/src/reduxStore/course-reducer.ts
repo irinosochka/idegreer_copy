@@ -9,6 +9,7 @@ type ThunkType = BaseThunkType<ActionsType>
 
 const INITIAL_STATE = {
 
+    course: {} as ICourse,
     courses: [] as ICourse[],
 
     /* Errors */
@@ -28,6 +29,12 @@ const courseReducer = (state = INITIAL_STATE, action: ActionsType) => {
             return {
                 ...state,
                 courses: action.payload
+            }
+        }
+        case "SET_COURSE": {
+            return {
+                ...state,
+                course: action.payload
             }
         }
         case "SET_ADD_COURSE_ERROR": {
@@ -50,6 +57,7 @@ const courseReducer = (state = INITIAL_STATE, action: ActionsType) => {
 const actions = {
     setGetAllCourseError: (bool: boolean) => ({type: "GET_ALL_COURSE_ERROR", payload: bool} as const),
     setCourses: (courses: Array<ICourse>) => ({type: "SET_COURSES", payload: courses} as const),
+    setCourse: (course: ICourse) => ({type: "SET_COURSE", payload: course} as const),
     setAddCourseError: (bool: boolean) => ({type: "SET_ADD_COURSE_ERROR", payload: bool} as const),
     addNewCourse: (course: ICourse) => ({type: "ADD_NEW_COURSE", payload: course} as const)
 }
@@ -92,6 +100,18 @@ export const getAllCourses = (): ThunkType =>
                 dispatch(actions.setCourses(response.data.data))
             } else {
                 dispatch(actions.setGetAllCourseError(true))
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+export const getOneCourses = (courseId: string): ThunkType =>
+    async (dispatch: Dispatch<any>) => {
+        try {
+            const response = await CourseService.getCourse(courseId);
+            if (response.data.resultCode === 1) {
+                dispatch(actions.setCourse(response.data.data))
+            } else {
             }
         } catch (e) {
             console.log(e);

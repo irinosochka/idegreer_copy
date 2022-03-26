@@ -29,6 +29,15 @@ class CourseController {
             return res.json({message: 'Get all courses error', resultCode: 0})
         }
     }
+    async getCourseById(req, res) {
+        try {
+            const id = req.params.id;
+            const data = await courseService.getCourseById(id);
+            return res.json({data, resultCode: 1})
+        } catch {
+            return res.json({message: "Getting user using id error", resultCode: 0})
+        }
+    }
 }
 
 module.exports = new CourseController()

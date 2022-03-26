@@ -15,6 +15,10 @@ class CourseService {
         return CourseModel.find().limit(limit)
     }
 
+    async getCourseById(courseId) {
+        return CourseModel.findOne({_id: courseId})
+    }
+
     async changeCourseData(courseId, newTitle, newTheme, newDescription, newPrice) {
         const courseWithNewData = await CourseModel.updateOne({
             _id: courseId
