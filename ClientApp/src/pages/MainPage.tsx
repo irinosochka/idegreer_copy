@@ -4,6 +4,7 @@ import {ICourse} from "../models/ICourse";
 import {connect} from "react-redux";
 import {AppStateType} from "../reduxStore/store";
 import {getAllCourses} from "../reduxStore/course-reducer";
+import {NavLink} from "react-router-dom";
 
 interface MainPageProps {
     courses: ICourse[],
@@ -23,7 +24,7 @@ const MainPage: FC<MainPageProps> = ({courses, getAllCourses}) => {
             <div className="courses__container">
                 {courses.map((course: ICourse) => {
                     console.log(course)
-                        return <CourseItem course={course} key={course._id}/>
+                        return <NavLink to={'/course/:id'}><CourseItem course={course} key={course._id}/></NavLink>
                     }
                 )}
             </div>
