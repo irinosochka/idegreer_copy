@@ -136,9 +136,9 @@ export const logout = (): ThunkType => {
     }
 }
 
-export const userDataChanging = (user: IUser, newUsername: string, newName: string, newEmail: string): ThunkType =>
+export const userDataChanging = (formData: FormData): ThunkType =>
     async (dispatch: Dispatch<any>) => {
-        const response = await UserService.userDataChanging(user.username, newUsername, newName, newEmail);
+        const response = await UserService.userDataChanging(formData);
         if (response.data.resultCode === 1) {
             dispatch(actions.setAuthUser(response.data.data.user));
             dispatch(actions.setUserDataChangingSuccess(true))

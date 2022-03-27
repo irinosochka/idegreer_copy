@@ -9,7 +9,6 @@ interface CourseItemProps {
 }
 
 const CourseItem: FC<CourseItemProps> = ({course}) => {
-
     return (
         <div className={'item__wrapper'}>
             <div style={{width: '100%', textAlign: 'center'}} >

@@ -4,5 +4,6 @@ export interface IUser {
     email: string;
     name: string;
     isRoleRequest: boolean;
+    image: { path: string } | null;
     roles: Array<string>
 }
