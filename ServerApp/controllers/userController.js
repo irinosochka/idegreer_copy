@@ -4,7 +4,8 @@ class UserController {
     async userDataChanging(req, res) {
         try {
             const {username, newUsername, newName, newEmail} = req.body;
-            const data = await userService.userDataChanging(username, newUsername, newName, newEmail);
+            const image = req.file;
+            const data = await userService.userDataChanging(username, newUsername, newName, newEmail, image);
             return res.json({data, resultCode: 1})
         } catch(e) {
             return res.json({status: e.status, message: `User with this username or email actually exists` , resultCode: 0})

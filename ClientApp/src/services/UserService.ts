@@ -1,8 +1,12 @@
 import {$user} from "../http";
 
 export default class UserService {
-    static userDataChanging(username: string, newUsername: string, newName: string, newEmail: string): Promise<any> {
-        return $user.post('/changeUserData', {username, newUsername, newName, newEmail}).then(res => {
+    static userDataChanging(formData: FormData): Promise<any> {
+        return $user.post('/changeUserData', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(res => {
             return res
         }).catch(e => console.log(e))
     }

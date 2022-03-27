@@ -6,6 +6,7 @@ const UserModel = new Schema({
     name: {type: String, required: true},
     email: {type: String, required: true},
     isRoleRequest: {type: Boolean, default: false},
+    image: {type: Object, default: null},
     roles: [{type: String, ref: 'RoleModel'}]
 })
 

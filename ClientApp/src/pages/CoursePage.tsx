@@ -1,37 +1,48 @@
-import React, {useState} from 'react';
+import React, {FC, useEffect} from 'react';
 import LessonList from "../components/CourseItem/Lesson/LessonList";
+import {useParams} from "react-router-dom";
+import {getOneCourse} from "../reduxStore/course-reducer";
+import {connect} from "react-redux";
+import {AppStateType} from "../reduxStore/store";
+import {ICourse} from "../models/ICourse";
 
-const CoursePage = () => {
-    const [lessons, setLessons] = useState([
+interface CoursePage {
+    getOneCourse: (courseId: string) => void,
+    course: ICourse
+}
+
+const CoursePage: FC<CoursePage> = ({course, getOneCourse}) => {
+    const lessons = [
         {id: 1, title: 'Lesson 1', time: '00:10:15'},
         {id: 2, title: 'Lesson 2', time: '00:34:13'},
         {id: 3, title: 'Lesson 3', time: '00:23:43'},
         {id: 4, title: 'Lesson 4', time: '00:12:33'},
         {id: 5, title: 'Lesson 5', time: '00:42:01'},
         {id: 6, title: 'Lesson 6', time: '00:22:01'}
-    ])
+    ];
+
+    const params = useParams()
+
+    useEffect(() => {
+        getOneCourse(params.id!)
+    }, [])
+
 
     return (
         <div className="course-page">
             <div className="course__title">
-                <h1>Course name</h1>
+                <h1>{course.title}</h1>
             </div>
             <div className="about-course-wrapper">
                 <div className="course__desc">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-                        of type and scrambled it to make a type specimen book. It has survived not only five centuries,
-                        but also the leap into electronic typesetting, remaining essentially unchanged. It was
-                        popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-                        and more recently with desktop publishing software like Aldus PageMaker including versions of
-                        Lorem Ipsum.</p>
+                    <p>{course.description}</p>
                 </div>
                 <div className="course-details">
                     <div className="course__about">
                         <header>About course</header>
                     </div>
                     <div className="course__author">
-                        <h3>Author</h3>
+                        <h3>{course.author.name}</h3>
                     </div>
                 </div>
             </div>
@@ -52,4 +63,10 @@ const CoursePage = () => {
     );
 };
 
-export default CoursePage;
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        course: state.course.course
+    }
+}
+
+export default connect(mapStateToProps, {getOneCourse})(CoursePage);

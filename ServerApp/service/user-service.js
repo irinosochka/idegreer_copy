@@ -101,7 +101,7 @@ class UserService {
             user: updatedUser
         }
     }
-    async userDataChanging(username, newUsername, newName, newEmail) {
+    async userDataChanging(username, newUsername, newName, newEmail, image) {
         // const user = await UserModel.findOne({username: newUsername})
         // if (user) {
         //     throw new Error('User with this username exists')
@@ -111,18 +111,20 @@ class UserService {
         //     throw new Error('This email exists')
         // }
         const userWithNewPassword = await UserModel.updateOne({
-            username
+            username: username
         }, {
             $set: {
-                username: newUsername.length !== 0 ? newUsername : user.username,
-                name: newName.length !== 0 ? newName : user.name,
-                email: newEmail.length !== 0 ? newEmail : user.email
+                username: newUsername,
+                name: newName,
+                email: newEmail,
+                image: image
             }
         });
-        const updatedUser = await UserModel.findOne({username: newUsername.length !== 0 ? newUsername : user.username})
+        const updatedUser = await UserModel.findOne({username: newUsername})
         if (!updatedUser) {
             throw new Error('User with this username dont exist')
         }
+        console.log(updatedUser)
         const userDto = new UserDto(updatedUser); //id, username, name, email, roles
         const tokens = tokenService.generateTokens({...userDto})
         await authService.refresh(tokens.refreshToken)
