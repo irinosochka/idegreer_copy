@@ -26,12 +26,12 @@ const Navbar: FC<NavbarProps> = ({logout}) => {
             <div style={{
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: `${location.pathname === '/' ? 'space-between' : 'end'}`,
+                justifyContent: `${location.pathname === '/' || location.pathname === '/course/:id' ? 'space-between' : 'end'}`,
                 color: 'white',
                 padding: '20px',
                 textAlign: 'left'
             }}>
-                {location.pathname === '/' && <Logo />}
+                {(location.pathname === '/' || location.pathname === '/course/:id') && <Logo />}
                 <div style={{display: 'flex', alignItems: 'center', textAlign: 'right', padding: '5px 0'}}>
                     <NavbarIcon icon={homeIcon} link={'/'} />
                     <NavbarIcon icon={profileIcon} link={'/profile'} />

@@ -17,6 +17,7 @@ import profileIcon from '../assets/img/user-profile-svgrepo-com.svg'
 import editIcon from '../assets/img/edit-svgrepo-com.svg'
 import passwordIcon from '../assets/img/password-svgrepo-com.svg'
 import addCourseIcon from '../assets/img/add-svgrepo-com.svg'
+import requestIcon from '../assets/img/question-svgrepo-com.svg'
 
 export enum UserPageSlidesItems {
     EDIT_PROFILE = 'editProfile',
@@ -54,7 +55,7 @@ const UserPage: FC<UserPageProps> = ({authUser}) => {
                         <EditProfileButton isActive={slideItem === UserPageSlidesItems.CHANGE_PASSWORD} icon={passwordIcon} onClick={() => setSlideItem(UserPageSlidesItems.CHANGE_PASSWORD)}>Change password</EditProfileButton>
                         {authUser && authUser.roles && authUser.roles.includes('PROFESSOR') &&<EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_COURSE} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ADD_COURSE)}>Add course</EditProfileButton>}
                         {authUser && authUser.roles && authUser.roles.includes('ADMIN') && <EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_ROLE} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ADD_ROLE)}>Add role</EditProfileButton>}
-                        {authUser && authUser.roles && authUser.roles.includes('ADMIN') && <EditProfileButton isActive={slideItem === UserPageSlidesItems.ROLE_REQUEST} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ROLE_REQUEST)}>Role request</EditProfileButton>}
+                        {authUser && authUser.roles && authUser.roles.includes('ADMIN') && <EditProfileButton isActive={slideItem === UserPageSlidesItems.ROLE_REQUEST} icon={requestIcon} onClick={() => setSlideItem(UserPageSlidesItems.ROLE_REQUEST)}>Role request</EditProfileButton>}
                     </div>
                 </div>
             </div>
