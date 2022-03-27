@@ -1,7 +1,24 @@
-import React, {useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import LessonList from "../components/CourseItem/Lesson/LessonList";
+import {AppStateType} from "../reduxStore/store";
+import {ICourse} from "../models/ICourse";
+import {useParams} from "react-router-dom";
+import {connect} from "react-redux";
+import {getOneCourse} from "../reduxStore/course-reducer";
 
-const CoursePage = () => {
+interface CoursePageProps {
+    course: ICourse,
+    getOneCourse: (id: string) => void
+}
+
+const CoursePage: FC<CoursePageProps> = ({course, getOneCourse}) => {
+    const {id} = useParams();
+    useEffect(() => {
+        if (id) {
+            getOneCourse(id)
+        }
+    }, []);
+
     const [lessons, setLessons] = useState([
         {id: 1, title: 'Lesson 1', time: '00:10:15'},
         {id: 2, title: 'Lesson 2', time: '00:34:13'},
@@ -14,24 +31,18 @@ const CoursePage = () => {
     return (
         <div className="course-page">
             <div className="course__title">
-                <h1>Course name</h1>
+                <h1>{course.title}</h1>
             </div>
             <div className="about-course-wrapper">
                 <div className="course__desc">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-                        of type and scrambled it to make a type specimen book. It has survived not only five centuries,
-                        but also the leap into electronic typesetting, remaining essentially unchanged. It was
-                        popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-                        and more recently with desktop publishing software like Aldus PageMaker including versions of
-                        Lorem Ipsum.</p>
+                    {course.description}
                 </div>
                 <div className="course-details">
                     <div className="course__about">
                         <header>About course</header>
                     </div>
                     <div className="course__author">
-                        <h3>Author</h3>
+                        {course.author && <h3>{course.author.name}</h3> }
                     </div>
                 </div>
             </div>
@@ -52,4 +63,10 @@ const CoursePage = () => {
     );
 };
 
-export default CoursePage;
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        course: state.course.course
+    }
+}
+
+export default connect(mapStateToProps, {getOneCourse})(CoursePage);
