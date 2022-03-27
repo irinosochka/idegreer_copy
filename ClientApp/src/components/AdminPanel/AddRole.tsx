@@ -8,7 +8,7 @@ import addIcon from "../../assets/img/add-svgrepo-com.svg"
 import {IUser} from "../../models/IUser";
 import {connect} from "react-redux";
 import {AppStateType} from "../../reduxStore/store";
-import {setRoleToUser} from "../../reduxStore/role-reducer";
+import {actions, setRoleToUser} from "../../reduxStore/role-reducer";
 import {getAllUsers, getUser} from "../../reduxStore/user-reducer";
 import Button from "../../common/button/Button";
 
@@ -16,25 +16,27 @@ import Button from "../../common/button/Button";
 interface AddRoleProps {
     getAllUsers: () => void,
     usersList: IUser[],
-    setRoleToUser: (user: IUser, newRole: string) => void
+    setRoleToUser: (user: IUser, newRole: string) => void,
+    roleAdded: boolean,
+    setRoleAdded: (bool: boolean) => void
 }
 
-const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser}) => {
+const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser, roleAdded, setRoleAdded}) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [showUsers, setShowUsers] = useState(false);
     const [selectedUser, setSelectedUser] = useState<IUser>();
+    const [buttonVisible, setButtonVisible] = useState(true)
 
     useEffect(() => {
         getAllUsers()
     }, []);
 
-    const addRole = (user: IUser) => {
+    const handleSelectingUser = (user: IUser) => {
         setSelectedUser(user);
+        setButtonVisible(true);
     };
 
-    const handleAdding = (event: React.FormEvent<EventTarget>): void => {
-        event.preventDefault();
-
+    function handleAdding() {
         if(selectedUser && !selectedUser.roles.includes('PROFESSOR')){
             setRoleToUser(selectedUser, 'PROFESSOR')
         }
@@ -72,7 +74,7 @@ const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser}
                         return (
                             <div className="body__item" key={user._id}
                                  onClick={() => {
-                                     addRole(user)
+                                     handleSelectingUser(user)
                                  }}>
                                         {user?.username}
                             </div>
@@ -99,18 +101,25 @@ const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser}
                 </div>
 
                 </div>
-                    <form onSubmit={handleAdding}>
-                        {!selectedUser.roles.includes('PROFESSOR') &&
-                        <Button>Make a professor</Button>}
-                    </form>
+
+                {buttonVisible && !selectedUser.roles.includes('PROFESSOR') &&
+                <div>
+                    <Button onClick={() =>{
+                        handleAdding();
+                        setButtonVisible(false);
+                        setTimeout(() => setRoleAdded(false), 4000)
+                    }}>Make a professor</Button>
+                </div>}
+                <div style={{marginTop: '10px'}}>{roleAdded && <span style={{fontSize: '14px'}}>Role was added</span>}</div>
             </div>}
         </div>
     )}
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        usersList: state.user.usersList
+        usersList: state.user.usersList,
+        roleAdded: state.role.roleAdded
     }
 }
 
-export default connect(mapStateToProps, {setRoleToUser, getAllUsers, getUser})(AddRole);
+export default connect(mapStateToProps, {setRoleToUser, getAllUsers, getUser, setRoleAdded: actions.setRoleAdded})(AddRole);
