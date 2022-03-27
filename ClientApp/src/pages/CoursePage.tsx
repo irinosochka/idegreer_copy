@@ -12,6 +12,12 @@ interface CoursePage {
 }
 
 const CoursePage: FC<CoursePage> = ({course, getOneCourse}) => {
+  const {id} = useParams();
+    useEffect(() => {
+        if (id) {
+            getOneCourse(id)
+        }
+    }, []);
     const lessons = [
         {id: 1, title: 'Lesson 1', time: '00:10:15'},
         {id: 2, title: 'Lesson 2', time: '00:34:13'},
@@ -35,14 +41,14 @@ const CoursePage: FC<CoursePage> = ({course, getOneCourse}) => {
             </div>
             <div className="about-course-wrapper">
                 <div className="course__desc">
-                    <p>{course.description}</p>
+                    {course.description}
                 </div>
                 <div className="course-details">
                     <div className="course__about">
                         <header>About course</header>
                     </div>
                     <div className="course__author">
-                        <h3>{course.author.name}</h3>
+                        {course.author && <h3>{course.author.name}</h3> }
                     </div>
                 </div>
             </div>
@@ -68,5 +74,5 @@ const mapStateToProps = (state: AppStateType) => {
         course: state.course.course
     }
 }
-
+    
 export default connect(mapStateToProps, {getOneCourse})(CoursePage);
