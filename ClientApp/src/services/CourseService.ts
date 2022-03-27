@@ -9,7 +9,7 @@ export default class CourseService {
     }
 
     static changeCourseData(courseId: string, newTitle: string, newTheme: string, newDescription: string, newPrice: string): Promise<any> {
-        return $course.post<CourseResponse>('/add', {courseId, newTitle, newTheme, newDescription, newPrice}).then(res => {
+        return $course.post<CourseResponse>('/changeCourseData', {courseId, newTitle, newTheme, newDescription, newPrice}).then(res => {
             return res
         }).catch(e => console.log(e))
     }
