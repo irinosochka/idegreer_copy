@@ -12,11 +12,10 @@ interface PhotoMockupProps {
     size: sizeTypes,
     isAuth: boolean,
     authUser: IUser,
-    photo: string
+    photo: { path: string} | null
 }
 
 const PhotoMockup: FC<PhotoMockupProps> = ({size, photo, authUser, isAuth}) => {
-
 
     const initial = () => {
         if (isAuth && authUser.name) {
@@ -32,7 +31,6 @@ const PhotoMockup: FC<PhotoMockupProps> = ({size, photo, authUser, isAuth}) => {
         }
     };
 
-
     return (
         <>
             <div style={{
@@ -46,7 +44,8 @@ const PhotoMockup: FC<PhotoMockupProps> = ({size, photo, authUser, isAuth}) => {
                 margin: '0 auto',
                 fontSize: size === sizeTypes.large ? '40px' : 'normal'
             }}>
-                {photo ? <img src={"data:image/png;base64," + photo} alt="avatar" style={{borderRadius: '50%', height: size, width: size}}/> :
+                {photo && photo.path ? <img src={`http://localhost:5000/uploads/${photo.path.slice(8)}`} alt="avatar"
+                              style={{borderRadius: '50%', height: size, width: size}}/> :
                     <h2 style={{margin: 'auto', color: '#4d6243', fontWeight: 400}}>
                         {initial()}
                     </h2>}
@@ -59,7 +58,7 @@ const mapStateToProps = (state: AppStateType) => {
     return {
         isAuth: state.auth.isAuth,
         authUser: state.auth.authUser,
-        photo: state.file.photo
+        photo: state.auth.authUser.image
     }
 }
 

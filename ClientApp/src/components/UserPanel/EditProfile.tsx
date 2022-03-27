@@ -12,7 +12,7 @@ import {IUser} from "../../models/IUser";
 interface EditProfileProps {
     authUser: IUser,
     setUserDataChangingSuccess: (bool: boolean) => void,
-    userDataChanging: (authUser: IUser, username: string, name: string, email: string) => void
+    userDataChanging: (formData: FormData) => void
     userDataChangingError: boolean,
     userDataChangedSuccess: boolean,
     setUserDataChangingError: (bool: boolean) => void
@@ -41,9 +41,12 @@ const EditProfile: FC<EditProfileProps> = ({
         event.preventDefault();
         const formData = new FormData();
         formData.append('userImage', image!)
-        formData.append('username', username)
+        formData.append('username', authUser.username)
+        formData.append('newUsername', username)
+        formData.append('newName', name)
+        formData.append('newEmail', email)
         if (username.length !== 0 && name.length !== 0 && email.length !== 0) {
-            userDataChanging(authUser, username, name, email);
+            userDataChanging(formData);
             changePhoto(formData)
         } else {
             setError(true);
@@ -97,7 +100,8 @@ const EditProfile: FC<EditProfileProps> = ({
                     </label>
                     <span style={{fontSize: '14px', paddingLeft: '10px'}}>{image ? image!.name : ''}</span>
                 </div>
-                <input className="uploadButton" id="uploadButton" style={{visibility: "hidden"}} name={'userImage'} type={"file"}
+                <input className="uploadButton" id="uploadButton" style={{visibility: "hidden"}} name={'userImage'}
+                       type={"file"}
                        onChange={(event) => {
                            setImage(event.target!.files![0]);
                            setError(false);
