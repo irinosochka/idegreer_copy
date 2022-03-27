@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useState} from 'react';
 
-import "./index.css"
+import "./userPanel.css"
 import Button from "../../common/button/Button";
 import Message, {MessageType} from "../../common/Messages/Message";
 import {AppStateType} from "../../reduxStore/store";
@@ -52,7 +52,7 @@ const EditProfile: FC<EditProfileProps> = ({
 
 
     return (
-        <div className="editProfileContainer">
+        <div style={{width: '600px', margin: '0 auto'}}>
             {isError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
             {userDataChangingError &&
                 <Message type={MessageType.ERROR}>User with this username or email actually exists</Message>}

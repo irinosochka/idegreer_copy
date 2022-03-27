@@ -1,8 +1,8 @@
 import React, {FC, useEffect, useState} from 'react';
-import {AppStateType} from "../../reduxStore/store";
+import {AppStateType} from "../../../reduxStore/store";
 import {connect} from "react-redux";
-import {getAllUsers} from "../../reduxStore/user-reducer";
-import {IUser} from "../../models/IUser";
+import {getAllUsers} from "../../../reduxStore/user-reducer";
+import {IUser} from "../../../models/IUser";
 
 interface AdminPanelProps {
     usersList: IUser[],

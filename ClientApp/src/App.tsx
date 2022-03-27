@@ -5,7 +5,7 @@ import MainPage from "./pages/MainPage";
 import AuthPage from "./pages/AuthPage";
 import UserPage from "./pages/UserPage";
 import Navbar from "./components/Navbar/Navbar";
-import Loader from "./common/Loader";
+import Loader from "./common/Loader/Loader";
 import {connect} from "react-redux";
 import {AppStateType} from "./reduxStore/store";
 import {checkAuth} from "./reduxStore/auth-reducer";

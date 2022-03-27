@@ -1,13 +1,13 @@
 import React, {FC, useEffect, useState} from 'react';
 
-import "./index.css"
+import "./userPanel.css"
 import PhotoMockup, {sizeTypes} from "../../common/photoMockup/PhotoMockup";
 import {connect} from "react-redux";
 import {AppStateType} from "../../reduxStore/store";
 import {getPhoto} from "../../reduxStore/file-reducer";
 import {IUser} from "../../models/IUser";
-import Button from "../../common/button/Button";
 import {actions, roleRequest} from "../../reduxStore/role-reducer";
+import Message, {MessageType} from "../../common/Messages/Message";
 
 interface ProfileProps {
     authUser: IUser,
@@ -25,7 +25,7 @@ const Profile: FC<ProfileProps> = ({getPhoto, authUser, roleRequest, rolePleaser
         getPhoto('1648243003706-idegreer-visuals_produktlinie_men_560x420.jpg')
     }, [])
     return (
-        <div className="profile" style={{textAlign: 'center', verticalAlign: 'middle', paddingTop: '20px'}}>
+        <div className="profile" style={{textAlign: 'center', verticalAlign: 'middle', paddingTop: '20px', width: '600px', margin: '0 auto'}}>
             <div style={{display: 'inline-block'}}>
                 <PhotoMockup size={sizeTypes.large}/>
             </div>
@@ -46,14 +46,13 @@ const Profile: FC<ProfileProps> = ({getPhoto, authUser, roleRequest, rolePleaser
 
             {buttonVisible && !authUser.isRoleRequest && authUser.roles && authUser.roles.length === 1
                 && authUser.roles.includes('STUDENT') &&
-                <div>
-                    <Button onClick={() => {
-                        roleRequest(authUser._id);
-                        setButtonVisible(false)
-                        setTimeout(() => setRolePleasedSuccess(false), 2000)
-                    }}>Please the role of professor</Button>
+                <div style={{marginTop: '40px', fontSize: '15px'}}>
+                    Do you want to be as professor? <span onClick={() => {
+                    roleRequest(authUser._id);
+                    setButtonVisible(false)
+                    setTimeout(() => setRolePleasedSuccess(false), 2000)}} style={{fontSize: '16px', color: 'orange', cursor: 'pointer'}}>Try it!</span>
                 </div>}
-            <div style={{marginTop: '10px'}}>{rolePleaserSuccess && <span style={{fontSize: '14px'}}>Request was sended</span>}</div>
+            <div style={{marginTop: '40px'}}>{rolePleaserSuccess && <span style={{fontSize: '14px'}}><Message type={MessageType.SUCCESS}>Request was sended</Message></span>}</div>
         </div>
     );
 };

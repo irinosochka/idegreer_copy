@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react';
 
-import "./index.css";
+import "./adminPanel.css";
 // @ts-ignore
-import editIcon from "../../assets/img/edit-svgrepo-com.svg"
+import editIcon from "../../../assets/img/edit-svgrepo-com.svg"
 // @ts-ignore
-import addIcon from "../../assets/img/add-svgrepo-com.svg"
-import {IUser} from "../../models/IUser";
+import addIcon from "../../../assets/img/add-svgrepo-com.svg"
+import {IUser} from "../../../models/IUser";
 import {connect} from "react-redux";
-import {AppStateType} from "../../reduxStore/store";
-import {actions, setRoleToUser} from "../../reduxStore/role-reducer";
-import {getAllUsers, getUser} from "../../reduxStore/user-reducer";
-import Button from "../../common/button/Button";
+import {AppStateType} from "../../../reduxStore/store";
+import {actions, setRoleToUser} from "../../../reduxStore/role-reducer";
+import {getAllUsers, getUser} from "../../../reduxStore/user-reducer";
+import Button from "../../../common/button/Button";
 
 
 interface AddRoleProps {
@@ -29,7 +29,7 @@ const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser,
 
     useEffect(() => {
         getAllUsers()
-    }, []);
+    }, [usersList]);
 
     const handleSelectingUser = (user: IUser) => {
         setSelectedUser(user);

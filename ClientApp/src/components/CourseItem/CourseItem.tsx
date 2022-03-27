@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import '../AuthComponents/index.scss';
+import '../AuthComponents/auth.scss';
 
 // @ts-ignore
 import reactLogo from '../../assets/img/react-logo.png'

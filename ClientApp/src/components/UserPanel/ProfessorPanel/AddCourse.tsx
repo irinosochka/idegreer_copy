@@ -1,10 +1,10 @@
 import React, {FC, useState} from 'react';
-import Button from "../../common/button/Button";
-import Message, {MessageType} from "../../common/Messages/Message";
+import Button from "../../../common/button/Button";
+import Message, {MessageType} from "../../../common/Messages/Message";
 import {connect} from "react-redux";
-import {addCourse} from "../../reduxStore/course-reducer";
-import {IUser} from "../../models/IUser";
-import {AppStateType} from "../../reduxStore/store";
+import {addCourse} from "../../../reduxStore/course-reducer";
+import {IUser} from "../../../models/IUser";
+import {AppStateType} from "../../../reduxStore/store";
 
 interface AddCourseProps {
     authUser: IUser,

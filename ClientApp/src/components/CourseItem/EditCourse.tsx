@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import "../AdminPanel/index.css";
+import "../UserPanel/AdminPanel/adminPanel.css";
 // @ts-ignore
 import editIcon from "../../assets/img/edit-svgrepo-com.svg"
 import {AppStateType} from "../../reduxStore/store";

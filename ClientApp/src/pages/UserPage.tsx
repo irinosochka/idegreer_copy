@@ -1,8 +1,8 @@
 import React, {FC, useState} from 'react';
-import EditProfile from "../components/EditProfile/EditProfile";
-import ChangePassword from "../components/EditProfile/ChangePassword";
-import AddCourse from "../components/EditProfile/AddCourse";
-import Profile from "../components/EditProfile/Profile";
+import EditProfile from "../components/UserPanel/EditProfile";
+import ChangePassword from "../components/UserPanel/ChangePassword";
+import AddCourse from "../components/UserPanel/ProfessorPanel/AddCourse";
+import Profile from "../components/UserPanel/Profile";
 import {NavLink} from "react-router-dom";
 import PhotoMockup, {sizeTypes} from "../common/photoMockup/PhotoMockup";
 
@@ -15,16 +15,12 @@ import editIcon from '../assets/img/edit-svgrepo-com.svg'
 import passwordIcon from '../assets/img/password-svgrepo-com.svg'
 // @ts-ignore
 import addCourseIcon from '../assets/img/add-svgrepo-com.svg'
-import EditProfileButton from "../components/EditProfile/EditProfileButton";
-import AddRole from "../components/AdminPanel/AddRole";
+import EditProfileButton from "../components/UserPanel/EditProfileButton";
+import AddRole from "../components/UserPanel/AdminPanel/AddRole";
 import {AppStateType} from "../reduxStore/store";
 import {connect} from "react-redux";
 import {IUser} from "../models/IUser";
-import RoleRequestList from "../components/EditProfile/RoleRequestList";
-
-interface UserPageProps {
-    authUser: IUser
-}
+import RoleRequestList from "../components/UserPanel/AdminPanel/RoleRequestList";
 
 export enum UserPageSlidesItems {
     EDIT_PROFILE = 'editProfile',
@@ -33,6 +29,10 @@ export enum UserPageSlidesItems {
     INFO_PROFILE = 'infoProfile',
     ADD_ROLE = 'addRole',
     ROLE_REQUEST = 'roleRequest'
+}
+
+interface UserPageProps {
+    authUser: IUser
 }
 
 const UserPage: FC<UserPageProps> = ({authUser}) => {

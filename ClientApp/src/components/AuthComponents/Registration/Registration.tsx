@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import '../index.scss';
+import '../auth.scss';
 import Button from "../../../common/button/Button";
 import Message, {MessageType} from "../../../common/Messages/Message";
 import {connect} from "react-redux";

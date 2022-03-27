@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useState} from 'react';
 
-import "./index.css"
+import "./userPanel.css"
 import Button from "../../common/button/Button";
 import Message, {MessageType} from "../../common/Messages/Message";
 import {connect} from "react-redux";
@@ -55,7 +55,7 @@ const ChangePassword: FC<ChangePasswordProps> = ({authUser, passwordChanging, se
     }
 
     return (
-        <div>
+        <div style={{width: '600px', margin: '0 auto'}}>
             {emptyError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
             {!emptyError && repeatPasswordError && <Message type={MessageType.ERROR}>Password should be the same</Message>}
             {badPasswordLengthError && <Message type={MessageType.ERROR}>Password length should be more than 8 signs</Message>}
