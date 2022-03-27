@@ -54,9 +54,13 @@
 .user__container{
   width: 800px;
   margin: 0 auto;
-  display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.infoUser__line{
+  display: flex;
+  margin: 5px 15px;
 }
 
 .user__title{
@@ -65,4 +69,5 @@
 
 .user__info{
   font-weight: lighter;
+  padding: 0 15px;
 }

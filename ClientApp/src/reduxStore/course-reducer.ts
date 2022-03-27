@@ -14,7 +14,10 @@ const INITIAL_STATE = {
 
     /* Errors */
     getAllCourseError: false,
-    addCourseError: false
+    addCourseError: false,
+
+    /*Success*/
+    courseDataChangedSuccess: false
 }
 
 const courseReducer = (state = INITIAL_STATE, action: ActionsType) => {
@@ -49,16 +52,23 @@ const courseReducer = (state = INITIAL_STATE, action: ActionsType) => {
                 courses: [...state.courses, action.payload]
             }
         }
+        case "SET_COURSE_DATA_CHANGING_SUCCESS": {
+            return {
+                ...state,
+                courseDataChangedSuccess: action.payload
+            }
+        }
         default:
             return state
     }
 }
 
-const actions = {
+export const actions = {
     setGetAllCourseError: (bool: boolean) => ({type: "GET_ALL_COURSE_ERROR", payload: bool} as const),
     setCourses: (courses: Array<ICourse>) => ({type: "SET_COURSES", payload: courses} as const),
     setCourse: (course: ICourse) => ({type: "SET_COURSE", payload: course} as const),
     setAddCourseError: (bool: boolean) => ({type: "SET_ADD_COURSE_ERROR", payload: bool} as const),
+    setCourseDataChangedSuccess: (bool: boolean) => ({type: "SET_COURSE_DATA_CHANGING_SUCCESS", payload: bool} as const),
     addNewCourse: (course: ICourse) => ({type: "ADD_NEW_COURSE", payload: course} as const)
 }
 
@@ -78,14 +88,15 @@ export const addCourse = (user: string, title: string, theme: string, descriptio
     }
 
 export const changeCourseData = (courseId: string, newTitle: string, newTheme: string, newDescription: string, newPrice: string): ThunkType =>
-    async () => {
+    async (dispatch: Dispatch<any>) => {
         try {
             const response = await CourseService.changeCourseData(courseId, newTitle, newTheme, newDescription, newPrice)
             if (response.data.resultCode === 1) {
+                dispatch(actions.setCourseDataChangedSuccess(true));
                 return response.data.data
             }
             if (response.data.resultCode === 0) {
-                console.log('error')
+                dispatch(actions.setAddCourseError(true))
             }
         } catch (e) {
             console.log(e);
@@ -119,4 +130,4 @@ export const getOneCourse = (courseId: string): ThunkType =>
         }
     }
 
-export default courseReducer
+export default courseReducer;

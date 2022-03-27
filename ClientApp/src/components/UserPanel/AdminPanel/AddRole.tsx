@@ -7,6 +7,7 @@ import {AppStateType} from "../../../reduxStore/store";
 import {actions, setRoleToUser} from "../../../reduxStore/role-reducer";
 import {getAllUsers, getUser} from "../../../reduxStore/user-reducer";
 import Button from "../../../common/button/Button";
+import Message, {MessageType} from "../../../common/Messages/Message";
 
 
 interface AddRoleProps {
@@ -27,7 +28,7 @@ const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser,
         getAllUsers()
     }, [usersList]);
 
-    const handleSelectingUser = (user: IUser) => {
+    const handleSelecting = (user: IUser) => {
         setSelectedUser(user);
         setButtonVisible(true);
     };
@@ -39,12 +40,12 @@ const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser,
     }
 
     return (
-        <div className="user__container"
-        style={{display: 'flex'}}>
+        <div className="user__container" style={{display: 'flex'}}>
             <div style= {{display: 'inline-block'}}>
                 <>
                     <h1>Add professor role</h1>
                 </>
+
                 <div className="input__wrapper">
                     <input type="text"
                            placeholder="Search user"
@@ -70,9 +71,9 @@ const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser,
                         return (
                             <div className="body__item" key={user._id}
                                  onClick={() => {
-                                     handleSelectingUser(user)
+                                     handleSelecting(user)
                                  }}>
-                                        {user?.username}
+                                {user?.username}
                             </div>
                         )})}
                 </div>
@@ -80,23 +81,23 @@ const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser,
 
 
             {selectedUser && <div>
-                <div style={{display: 'flex', marginTop: '70px'}}>
+                    <div className="infoUser__line">
+                        <p className="user__title">Name:</p>
+                        <p className="user__info">{selectedUser?.name}</p>
+                    </div>
 
-                <div style={{alignContent: 'space-between', margin: '0 10px'}}>
-                    <p className="user__title">Name:</p>
-                    <p className="user__title">Email:</p>
-                    <p className="user__title">Username:</p>
-                    <p className="user__title">Role:</p>
-                </div>
-
-                <div style={{alignContent: 'space-between'}}>
-                    <p className="user__info">{selectedUser?.name}</p>
-                    <p className="user__info">{selectedUser?.email}</p>
-                    <p className="user__info">{selectedUser?.username}</p>
-                    <p className="user__info">{selectedUser?.roles.join(", ")}</p>
-                </div>
-
-                </div>
+                    <div className="infoUser__line">
+                        <p className="user__title">Email:</p>
+                        <p className="user__info">{selectedUser?.email}</p>
+                    </div>
+                    <div className="infoUser__line">
+                        <p className="user__title">Username:</p>
+                        <p className="user__info">{selectedUser?.username}</p>
+                    </div>
+                    <div className="infoUser__line">
+                        <p className="user__title">Role:</p>
+                        <p className="user__info">{selectedUser?.roles.join(", ")}</p>
+                    </div>
 
                 {buttonVisible && !selectedUser.roles.includes('PROFESSOR') && !selectedUser.roles.includes('ADMIN') &&
                 <div>
@@ -106,7 +107,7 @@ const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser,
                         setTimeout(() => setRoleAdded(false), 4000)
                     }}>Make a professor</Button>
                 </div>}
-                <div style={{marginTop: '10px'}}>{roleAdded && <span style={{fontSize: '14px'}}>Role was added</span>}</div>
+                <div style={{marginTop: '10px'}}>{roleAdded && <span style={{fontSize: '14px'}}><Message type={MessageType.SUCCESS}>Role was added</Message></span>}</div>
             </div>}
         </div>
     )}
