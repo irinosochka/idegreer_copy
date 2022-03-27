@@ -7,9 +7,9 @@ interface LessonListProps {
 const LessonList: FC<LessonListProps> = ({lessons}) => {
     return (
         <div className="lessons-container">
-            <div className="content-header">
+            <header className="content-header">
                 List of lessons
-            </div>
+            </header>
             <div className="video-lessons-list-content">
                 {lessons.map((lesson:any) =>
                     <LessonItem lesson={lesson} key={lesson.id}/>

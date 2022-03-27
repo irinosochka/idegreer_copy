@@ -1,3 +1,4 @@
+
 .auth__form input{
     width: 100%;
     padding: 12px 0;
@@ -140,48 +141,81 @@ h2, h3, p, .course__item{
 
 // Course page
 .course-page{
+    width: 1200px;
+    margin: 50px auto 50px;
     height: 100%;
     display: block;
-    margin: 50px;
-    justify-content: center;
     border: 1px black solid;
-    color: #00097d;
+    color: #FFFFFF;
+    border-radius: 30px;
 }
 
 .course__title {
-    border-bottom: 2px solid #4d6243;
-    margin-bottom: 30px;
+    padding: 20px 30px;
+    background-color: #4d6243;
+    border-radius: 29px 29px 0 0;
+}
+
+.course__title h1 {
+    font-size: 3em;
+    font-weight: bolder;
+    border-bottom: 3px solid #ee9a46;
+    margin-bottom: 10px;
+}
+
+.course__desc {
+    font-size: 1.5em;
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 .about-course-wrapper {
     display: flex;
-    align-content: center;
+    justify-content: space-between;
+    text-align: center;
 }
 
-.course__desc {
-    width: 55%;
-    padding: 0 15px 10px;
-    position: relative;
+.course__details {
+    display: flex;
 }
 
-.course__desc p{
-    text-align: justify;
-
+.course__price {
+    display: flex;
+    align-items: center;
 }
 
-.course-details {
-    width: 45%;
-    margin: 0 10px;
+.course__evaluation {
+    padding-right: 40px;
+}
+
+.course__evaluation span {
+    color: #ee9a46;
+    font-size: 1em;
+}
+
+.course__price h2{
+    text-align: center;
+    padding-right: 20px;
 }
 
 .video-lesson-content {
     display: flex;
     align-content: center;
-    margin: 0 10px;
+    margin-top: 15px;
+    padding: 20px 30px;
 }
 
 .video-player-container {
     width: 55%;
+    padding-right: 20px;
+}
+
+.video-player-wrapper {
+    border: 1px solid #4d6243;
+    height: 330px;
+    text-align: center;
+    color: #4d6243;
 }
 
 .lessons-container {
@@ -189,14 +223,24 @@ h2, h3, p, .course__item{
 }
 
 .content-header {
-    background-color: #a8a8a8;
+    background-color: #4d6243;
+    padding: 10px;
+    font-size: 1em;
+    color: #FFFFFF;
 }
 
 .lesson {
     display: flex;
-    padding: 5px;
+    padding: 10px;
     border: 1px solid #4d6243;
-    margin: 5px 0;
+    margin-bottom: 1px;
     justify-content: space-between;
     align-items: center;
+    color: #4d6243;
+}
+
+.lesson:hover {
+    border: 1px solid #ee9a46;
+    color: #FFFFFF;
+    background-color: #ee9a46;
 }

@@ -5,6 +5,7 @@ import {getOneCourse} from "../reduxStore/course-reducer";
 import {connect} from "react-redux";
 import {AppStateType} from "../reduxStore/store";
 import {ICourse} from "../models/ICourse";
+import Button from "../common/button/Button";
 
 interface CoursePage {
     getOneCourse: (courseId: string) => void,
@@ -24,7 +25,9 @@ const CoursePage: FC<CoursePage> = ({course, getOneCourse}) => {
         {id: 3, title: 'Lesson 3', time: '00:23:43'},
         {id: 4, title: 'Lesson 4', time: '00:12:33'},
         {id: 5, title: 'Lesson 5', time: '00:42:01'},
-        {id: 6, title: 'Lesson 6', time: '00:22:01'}
+        {id: 6, title: 'Lesson 6', time: '00:22:34'},
+        {id: 7, title: 'Lesson 7', time: '00:12:54'},
+        {id: 8, title: 'Lesson 8', time: '00:45:25'}
     ];
 
     const params = useParams()
@@ -38,27 +41,35 @@ const CoursePage: FC<CoursePage> = ({course, getOneCourse}) => {
         <div className="course-page">
             <div className="course__title">
                 <h1>{course.title}</h1>
-            </div>
-            <div className="about-course-wrapper">
                 <div className="course__desc">
                     {course.description}
                 </div>
-                <div className="course-details">
-                    <div className="course__about">
-                        <header>About course</header>
+                <div className="about-course-wrapper">
+                    <div className="course__details">
+                        <div className="course__evaluation">
+                            Course evaluation: <span>★★★★★</span>
+                        </div>
+                        <div className="course__members">
+                            Number of members: 18
+                        </div>
                     </div>
-                    <div className="course__author">
-                        {course.author && <h3>{course.author.name}</h3> }
+                    <div className="course__price">
+                        <h2>Price: ${course.price}</h2>
+                        <Button>Add to cart</Button>
                     </div>
+                </div>
+                <div className="course__author">
+                    {course.author && <div>Course author: {course.author.name}</div> }
                 </div>
             </div>
 
-            <div className="video-lesson-content" style={{height: "100%"}}>
-                <div className="video-player-container" style={{padding: "0 15px 10px", display: 'block'}}>
-                    <div className="content-header">
-                        Lesson nr. 1
-                    </div>
-                    <div className="video-player-wrapper" style={{border: "1px solid black", height: "90%",textAlign:"center"}}>
+
+            <div className="video-lesson-content">
+                <div className="video-player-container">
+                    <header className="content-header">
+                        Lesson 1. Start of course
+                    </header>
+                    <div className="video-player-wrapper">
                         Video
                     </div>
                 </div>
