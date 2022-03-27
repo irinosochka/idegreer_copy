@@ -11,20 +11,12 @@ type ThunkType = BaseThunkType<ActionsType>
 const INITIAL_STATE = {
     user: {} as IUser,
     usersList: [] as any,
-    userDataChangingError: false,
-    userDataChangedSuccess: false,
     passwordChangingError: false,
     passwordChangingSuccess: false
 }
 
 const userReducer = (state = INITIAL_STATE, action: ActionsType): InitialStateType => {
     switch (action.type) {
-        case "SET_USER_DATA_CHANGING_SUCCESS": {
-            return {
-                ...state,
-                userDataChangedSuccess: action.payload
-            }
-        }
         case "SET_USER": {
             return {
                 ...state,
@@ -35,12 +27,6 @@ const userReducer = (state = INITIAL_STATE, action: ActionsType): InitialStateTy
             return {
                 ...state,
                 usersList: action.payload
-            }
-        }
-        case "SET_USER_DATA_CHANGING_ERROR": {
-            return {
-                ...state,
-                userDataChangingError: action.payload
             }
         }
         case "SET_PASSWORD_CHANGING_ERROR": {
@@ -64,7 +50,6 @@ export const actions = {
     setUserDataChangingSuccess: (bool: boolean) => ({type: "SET_USER_DATA_CHANGING_SUCCESS", payload: bool} as const),
     setUser: (user: IUser) => ({type: "SET_USER", payload: user} as const),
     setUserList: (users: any) => ({type: "SET_USER_LIST", payload: users} as const),
-    setUserDataChangingError: (bool: boolean) => ({type: "SET_USER_DATA_CHANGING_ERROR", payload: bool} as const),
     setPasswordChangingError: (bool: boolean) => ({type: "SET_PASSWORD_CHANGING_ERROR", payload: bool} as const),
     setPasswordChangingSuccess: (bool: boolean) => ({type: "SET_PASSWORD_CHANGING_SUCCESS", payload: bool} as const),
 

@@ -17,7 +17,9 @@ const INITIAL_STATE = {
 
     /* Errors */
     loginError: false,
-    registrationError: false
+    registrationError: false,
+    userDataChangedSuccess: false,
+    userDataChangingError: false,
 }
 
 const authReducer = (state = INITIAL_STATE, action: ActionsType): InitialStateType => {
@@ -52,6 +54,18 @@ const authReducer = (state = INITIAL_STATE, action: ActionsType): InitialStateTy
                 isLoading: action.payload
             }
         }
+        case "SET_USER_DATA_CHANGING_ERROR": {
+            return {
+                ...state,
+                userDataChangingError: action.payload
+            }
+        }
+        case "SET_USER_DATA_CHANGING_SUCCESS": {
+            return {
+                ...state,
+                userDataChangedSuccess: action.payload
+            }
+        }
         default:
             return state
     }
@@ -62,7 +76,9 @@ export const actions = {
     setLoginError: (bool: boolean) => ({type: 'SET_LOGIN_ERROR', payload: bool} as const),
     setRegistrationError: (bool: boolean) => ({type: 'SET_REGISTRATION_ERROR', payload: bool} as const),
     setAuthUser: (user: IUser) => ({type: 'SET_AUTH_USER', payload: user} as const),
-    setLoading: (bool: boolean) => ({type: 'SET_LOADING', payload: bool} as const)
+    setLoading: (bool: boolean) => ({type: 'SET_LOADING', payload: bool} as const),
+    setUserDataChangingError: (bool: boolean) => ({type: "SET_USER_DATA_CHANGING_ERROR", payload: bool} as const),
+    setUserDataChangingSuccess: (bool: boolean) => ({type: "SET_USER_DATA_CHANGING_SUCCESS", payload: bool} as const)
 }
 
 export const login = (username: string, password: string): ThunkType =>
@@ -125,6 +141,7 @@ export const userDataChanging = (user: IUser, newUsername: string, newName: stri
         const response = await UserService.userDataChanging(user.username, newUsername, newName, newEmail);
         if (response.data.resultCode === 1) {
             dispatch(actions.setAuthUser(response.data.data.user));
+            dispatch(actions.setUserDataChangingSuccess(true))
             return response
         } else {
         }

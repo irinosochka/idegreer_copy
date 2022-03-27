@@ -5,8 +5,7 @@ import Button from "../../common/button/Button";
 import Message, {MessageType} from "../../common/Messages/Message";
 import {AppStateType} from "../../reduxStore/store";
 import {connect} from "react-redux";
-import {actions} from "../../reduxStore/user-reducer";
-import {userDataChanging} from "../../reduxStore/auth-reducer";
+import {actions, userDataChanging} from "../../reduxStore/auth-reducer";
 import {changePhoto} from "../../reduxStore/file-reducer";
 import {IUser} from "../../models/IUser";
 
@@ -41,7 +40,8 @@ const EditProfile: FC<EditProfileProps> = ({
     const handleSubmit = (event: any) => {
         event.preventDefault();
         const formData = new FormData();
-        formData.append('file', image!)
+        formData.append('userImage', image!)
+        formData.append('username', username)
         if (username.length !== 0 && name.length !== 0 && email.length !== 0) {
             userDataChanging(authUser, username, name, email);
             changePhoto(formData)
@@ -97,7 +97,7 @@ const EditProfile: FC<EditProfileProps> = ({
                     </label>
                     <span style={{fontSize: '14px', paddingLeft: '10px'}}>{image ? image!.name : ''}</span>
                 </div>
-                <input className="uploadButton" id="uploadButton" style={{visibility: "hidden"}} type={"file"}
+                <input className="uploadButton" id="uploadButton" style={{visibility: "hidden"}} name={'userImage'} type={"file"}
                        onChange={(event) => {
                            setImage(event.target!.files![0]);
                            setError(false);
@@ -115,8 +115,8 @@ const EditProfile: FC<EditProfileProps> = ({
 const mapStateToProps = (state: AppStateType) => {
     return {
         authUser: state.auth.authUser,
-        userDataChangingError: state.user.userDataChangingError,
-        userDataChangedSuccess: state.user.userDataChangedSuccess
+        userDataChangingError: state.auth.userDataChangingError,
+        userDataChangedSuccess: state.auth.userDataChangedSuccess
     }
 }
 
