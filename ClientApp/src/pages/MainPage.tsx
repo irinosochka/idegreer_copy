@@ -22,7 +22,7 @@ const MainPage: FC<MainPageProps> = ({courses, getAllCourses}) => {
             <h1 style={{textAlign: 'left', marginTop: '20px', fontSize: '20px'}}>All courses</h1>
             <div className="courses__container">
                 {courses.map((course: ICourse) => {
-                        return <NavLink key={course._id} to={'/course/:id'}><CourseItem course={course} /></NavLink>
+                        return <NavLink key={course._id} to={`/course/${course._id}`}><CourseItem course={course} /></NavLink>
                     }
                 )}
             </div>
