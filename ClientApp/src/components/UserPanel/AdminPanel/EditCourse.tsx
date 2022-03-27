@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {AppStateType} from "../../../reduxStore/store";
 import {connect} from "react-redux";
 import {getAllCourses} from "../../../reduxStore/course-reducer";
