@@ -1,9 +1,8 @@
 import React, {FC} from 'react';
 import '../AuthComponents/auth.scss';
-
-// @ts-ignore
-import reactLogo from '../../assets/img/react-logo.png'
 import {ICourse} from "../../models/ICourse";
+
+import reactLogo from '../../assets/img/react-logo.png'
 
 interface CourseItemProps {
     course: ICourse

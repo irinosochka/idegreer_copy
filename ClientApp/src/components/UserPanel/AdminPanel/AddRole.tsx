@@ -1,10 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
 import "./adminPanel.css";
-// @ts-ignore
-import editIcon from "../../../assets/img/edit-svgrepo-com.svg"
-// @ts-ignore
-import addIcon from "../../../assets/img/add-svgrepo-com.svg"
 import {IUser} from "../../../models/IUser";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../reduxStore/store";

@@ -5,22 +5,18 @@ import AddCourse from "../components/UserPanel/ProfessorPanel/AddCourse";
 import Profile from "../components/UserPanel/Profile";
 import {NavLink} from "react-router-dom";
 import PhotoMockup, {sizeTypes} from "../common/photoMockup/PhotoMockup";
-
-/* IMG */
-// @ts-ignore
-import profileIcon from '../assets/img/user-profile-svgrepo-com.svg'
-// @ts-ignore
-import editIcon from '../assets/img/edit-svgrepo-com.svg'
-// @ts-ignore
-import passwordIcon from '../assets/img/password-svgrepo-com.svg'
-// @ts-ignore
-import addCourseIcon from '../assets/img/add-svgrepo-com.svg'
 import EditProfileButton from "../components/UserPanel/EditProfileButton";
 import AddRole from "../components/UserPanel/AdminPanel/AddRole";
 import {AppStateType} from "../reduxStore/store";
 import {connect} from "react-redux";
 import {IUser} from "../models/IUser";
 import RoleRequestList from "../components/UserPanel/AdminPanel/RoleRequestList";
+
+/* IMG */
+import profileIcon from '../assets/img/user-profile-svgrepo-com.svg'
+import editIcon from '../assets/img/edit-svgrepo-com.svg'
+import passwordIcon from '../assets/img/password-svgrepo-com.svg'
+import addCourseIcon from '../assets/img/add-svgrepo-com.svg'
 
 export enum UserPageSlidesItems {
     EDIT_PROFILE = 'editProfile',

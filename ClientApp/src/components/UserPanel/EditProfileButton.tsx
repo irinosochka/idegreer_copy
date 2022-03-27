@@ -1,6 +1,4 @@
 import React, {FC} from 'react';
-// @ts-ignore
-import profileIcon from "../../assets/img/user-profile-svgrepo-com.svg";
 
 interface EditProfileButtonProps {
     icon: string,

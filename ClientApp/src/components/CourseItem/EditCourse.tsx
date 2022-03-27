@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
-
-import "../UserPanel/AdminPanel/adminPanel.css";
-// @ts-ignore
-import editIcon from "../../assets/img/edit-svgrepo-com.svg"
 import {AppStateType} from "../../reduxStore/store";
 import {connect} from "react-redux";
 import {getAllCourses} from "../../reduxStore/course-reducer";
 import {ICourse} from "../../models/ICourse";
+import "../UserPanel/AdminPanel/adminPanel.css";
+
+import editIcon from "../../assets/img/edit-svgrepo-com.svg"
 
 
 interface EditCourseProps {

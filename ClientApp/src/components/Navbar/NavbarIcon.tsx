@@ -1,6 +1,4 @@
 import React, {FC} from 'react';
-// @ts-ignore
-import homeIcon from "../../assets/img/home-svgrepo-com.svg";
 import {useNavigate} from "react-router-dom";
 
 interface NavbarIcon {
