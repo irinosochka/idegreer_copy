@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {NavLink, useLocation, useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 /* IMG */
 // @ts-ignore
@@ -10,14 +10,14 @@ import homeIcon from '../../assets/img/home-svgrepo-com.svg'
 import profileIcon from '../../assets/img/user-profile-svgrepo-com.svg'
 import {connect} from "react-redux";
 import {logout} from "../../reduxStore/auth-reducer";
+import NavbarIcon from "./NavbarIcon";
+import Logo from "../../common/Logo";
 
 interface NavbarProps {
     logout: () => void
 }
 
 const Navbar: FC<NavbarProps> = ({logout}) => {
-
-    const navigator = useNavigate();
 
     const location = useLocation();
 
@@ -31,27 +31,11 @@ const Navbar: FC<NavbarProps> = ({logout}) => {
                 padding: '20px',
                 textAlign: 'left'
             }}>
-                {location.pathname === '/' && <div>
-                    <NavLink to={'/'} style={{fontSize: '28px'}}>
-                        iDegreer
-                    </NavLink>
-                </div>}
-
+                {location.pathname === '/' && <Logo />}
                 <div style={{display: 'flex', alignItems: 'center', textAlign: 'right', padding: '5px 0'}}>
-                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#fff', borderRadius: '50px', width: '35px', height: '35px', marginRight: '10px', cursor: 'pointer'}} onClick={() => {
-                        navigator('/')
-                    }}>
-                        <img src={homeIcon} style={{color: '#fff', width: '15px', height: '15px'}}  alt=""/>
-                    </div>
-                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#fff', borderRadius: '50px', width: '35px', height: '35px', marginRight: '10px', cursor: 'pointer'}} onClick={() => {
-                        navigator('/profile')
-                    }}>
-                        <img src={profileIcon} style={{color: '#fff', width: '15px', height: '15px'}}  alt=""/>
-                    </div>
-                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'rgb(217 115 115)', borderRadius: '50px', width: '35px', height: '35px', cursor: 'pointer'}} onClick={logout}>
-                        <img src={logoutIcon} style={{width: '15px', height: '15px'}}
-                              alt="logout"/>
-                    </div>
+                    <NavbarIcon icon={homeIcon} link={'/'} />
+                    <NavbarIcon icon={profileIcon} link={'/profile'} />
+                    <NavbarIcon icon={logoutIcon} func={logout} bg={'rgb(217 115 115)'} />
                 </div>
             </div>
         </div>

@@ -13,7 +13,6 @@ interface MainPageProps {
 
 const MainPage: FC<MainPageProps> = ({courses, getAllCourses}) => {
 
-
     useEffect(() => {
         getAllCourses()
     }, [])

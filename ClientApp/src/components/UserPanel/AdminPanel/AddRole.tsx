@@ -102,7 +102,7 @@ const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser,
 
                 </div>
 
-                {buttonVisible && !selectedUser.roles.includes('PROFESSOR') &&
+                {buttonVisible && !selectedUser.roles.includes('PROFESSOR') && !selectedUser.roles.includes('ADMIN') &&
                 <div>
                     <Button onClick={() =>{
                         handleAdding();

@@ -2,7 +2,7 @@ import React, {FC, useEffect} from 'react';
 import './App.css'
 import {Route, Routes, useNavigate} from 'react-router-dom';
 import MainPage from "./pages/MainPage";
-import AuthPage from "./pages/AuthPage";
+import AuthPage from "./pages/AuthPage/AuthPage";
 import UserPage from "./pages/UserPage";
 import Navbar from "./components/Navbar/Navbar";
 import Loader from "./common/Loader/Loader";
