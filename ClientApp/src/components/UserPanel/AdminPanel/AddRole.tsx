@@ -8,6 +8,7 @@ import {actions, setRoleToUser} from "../../../reduxStore/role-reducer";
 import {getAllUsers, getUser} from "../../../reduxStore/user-reducer";
 import Button from "../../../common/button/Button";
 import Message, {MessageType} from "../../../common/Messages/Message";
+import searchIcon from "../../../assets/img/search-svgrepo-com.svg";
 
 
 interface AddRoleProps {
@@ -22,13 +23,15 @@ const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser,
     const [searchTerm, setSearchTerm] = useState('');
     const [showUsers, setShowUsers] = useState(false);
     const [selectedUser, setSelectedUser] = useState<IUser>();
-    const [buttonVisible, setButtonVisible] = useState(true)
+    const [buttonVisible, setButtonVisible] = useState(true);
+    const searchWrapper = document.querySelector('.search__input');
 
     useEffect(() => {
         getAllUsers()
     }, [usersList]);
 
     const handleSelecting = (user: IUser) => {
+        searchWrapper?.classList.remove("active")
         setSelectedUser(user);
         setButtonVisible(true);
     };
@@ -40,52 +43,47 @@ const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser,
     }
 
     return (
-        <div className="user__container" style={{display: 'flex'}}>
-            <div style= {{display: 'inline-block'}}>
-                <>
-                    <h1>Add professor role</h1>
-                </>
-
-                <div className="input__wrapper">
-                    <input type="text"
-                           placeholder="Search user"
-                           value={searchTerm}
-                           onChange={e => {
-                               setSearchTerm(e.target.value);
-                               setShowUsers(!showUsers)
-                           }}/>
+        <div className="body">
+            <div className="user__container">
+                <h1>Add role</h1>
+                <div className="search__input">
+                    <input
+                        type="text"
+                        placeholder="Search user..."
+                        value={searchTerm}
+                        onChange={e => {
+                            setSearchTerm(e.target.value);
+                            setShowUsers(!showUsers)
+                        }}
+                    />
+                    <div className="item__box">
+                        {usersList?.filter((user: IUser) => {
+                            if (searchTerm == "") {
+                                searchWrapper?.classList.remove("active")
+                                return user;
+                            } else if (user.username.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                return user;
+                            }
+                            searchWrapper?.classList.add("active")
+                        }).map((user: IUser) => {
+                            return (
+                                <li key={user._id}
+                                    onClick={() => {
+                                        handleSelecting(user)
+                                    }}>
+                                    {user?.username}
+                                </li>
+                            )})}
+                    </div>
+                    <div className="icon">
+                        <img src={searchIcon} alt=""/>
+                    </div>
                 </div>
-
-                <div className="body">
-                    {showUsers && usersList.length === 0 && (
-                        <div className="notFound">No User Found</div>
-                    )}
-
-                    {usersList?.filter((user: IUser) => {
-                        if (searchTerm == "") {
-                            return user;
-                        } else if (user.username.toLowerCase().includes(searchTerm.toLowerCase())) {
-                            return user;
-                        }
-                    }).map((user: IUser) => {
-                        return (
-                            <div className="body__item" key={user._id}
-                                 onClick={() => {
-                                     handleSelecting(user)
-                                 }}>
-                                {user?.username}
-                            </div>
-                        )})}
-                </div>
-            </div>
-
-
-            {selectedUser && <div>
+                {selectedUser && <div style={{width: '400px', marginTop: '50px',display: 'inline-block'}}>
                     <div className="infoUser__line">
                         <p className="user__title">Name:</p>
                         <p className="user__info">{selectedUser?.name}</p>
                     </div>
-
                     <div className="infoUser__line">
                         <p className="user__title">Email:</p>
                         <p className="user__info">{selectedUser?.email}</p>
@@ -98,17 +96,17 @@ const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser,
                         <p className="user__title">Role:</p>
                         <p className="user__info">{selectedUser?.roles.join(", ")}</p>
                     </div>
-
-                {buttonVisible && !selectedUser.roles.includes('PROFESSOR') && !selectedUser.roles.includes('ADMIN') &&
-                <div>
-                    <Button onClick={() =>{
-                        handleAdding();
-                        setButtonVisible(false);
-                        setTimeout(() => setRoleAdded(false), 4000)
-                    }}>Make a professor</Button>
+                    {buttonVisible && !selectedUser.roles.includes('PROFESSOR') && !selectedUser.roles.includes('ADMIN') &&
+                    <div>
+                        <Button onClick={() =>{
+                            handleAdding();
+                            setButtonVisible(false);
+                            setTimeout(() => setRoleAdded(false), 4000)
+                        }}>Make a professor</Button>
+                    </div>}
+                    <div style={{marginTop: '10px'}}>{roleAdded && <span style={{fontSize: '14px'}}><Message type={MessageType.SUCCESS}>Role was added</Message></span>}</div>
                 </div>}
-                <div style={{marginTop: '10px'}}>{roleAdded && <span style={{fontSize: '14px'}}><Message type={MessageType.SUCCESS}>Role was added</Message></span>}</div>
-            </div>}
+            </div>
         </div>
     )}
 

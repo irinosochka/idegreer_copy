@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {AppStateType} from "../../../reduxStore/store";
 import {connect} from "react-redux";
 import {actions, changeCourseData, getAllCourses} from "../../../reduxStore/course-reducer";
@@ -10,11 +10,12 @@ import Button from "../../../common/button/Button";
 
 interface EditCourseProps {
     course: ICourse,
+    setCourseDataChangedSuccess: (bool: boolean) => void,
     changeCourseData: (courseId: string, title: string, theme: string, description: string, price: string) => void,
     courseDataChangedSuccess: boolean
 }
 
-const EditCourseForm: React.FC<EditCourseProps> = ({course, changeCourseData, courseDataChangedSuccess}) => {
+const EditCourseForm: React.FC<EditCourseProps> = ({course, setCourseDataChangedSuccess, changeCourseData, courseDataChangedSuccess}) => {
 
     const [title, setTitle] = useState('');
     const [theme, setTheme] = useState('');
@@ -23,30 +24,32 @@ const EditCourseForm: React.FC<EditCourseProps> = ({course, changeCourseData, co
 
     const [isError, setError] = useState(false);
 
+    useEffect(() => {
+        return () => setCourseDataChangedSuccess(false)
+    }, [])
+
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
 
         if (title.length !== 0 && theme.length !== 0 && price.length !== 0 && description.length !== 0) {
-            console.log(title);
             changeCourseData(course._id, title, theme, description, price);
+
         } else {
             setError(true);
         }
     };
 
     return (
-        <div style={{width: '400px', marginTop: '130px'}}>
-            {isError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
-            {courseDataChangedSuccess && <Message type={MessageType.SUCCESS}>Success data changing</Message>}
-
-            <form onSubmit={handleSubmit}>
+        <div style={{width: '400px', marginTop: '50px',display: 'inline-block'}}>
+            <form className="edit__box" onSubmit={handleSubmit}>
+                {isError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
+                {courseDataChangedSuccess && <Message type={MessageType.SUCCESS}>Success data changing</Message>}
                 <input
                     onChange={(event) => {
                         setTitle(event.target.value);
                         setError(false);
-
-
+                        setCourseDataChangedSuccess(false);
                     }}
                     type="text"
                     id="course_name"
@@ -57,6 +60,7 @@ const EditCourseForm: React.FC<EditCourseProps> = ({course, changeCourseData, co
                     onChange={(event) => {
                         setTheme(event.target.value);
                         setError(false);
+                        setCourseDataChangedSuccess(false);
                     }}
                     type="text"
                     id="course_topic"
@@ -67,6 +71,7 @@ const EditCourseForm: React.FC<EditCourseProps> = ({course, changeCourseData, co
                     onChange={(event) => {
                         setPrice(event.target.value);
                         setError(false);
+                        setCourseDataChangedSuccess(false);
                     }}
                     type="number"
                     id="course_price"
@@ -77,12 +82,13 @@ const EditCourseForm: React.FC<EditCourseProps> = ({course, changeCourseData, co
                     onChange={(event) => {
                         setDescription(event.target.value);
                         setError(false);
+                        setCourseDataChangedSuccess(false);
                     }}
                     value={description}
                     name="textarea"
                     id="course_description"
                     placeholder={course.description}
-                    style={{resize: "none", marginBottom: '10px', padding: '5px 15px', width: 'calc(100% - 32px)'}}
+                    style={{resize: "none", marginBottom: '10px', padding: '5px 15px', width: 'calc(100% - 32px)', height: '80px'}}
                 />
                 <p style={{color: 'slategrey'}}>Author: {course.author.name}</p>
                 <div>
