@@ -41,10 +41,8 @@ const EditCourseForm: React.FC<EditCourseProps> = ({course, setCourseDataChanged
     };
 
     return (
-        <div style={{width: '400px', marginTop: '130px'}}>
-
-
-            <form onSubmit={handleSubmit}>
+        <div style={{width: '400px', marginTop: '50px',display: 'inline-block'}}>
+            <form className="edit__box" onSubmit={handleSubmit}>
                 {isError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
                 {courseDataChangedSuccess && <Message type={MessageType.SUCCESS}>Success data changing</Message>}
                 <input
@@ -90,7 +88,7 @@ const EditCourseForm: React.FC<EditCourseProps> = ({course, setCourseDataChanged
                     name="textarea"
                     id="course_description"
                     placeholder={course.description}
-                    style={{resize: "none", marginBottom: '10px', padding: '5px 15px', width: 'calc(100% - 32px)'}}
+                    style={{resize: "none", marginBottom: '10px', padding: '5px 15px', width: 'calc(100% - 32px)', height: '80px'}}
                 />
                 <p style={{color: 'slategrey'}}>Author: {course.author.name}</p>
                 <div>
