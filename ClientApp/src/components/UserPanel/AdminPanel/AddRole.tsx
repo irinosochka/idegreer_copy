@@ -22,18 +22,18 @@ interface AddRoleProps {
 const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser, roleAdded, setRoleAdded}) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [showUsers, setShowUsers] = useState(false);
+    const [active, setActive] = useState(false);
     const [selectedUser, setSelectedUser] = useState<IUser>();
     const [buttonVisible, setButtonVisible] = useState(true);
-    const searchWrapper = document.querySelector('.search__input');
 
     useEffect(() => {
         getAllUsers()
     }, [usersList]);
 
     const handleSelecting = (user: IUser) => {
-        searchWrapper?.classList.remove("active")
         setSelectedUser(user);
         setButtonVisible(true);
+        setActive(false);
     };
 
     function handleAdding() {
@@ -46,25 +46,24 @@ const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser,
         <div className="body">
             <div className="user__container">
                 <h1>Add role</h1>
-                <div className="search__input">
+                <div className={`search__input ${active && 'active'}`}>
                     <input
                         type="text"
                         placeholder="Search user..."
                         value={searchTerm}
                         onChange={e => {
                             setSearchTerm(e.target.value);
-                            setShowUsers(!showUsers)
+                            setShowUsers(!showUsers);
+                            setActive(true);
                         }}
                     />
                     <div className="item__box">
                         {usersList?.filter((user: IUser) => {
                             if (searchTerm == "") {
-                                searchWrapper?.classList.remove("active")
                                 return user;
                             } else if (user.username.toLowerCase().includes(searchTerm.toLowerCase())) {
                                 return user;
                             }
-                            searchWrapper?.classList.add("active")
                         }).map((user: IUser) => {
                             return (
                                 <li key={user._id}
@@ -79,7 +78,7 @@ const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser,
                         <img src={searchIcon} alt=""/>
                     </div>
                 </div>
-                {selectedUser && <div style={{width: '400px', marginTop: '50px',display: 'inline-block'}}>
+                {selectedUser && <div className="infoUser_box" style={{width: '400px', marginTop: '50px',display: 'inline-block'}}>
                     <div className="infoUser__line">
                         <p className="user__title">Name:</p>
                         <p className="user__info">{selectedUser?.name}</p>
