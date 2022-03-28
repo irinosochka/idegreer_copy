@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {AppStateType} from "../reduxStore/store";
 import {ICourse} from "../models/ICourse";
 import Button from "../common/button/Button";
+import './coursePage.css'
 
 interface CoursePage {
     getOneCourse: (courseId: string) => void,
@@ -70,7 +71,6 @@ const CoursePage: FC<CoursePage> = ({course, getOneCourse}) => {
                         Lesson 1. Start of course
                     </header>
                     <div className="video-player-wrapper">
-                        Video
                     </div>
                 </div>
 

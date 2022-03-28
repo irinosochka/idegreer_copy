@@ -1,0 +1,28 @@
+
+
+.lesson {
+    display: flex;
+    padding: 10px;
+    border: 1px solid #4d6243;
+    margin-bottom: 1px;
+    justify-content: space-between;
+    align-items: center;
+    color: #4d6243;
+    border-radius: 50px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.lesson:hover {
+    border: 1px solid #ee9a46;
+    color: #FFFFFF;
+    background-color: #ee9a46;
+}
+
+.lessons-container {
+    width: 45%;
+}
+
+.video-lessons-list-content {
+    margin-top: 20px;
+}

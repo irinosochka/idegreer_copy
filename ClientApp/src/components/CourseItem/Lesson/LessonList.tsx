@@ -1,5 +1,8 @@
 import React, {FC} from 'react';
 import LessonItem from "./LessonItem";
+import './lesson.css'
+
+
 interface LessonListProps {
     lessons: any
 }

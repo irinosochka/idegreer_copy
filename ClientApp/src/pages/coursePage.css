@@ -1,0 +1,87 @@
+.course-page{
+    width: 1200px;
+    margin: 50px auto 50px;
+    height: 100%;
+    display: block;
+    border: 1px black solid;
+    color: #FFFFFF;
+    border-radius: 30px;
+}
+
+.course__title {
+    padding: 20px 30px;
+    background-color: #4d6243;
+    border-radius: 29px 29px 0 0;
+}
+
+.course__title h1 {
+    font-size: 3em;
+    font-weight: bolder;
+    border-bottom: 3px solid #ee9a46;
+    margin-bottom: 10px;
+}
+
+.course__desc {
+    font-size: 1.5em;
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.about-course-wrapper {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.course__details {
+    display: flex;
+}
+
+.course__price {
+    display: flex;
+    align-items: center;
+}
+
+.course__evaluation {
+    padding-right: 40px;
+}
+
+.course__evaluation span {
+    color: #ee9a46;
+    font-size: 1em;
+}
+
+.course__price h2{
+    text-align: center;
+    padding-right: 20px;
+}
+
+.video-lesson-content {
+    display: flex;
+    align-content: center;
+    margin-top: 15px;
+    padding: 20px 30px;
+}
+
+.video-player-container {
+    width: 55%;
+    padding-right: 20px;
+}
+
+.video-player-wrapper {
+    border: 1px solid #4d6243;
+    height: 330px;
+    text-align: center;
+    color: #4d6243;
+    border-radius: 50px;
+    margin-top: 20px;
+}
+
+.content-header {
+    background-color: #4d6243;
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #FFFFFF;
+    border-radius: 50px;
+}
