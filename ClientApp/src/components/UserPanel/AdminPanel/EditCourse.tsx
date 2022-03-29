@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {AppStateType} from "../../../reduxStore/store";
 import {connect} from "react-redux";
 import {getAllCourses} from "../../../reduxStore/course-reducer";
@@ -6,6 +6,7 @@ import {ICourse} from "../../../models/ICourse";
 import "./adminPanel.css";
 import EditCourseForm from "./EditCourseForm";
 import searchIcon from "../../../assets/img/search-svgrepo-com.svg"
+import closeIcon from "../../../assets/img/close-svgrepo-com.svg";
 
 
 interface ListOfCourseProps {
@@ -63,6 +64,9 @@ const EditCourse: React.FC<ListOfCourseProps> = ({courses, getAllCourses}) => {
                     <div className="icon">
                        <img src={searchIcon} alt=""/>
                     </div>
+                    {active && <div className="iconClose" onClick={() => {setActive(false)}}>
+                        <img src={closeIcon} alt=""/>
+                    </div>}
                 </div>
             {selectedCourse && <EditCourseForm course={selectedCourse}/>}
             </div>

@@ -110,6 +110,18 @@
   font-size: 20px;
 }
 
+.search__input .iconClose{
+  height: 10px;
+  width: 10px;
+  line-height: 15px;
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  text-align: center;
+  font-size: 20px;
+  cursor: pointer;
+}
+
 .edit__box{
   border-radius: 5px;
   padding: 0 30px 0 30px;
