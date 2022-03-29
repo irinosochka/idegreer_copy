@@ -93,6 +93,7 @@
 
 .search__input.active .item__box{
   display: block;
+  z-index: 10;
 }
 
 .item__box li:hover{
