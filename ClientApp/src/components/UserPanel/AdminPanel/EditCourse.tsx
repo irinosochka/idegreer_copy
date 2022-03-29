@@ -16,15 +16,15 @@ interface ListOfCourseProps {
 const EditCourse: React.FC<ListOfCourseProps> = ({courses, getAllCourses}) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [showCourse, setShowCourse] = useState(false);
+    const [active, setActive] = useState(false);
     const [selectedCourse, setSelectedCourse] = useState<ICourse>();
-    const searchWrapper = document.querySelector('.search__input');
 
     useEffect(() => {
         getAllCourses()
     }, []);
 
     const handleSelecting = (course: ICourse) => {
-        searchWrapper?.classList.remove("active")
+        setActive(false);
         setSelectedCourse(course);
     };
 
@@ -32,25 +32,24 @@ const EditCourse: React.FC<ListOfCourseProps> = ({courses, getAllCourses}) => {
         <div className="body">
             <div className="user__container">
                 <h1>Edit courses</h1>
-                <div className="search__input">
-                    <input
+                <div className={`search__input ${active && 'active'}`}>
+                <input
                         type="text"
                         placeholder="Search course..."
                         value={searchTerm}
                         onChange={e => {
                             setSearchTerm(e.target.value);
                             setShowCourse(!showCourse)
+                            setActive(true);
                         }}
                     />
                     <div className="item__box">
                         {courses?.filter((course: ICourse ) => {
                             if (searchTerm == "") {
-                                searchWrapper?.classList.remove("active")
                                 return course;
                             } else if(course.title.toLowerCase().includes(searchTerm.toLowerCase())){
                                 return course;
                             }
-                            searchWrapper?.classList.add("active")
                         }).map((course: ICourse) => {
                             return(
                                 <li key={course._id}
