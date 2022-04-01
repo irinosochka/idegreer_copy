@@ -9,7 +9,7 @@ import {getAllUsers, getUser} from "../../../reduxStore/user-reducer";
 import Button from "../../../common/button/Button";
 import Message, {MessageType} from "../../../common/Messages/Message";
 import searchIcon from "../../../assets/img/search-svgrepo-com.svg";
-
+import closeIcon from "../../../assets/img/close-svgrepo-com.svg"
 
 interface AddRoleProps {
     getAllUsers: () => void,
@@ -41,6 +41,8 @@ const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser,
             setRoleToUser(selectedUser, 'PROFESSOR')
         }
     }
+
+
 
     return (
         <div className="body">
@@ -77,6 +79,9 @@ const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser,
                     <div className="icon">
                         <img src={searchIcon} alt=""/>
                     </div>
+                    {active && <div className="iconClose" onClick={() => {setActive(false)}}>
+                        <img src={closeIcon} alt=""/>
+                    </div>}
                 </div>
                 {selectedUser && <div className="infoUser_box" style={{width: '400px', marginTop: '50px',display: 'inline-block'}}>
                     <div className="infoUser__line">
