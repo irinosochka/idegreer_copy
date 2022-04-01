@@ -42,7 +42,7 @@ const EditCourse: React.FC<ListOfCourseProps> = ({courses, getAllCourses, setCou
     };
 
     return (
-        <div className="body">
+
             <div className="user__container">
                 <h1>Edit courses</h1>
                 <SearchComponent setSelected={setSelectedCourse} list={courses} getList={getAllCourses} />
@@ -103,7 +103,6 @@ const EditCourse: React.FC<ListOfCourseProps> = ({courses, getAllCourses, setCou
                 </form>
             </div>}
             </div>
-        </div>
     )}
 
 const mapStateToProps = (state: AppStateType) => {
