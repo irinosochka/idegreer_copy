@@ -37,6 +37,18 @@ class CourseService {
             course
         }
     }
+
+    async deleteCourseById(id) {
+        const course = await CourseModel.findOne({_id: id});
+        if(!course) {
+            throw new Error('This course not exists')
+        }
+        console.log(course)
+        const deletedCourse = await course.deleteOne({_id: id});
+        return {
+            deletedCourse
+        }
+    }
 }
 
 module.exports = new CourseService()

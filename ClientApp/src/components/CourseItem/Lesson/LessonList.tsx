@@ -1,10 +1,11 @@
 import React, {FC} from 'react';
 import LessonItem from "./LessonItem";
 import './lesson.css'
+import {ILection} from "../../../models/ILection";
 
 
 interface LessonListProps {
-    lessons: any
+    lessons: Array<ILection>
 }
 
 const LessonList: FC<LessonListProps> = ({lessons}) => {
@@ -14,8 +15,8 @@ const LessonList: FC<LessonListProps> = ({lessons}) => {
                 List of lessons
             </header>
             <div className="video-lessons-list-content">
-                {lessons.map((lesson:any) =>
-                    <LessonItem lesson={lesson} key={lesson.id}/>
+                {lessons.map((lesson: ILection, index: number) =>
+                    <LessonItem lesson={lesson} index={index} key={lesson._id}/>
                 )}
             </div>
         </div>
