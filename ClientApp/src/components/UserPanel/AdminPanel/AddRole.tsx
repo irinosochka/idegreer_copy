@@ -10,7 +10,6 @@ import Button from "../../../common/button/Button";
 import Message, {MessageType} from "../../../common/Messages/Message";
 import SearchComponent from "../../SearchComponent/SearchComponent";
 
-
 interface AddRoleProps {
     getAllUsers: () => void,
     usersList: IUser[],
@@ -32,6 +31,8 @@ const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser,
             setRoleToUser(selectedUser, 'PROFESSOR')
         }
     }
+
+
 
     return (
         <div className="body">
