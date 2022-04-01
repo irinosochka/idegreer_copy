@@ -8,8 +8,7 @@ import {actions, setRoleToUser} from "../../../reduxStore/role-reducer";
 import {getAllUsers, getUser} from "../../../reduxStore/user-reducer";
 import Button from "../../../common/button/Button";
 import Message, {MessageType} from "../../../common/Messages/Message";
-import searchIcon from "../../../assets/img/search-svgrepo-com.svg";
-
+import SearchComponent from "../../SearchComponent/SearchComponent";
 
 interface AddRoleProps {
     getAllUsers: () => void,
@@ -20,9 +19,6 @@ interface AddRoleProps {
 }
 
 const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser, roleAdded, setRoleAdded}) => {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [showUsers, setShowUsers] = useState(false);
-    const [active, setActive] = useState(false);
     const [selectedUser, setSelectedUser] = useState<IUser>();
     const [buttonVisible, setButtonVisible] = useState(true);
 
@@ -30,54 +26,20 @@ const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser,
         getAllUsers()
     }, [usersList]);
 
-    const handleSelecting = (user: IUser) => {
-        setSelectedUser(user);
-        setButtonVisible(true);
-        setActive(false);
-    };
-
     function handleAdding() {
         if(selectedUser && !selectedUser.roles.includes('PROFESSOR')){
             setRoleToUser(selectedUser, 'PROFESSOR')
         }
     }
 
+
+
     return (
         <div className="body">
             <div className="user__container">
                 <h1>Add role</h1>
-                <div className={`search__input ${active && 'active'}`}>
-                    <input
-                        type="text"
-                        placeholder="Search user..."
-                        value={searchTerm}
-                        onChange={e => {
-                            setSearchTerm(e.target.value);
-                            setShowUsers(!showUsers);
-                            setActive(true);
-                        }}
-                    />
-                    <div className="item__box">
-                        {usersList?.filter((user: IUser) => {
-                            if (searchTerm == "") {
-                                return user;
-                            } else if (user.username.toLowerCase().includes(searchTerm.toLowerCase())) {
-                                return user;
-                            }
-                        }).map((user: IUser) => {
-                            return (
-                                <li key={user._id}
-                                    onClick={() => {
-                                        handleSelecting(user)
-                                    }}>
-                                    {user?.username}
-                                </li>
-                            )})}
-                    </div>
-                    <div className="icon">
-                        <img src={searchIcon} alt=""/>
-                    </div>
-                </div>
+                <SearchComponent setSelected={setSelectedUser} list={usersList} getList={getAllUsers} />
+
                 {selectedUser && <div className="infoUser_box" style={{width: '400px', marginTop: '50px',display: 'inline-block'}}>
                     <div className="infoUser__line">
                         <p className="user__title">Name:</p>

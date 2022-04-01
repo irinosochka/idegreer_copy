@@ -111,7 +111,29 @@
   font-size: 20px;
 }
 
+.search__input .iconClose{
+  height: 10px;
+  width: 10px;
+  line-height: 15px;
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  text-align: center;
+  font-size: 20px;
+  cursor: pointer;
+}
+
 .edit__box{
   border-radius: 5px;
   padding: 0 30px 0 30px;
+}
+
+.role__btn{
+  color: #b8b8b8;
+  text-align: center;
+  padding: 10px 15px;
+}
+
+.role__btn.active {
+  border-bottom: 3px solid #ee9a46;
 }

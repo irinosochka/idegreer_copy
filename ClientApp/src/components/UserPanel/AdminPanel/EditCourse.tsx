@@ -1,77 +1,118 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {AppStateType} from "../../../reduxStore/store";
 import {connect} from "react-redux";
-import {getAllCourses} from "../../../reduxStore/course-reducer";
+import {actions, changeCourseData, getAllCourses} from "../../../reduxStore/course-reducer";
 import {ICourse} from "../../../models/ICourse";
 import "./adminPanel.css";
-import EditCourseForm from "./EditCourseForm";
-import searchIcon from "../../../assets/img/search-svgrepo-com.svg"
+import SearchComponent from "../../SearchComponent/SearchComponent";
+import Message, {MessageType} from "../../../common/Messages/Message";
+import Button from "../../../common/button/Button";
 
 
 interface ListOfCourseProps {
     courses: ICourse[],
-    getAllCourses: () => void
+    getAllCourses: () => void,
+    setCourseDataChangedSuccess: (bool: boolean) => void,
+    changeCourseData: (courseId: string, title: string, theme: string, description: string, price: string) => void,
+    courseDataChangedSuccess: boolean
 }
 
-const EditCourse: React.FC<ListOfCourseProps> = ({courses, getAllCourses}) => {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [showCourse, setShowCourse] = useState(false);
-    const [active, setActive] = useState(false);
+const EditCourse: React.FC<ListOfCourseProps> = ({courses, getAllCourses, setCourseDataChangedSuccess, changeCourseData, courseDataChangedSuccess}) => {
     const [selectedCourse, setSelectedCourse] = useState<ICourse>();
 
+    const [title, setTitle] = useState('');
+    const [theme, setTheme] = useState('');
+    const [description, setDescription] = useState('');
+    const [price, setPrice] = useState('');
+
+    const [isError, setError] = useState(false);
+
     useEffect(() => {
-        getAllCourses()
+        getAllCourses();
+        return () => setCourseDataChangedSuccess(false)
     }, []);
 
-    const handleSelecting = (course: ICourse) => {
-        setActive(false);
-        setSelectedCourse(course);
+    const handleSubmit = (event: any) => {
+        event.preventDefault();
+        if (selectedCourse && title.length !== 0 && theme.length !== 0 && price.length !== 0 && description.length !== 0) {
+            changeCourseData(selectedCourse._id, title, theme, description, price);
+        } else {
+            setError(true);
+        }
     };
 
     return (
-        <div className="body">
+
             <div className="user__container">
                 <h1>Edit courses</h1>
-                <div className={`search__input ${active && 'active'}`}>
-                <input
-                        type="text"
-                        placeholder="Search course..."
-                        value={searchTerm}
-                        onChange={e => {
-                            setSearchTerm(e.target.value);
-                            setShowCourse(!showCourse)
-                            setActive(true);
+                <SearchComponent setSelected={setSelectedCourse} list={courses} getList={getAllCourses} />
+                {selectedCourse &&
+                <div style={{width: '550px', marginTop: '50px',display: 'inline-block'}}>
+                <form className="edit__box" onSubmit={handleSubmit}>
+                    {isError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
+                    {courseDataChangedSuccess && <Message type={MessageType.SUCCESS}>Success data changing</Message>}
+                    <input
+                        onChange={(event) => {
+                            setTitle(event.target.value);
+                            setError(false);
+                            setCourseDataChangedSuccess(false);
                         }}
+                        type="text"
+                        id="course_name"
+                        value={title}
+                        placeholder={"Title: " + selectedCourse.title}
                     />
-                    <div className="item__box">
-                        {courses?.filter((course: ICourse ) => {
-                            if (searchTerm == "") {
-                                return course;
-                            } else if(course.title.toLowerCase().includes(searchTerm.toLowerCase())){
-                                return course;
-                            }
-                        }).map((course: ICourse) => {
-                            return(
-                                <li key={course._id}
-                                     onClick={() => {
-                                         handleSelecting(course)
-                                     }}>
-                                    {course?.title}
-                                </li>
-                            )})}
+                    <input
+                        onChange={(event) => {
+                            setTheme(event.target.value);
+                            setError(false);
+                            setCourseDataChangedSuccess(false);
+                        }}
+                        type="text"
+                        id="course_topic"
+                        value={theme}
+                        placeholder={"Theme: " + selectedCourse.theme}
+                    />
+                    <input
+                        onChange={(event) => {
+                            setPrice(event.target.value);
+                            setError(false);
+                            setCourseDataChangedSuccess(false);
+                        }}
+                        type="number"
+                        id="course_price"
+                        value={price}
+                        placeholder={"Price: " + selectedCourse.price}
+                    />
+                    <textarea
+                        onChange={(event) => {
+                            setDescription(event.target.value);
+                            setError(false);
+                            setCourseDataChangedSuccess(false);
+                        }}
+                        value={description}
+                        name="textarea"
+                        id="course_description"
+                        placeholder={"Description: " + selectedCourse.description}
+                        style={{resize: "none", marginBottom: '10px', padding: '5px 15px', width: 'calc(100% - 32px)', height: '80px', borderRadius: '5px'}}
+                    />
+                    <p style={{color: 'slategrey'}}>Author: {selectedCourse.author.name}</p>
+                    <div>
+                        <Button width={240}>Submit changes</Button>
                     </div>
-                    <div className="icon">
-                       <img src={searchIcon} alt=""/>
-                    </div>
-                </div>
-            {selectedCourse && <EditCourseForm course={selectedCourse}/>}
+                </form>
+            </div>}
             </div>
-        </div>
     )}
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        courses: state.course.courses
+        courses: state.course.courses,
+        courseDataChangedSuccess: state.course.courseDataChangedSuccess
     }
 }
-export default connect(mapStateToProps, {getAllCourses})(EditCourse);
+export default connect(mapStateToProps, {
+    getAllCourses,
+    changeCourseData,
+    setCourseDataChangedSuccess: actions.setCourseDataChangedSuccess
+})(EditCourse);
