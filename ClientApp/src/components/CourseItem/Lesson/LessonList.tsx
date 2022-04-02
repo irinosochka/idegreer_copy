@@ -9,7 +9,6 @@ interface LessonListProps {
 }
 
 const LessonList: FC<LessonListProps> = ({lessons}) => {
-    console.log(lessons.length)
     return (
         <div className="lessons-container">
             <header className="content-header">

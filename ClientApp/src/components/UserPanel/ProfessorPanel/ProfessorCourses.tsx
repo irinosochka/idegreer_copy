@@ -22,7 +22,7 @@ const ProfessorCourses: FC<ProfessorCoursesProps> = ({courses, getAllCourses, au
             {courses.map((course: ICourse) => {
                     {
                         return course.author && course.author.name === authUser.name &&
-                            <CourseItem course={course}/>
+                            <CourseItem key={course._id} course={course}/>
                     }
                 }
             )}

@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import './message.css'
 
 export enum MessageType {
@@ -7,14 +7,26 @@ export enum MessageType {
 }
 
 interface MessageProps {
-    type: MessageType
+    type: MessageType,
+    duration?: number
 }
 
-const Message: FC<MessageProps> = ({children, type}) => {
+const Message: FC<MessageProps> = ({children, type, duration = 3000}) => {
+
+    const [visibility, setVisibility] = useState(true);
+
+    useEffect(() => {
+        if (duration && duration > 0) {
+            setTimeout(() => setVisibility(false), duration)
+        }
+    }, [])
+
     return (
-        <div className={`${type === MessageType.ERROR ?  'message-error-wrapper' : 'message-success-wrapper'}`}>
-            <span className={`${type === MessageType.ERROR ?  'message-error' : 'message-success'}`}>{children}</span>
-        </div>
+        <>
+            {visibility && <div className={`${type === MessageType.ERROR ?  'message-error-wrapper' : 'message-success-wrapper'}`}>
+                <span className={`${type === MessageType.ERROR ?  'message-error' : 'message-success'}`}>{children}</span>
+            </div>}
+        </>
     );
 };
 
