@@ -17,7 +17,8 @@ const INITIAL_STATE = {
     addCourseError: false,
 
     /*Success*/
-    courseDataChangedSuccess: false
+    courseDataChangedSuccess: false,
+    deleteCourseByIdSuccess: false
 }
 
 const courseReducer = (state: InitialStateType = INITIAL_STATE, action: ActionsType) => {
@@ -58,6 +59,14 @@ const courseReducer = (state: InitialStateType = INITIAL_STATE, action: ActionsT
                 courseDataChangedSuccess: action.payload
             }
         }
+
+        case "SET_DELETE_COURSE_BY_ID_SUCCESS": {
+            return {
+                ...state,
+                deleteCourseByIdSuccess: action.payload
+            }
+        }
+
         default:
             return state
     }
@@ -72,7 +81,8 @@ export const actions = {
         type: "SET_COURSE_DATA_CHANGING_SUCCESS",
         payload: bool
     } as const),
-    addNewCourse: (course: ICourse) => ({type: "ADD_NEW_COURSE", payload: course} as const)
+    addNewCourse: (course: ICourse) => ({type: "ADD_NEW_COURSE", payload: course} as const),
+    setDeleteCourseByIdSuccess: (bool: boolean) => ({type: "SET_DELETE_COURSE_BY_ID_SUCCESS", payload: bool} as const),
 }
 
 export const addCourse = (user: string, title: string, theme: string, description: string, price: string): ThunkType =>
@@ -118,6 +128,21 @@ export const getAllCourses = (): ThunkType =>
         } catch (e) {
             console.log(e);
         }
+    }
+
+export const deleteCourseById = (courseId: string): ThunkType =>
+    async (dispatch: Dispatch<any>) => {
+       try {
+           const response = await CourseService.deleteCourse(courseId);
+           if(response.data.resultCode === 1){
+               dispatch(actions.setDeleteCourseByIdSuccess(true));
+               return response.data.data
+           } else {
+               //
+           }
+       } catch (e) {
+           console.log(e);
+       }
     }
 
 export const getOneCourse = (courseId: string): ThunkType =>

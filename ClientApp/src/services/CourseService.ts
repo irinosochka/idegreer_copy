@@ -25,4 +25,10 @@ export default class CourseService {
             return res
         }).catch(e => console.log(e))
     }
+
+    static deleteCourse(courseId : string): Promise<any> {
+        return $course.delete<Array<CourseResponse>>(`deleteCourseById/${courseId}`).then(res =>{
+            return res
+        }).catch(e => console.log(e))
+    }
 }
