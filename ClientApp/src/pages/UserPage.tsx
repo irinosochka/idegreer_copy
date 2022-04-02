@@ -11,13 +11,15 @@ import {connect} from "react-redux";
 import {IUser} from "../models/IUser";
 
 /* IMG */
-import profileIcon from '../assets/img/user-profile-svgrepo-com.svg'
-import editIcon from '../assets/img/edit-svgrepo-com.svg'
-import passwordIcon from '../assets/img/password-svgrepo-com.svg'
-import addCourseIcon from '../assets/img/add-svgrepo-com.svg'
-import requestIcon from '../assets/img/question-svgrepo-com.svg'
+import profileIcon from '../assets/img/user-profile-svgrepo-com.svg';
+import editIcon from '../assets/img/edit-svgrepo-com.svg';
+import passwordIcon from '../assets/img/password-svgrepo-com.svg';
+import addCourseIcon from '../assets/img/add-svgrepo-com.svg';
+import requestIcon from '../assets/img/question-svgrepo-com.svg';
+import courseList from '../assets/img/list-svgrepo-com.svg';
 import EditCourse from "../components/UserPanel/AdminPanel/EditCourse";
 import ManageRoles from "../components/UserPanel/AdminPanel/ManageRoles";
+import ProfessorCourses from "../components/UserPanel/ProfessorPanel/ProfessorCourses;
 import AddLection from "../components/UserPanel/ProfessorPanel/AddLection";
 
 
@@ -28,6 +30,7 @@ export enum UserPageSlidesItems {
     INFO_PROFILE = 'infoProfile',
     MANAGE_ROLE = 'manageRole',
     EDIT_COURSE = 'editCourse',
+    PROFESSOR_COURSES = 'professorCourses',
     ADD_LECTION = 'addLection'
 }
 
@@ -54,6 +57,7 @@ const UserPage: FC<UserPageProps> = ({authUser}) => {
                     </div>
                     <div className="btn__menu">
                         <EditProfileButton isActive={slideItem === UserPageSlidesItems.INFO_PROFILE} icon={profileIcon}  onClick={() => setSlideItem(UserPageSlidesItems.INFO_PROFILE)}>Profile</EditProfileButton>
+                        {authUser && authUser.roles && authUser.roles.includes('PROFESSOR') && <EditProfileButton isActive={slideItem === UserPageSlidesItems.PROFESSOR_COURSES} icon={courseList} onClick={() => setSlideItem(UserPageSlidesItems.PROFESSOR_COURSES)}>Course list</EditProfileButton>}
                         <EditProfileButton isActive={slideItem === UserPageSlidesItems.EDIT_PROFILE} icon={editIcon} onClick={() => setSlideItem(UserPageSlidesItems.EDIT_PROFILE)}>Edit profile</EditProfileButton>
                         <EditProfileButton isActive={slideItem === UserPageSlidesItems.CHANGE_PASSWORD} icon={passwordIcon} onClick={() => setSlideItem(UserPageSlidesItems.CHANGE_PASSWORD)}>Change password</EditProfileButton>
                         {authUser && authUser.roles && authUser.roles.includes('PROFESSOR') && <EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_COURSE} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ADD_COURSE)}>Add course</EditProfileButton>}
@@ -67,6 +71,7 @@ const UserPage: FC<UserPageProps> = ({authUser}) => {
                 <div style={{background: '#fff', borderRadius: '50px 0 0 0', height: 'calc(100vh - 85px)'}}>
                     <div className="edit__container">
                         {slideItem === UserPageSlidesItems.INFO_PROFILE && <Profile/>}
+                        {slideItem === UserPageSlidesItems.PROFESSOR_COURSES && authUser && authUser.roles.includes('PROFESSOR') && <ProfessorCourses/>}
                         {slideItem === UserPageSlidesItems.EDIT_PROFILE && <EditProfile/>}
                         {slideItem === UserPageSlidesItems.CHANGE_PASSWORD && <ChangePassword/>}
                         {slideItem === UserPageSlidesItems.ADD_COURSE && authUser && authUser.roles.includes('PROFESSOR') &&
