@@ -5,13 +5,15 @@ import fileReducer from "./file-reducer";
 import courseReducer from "./course-reducer";
 import userReducer from "./user-reducer";
 import roleReducer from "./role-reducer";
+import lectionReducer from "./lection-reducer";
 
 let rootReducer = combineReducers({
     auth: authReducer,
     file: fileReducer,
     course: courseReducer,
     user: userReducer,
-    role: roleReducer
+    role: roleReducer,
+    lection: lectionReducer
 })
 
 type RootReducerType = typeof rootReducer;

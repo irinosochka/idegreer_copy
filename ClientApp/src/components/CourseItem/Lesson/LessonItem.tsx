@@ -1,14 +1,16 @@
 import React, {FC} from 'react';
+import {ILection} from "../../../models/ILection";
 interface LessonItemProps {
-    lesson: any
+    lesson: ILection,
+    index: number
 }
 
-const LessonItem: FC<LessonItemProps> = ({lesson}) => {
+const LessonItem: FC<LessonItemProps> = ({lesson, index}) => {
     return (
         <div className="lesson">
-            <strong>{lesson.id}</strong>
+            <strong>{index + 1}</strong>
             <div>{lesson.title}</div>
-            <div>{lesson.time}</div>
+            <div>{lesson.duration}</div>
         </div>
     );
 };

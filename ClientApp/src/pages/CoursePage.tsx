@@ -7,36 +7,37 @@ import {AppStateType} from "../reduxStore/store";
 import {ICourse} from "../models/ICourse";
 import Button from "../common/button/Button";
 import './coursePage.css'
+import {actions} from "../reduxStore/auth-reducer";
+import {actions as lectionActions, getAllLectionsFromCourse} from "../reduxStore/lection-reducer";
+import {ILection} from "../models/ILection";
 
 interface CoursePage {
     getOneCourse: (courseId: string) => void,
-    course: ICourse
+    course: ICourse,
+    setLoading: (bool: boolean) => void,
+    isLoading: boolean,
+    getAllLectionsFromCourse: (courseId: string) => void,
+    setLection: () => void,
+    lections: ILection[],
 }
 
-const CoursePage: FC<CoursePage> = ({course, getOneCourse}) => {
-  const {id} = useParams();
+const CoursePage: FC<CoursePage> = ({
+                                        course,
+                                        lections,
+                                        getOneCourse,
+                                        getAllLectionsFromCourse,
+                                        setLection
+                                    }) => {
+    const {id} = useParams();
     useEffect(() => {
         if (id) {
             getOneCourse(id)
+            getAllLectionsFromCourse(id)
+        }
+        return () => {
+            setLection();
         }
     }, []);
-    const lessons = [
-        {id: 1, title: 'Lesson 1', time: '00:10:15'},
-        {id: 2, title: 'Lesson 2', time: '00:34:13'},
-        {id: 3, title: 'Lesson 3', time: '00:23:43'},
-        {id: 4, title: 'Lesson 4', time: '00:12:33'},
-        {id: 5, title: 'Lesson 5', time: '00:42:01'},
-        {id: 6, title: 'Lesson 6', time: '00:22:34'},
-        {id: 7, title: 'Lesson 7', time: '00:12:54'},
-        {id: 8, title: 'Lesson 8', time: '00:45:25'}
-    ];
-
-    const params = useParams()
-
-    useEffect(() => {
-        getOneCourse(params.id!)
-    }, [])
-
 
     return (
         <div className="course-page">
@@ -60,7 +61,7 @@ const CoursePage: FC<CoursePage> = ({course, getOneCourse}) => {
                     </div>
                 </div>
                 <div className="course__author">
-                    {course.author && <div>Course author: {course.author.name}</div> }
+                    {course.author && <div>Course author: {course.author.name}</div>}
                 </div>
             </div>
 
@@ -74,7 +75,7 @@ const CoursePage: FC<CoursePage> = ({course, getOneCourse}) => {
                     </div>
                 </div>
 
-                <LessonList lessons={lessons} />
+                <LessonList lessons={lections}/>
             </div>
         </div>
     );
@@ -82,8 +83,15 @@ const CoursePage: FC<CoursePage> = ({course, getOneCourse}) => {
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        course: state.course.course
+        course: state.course.course,
+        isLoading: state.auth.isLoading,
+        lections: state.lection.lections
     }
 }
-    
-export default connect(mapStateToProps, {getOneCourse})(CoursePage);
+
+export default connect(mapStateToProps, {
+    setLection: lectionActions.setLections,
+    setLoading: actions.setLoading,
+    getOneCourse,
+    getAllLectionsFromCourse
+})(CoursePage);

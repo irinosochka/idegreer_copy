@@ -10,7 +10,7 @@ type ThunkType = BaseThunkType<ActionsType>
 const INITIAL_STATE = {
 
     course: {} as ICourse,
-    courses: [] as ICourse[],
+    courses: [] as Array<ICourse>,
 
     /* Errors */
     getAllCourseError: false,
@@ -20,7 +20,7 @@ const INITIAL_STATE = {
     courseDataChangedSuccess: false
 }
 
-const courseReducer = (state = INITIAL_STATE, action: ActionsType) => {
+const courseReducer = (state: InitialStateType = INITIAL_STATE, action: ActionsType) => {
     switch (action.type) {
         case "GET_ALL_COURSE_ERROR": {
             return {
@@ -68,7 +68,10 @@ export const actions = {
     setCourses: (courses: Array<ICourse>) => ({type: "SET_COURSES", payload: courses} as const),
     setCourse: (course: ICourse) => ({type: "SET_COURSE", payload: course} as const),
     setAddCourseError: (bool: boolean) => ({type: "SET_ADD_COURSE_ERROR", payload: bool} as const),
-    setCourseDataChangedSuccess: (bool: boolean) => ({type: "SET_COURSE_DATA_CHANGING_SUCCESS", payload: bool} as const),
+    setCourseDataChangedSuccess: (bool: boolean) => ({
+        type: "SET_COURSE_DATA_CHANGING_SUCCESS",
+        payload: bool
+    } as const),
     addNewCourse: (course: ICourse) => ({type: "ADD_NEW_COURSE", payload: course} as const)
 }
 

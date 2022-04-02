@@ -11,7 +11,7 @@ class CourseController {
         }
     }
 
-   async changeCourseData(req, res) {
+    async changeCourseData(req, res) {
         try {
             const {courseId, newTitle, newTheme, newDescription, newPrice} = req.body;
             const data = await courseService.changeCourseData(courseId, newTitle, newTheme, newDescription, newPrice);
@@ -25,10 +25,11 @@ class CourseController {
         try {
             const data = await courseService.getAllCourses(req.query.limit);
             return res.json({data, resultCode: 1});
-        } catch(e) {
+        } catch (e) {
             return res.json({message: 'Get all courses error', resultCode: 0})
         }
     }
+
     async getCourseById(req, res) {
         try {
             const id = req.params.id;
@@ -36,6 +37,16 @@ class CourseController {
             return res.json({data, resultCode: 1})
         } catch {
             return res.json({message: "Getting user using id error", resultCode: 0})
+        }
+    }
+
+    async deleteCourseById(req, res) {
+        try {
+            const id = req.params.id;
+            const data = await courseService.deleteCourseById(id);
+            return res.json({data, resultCode: 1})
+        } catch {
+            return res.json({message: "delete course error", resultCode: 0})
         }
     }
 }
