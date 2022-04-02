@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import './adminPanel.css'
 import RoleRequestList from "./RoleRequestList";
-import ManageRolesButton from "./ManageRolesButton";
 import AddRole from "./AddRole";
+import TwoButtons from "../../UniversalComponents/TwoButtons";
 
 const ManageRoles = () => {
     const [isAddCourse, setAddCourse] = useState(true);
@@ -10,10 +10,10 @@ const ManageRoles = () => {
     return (
         <div>
             <div style={{display: 'inline-flex', width: '400px'}}>
-                <ManageRolesButton isAddCourse={isAddCourse} setAddCourse={() => setAddCourse(true)}>Add role</ManageRolesButton>
-                <ManageRolesButton isAddCourse={!isAddCourse} setAddCourse={() => setAddCourse(false)}>Role request</ManageRolesButton>
+                <TwoButtons isFirst={isAddCourse} setFirst={() => setAddCourse(true)}>Add role</TwoButtons>
+                <TwoButtons isFirst={!isAddCourse} setFirst={() => setAddCourse(false)}>Role request</TwoButtons>
             </div>
-            <div style={{paddingTop: '10px'}}>
+            <div>
                 {isAddCourse ? <AddRole/> : <RoleRequestList/>}
             </div>
         </div>

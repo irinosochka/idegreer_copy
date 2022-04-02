@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {actions, changeCourseData, deleteCourseById, getAllCourses} from "../../../reduxStore/course-reducer";
 import {ICourse} from "../../../models/ICourse";
 import "./adminPanel.css";
-import SearchComponent from "../../SearchComponent/SearchComponent";
+import SearchComponent from "../../UniversalComponents/SearchComponent";
 import Message, {MessageType} from "../../../common/Messages/Message";
 import Button from "../../../common/button/Button";
 

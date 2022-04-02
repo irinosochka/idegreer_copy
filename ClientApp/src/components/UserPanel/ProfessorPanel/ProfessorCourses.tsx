@@ -1,10 +1,11 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {AppStateType} from "../../../reduxStore/store";
 import {connect} from "react-redux";
 import {getAllCourses} from "../../../reduxStore/course-reducer";
 import {ICourse} from "../../../models/ICourse";
 import CourseItem from "../../CourseItem/CourseItem";
 import {IUser} from "../../../models/IUser";
+import ManageCourse from "./ManageCourse/ManageCourse";
 
 interface ProfessorCoursesProps {
     authUser: IUser,
@@ -13,20 +14,38 @@ interface ProfessorCoursesProps {
 }
 
 const ProfessorCourses: FC<ProfessorCoursesProps> = ({courses, getAllCourses, authUser}) => {
+    const [selectedCourse, setSelectedCourse] = useState<ICourse>();
+    const [visibleList, setVisibleList] = useState(true);
+    const [visibleEditPanel, setVisibleEditPanel] = useState(false);
+
+
     useEffect(() => {
         getAllCourses();
     }, [])
 
+    const handleSelecting = (course: ICourse) => {
+        setVisibleList(false);
+        setVisibleEditPanel(true);
+        setSelectedCourse(course);
+    }
+
     return (
-        <div className="courses__container">
-            {courses.map((course: ICourse) => {
-                    {
-                        return course.author && course.author.name === authUser.name &&
-                            <CourseItem key={course._id} course={course}/>
+        <>
+            {visibleList && <div className="courses__container">
+                {courses.map((course: ICourse) => {
+                        {
+                            return course.author && course.author.name === authUser.name &&
+                                <div onClick={() => {
+                                        handleSelecting(course)
+                                    }} style={{cursor: 'pointer'}}>
+                                <CourseItem key={course._id} course={course} />
+                                </div>
+                        }
                     }
-                }
-            )}
-        </div>
+                )}
+            </div>}
+            {visibleEditPanel && selectedCourse&& <ManageCourse selectedCourse={selectedCourse} />}
+        </>
     );
 };
 

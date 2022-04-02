@@ -4,8 +4,10 @@ import Button from "../../../common/button/Button";
 import {AppStateType} from "../../../reduxStore/store";
 import {actions, addLection} from "../../../reduxStore/lection-reducer";
 import {connect} from "react-redux";
+import {ICourse} from "../../../models/ICourse";
 
 interface AddLectionProps {
+    selectedCourse: ICourse,
     onSuccessAddingLection: (bool: boolean) => void,
     addLection: (title: string, description: string, duration: string, link: string, courseId: string) => void,
     successAddingLection: boolean,
@@ -13,6 +15,7 @@ interface AddLectionProps {
 }
 
 const AddLection: FC<AddLectionProps> = ({
+                                             selectedCourse,
                                              successAddingLection,
                                              errorAddingLection,
                                              onSuccessAddingLection,
@@ -23,7 +26,7 @@ const AddLection: FC<AddLectionProps> = ({
     const [description, setDescription] = useState('');
     const [duration, setDuration] = useState('');
     const [link, setLink] = useState('');
-    const [course, setCourse] = useState('');
+    //const [course, setCourse] = useState('');
 
     useEffect(() => {
         return () => onSuccessAddingLection(false)
@@ -31,25 +34,23 @@ const AddLection: FC<AddLectionProps> = ({
 
     const handleSubmit = (e: React.FormEvent<EventTarget>) => {
         e.preventDefault()
-        addLection(title, description, duration, link, course);
+        addLection(title, description, duration, link, selectedCourse._id);
     }
 
     return (
-        <div>
+        <>
             {successAddingLection && <Message type={MessageType.SUCCESS}>Lection was added</Message>}
             {errorAddingLection && <Message type={MessageType.ERROR}>Lection adding error</Message>}
-            <form onSubmit={handleSubmit}>
-                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder={'title'}/>
+            <form className="edit__box" onSubmit={handleSubmit}>
+                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder={'Title'}/>
                 <input type="text" value={description} onChange={(e) => setDescription(e.target.value)}
-                       placeholder={'description'}/>
+                       placeholder={'Description'}/>
                 <input type="text" value={duration} onChange={(e) => setDuration(e.target.value)}
-                       placeholder={'duration'}/>
-                <input type="text" value={link} onChange={(e) => setLink(e.target.value)} placeholder={'link'}/>
-                <input type="text" value={course} onChange={(e) => setCourse(e.target.value)}
-                       placeholder={'course id'}/>
-                <Button>Add</Button>
+                       placeholder={'Duration'}/>
+                <input type="text" value={link} onChange={(e) => setLink(e.target.value)} placeholder={'Link'}/>
+                <Button width={240}>Add</Button>
             </form>
-        </div>
+        </>
     );
 };
 

@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import searchIcon from "../../assets/img/search-svgrepo-com.svg";
 import {ICourse} from "../../models/ICourse";
 import {IUser} from "../../models/IUser";
 
@@ -53,9 +52,6 @@ const SearchComponent: React.FC<SearchProps> = ({list, getList, setSelected}) =>
                                 {(unit?.title || unit?.username)}
                             </li>
                         )})}
-                </div>
-                <div className="icon">
-                    <img src={searchIcon} alt=""/>
                 </div>
             </div>
         </>

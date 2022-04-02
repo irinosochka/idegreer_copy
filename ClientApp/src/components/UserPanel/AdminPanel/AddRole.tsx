@@ -8,7 +8,7 @@ import {actions, setRoleToUser} from "../../../reduxStore/role-reducer";
 import {getAllUsers, getUser} from "../../../reduxStore/user-reducer";
 import Button from "../../../common/button/Button";
 import Message, {MessageType} from "../../../common/Messages/Message";
-import SearchComponent from "../../SearchComponent/SearchComponent";
+import SearchComponent from "../../UniversalComponents/SearchComponent";
 
 interface AddRoleProps {
     getAllUsers: () => void,
