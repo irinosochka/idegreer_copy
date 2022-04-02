@@ -9,6 +9,7 @@ import EditProfileButton from "../components/UserPanel/EditProfileButton";
 import {AppStateType} from "../reduxStore/store";
 import {connect} from "react-redux";
 import {IUser} from "../models/IUser";
+import ProfessorCourses from "../components/UserPanel/ProfessorPanel/ProfessorCourses";
 
 /* IMG */
 import profileIcon from '../assets/img/user-profile-svgrepo-com.svg';
@@ -19,7 +20,6 @@ import requestIcon from '../assets/img/question-svgrepo-com.svg';
 import courseList from '../assets/img/list-svgrepo-com.svg';
 import EditCourse from "../components/UserPanel/AdminPanel/EditCourse";
 import ManageRoles from "../components/UserPanel/AdminPanel/ManageRoles";
-import ProfessorCourses from "../components/UserPanel/ProfessorPanel/ProfessorCourses;
 import AddLection from "../components/UserPanel/ProfessorPanel/AddLection";
 
 

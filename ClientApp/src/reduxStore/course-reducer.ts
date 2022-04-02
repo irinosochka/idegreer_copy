@@ -85,10 +85,10 @@ export const actions = {
     setDeleteCourseByIdSuccess: (bool: boolean) => ({type: "SET_DELETE_COURSE_BY_ID_SUCCESS", payload: bool} as const),
 }
 
-export const addCourse = (user: string, title: string, theme: string, description: string, price: string): ThunkType =>
+export const addCourse = (userId: string, title: string, theme: string, description: string, price: string): ThunkType =>
     async (dispatch: Dispatch<any>) => {
         try {
-            const response = await CourseService.addCourse(user, title, theme, description, price);
+            const response = await CourseService.addCourse(userId, title, theme, description, price);
             if (response.data.resultCode === 1) {
                 return response.data.data
             }
