@@ -13,8 +13,8 @@ class LectionController {
 
     async getLectionsFromCourse(req, res) {
         try {
-            const {course} = req.body;
-            const data = await lectionService.getLectionsFromCourse(course)
+            const courseId = req.params.id;
+            const data = await lectionService.getLectionsFromCourse(courseId)
             return res.json({data, resultCode: 1})
         } catch (e) {
             return res.json({message: "Add lection error", resultCode: 0})

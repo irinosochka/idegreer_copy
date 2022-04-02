@@ -5,7 +5,7 @@ const LectionModel = new Schema({
     description: {type: String},
     duration: {type: String},
     link: {type: String, required: true},
-    course: {type: String, ref: 'CourseModel'}
+    course: {type: Object }
 })
 
 module.exports = model('LectionModel', LectionModel)

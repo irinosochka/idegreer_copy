@@ -3,7 +3,7 @@ const lectionController = require("../controllers/lectionController");
 const router = new Router();
 
 router.post("/addLection", lectionController.addLection);
-router.get("/getLectionsFromCourse", lectionController.getLectionsFromCourse);
+router.get('/getLectionsFromCourse/:id', lectionController.getLectionsFromCourse);
 
 
 module.exports = router;

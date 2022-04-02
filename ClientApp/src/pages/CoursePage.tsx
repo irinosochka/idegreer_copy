@@ -24,12 +24,18 @@ interface CoursePage {
 const CoursePage: FC<CoursePage> = ({
                                         course,
                                         lections,
-                                        getOneCourse
+                                        getOneCourse,
+                                        getAllLectionsFromCourse,
+                                        setLection
                                     }) => {
     const {id} = useParams();
     useEffect(() => {
         if (id) {
             getOneCourse(id)
+            getAllLectionsFromCourse(id)
+        }
+        return () => {
+            setLection();
         }
     }, []);
 
