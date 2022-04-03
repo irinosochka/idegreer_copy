@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import "./adminPanel.css";
+import './adminPanel.css'
 import {IUser} from "../../../models/IUser";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../reduxStore/store";
@@ -8,7 +8,7 @@ import {actions, setRoleToUser} from "../../../reduxStore/role-reducer";
 import {getAllUsers, getUser} from "../../../reduxStore/user-reducer";
 import Button from "../../../common/button/Button";
 import Message, {MessageType} from "../../../common/Messages/Message";
-import SearchComponent from "../../UniversalComponents/SearchComponent";
+import SearchComponent from "../../../common/SearchComponent/SearchComponent";
 
 interface AddRoleProps {
     getAllUsers: () => void,

@@ -7,6 +7,7 @@ import {IUser} from "../../../models/IUser";
 import {AppStateType} from "../../../reduxStore/store";
 import {useNavigate} from "react-router-dom";
 import {ICourse} from "../../../models/ICourse";
+import '../userPanel.css'
 
 interface AddCourseProps {
     authUser: IUser,
@@ -49,46 +50,55 @@ const AddCourse: FC<AddCourseProps> = ({authUser, courses, addCourse}) => {
             <form onSubmit={onAddCourseHandler}>
                 {emptyError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
                 {successAddCourse && <Message type={MessageType.SUCCESS}>The course was successfully added</Message>}
-                <input
-                    onChange={(event)=> {
-                        setCourseName(event.target.value);
-                        setEmptyError(false);
-                    }}
-                    type="text"
-                    id="course_name"
-                    value={courseName}
-                    placeholder='Enter the name of the course'
-                />
-                <input
-                    onChange={(event)=> {
-                        setCourseTopic(event.target.value);
-                        setEmptyError(false);
-                    }}
-                    type="text"
-                    id="course_topic"
-                    value={courseTopic}
-                    placeholder='Enter the topic of the course'
-                />
-                <input
-                    onChange={(event)=> {
-                        setCoursePrice(event.target.value);
-                        setEmptyError(false);
-                    }}
-                    type="number"
-                    id="course_price"
-                    value={coursePrice}
-                    placeholder='Enter the price of the course'
-                />
-                <textarea
-                    onChange={(event)=> {
-                        setCourseDescription(event.target.value);
-                        setEmptyError(false);
-                    }}
-                    value={courseDescription}
-                    name="textarea"
-                    id="course_description"
-                    placeholder='Enter a description of the course'
-                    style={{resize: "none", padding: '15px', width: 'calc(100% - 32px)'}}/>
+                <div className="input-wrapper">
+                    <input className="form-control"
+                           onChange={(event)=> {
+                            setCourseName(event.target.value);
+                            setEmptyError(false);
+                        }}
+                        type="text"
+                        id="course_name"
+                        value={courseName}
+                        placeholder='Enter the title of the course'
+                    /><label htmlFor="input" className="control-label">Title:</label>
+                </div>
+                <div className="input-wrapper">
+                    <input className="form-control"
+                           onChange={(event)=> {
+                            setCourseTopic(event.target.value);
+                            setEmptyError(false);
+                        }}
+                        type="text"
+                        id="course_topic"
+                        value={courseTopic}
+                        placeholder='Enter the topic of the course'
+                    /><label htmlFor="input" className="control-label">Topic:</label>
+                </div>
+                <div className="input-wrapper">
+                    <input className="form-control"
+                           onChange={(event)=> {
+                            setCoursePrice(event.target.value);
+                            setEmptyError(false);
+                        }}
+                        type="number"
+                        id="course_price"
+                        value={coursePrice}
+                        placeholder='Enter the price of the course'
+                    /><label htmlFor="input" className="control-label">Price:</label>
+                </div>
+                <div className="input-wrapper">
+                    <textarea className="form-control"
+                              onChange={(event)=> {
+                            setCourseDescription(event.target.value);
+                            setEmptyError(false);
+                        }}
+                        value={courseDescription}
+                        name="textarea"
+                        id="course_description"
+                        placeholder='Enter a description of the course'
+                        style={{resize: "none", padding: '10px 15px', width: 'calc(100% - 32px)'}}
+                    /><label style={{ transform: 'translateY(-70px)'}} htmlFor="input" className="control-label">Description:</label>
+                </div>
                 {/*<label htmlFor="course_image">Add an image of the course</label>*/}
                 {/*<input*/}
                 {/*    type="file"*/}

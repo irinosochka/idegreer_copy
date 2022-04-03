@@ -5,6 +5,7 @@ import {AppStateType} from "../../../reduxStore/store";
 import {actions, addLection} from "../../../reduxStore/lection-reducer";
 import {connect} from "react-redux";
 import {ICourse} from "../../../models/ICourse";
+import '../userPanel.css'
 
 interface AddLectionProps {
     selectedCourse: ICourse,
@@ -42,12 +43,30 @@ const AddLection: FC<AddLectionProps> = ({
             {successAddingLection && <Message type={MessageType.SUCCESS}>Lection was added</Message>}
             {errorAddingLection && <Message type={MessageType.ERROR}>Lection adding error</Message>}
             <form className="edit__box" onSubmit={handleSubmit}>
-                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder={'Title'}/>
-                <input type="text" value={description} onChange={(e) => setDescription(e.target.value)}
-                       placeholder={'Description'}/>
-                <input type="text" value={duration} onChange={(e) => setDuration(e.target.value)}
-                       placeholder={'Duration'}/>
-                <input type="text" value={link} onChange={(e) => setLink(e.target.value)} placeholder={'Link'}/>
+                <div className="input-wrapper">
+                    <input type="text" value={title} className="form-control"
+                           onChange={(e) => setTitle(e.target.value)}
+                           placeholder={'Title'}
+                    /><label htmlFor="input" className="control-label">Title:</label>
+                </div>
+                <div className="input-wrapper">
+                    <input type="text" value={description} className="form-control"
+                           onChange={(e) => setDescription(e.target.value)}
+                        placeholder={'Description'}
+                    /><label htmlFor="input" className="control-label">Description:</label>
+                </div>
+                <div className="input-wrapper">
+                    <input type="text" value={duration} className="form-control"
+                           onChange={(e) => setDuration(e.target.value)}
+                           placeholder={'Duration'}
+                    /><label htmlFor="input" className="control-label">Duration:</label>
+                </div>
+                <div className="input-wrapper">
+                    <input type="text" value={link} className="form-control"
+                           onChange={(e) => setLink(e.target.value)}
+                           placeholder={'Link'}
+                    /><label htmlFor="input" className="control-label">Link:</label>
+                </div>
                 <Button width={240}>Add</Button>
             </form>
         </>

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './adminPanel.css'
 import RoleRequestList from "./RoleRequestList";
 import AddRole from "./AddRole";
-import TwoButtons from "../../UniversalComponents/TwoButtons";
+import TwoButtons from "../../../common/PanelTopButtons/TwoButtons";
 
 const ManageRoles = () => {
     const [isAddCourse, setAddCourse] = useState(true);

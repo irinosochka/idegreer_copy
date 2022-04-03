@@ -61,53 +61,53 @@ const EditProfile: FC<EditProfileProps> = ({
                 <Message type={MessageType.ERROR}>User with this username or email actually exists</Message>}
             {userDataChangedSuccess && <Message type={MessageType.SUCCESS}>Success data changing</Message>}
             <form onSubmit={handleSubmit}>
-                <input
-                    onChange={(event) => {
-                        setName(event.target.value);
-                        setError(false);
-                        setUserDataChangingError(false);
-                        setUserDataChangingSuccess(false);
-                    }}
-                    value={name}
-                    type="text"
-                    placeholder={authUser.name}
-                />
-                <input
-                    onChange={(event) => {
-                        setUsername(event.target.value);
-                        setError(false);
-                        setUserDataChangingError(false);
-                        setUserDataChangingSuccess(false);
-                    }}
-                    value={username}
-                    type="text"
-                    placeholder={authUser.username}
-                />
-                <input
-                    onChange={(event) => {
-                        setEmail(event.target.value);
-                        setError(false);
-                        setUserDataChangingError(false);
-                        setUserDataChangingSuccess(false);
-                    }}
-                    value={email}
-                    type="email"
-                    placeholder={authUser.email}
-                />
+                <div className="input-wrapper">
+                    <input type="text" id="input" className="form-control" placeholder="Full name:"
+                           onChange={(event) => {
+                               setName(event.target.value);
+                               setError(false);
+                               setUserDataChangingError(false);
+                               setUserDataChangingSuccess(false);
+                           }}
+                           value={name}
+                    /><label htmlFor="input" className="control-label">Full name:</label>
+                </div>
+                <div className="input-wrapper">
+                    <input type="text" id="input" className="form-control" placeholder="Username:"
+                        onChange={(event) => {
+                            setUsername(event.target.value);
+                            setError(false);
+                            setUserDataChangingError(false);
+                            setUserDataChangingSuccess(false);
+                        }}
+                        value={username}
+                    /><label htmlFor="input" className="control-label">Username:</label>
+                </div>
+                <div className="input-wrapper" style={{marginBottom: '10px'}}>
+                    <input type="email" id="input" className="form-control" placeholder="Email:"
+                        onChange={(event) => {
+                            setEmail(event.target.value);
+                            setError(false);
+                            setUserDataChangingError(false);
+                            setUserDataChangingSuccess(false);
+                        }}
+                        value={email}
+                    /><label htmlFor="input" className="control-label">Email:</label>
+                </div>
                 <div style={{display: 'flex', alignItems: 'center'}}>
                     <label htmlFor="uploadButton" className="uploadButton">
                         Choose the photo
                     </label>
                     <span style={{fontSize: '14px', paddingLeft: '10px'}}>{image ? image!.name : ''}</span>
+                    <input className="uploadButton" id="uploadButton" style={{visibility: "hidden"}} name={'userImage'}
+                           type={"file"}
+                           onChange={(event) => {
+                               setImage(event.target!.files![0]);
+                               setError(false);
+                               setUserDataChangingError(false);
+                               setUserDataChangingSuccess(false);
+                           }}/>
                 </div>
-                <input className="uploadButton" id="uploadButton" style={{visibility: "hidden"}} name={'userImage'}
-                       type={"file"}
-                       onChange={(event) => {
-                           setImage(event.target!.files![0]);
-                           setError(false);
-                           setUserDataChangingError(false);
-                           setUserDataChangingSuccess(false);
-                       }}/>
                 <div>
                     <Button width={240}>Submit changes</Button>
                 </div>
