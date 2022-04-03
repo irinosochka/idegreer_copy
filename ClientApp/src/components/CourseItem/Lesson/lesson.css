@@ -25,6 +25,8 @@
 
 .video-lessons-list-content {
     margin-top: 20px;
+    height: 350px;
+    overflow-y: scroll;
 }
 
 iframe {
