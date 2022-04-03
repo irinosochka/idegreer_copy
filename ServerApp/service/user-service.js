@@ -124,7 +124,6 @@ class UserService {
         if (!updatedUser) {
             throw new Error('User with this username dont exist')
         }
-        console.log(updatedUser)
         const userDto = new UserDto(updatedUser); //id, username, name, email, roles
         const tokens = tokenService.generateTokens({...userDto})
         await authService.refresh(tokens.refreshToken)

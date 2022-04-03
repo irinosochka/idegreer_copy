@@ -5,10 +5,11 @@ import {ILection} from "../../../models/ILection";
 
 
 interface LessonListProps {
-    lessons: Array<ILection>
+    lessons: Array<ILection>,
+    setActiveLection: (lection: ILection) => void
 }
 
-const LessonList: FC<LessonListProps> = ({lessons}) => {
+const LessonList: FC<LessonListProps> = ({lessons, setActiveLection}) => {
     return (
         <div className="lessons-container">
             <header className="content-header">
@@ -16,7 +17,7 @@ const LessonList: FC<LessonListProps> = ({lessons}) => {
             </header>
             <div className="video-lessons-list-content">
                 {lessons.length === 0 ? <span style={{color: '#000', fontSize: '15px', paddingLeft: '10px'}}>No lections</span> : lessons.map((lesson: ILection, index: number) =>
-                    <LessonItem lesson={lesson} index={index} key={lesson._id}/>
+                    <LessonItem lesson={lesson} index={index} key={lesson._id} setActiveLection={setActiveLection}/>
                 )}
             </div>
         </div>

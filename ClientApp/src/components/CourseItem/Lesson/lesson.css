@@ -26,3 +26,8 @@
 .video-lessons-list-content {
     margin-top: 20px;
 }
+
+iframe {
+    border-radius: 50px;
+    width: 100%;
+}

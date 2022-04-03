@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 
 import "./userPanel.css"
 import PhotoMockup, {sizeTypes} from "../../common/photoMockup/PhotoMockup";
@@ -17,13 +17,10 @@ interface ProfileProps {
     setRolePleasedSuccess: (bool: boolean) => void
 }
 
-const Profile: FC<ProfileProps> = ({getPhoto, authUser, roleRequest, rolePleaserSuccess, setRolePleasedSuccess}) => {
+const Profile: FC<ProfileProps> = ({authUser, roleRequest, rolePleaserSuccess, setRolePleasedSuccess}) => {
 
     const [buttonVisible, setButtonVisible] = useState(true)
 
-    useEffect(() => {
-        getPhoto('1648243003706-idegreer-visuals_produktlinie_men_560x420.jpg')
-    }, [])
     return (
         <div className="profile" style={{textAlign: 'center', verticalAlign: 'middle', paddingTop: '20px', width: '600px', margin: '0 auto'}}>
             <div style={{display: 'inline-block'}}>

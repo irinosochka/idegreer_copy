@@ -8,7 +8,6 @@ const storage = new GridFsStorage({
     file: (req, file) => {
         const match = ["image/png", "image/jpeg"];
 
-        console.log(file)
         if (match.indexOf(file.mimetype) === -1) {
             return `${Date.now()}-idegreer-${file.originalname}`;
         }

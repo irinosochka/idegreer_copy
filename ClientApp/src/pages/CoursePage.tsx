@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import LessonList from "../components/CourseItem/Lesson/LessonList";
 import {useParams} from "react-router-dom";
 import {getOneCourse} from "../reduxStore/course-reducer";
@@ -10,6 +10,7 @@ import './coursePage.css'
 import {actions} from "../reduxStore/auth-reducer";
 import {actions as lectionActions, getAllLectionsFromCourse} from "../reduxStore/lection-reducer";
 import {ILection} from "../models/ILection";
+import YouTube from "react-youtube";
 
 interface CoursePage {
     getOneCourse: (courseId: string) => void,
@@ -28,6 +29,7 @@ const CoursePage: FC<CoursePage> = ({
                                         getAllLectionsFromCourse,
                                         setLection
                                     }) => {
+    const [activeLection, setActiveLection] = useState<ILection>();
     const {id} = useParams();
     useEffect(() => {
         if (id) {
@@ -68,14 +70,15 @@ const CoursePage: FC<CoursePage> = ({
 
             <div className="video-lesson-content">
                 <div className="video-player-container">
-                    <header className="content-header">
-                        Lesson 1. Start of course
-                    </header>
-                    <div className="video-player-wrapper">
-                    </div>
+                    {activeLection && <header className="content-header">
+                        {activeLection?.title}
+                    </header>}
+                    {activeLection &&<div className="video-player-wrapper">
+                        <YouTube videoId={activeLection?.link} />;
+                    </div>}
                 </div>
 
-                <LessonList lessons={lections}/>
+                <LessonList lessons={lections} setActiveLection={setActiveLection}/>
             </div>
         </div>
     );
