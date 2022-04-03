@@ -11,6 +11,7 @@ const INITIAL_STATE = {
 
     course: {} as ICourse,
     courses: [] as Array<ICourse>,
+    authorCourses: [] as Array<ICourse>,
 
     /* Errors */
     getAllCourseError: false,
@@ -67,6 +68,13 @@ const courseReducer = (state: InitialStateType = INITIAL_STATE, action: ActionsT
             }
         }
 
+        case "SET_AUTHOR_COURSES": {
+            return {
+                ...state,
+                authorCourses: action.payload
+            }
+        }
+
         default:
             return state
     }
@@ -83,6 +91,7 @@ export const actions = {
     } as const),
     addNewCourse: (course: ICourse) => ({type: "ADD_NEW_COURSE", payload: course} as const),
     setDeleteCourseByIdSuccess: (bool: boolean) => ({type: "SET_DELETE_COURSE_BY_ID_SUCCESS", payload: bool} as const),
+    setAuthorCourses: (courses: Array<ICourse>) => ({type: "SET_AUTHOR_COURSES", payload: courses} as const),
 }
 
 export const addCourse = (userId: string, title: string, theme: string, description: string, price: string): ThunkType =>
@@ -129,6 +138,22 @@ export const getAllCourses = (): ThunkType =>
             console.log(e);
         }
     }
+
+export const getCoursesOfAuthor = (authorId: string): ThunkType =>
+    async (dispatch: Dispatch<any>) => {
+        try {
+            const response = await CourseService.getCoursesOfAuthor(authorId);
+            if (response.data.resultCode === 1) {
+                dispatch(actions.setAuthorCourses(response.data.data.courses))
+            } else {
+                console.log(`Can\'t get courses of the author ${authorId}`);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
 
 export const deleteCourseById = (courseId: string): ThunkType =>
     async (dispatch: Dispatch<any>) => {

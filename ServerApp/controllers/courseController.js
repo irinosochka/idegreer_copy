@@ -40,6 +40,16 @@ class CourseController {
         }
     }
 
+    async getCoursesOfAuthor(req, res) {
+        try {
+           const id = req.params.id;
+           const data = await courseService.getCoursesOfAuthor(id);
+           return res.json({data, resultCode: 1})
+        } catch {
+           return res.json({message: "Get course of the author error", resultCode: 0})
+        }
+    }
+
     async deleteCourseById(req, res) {
         try {
             const id = req.params.id;

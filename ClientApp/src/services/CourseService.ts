@@ -20,6 +20,12 @@ export default class CourseService {
         }).catch(e => console.log(e))
     }
 
+    static getCoursesOfAuthor(authorId: string): Promise<any> {
+        return $course.get<Array<CourseResponse>>(`/getCoursesByAuthorId/${authorId}`).then(res => {
+            return res
+        }).catch(e => console.log(e))
+    }
+
     static getCourse(courseId: string): Promise<any> {
         return $course.get<Array<CourseResponse>>(`/getCourse/${courseId}`).then(res => {
             return res

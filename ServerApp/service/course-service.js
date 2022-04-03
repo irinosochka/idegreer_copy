@@ -41,6 +41,20 @@ class CourseService {
         }
     }
 
+    async getCoursesOfAuthor(authorId) {
+        const user = await UserModel.findOne({_id: authorId});
+        if (!user) {
+            throw new Error(`User with id ${authorId} not exists`);
+        }
+        const courses = await CourseModel.find({author: user});
+        if(!courses) {
+            throw new Error(`There is not courses of the author ${user.username}`)
+        }
+        return {
+            courses
+        }
+    }
+
     async deleteCourseById(courseId) {
         const course = await CourseModel.findOne({_id: courseId});
         if(!course) {

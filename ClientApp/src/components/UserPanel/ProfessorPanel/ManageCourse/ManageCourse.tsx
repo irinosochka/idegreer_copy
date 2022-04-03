@@ -16,13 +16,13 @@ const ManageCourse: React.FC<ManageCourseProps> = ({ selectedCourse }) => {
     return (
         <div className="user__container">
             <div style={{display: 'inline-flex', width: '400px'}}>
-                <TwoButtons isFirst={isAddLecture} setFirst={() => setAddLecture(true)}>Add lecture</TwoButtons>
-                <TwoButtons isFirst={!isAddLecture} setFirst={() => setAddLecture(false)}>Edit course</TwoButtons>
+                <TwoButtons isFirst={isAddLecture} setFirst={() => setAddLecture(true)}>Edit course</TwoButtons>
+                <TwoButtons isFirst={!isAddLecture} setFirst={() => setAddLecture(false)}>Add lecture</TwoButtons>
                 <div className="icon__close">
                     <img src={closeIcon} alt=""/>
                 </div>
             </div>
-            {isAddLecture ? <AddLection selectedCourse={selectedCourse}/> : <EditProfessorCourse selectedCourse={selectedCourse}/>}
+            {isAddLecture ? <EditProfessorCourse selectedCourse={selectedCourse}/> : <AddLection selectedCourse={selectedCourse}/>}
         </div>
     );
 };
