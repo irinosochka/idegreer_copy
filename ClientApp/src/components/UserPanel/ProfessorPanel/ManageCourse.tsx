@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import "../../AdminPanel/adminPanel.css";
-import TwoButtons from "../../../UniversalComponents/TwoButtons";
-import AddLection from "../AddLection";
-import EditProfessorCourse from "./EditProfessorCourse";
-import {ICourse} from "../../../../models/ICourse";
-import closeIcon from "../../../../assets/img/close-svgrepo-com.svg";
+import "../AdminPanel/adminPanel.css";
+import TwoButtons from "../../../common/PanelTopButtons/TwoButtons";
+import AddLection from "./AddLection";
+import {ICourse} from "../../../models/ICourse";
+import closeIcon from "../../../assets/img/close-svgrepo-com.svg";
+import EditCourse from "../EditCourse";
 
 interface ManageCourseProps {
     selectedCourse: ICourse,
@@ -22,7 +22,7 @@ const ManageCourse: React.FC<ManageCourseProps> = ({ selectedCourse }) => {
                     <img src={closeIcon} alt=""/>
                 </div>
             </div>
-            {isAddLecture ? <EditProfessorCourse selectedCourse={selectedCourse}/> : <AddLection selectedCourse={selectedCourse}/>}
+            {isAddLecture ? <EditCourse selectedCourse={selectedCourse}/> : <AddLection selectedCourse={selectedCourse}/>}
         </div>
     );
 };

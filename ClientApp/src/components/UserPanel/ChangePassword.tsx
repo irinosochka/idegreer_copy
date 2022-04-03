@@ -61,44 +61,50 @@ const ChangePassword: FC<ChangePasswordProps> = ({authUser, passwordChanging, se
             {badPasswordLengthError && <Message type={MessageType.ERROR}>Password length should be more than 8 signs</Message>}
             {passwordChangingSuccess && <Message type={MessageType.SUCCESS}>Success</Message>}
             <form onSubmit={handleSubmit}>
-                <input
-                    onChange={(event) => {
-                        setCurrentPassword(event.target.value);
-                        setEmptyError(false);
-                        setRepeatPasswordError(false);
-                        setRegistrationError(false);
-                        setPasswordChangingSuccess(false);
-                    }}
-                    value={currentPassword}
-                    type="password"
-                    placeholder="Current password"
-                />
-                <input
-                    onChange={(event) => {
-                        setFirstPassword(event.target.value);
-                        setEmptyError(false);
-                        setRepeatPasswordError(false);
-                        setRegistrationError(false);
-                        setBadPasswordLengthError(false);
-                        setPasswordChangingSuccess(false);
-                    }}
-                    value={firstPassword}
-                    type="password"
-                    placeholder="Password"
-                />
-                <input
-                    onChange={(event) => {
-                        setSecondPassword(event.target.value);
-                        setEmptyError(false);
-                        setRepeatPasswordError(false);
-                        setRegistrationError(false);
-                        setBadPasswordLengthError(false);
-                        setPasswordChangingSuccess(false);
-                    }}
-                    value={secondPassword}
-                    type="password"
-                    placeholder="Repeat password"
-                />
+                <div className="input-wrapper">
+                    <input className="form-control"
+                        onChange={(event) => {
+                            setCurrentPassword(event.target.value);
+                            setEmptyError(false);
+                            setRepeatPasswordError(false);
+                            setRegistrationError(false);
+                            setPasswordChangingSuccess(false);
+                        }}
+                        value={currentPassword}
+                        type="password"
+                        placeholder="Current password"
+                    /><label htmlFor="input" className="control-label">Current password:</label>
+                </div>
+                <div className="input-wrapper">
+                    <input className="form-control"
+                        onChange={(event) => {
+                            setFirstPassword(event.target.value);
+                            setEmptyError(false);
+                            setRepeatPasswordError(false);
+                            setRegistrationError(false);
+                            setBadPasswordLengthError(false);
+                            setPasswordChangingSuccess(false);
+                        }}
+                        value={firstPassword}
+                        type="password"
+                        placeholder="New password"
+                    /><label htmlFor="input" className="control-label">New password:</label>
+                </div>
+                <div className="input-wrapper">
+                    <input className="form-control"
+                        onChange={(event) => {
+                            setSecondPassword(event.target.value);
+                            setEmptyError(false);
+                            setRepeatPasswordError(false);
+                            setRegistrationError(false);
+                            setBadPasswordLengthError(false);
+                            setPasswordChangingSuccess(false);
+                        }}
+                        value={secondPassword}
+                        type="password"
+                        placeholder="Repeat password"
+                    /><label htmlFor="input" className="control-label">Repeat password:</label>
+                </div>
                 <Button width={260}>Change password</Button>
             </form>
         </div>

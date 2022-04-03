@@ -10,7 +10,6 @@ import {AppStateType} from "../reduxStore/store";
 import {connect} from "react-redux";
 import {IUser} from "../models/IUser";
 import ProfessorCourses from "../components/UserPanel/ProfessorPanel/ProfessorCourses";
-import EditCourse from "../components/UserPanel/AdminPanel/EditCourse";
 import ManageRoles from "../components/UserPanel/AdminPanel/ManageRoles";
 
 /* IMG */
@@ -20,6 +19,7 @@ import passwordIcon from '../assets/img/password-svgrepo-com.svg';
 import addCourseIcon from '../assets/img/add-svgrepo-com.svg';
 import requestIcon from '../assets/img/question-svgrepo-com.svg';
 import courseList from '../assets/img/list-svgrepo-com.svg';
+import ManageCourses from "../components/UserPanel/AdminPanel/ManageCourses";
 
 
 
@@ -75,7 +75,7 @@ const UserPage: FC<UserPageProps> = ({authUser}) => {
                         {slideItem === UserPageSlidesItems.ADD_COURSE && authUser && authUser.roles.includes('PROFESSOR') &&
                         <AddCourse/>}
                         {slideItem === UserPageSlidesItems.EDIT_COURSE && authUser && authUser.roles.includes('ADMIN') &&
-                        <EditCourse/>}
+                        <ManageCourses/>}
                         {slideItem === UserPageSlidesItems.MANAGE_ROLE && authUser && authUser.roles.includes('ADMIN') &&
                         <ManageRoles/>}
                     </div>

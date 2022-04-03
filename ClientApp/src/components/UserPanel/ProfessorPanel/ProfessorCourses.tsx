@@ -5,7 +5,7 @@ import {getCoursesOfAuthor} from "../../../reduxStore/course-reducer";
 import {ICourse} from "../../../models/ICourse";
 import CourseItem from "../../CourseItem/CourseItem";
 import {IUser} from "../../../models/IUser";
-import ManageCourse from "./ManageCourse/ManageCourse";
+import ManageCourse from "./ManageCourse";
 
 interface ProfessorCoursesProps {
     authUser: IUser,
@@ -33,7 +33,8 @@ const ProfessorCourses: FC<ProfessorCoursesProps> = ({courses, getCoursesOfAutho
         <>
             {visibleList && <div className="courses__container">
                 {courses.map((course: ICourse) => {
-                        return <div onClick={() => {
+                        return <div key={course._id}
+                            onClick={() => {
                                 handleSelecting(course)
                             }} style={{cursor: 'pointer'}}>
                                 <CourseItem key={course._id} course={course}/>
