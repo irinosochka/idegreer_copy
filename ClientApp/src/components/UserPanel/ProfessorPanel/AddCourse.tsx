@@ -1,17 +1,20 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import Button from "../../../common/button/Button";
 import Message, {MessageType} from "../../../common/Messages/Message";
 import {connect} from "react-redux";
 import {addCourse} from "../../../reduxStore/course-reducer";
 import {IUser} from "../../../models/IUser";
 import {AppStateType} from "../../../reduxStore/store";
+import {useNavigate} from "react-router-dom";
+import {ICourse} from "../../../models/ICourse";
 
 interface AddCourseProps {
     authUser: IUser,
     addCourse: (user: string, courseName: string, courseTopic: string, courseDescription: string, coursePrice: string) => Promise<void>
+    courses: Array<ICourse>
 }
 
-const AddCourse: FC<AddCourseProps> = ({authUser, addCourse}) => {
+const AddCourse: FC<AddCourseProps> = ({authUser, courses, addCourse}) => {
     const [courseName, setCourseName] = useState('');
     const [courseTopic, setCourseTopic] = useState('');
     const [courseDescription, setCourseDescription] = useState('');
@@ -19,6 +22,13 @@ const AddCourse: FC<AddCourseProps> = ({authUser, addCourse}) => {
     const [emptyError, setEmptyError] = useState(false);
     const [successAddCourse, setSuccessAddCourse] = useState(false);
 
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (successAddCourse) {
+            navigate(`/course/${courses[courses.length - 1]._id}`)
+        }
+    }, [courses])
 
     const onAddCourseHandler = (event:React.FormEvent<EventTarget>) => {
         event.preventDefault();
@@ -96,6 +106,7 @@ const AddCourse: FC<AddCourseProps> = ({authUser, addCourse}) => {
 
 const mapStateToProps = (state: AppStateType) => {
     return {
+        courses: state.course.courses,
         authUser: state.auth.authUser
     }
 }

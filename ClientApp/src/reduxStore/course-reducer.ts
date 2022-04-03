@@ -99,6 +99,7 @@ export const addCourse = (userId: string, title: string, theme: string, descript
         try {
             const response = await CourseService.addCourse(userId, title, theme, description, price);
             if (response.data.resultCode === 1) {
+                dispatch(actions.addNewCourse(response.data.data.course))
                 return response.data.data
             }
             if (response.data.resultCode === 0) {
