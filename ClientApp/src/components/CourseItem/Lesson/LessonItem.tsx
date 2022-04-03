@@ -9,9 +9,11 @@ interface LessonItemProps {
 const LessonItem: FC<LessonItemProps> = ({lesson, index, setActiveLection}) => {
     return (
         <div className="lesson" onClick={() => setActiveLection(lesson)}>
-            <strong>{index + 1}</strong>
-            <div>{lesson.title}</div>
-            <div>{lesson.duration}</div>
+            <div style={{display: 'flex'}}>
+                <strong>{index + 1}</strong>
+                <div style={{marginLeft: '15px'}}>{lesson.title}</div>
+            </div>
+            <div style={{width: '70px', textAlign: 'right'}}>{lesson.duration}</div>
         </div>
     );
 };
