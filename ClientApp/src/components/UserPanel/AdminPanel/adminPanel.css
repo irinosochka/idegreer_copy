@@ -100,17 +100,6 @@
   background: #efefef;
 }
 
-.search__input .icon{
-  height: 15px;
-  width: 15px;
-  line-height: 15px;
-  position: absolute;
-  top: 15px;
-  left: 10px;
-  text-align: center;
-  font-size: 20px;
-}
-
 .search__input .iconClose{
   height: 10px;
   width: 10px;

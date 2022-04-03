@@ -35,7 +35,7 @@ const AddCourse: FC<AddCourseProps> = ({authUser, addCourse}) => {
     }
 
     return (
-        <div style={{marginTop: '30px', margin: 'auto'}}>
+        <div className="user__container">
             <form onSubmit={onAddCourseHandler}>
                 {emptyError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
                 {successAddCourse && <Message type={MessageType.SUCCESS}>The course was successfully added</Message>}
