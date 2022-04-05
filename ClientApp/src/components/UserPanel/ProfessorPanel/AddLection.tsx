@@ -28,6 +28,7 @@ const AddLection: FC<AddLectionProps> = ({
     const [duration, setDuration] = useState('');
     const [link, setLink] = useState('');
     const [linkError, setLinkError] = useState(false);
+    const [isError, setError] = useState(false);
     //const [course, setCourse] = useState('');
 
     useEffect(() => {
@@ -36,19 +37,27 @@ const AddLection: FC<AddLectionProps> = ({
 
     const handleSubmit = (e: React.FormEvent<EventTarget>) => {
         e.preventDefault()
-        if (link.length !== 11) {
+        if(title.length === 0 && description.length ===0 && duration.length ===0 && link.length === 0){
+            setError(true);
+        }
+        else if (link.length !== 11 ) {
             setLinkError(true);
         } else {
             addLection(title, description, duration, link, selectedCourse._id);
+            setTitle('');
+            setDescription('');
+            setDuration('');
+            setLink('');
             onSuccessAddingLection(false);
         }
     }
 
     return (
         <>
-            {successAddingLection && <Message type={MessageType.SUCCESS}>Lection was added</Message>}
-            {errorAddingLection && <Message type={MessageType.ERROR}>Lection adding error</Message>}
-            {linkError && <Message type={MessageType.ERROR}>Bad length of the link to lection</Message>}
+            {isError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
+            {successAddingLection && <Message type={MessageType.SUCCESS}>Lecture was added</Message>}
+            {errorAddingLection && <Message type={MessageType.ERROR}>Lecture adding error</Message>}
+            {linkError && <Message type={MessageType.ERROR}>Bad length of the link to lecture</Message>}
             <form className="edit__box" onSubmit={handleSubmit}>
                 <div className="input-wrapper">
                     <input type="text" value={title} className="form-control"
