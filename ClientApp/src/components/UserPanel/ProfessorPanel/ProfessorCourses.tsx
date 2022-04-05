@@ -42,7 +42,7 @@ const ProfessorCourses: FC<ProfessorCoursesProps> = ({courses, getCoursesOfAutho
                     }
                 ) : 'No courses'}
             </div>}
-            {visibleEditPanel && selectedCourse && <ManageCourse selectedCourse={selectedCourse}/>}
+            {visibleEditPanel && selectedCourse && <ManageCourse selectedCourse={selectedCourse} setVisibleEditPanel={setVisibleEditPanel} setVisibleList={setVisibleList}/>}
         </>
     );
 };
