@@ -52,7 +52,6 @@ export const actions = {
     setUserList: (users: any) => ({type: "SET_USER_LIST", payload: users} as const),
     setPasswordChangingError: (bool: boolean) => ({type: "SET_PASSWORD_CHANGING_ERROR", payload: bool} as const),
     setPasswordChangingSuccess: (bool: boolean) => ({type: "SET_PASSWORD_CHANGING_SUCCESS", payload: bool} as const),
-
 }
 
 export const getAllUsers = (): ThunkType =>
@@ -87,8 +86,7 @@ export const passwordChanging = (user: IUser, lastPassword: string, newPassword:
             if (response.data.resultCode === 1) {
                 dispatch(actions.setPasswordChangingSuccess(true));
                 return response
-            }
-            if (response.data.resultCode === 0) {
+            } else {
                 dispatch(actions.setPasswordChangingError(true));
             }
         } catch (e) {

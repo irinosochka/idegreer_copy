@@ -48,6 +48,7 @@ const AddLection: FC<AddLectionProps> = ({
             setDescription('');
             setDuration('');
             setLink('');
+            onSuccessAddingLection(false);
         }
     }
 

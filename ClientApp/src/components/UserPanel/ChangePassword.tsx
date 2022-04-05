@@ -13,11 +13,13 @@ interface ChangePasswordProps {
     authUser: IUser,
     passwordChanging: (user: IUser, currentPassword: string, firstPassword: string) => Promise<void>,
     passwordChangingSuccess: boolean,
+    passwordChangingError: boolean,
     setPasswordChangingSuccess: (bool: boolean) => void,
+    setPasswordChangingError: (bool: boolean) => void,
     setRegistrationError:  (bool: boolean) => void
 }
 
-const ChangePassword: FC<ChangePasswordProps> = ({authUser, passwordChanging, setPasswordChangingSuccess, passwordChangingSuccess, setRegistrationError}) => {
+const ChangePassword: FC<ChangePasswordProps> = ({authUser, passwordChanging, setPasswordChangingSuccess, passwordChangingSuccess, setPasswordChangingError, passwordChangingError, setRegistrationError}) => {
 
     const [currentPassword, setCurrentPassword] = useState('');
     const [firstPassword, setFirstPassword] = useState('');
@@ -61,6 +63,7 @@ const ChangePassword: FC<ChangePasswordProps> = ({authUser, passwordChanging, se
             {!emptyError && repeatPasswordError && <Message type={MessageType.ERROR}>Password should be the same</Message>}
             {badPasswordLengthError && <Message type={MessageType.ERROR}>Password length should be more than 8 signs</Message>}
             {passwordChangingSuccess && <Message type={MessageType.SUCCESS}>Success</Message>}
+            {passwordChangingError && <Message type={MessageType.ERROR}>Bad old or new password</Message>}
             <form onSubmit={handleSubmit}>
                 <div className="input-wrapper">
                     <input className="form-control"
@@ -70,6 +73,7 @@ const ChangePassword: FC<ChangePasswordProps> = ({authUser, passwordChanging, se
                             setRepeatPasswordError(false);
                             setRegistrationError(false);
                             setPasswordChangingSuccess(false);
+                            setPasswordChangingError(false);
                         }}
                         value={currentPassword}
                         type="password"
@@ -85,6 +89,7 @@ const ChangePassword: FC<ChangePasswordProps> = ({authUser, passwordChanging, se
                             setRegistrationError(false);
                             setBadPasswordLengthError(false);
                             setPasswordChangingSuccess(false);
+                            setPasswordChangingError(false);
                         }}
                         value={firstPassword}
                         type="password"
@@ -100,6 +105,7 @@ const ChangePassword: FC<ChangePasswordProps> = ({authUser, passwordChanging, se
                             setRegistrationError(false);
                             setBadPasswordLengthError(false);
                             setPasswordChangingSuccess(false);
+                            setPasswordChangingError(false);
                         }}
                         value={secondPassword}
                         type="password"
@@ -116,6 +122,7 @@ const mapStateToProps = (state: AppStateType) => {
     return {
         authUser: state.auth.authUser,
         passwordChangingSuccess: state.user.passwordChangingSuccess,
+        passwordChangingError: state.user.passwordChangingError
     }
 }
 export default connect(mapStateToProps, {passwordChanging, setPasswordChangingSuccess: userActions.setPasswordChangingSuccess, setPasswordChangingError: userActions.setPasswordChangingError ,setRegistrationError: actions.setRegistrationError})(ChangePassword);
