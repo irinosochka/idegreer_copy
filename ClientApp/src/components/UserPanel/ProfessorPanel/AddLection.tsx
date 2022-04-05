@@ -31,7 +31,10 @@ const AddLection: FC<AddLectionProps> = ({
     //const [course, setCourse] = useState('');
 
     useEffect(() => {
-        return () => onSuccessAddingLection(false)
+        return () => {
+            onSuccessAddingLection(false)
+            setLinkError(false)
+        }
     }, [])
 
     const handleSubmit = (e: React.FormEvent<EventTarget>) => {
@@ -41,6 +44,7 @@ const AddLection: FC<AddLectionProps> = ({
         } else {
             addLection(title, description, duration, link, selectedCourse._id);
             onSuccessAddingLection(false);
+            setLinkError(false);
         }
     }
 

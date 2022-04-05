@@ -79,11 +79,10 @@ const Profile: FC<ProfileProps> = ({authUser, roleRequest, rolePleaserSuccess, s
                 </div>
             </div>
             <div className="courses__container">
-                {courses.map((course: ICourse) => {
-                        return <NavLink key={course._id} to={`/course/${course._id}`}><CourseItem
-                            course={course}/></NavLink>
-                    }
-                )}
+                <NavLink to={`/course/${courses[0]._id}`}><CourseItem
+                            course={courses[0]}/>
+                </NavLink><NavLink to={`/course/${courses[1]._id}`}><CourseItem
+                            course={courses[1]}/></NavLink>
             </div>
         </>
     );

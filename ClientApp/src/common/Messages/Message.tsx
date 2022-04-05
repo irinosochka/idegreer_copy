@@ -13,16 +13,24 @@ interface MessageProps {
 
 const Message: FC<MessageProps> = ({children, type, duration = 3000}) => {
 
-    const [visibility, setVisibility] = useState(true);
+    const [visibility, setVisibility] = useState(false);
 
     useEffect(() => {
-        let timer: any;
-        if (duration && duration > 0) {
-            timer = setTimeout(() => setVisibility(false), duration)
+
+        if(!type) {
+            setVisibility(false);
+            return;
         }
+
+        setVisibility(true);
+        const timer = setTimeout(() => {
+            setVisibility(false);
+        }, duration);
         return () => clearTimeout(timer);
     }, [])
 
+    if (!visibility) return null;
+    
     return (
         <>
             {visibility && <div className={`${type === MessageType.ERROR ?  'message-error-wrapper' : 'message-success-wrapper'}`}>
