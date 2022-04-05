@@ -40,6 +40,7 @@ const AddLection: FC<AddLectionProps> = ({
             setLinkError(true);
         } else {
             addLection(title, description, duration, link, selectedCourse._id);
+            onSuccessAddingLection(false);
         }
     }
 
