@@ -54,23 +54,25 @@ input{
 }
 
 .profile__title{
-    text-align: center;
-    font-weight: lighter;
+    font-weight: inherit;
     font-size: 22px;
-}
-
-.profile__subtitle{
-    text-align: center;
-    font-weight:  inherit;
-    font-size: 18px;
-    padding: 10px;
+    margin-bottom: 12px;
 }
 
 .profile__info{
+    width: 150px;
+    margin-right: 10px;
     text-align: center;
-    font-size: 16px;
-    font-weight: lighter;
+    font-size: 13px;
+    padding: 8px 0;
+    border-radius: 8px;
+    background: #DCDCDC;
 }
+
+.profile__subtitle{
+    color: #5d5d5d;
+}
+
 
 .uploadButton {
     display: block;
@@ -125,4 +127,3 @@ input{
     transform: translateY(-25px);
     transition: 0.2s ease-in-out transform;
 }
-

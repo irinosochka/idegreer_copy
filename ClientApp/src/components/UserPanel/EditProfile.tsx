@@ -47,7 +47,7 @@ const EditProfile: FC<EditProfileProps> = ({
         formData.append('newEmail', email)
         if (username.length !== 0 && name.length !== 0 && email.length !== 0) {
             userDataChanging(formData);
-            changePhoto(formData)
+            changePhoto(formData);
         } else {
             setError(true);
         }
@@ -55,12 +55,11 @@ const EditProfile: FC<EditProfileProps> = ({
 
 
     return (
-        <div style={{width: '600px', margin: '0 auto'}}>
-            {isError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
-            {userDataChangingError &&
-                <Message type={MessageType.ERROR}>User with this username or email actually exists</Message>}
-            {userDataChangedSuccess && <Message type={MessageType.SUCCESS}>Success data changing</Message>}
+        <div style={{margin: '0 20px', padding: '15px', background: "white", border: '#ee9a46 solid', borderRadius: '20px', position: 'absolute', zIndex: '10' }}>
             <form onSubmit={handleSubmit}>
+                {isError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
+                {userDataChangingError && <Message type={MessageType.ERROR}>User with this username or email actually exists</Message>}
+                {userDataChangedSuccess && <Message type={MessageType.SUCCESS}>Success data changing</Message>}
                 <div className="input-wrapper">
                     <input type="text" id="input" className="form-control" placeholder="Full name:"
                            onChange={(event) => {
