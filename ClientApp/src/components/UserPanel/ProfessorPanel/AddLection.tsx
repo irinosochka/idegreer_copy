@@ -27,6 +27,7 @@ const AddLection: FC<AddLectionProps> = ({
     const [description, setDescription] = useState('');
     const [duration, setDuration] = useState('');
     const [link, setLink] = useState('');
+    const [linkError, setLinkError] = useState(false);
     //const [course, setCourse] = useState('');
 
     useEffect(() => {
@@ -35,13 +36,18 @@ const AddLection: FC<AddLectionProps> = ({
 
     const handleSubmit = (e: React.FormEvent<EventTarget>) => {
         e.preventDefault()
-        addLection(title, description, duration, link, selectedCourse._id);
+        if (link.length !== 11) {
+            setLinkError(true);
+        } else {
+            addLection(title, description, duration, link, selectedCourse._id);
+        }
     }
 
     return (
         <>
             {successAddingLection && <Message type={MessageType.SUCCESS}>Lection was added</Message>}
             {errorAddingLection && <Message type={MessageType.ERROR}>Lection adding error</Message>}
+            {linkError && <Message type={MessageType.ERROR}>Bad length of the link to lection</Message>}
             <form className="edit__box" onSubmit={handleSubmit}>
                 <div className="input-wrapper">
                     <input type="text" value={title} className="form-control"
@@ -63,7 +69,10 @@ const AddLection: FC<AddLectionProps> = ({
                 </div>
                 <div className="input-wrapper">
                     <input type="text" value={link} className="form-control"
-                           onChange={(e) => setLink(e.target.value)}
+                           onChange={(e) => {
+                               setLink(e.target.value);
+                               setLinkError(false);
+                           }}
                            placeholder={'Link'}
                     /><label htmlFor="input" className="control-label">Link:</label>
                 </div>
