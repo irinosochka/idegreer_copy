@@ -60,13 +60,9 @@
 .video-lesson-content {
     display: flex;
     align-content: center;
+    justify-content: space-between;
     margin-top: 15px;
     padding: 50px 30px;
-}
-
-.video-player-container {
-    width: 55%;
-    padding-right: 20px;
 }
 
 .video-player-wrapper {
@@ -84,4 +80,8 @@
     font-size: 1em;
     color: #FFFFFF;
     border-radius: 50px;
+}
+
+.lessons-container, .video-player-container {
+    width: 500px;
 }

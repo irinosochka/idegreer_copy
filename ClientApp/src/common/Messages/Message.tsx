@@ -16,10 +16,11 @@ const Message: FC<MessageProps> = ({children, type, duration = 3000}) => {
     const [visibility, setVisibility] = useState(true);
 
     useEffect(() => {
+        let timer: any;
         if (duration && duration > 0) {
-            setTimeout(() => setVisibility(false), duration)
+            timer = setTimeout(() => setVisibility(false), duration)
         }
-        return () => clearTimeout();
+        return () => clearTimeout(timer);
     }, [])
 
     return (

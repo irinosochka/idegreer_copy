@@ -46,7 +46,7 @@ class CourseService {
         if (!user) {
             throw new Error(`User with id ${authorId} not exists`);
         }
-        const courses = await CourseModel.find({author: {_id: user._id}});
+        const courses = await CourseModel.find({author: user});
         if(!courses) {
             throw new Error(`There is not courses of the author ${user.username}`)
         }

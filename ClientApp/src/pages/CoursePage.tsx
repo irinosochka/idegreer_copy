@@ -11,33 +11,31 @@ import {actions} from "../reduxStore/auth-reducer";
 import {actions as lectionActions, getAllLectionsFromCourse} from "../reduxStore/lection-reducer";
 import {ILection} from "../models/ILection";
 import YouTube from "react-youtube";
+import {IUser} from "../models/IUser";
 
 interface CoursePage {
     getOneCourse: (courseId: string) => void,
     course: ICourse,
-    setLoading: (bool: boolean) => void,
-    isLoading: boolean,
     getAllLectionsFromCourse: (courseId: string) => void,
     setLection: () => void,
     lections: ILection[],
+    authUser: IUser
 }
 
 const CoursePage: FC<CoursePage> = ({
+                                        authUser,
                                         course,
                                         lections,
                                         getOneCourse,
-                                        getAllLectionsFromCourse,
-                                        setLection
+                                        getAllLectionsFromCourse
                                     }) => {
     const [activeLection, setActiveLection] = useState<ILection | null>();
     const {id} = useParams();
+
     useEffect(() => {
         if (id) {
             getOneCourse(id)
             getAllLectionsFromCourse(id)
-        }
-        return () => {
-            setLection();
         }
     }, []);
 
@@ -57,18 +55,21 @@ const CoursePage: FC<CoursePage> = ({
                             Number of members: 18
                         </div>
                     </div>
-                    <div className="course__price">
+                </div>
+                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                    <div className="course__author" style={{marginTop: '30px'}}>
+                        {course.author && <div>Course author: {course.author.name}</div>}
+                    </div>
+                    {course.author && authUser._id !== course.author._id && <div className="course__price">
                         <h2>Price: ${course.price}</h2>
                         <Button>Add to cart</Button>
-                    </div>
-                </div>
-                <div className="course__author">
-                    {course.author && <div>Course author: {course.author.name}</div>}
+                    </div>}
                 </div>
             </div>
 
 
             <div className="video-lesson-content">
+                <LessonList lessons={lections} setActiveLection={setActiveLection}/>
                 <div className="video-player-container">
                     {activeLection && <header className="content-header">
                         {activeLection?.title}
@@ -77,8 +78,6 @@ const CoursePage: FC<CoursePage> = ({
                         <YouTube videoId={activeLection?.link} />;
                     </div>}
                 </div>
-
-                <LessonList lessons={lections} setActiveLection={setActiveLection}/>
             </div>
         </div>
     );
@@ -86,6 +85,7 @@ const CoursePage: FC<CoursePage> = ({
 
 const mapStateToProps = (state: AppStateType) => {
     return {
+        authUser: state.auth.authUser,
         course: state.course.course,
         isLoading: state.auth.isLoading,
         lections: state.lection.lections
