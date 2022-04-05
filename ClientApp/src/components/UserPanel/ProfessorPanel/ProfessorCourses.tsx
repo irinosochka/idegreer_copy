@@ -32,7 +32,7 @@ const ProfessorCourses: FC<ProfessorCoursesProps> = ({courses, getCoursesOfAutho
     return (
         <>
             {visibleList && <div className="courses__container">
-                {courses.map((course: ICourse) => {
+                {courses.length !== 0 ? courses.map((course: ICourse) => {
                         return <div key={course._id}
                             onClick={() => {
                                 handleSelecting(course)
@@ -40,7 +40,7 @@ const ProfessorCourses: FC<ProfessorCoursesProps> = ({courses, getCoursesOfAutho
                                 <CourseItem key={course._id} course={course}/>
                             </div>
                     }
-                )}
+                ) : 'No courses'}
             </div>}
             {visibleEditPanel && selectedCourse && <ManageCourse selectedCourse={selectedCourse}/>}
         </>

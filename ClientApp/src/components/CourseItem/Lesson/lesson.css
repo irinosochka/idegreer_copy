@@ -25,7 +25,10 @@
 
 .video-lessons-list-content {
     margin-top: 20px;
-    height: 350px;
+    max-height: 350px;
+}
+
+.video-lessons-scroll {
     overflow-y: scroll;
 }
 

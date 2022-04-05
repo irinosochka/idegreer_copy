@@ -27,6 +27,7 @@ const ChangePassword: FC<ChangePasswordProps> = ({authUser, passwordChanging, se
     const [badPasswordLengthError, setBadPasswordLengthError] = useState(false);
 
     useEffect(() => {
+        console.log(authUser);
         return () => setPasswordChangingSuccess(false);
     }, []);
 

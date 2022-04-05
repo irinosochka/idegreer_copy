@@ -19,6 +19,7 @@ const Message: FC<MessageProps> = ({children, type, duration = 3000}) => {
         if (duration && duration > 0) {
             setTimeout(() => setVisibility(false), duration)
         }
+        return () => clearTimeout();
     }, [])
 
     return (

@@ -66,6 +66,12 @@ const authReducer = (state = INITIAL_STATE, action: ActionsType): InitialStateTy
                 userDataChangedSuccess: action.payload
             }
         }
+        case "SET_REQUEST_TO_ROLE": {
+            return {
+                ...state,
+                authUser: {...state.authUser, isRoleRequest: action.payload}
+            }
+        }
         default:
             return state
     }
@@ -78,7 +84,8 @@ export const actions = {
     setAuthUser: (user: IUser) => ({type: 'SET_AUTH_USER', payload: user} as const),
     setLoading: (bool: boolean) => ({type: 'SET_LOADING', payload: bool} as const),
     setUserDataChangingError: (bool: boolean) => ({type: "SET_USER_DATA_CHANGING_ERROR", payload: bool} as const),
-    setUserDataChangingSuccess: (bool: boolean) => ({type: "SET_USER_DATA_CHANGING_SUCCESS", payload: bool} as const)
+    setUserDataChangingSuccess: (bool: boolean) => ({type: "SET_USER_DATA_CHANGING_SUCCESS", payload: bool} as const),
+    setRequestToRole: (bool: boolean) => ({type: "SET_REQUEST_TO_ROLE", payload: bool} as const)
 }
 
 export const login = (username: string, password: string): ThunkType =>

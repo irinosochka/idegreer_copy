@@ -29,7 +29,7 @@ const CoursePage: FC<CoursePage> = ({
                                         getAllLectionsFromCourse,
                                         setLection
                                     }) => {
-    const [activeLection, setActiveLection] = useState<ILection>();
+    const [activeLection, setActiveLection] = useState<ILection | null>();
     const {id} = useParams();
     useEffect(() => {
         if (id) {
