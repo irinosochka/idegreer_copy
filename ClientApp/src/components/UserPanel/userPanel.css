@@ -60,7 +60,7 @@ input{
 }
 
 .profile__info{
-    width: 150px;
+    width: 180px;
     margin-right: 10px;
     text-align: center;
     font-size: 13px;
@@ -126,4 +126,16 @@ input{
     opacity: 1;
     transform: translateY(-25px);
     transition: 0.2s ease-in-out transform;
+}
+
+.photo__wrapper .edit__pencil__btn {
+    background-color: orange;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    position: relative;
+    left: calc(100% - 40px);
+    bottom: calc(100% - 140px);
+    /*background-image: url(./src/assets/img/edit-svgrepo-com.svg);*/
 }
