@@ -44,8 +44,9 @@ const Profile: FC<ProfileProps> = ({authUser, roleRequest, rolePleaserSuccess, s
     return (
         <>
             <div className="profile" style={{textAlign: 'start', display: 'flex'}}>
-                <div>
+                <div className="photo__wrapper">
                     <PhotoMockup size={sizeTypes.large}/>
+                    <div className="edit__pencil__btn"> </div>
                 </div>
                 <div style={{padding: '10px 0 0 20px', width: '550px'}}>
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
