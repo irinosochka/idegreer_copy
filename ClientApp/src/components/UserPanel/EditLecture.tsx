@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {AppStateType} from "../../reduxStore/store";
 import {connect} from "react-redux";
 import {actions, changeCourseData} from "../../reduxStore/course-reducer";
@@ -7,6 +7,7 @@ import {ILection} from "../../models/ILection";
 import {ICourse} from "../../models/ICourse";
 import Button from "../../common/button/Button";
 import closeIcon from "../../assets/img/close-svgrepo-com.svg";
+import Message, {MessageType} from "../../common/Messages/Message";
 
 interface SelectedLectionProps {
     selectedLection: ILection,
@@ -35,8 +36,7 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
         setVisibleLections(true);
     };
 
-    const handleDelete = (e: React.FormEvent<EventTarget>) => {
-        e.preventDefault();
+    const handleDelete = () => {
         if(selectedLection) {
             deleteLection(selectedLection._id);
             setVisibleLections(true);
@@ -45,7 +45,7 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
         }
     }
 
-    const handleSubmit = (e: React.FormEvent<EventTarget>) => {
+    const handleSubmit = (e:React.FormEvent<EventTarget>) => {
         e.preventDefault();
         if(title.length === 0 && description.length === 0 && duration.length === 0 && link.length === 0){
             setError(true);
@@ -53,8 +53,8 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
         else if (link.length !== 11 ) {
             setLinkError(true);
         } else {
-            setVisibleEditLection(false);
             setVisibleLections(true);
+            setVisibleEditLection(false);
             changeLectionData(selectedLection._id, title, description, duration, link);
             setTitle('');
             setDescription('');
@@ -65,7 +65,9 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
 
     return (
         <>
-            <form className="edit__box" >
+            {isError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
+            {linkError && <Message type={MessageType.ERROR}>Bad length of the link to lecture</Message>}
+            <form onSubmit={(e) => e.preventDefault} className="edit__box" >
                 <div style={{cursor: 'pointer', width: '10px', position: 'absolute', left: '450px', top:'-40px'}} onClick={handleClose}>
                     <img src={closeIcon} alt=""/>
                 </div>
@@ -96,19 +98,14 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
                            placeholder={`Link: ${selectedLection.link}`}
                     /><label htmlFor="input" className="control-label">Link:</label>
                 </div>
-                <Button onClick={() => handleSubmit} width={240}>Edit</Button>
-                <Button onClick={() => handleDelete} width={240}>Delete</Button>
+                <Button onClick={(e) => handleSubmit(e!)} width={240}>Edit</Button>
+                <Button onClick={() => handleDelete()} width={240}>Delete</Button>
             </form>
         </>
     );
 };
 
-const mapStateToProps = (state: AppStateType) => {
-    return {
-
-    }
-}
-export default connect(mapStateToProps, {
+export default connect(null, {
     changeLectionData,
     deleteLection,
 })(EditLecture);

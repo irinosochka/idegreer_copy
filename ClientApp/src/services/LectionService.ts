@@ -16,7 +16,7 @@ export default class AddService {
     }
 
     static deleteLection(lectionId: string): Promise<any> {
-        return $lection.delete<CourseResponse>(`/deleteLectionById/:${lectionId}`).then(res => {
+        return $lection.delete<CourseResponse>(`/deleteLectionById/${lectionId}`).then(res => {
             return res
         }).catch(e => console.log(e))
     }

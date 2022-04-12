@@ -140,6 +140,7 @@ export const deleteLection = (lectionId: string): ThunkType => {
     return async (dispatch: Dispatch<any>) => {
         try {
             const response = await LectionService.deleteLection(lectionId);
+            console.log(response);
             if (response.data.resultCode === 1) {
                 dispatch(actions.deleteLection(lectionId))
             } else {
