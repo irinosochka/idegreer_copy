@@ -14,6 +14,7 @@ import {ICourse} from "../../models/ICourse";
 import {NavLink} from "react-router-dom";
 import CourseItem from "../CourseItem/CourseItem";
 import EditProfile from "./EditProfile";
+import editPhoto from "../../assets/img/edit-svgrepo-com.svg"
 
 interface ProfileProps {
     authUser: IUser,
@@ -46,7 +47,9 @@ const Profile: FC<ProfileProps> = ({authUser, roleRequest, rolePleaserSuccess, s
             <div className="profile" style={{textAlign: 'start', display: 'flex'}}>
                 <div className="photo__wrapper">
                     <PhotoMockup size={sizeTypes.large}/>
-                    <div className="edit__pencil__btn"> </div>
+                    <div className="edit__pencil__btn">
+                        <img style={{width: '70%', }} src={editPhoto} alt=""/>
+                    </div>
                 </div>
                 <div style={{padding: '10px 0 0 20px', width: '550px'}}>
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
