@@ -54,6 +54,25 @@ const lectionReducer = (state: InitialStateType = INITIAL_STATE, action: Actions
                 errorGettingLection: action.payload
             }
         }
+        case "DELETE_LECTION": {
+            return {
+                ...state,
+                lections: state.lections.filter(l => l._id !== action.payload)
+            }
+        }
+        case "CHANGE_LECTION_DATA": {
+            return {
+                ...state,
+                lections: state.lections.filter(l => {
+                    if (l._id === action.payload.lectionId) {
+                       l.title = action.payload.title;
+                       l.link = action.payload.link;
+                       l.duration = action.payload.duration;
+                       l.description = action.payload.description;
+                    }
+                })
+            }
+        }
         default:
             return state
     }
@@ -65,7 +84,9 @@ export const actions = {
     onSuccessAddingLection: (bool: boolean) => ({type: "ON_SUCCESS_ADDING_LECTION", payload: bool} as const),
     onErrorAddingLection: (bool: boolean) => ({type: "ON_ERROR_ADDING_LECTION", payload: bool} as const),
     onSuccessGettingLection: (bool: boolean) => ({type: "ON_SUCCESS_GETTING_LECTION", payload: bool} as const),
-    onErrorGettingLection: (bool: boolean) => ({type: "ON_ERROR_GETTING_LECTION", payload: bool} as const)
+    onErrorGettingLection: (bool: boolean) => ({type: "ON_ERROR_GETTING_LECTION", payload: bool} as const),
+    deleteLection: (lectionId: string) => ({type: "DELETE_LECTION", payload: lectionId} as const),
+    changeLectionData: (body: any) => ({type: "CHANGE_LECTION_DATA", payload: body} as const)
 }
 
 export const addLection = (title: string, description: string, duration: string, link: string, courseId: string): ThunkType => {
@@ -93,6 +114,36 @@ export const getAllLectionsFromCourse = (courseId: string): ThunkType => {
             } else {
                 dispatch(actions.onErrorGettingLection(
                     true))
+            }
+        } catch(e) {
+            console.log(e);
+        }
+    }
+}
+
+export const changeLectionData = (lectionId: string, title: string, description: string, duration: string, link: string): ThunkType =>
+    async (dispatch: Dispatch<any>) => {
+        try {
+            const response = await LectionService.updateLectionData(lectionId, title, description, duration, link)
+            if (response.data.resultCode === 1) {
+                dispatch(actions.changeLectionData({lectionId, title, description, duration, link}));
+                return response.data.data
+            } else {
+                console.log('change lection error')
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+export const deleteLection = (lectionId: string): ThunkType => {
+    return async (dispatch: Dispatch<any>) => {
+        try {
+            const response = await LectionService.deleteLection(lectionId);
+            if (response.data.resultCode === 1) {
+                dispatch(actions.deleteLection(lectionId))
+            } else {
+                console.log('delete lection error');
             }
         } catch(e) {
             console.log(e);

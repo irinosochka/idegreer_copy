@@ -11,6 +11,26 @@ class LectionController {
         }
     }
 
+    async deleteLection(req, res) {
+        try {
+            const id = req.params.id;
+            const data = await lectionService.deleteLection(id);
+            return res.json({data, resultCode: 1})
+        } catch {
+            return res.json({message: "Delete lection error", resultCode: 0})
+        }
+    }
+
+    async changeLectionData(req, res) {
+        try {
+            const {lectionId, title, description, duration, link} = req.body;
+            const data = await lectionService.changeLectionData(lectionId, title, description, duration, link);
+            return res.json({data, resultCode: 1})
+        } catch {
+            return res.json({message: "Change lection data error", resultCode: 0})
+        }
+    }
+
     async getLectionsFromCourse(req, res) {
         try {
             const courseId = req.params.id;

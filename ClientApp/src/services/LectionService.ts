@@ -9,6 +9,18 @@ export default class AddService {
         }).catch(e => console.log(e))
     }
 
+    static updateLectionData(lectionId: string, title: string, description: string, duration: string, link: string): Promise<any> {
+        return $lection.post<CourseResponse>('/updateLectionData', {lectionId, title, description, duration, link}).then(res => {
+            return res
+        }).catch(e => console.log(e))
+    }
+
+    static deleteLection(lectionId: string): Promise<any> {
+        return $lection.delete<CourseResponse>(`/deleteLectionById/:${lectionId}`).then(res => {
+            return res
+        }).catch(e => console.log(e))
+    }
+
     static getLectionUsingCourseId(courseId: string): Promise<any> {
         return $lection.get<LectionResponse>(`/getLectionsFromCourse/${courseId}`).then(res => {
                 return res

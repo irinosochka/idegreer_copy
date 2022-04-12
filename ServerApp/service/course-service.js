@@ -60,7 +60,6 @@ class CourseService {
         if(!course) {
             throw new Error('This course not exists')
         }
-        console.log(course)
         const deletedCourse = await course.deleteOne({_id: courseId});
         return {
             deletedCourse

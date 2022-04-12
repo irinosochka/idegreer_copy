@@ -16,6 +16,37 @@ class LectionService {
         }
     }
 
+    async deleteLection(lectionId) {
+        const lection = await LectionModel.findOne({_id: lectionId})
+        if (!lection) {
+            throw new Error(`No lection with id ${lectionId}`)
+        }
+        const deletedLection = await lection.deleteOne({_id: lectionId});
+        return {
+            deletedLection
+        }
+    }
+
+    async changeLectionData(lectionId, title, description, duration, link) {
+        const lection = await LectionModel.findOne({_id: lectionId})
+        if (!lection) {
+            throw new Error(`No lection with id ${lectionId}`)
+        }
+        const updatedLectionResult = await LectionModel.updateOne({
+            _id: lectionId
+        }, {
+            $set: {
+                title: title,
+                description: description,
+                duration: duration,
+                link: link
+            }
+        });
+        return {
+            updatedLectionResult
+        }
+    }
+
     async getLectionsFromCourse(courseId) {
         const course = await CourseModel.findOne({_id: courseId})
         if (!course) {
