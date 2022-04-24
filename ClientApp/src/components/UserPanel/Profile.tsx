@@ -11,8 +11,6 @@ import {actions as authActions} from "../../reduxStore/auth-reducer";
 import Message, {MessageType} from "../../common/Messages/Message";
 import Button from "../../common/button/Button";
 import {ICourse} from "../../models/ICourse";
-import {NavLink} from "react-router-dom";
-import CourseItem from "../CourseItem/CourseItem";
 import EditProfile from "./EditProfile";
 
 interface ProfileProps {
@@ -78,12 +76,6 @@ const Profile: FC<ProfileProps> = ({authUser, roleRequest, rolePleaserSuccess, s
                 <div style={{position: "relative"}}>
                     {isEditProfile && <EditProfile/>}
                 </div>
-            </div>
-            <div className="courses__container">
-                <NavLink to={`/course/${courses[0]._id}`}><CourseItem
-                            course={courses[0]}/>
-                </NavLink><NavLink to={`/course/${courses[1]._id}`}><CourseItem
-                            course={courses[1]}/></NavLink>
             </div>
         </>
     );

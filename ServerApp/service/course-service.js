@@ -55,10 +55,52 @@ class CourseService {
         }
     }
 
+    async addUserToCourse(courseId, userToAddRoleId) {
+        const user = await UserModel.findOne({_id: userToAddRoleId});
+        if (!user) {
+            throw new Error('This user dont exists');
+        }
+        const course = await CourseModel.findOne({_id: courseId});
+        if (!course) {
+            throw new Error('This course dont exists');
+        }
+        const updatedCourseResult = await CourseModel.updateOne({
+            _id: courseId
+        }, {
+            $set: {
+                userList: [...course.userList, userToAddRoleId]
+            }
+        });
+        return {
+            updatedCourseResult
+        }
+    }
+
+    async getUserCourseList(userId) {
+        const user = await UserModel.findOne({_id: userId});
+        if (!user) {
+            throw new Error('This user dont exists')
+        }
+        const userCourseList = await CourseModel.find({ userList: { $all: [userId] } })
+        return {
+            userCourseList
+        }
+    }
+
+    async getAllUsersFromCourse(courseId) {
+        const course = await CourseModel.findOne({_id: courseId});
+        if (!course) {
+            throw new Error('This course dont exists');
+        }
+        return {
+            userList: course.userList
+        }
+    }
+
     async deleteCourseById(courseId) {
         const course = await CourseModel.findOne({_id: courseId});
         if(!course) {
-            throw new Error('This course not exists')
+            throw new Error('This course dont exists')
         }
         const deletedCourse = await course.deleteOne({_id: courseId});
         return {

@@ -5,7 +5,8 @@ const CourseModel = new Schema({
     theme: {type: String},
     description: {type: String},
     price: {type: String},
-    author: { type: Object }
+    author: { type: Object },
+    userList: [{type: String}]
 })
 
 module.exports = model('CourseModel', CourseModel)
