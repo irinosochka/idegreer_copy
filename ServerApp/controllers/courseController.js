@@ -50,6 +50,36 @@ class CourseController {
         }
     }
 
+    async addUserToCourse(req, res) {
+        try {
+           const {courseId, userId} = req.body;
+           const data = await courseService.addUserToCourse(courseId, userId);
+           return res.json({data, resultCode: 1})
+        } catch {
+           return res.json({message: 'add user to course error', resultCode: 0});
+        }
+    }
+
+    async getUserCourseList(req, res) {
+        try {
+           const userId = req.params.id;
+           const data = await courseService.getUserCourseList(userId);
+           return res.json({data, resultCode: 1});
+        } catch {
+           return res.json({message: "get user course list error", resultCode: 0})
+        }
+    }
+
+    async getAllUsersFromCourse(req, res) {
+        try {
+           const courseId = req.params.id;
+           const data = await courseService.getAllUsersFromCourse(courseId);
+           return res.json({data, resultCode: 1});
+        } catch {
+           return res.json({message: "get all users from course error", resultCode: 0})
+        }
+    }
+
     async deleteCourseById(req, res) {
         try {
             const id = req.params.id;

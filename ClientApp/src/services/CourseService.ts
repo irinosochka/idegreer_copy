@@ -37,4 +37,23 @@ export default class CourseService {
             return res
         }).catch(e => console.log(e))
     }
+
+    static getAllUsersFromCourse(courseId : string): Promise<any> {
+        return $course.get<Array<CourseResponse>>(`getAllUsersFromCourse/${courseId}`).then(res =>{
+            return res
+        }).catch(e => console.log(e))
+    }
+
+    static getUserCourseList(courseId : string): Promise<any> {
+        return $course.get<Array<CourseResponse>>(`getUserCourseList/${courseId}`).then(res =>{
+            return res
+        }).catch(e => console.log(e))
+    }
+
+    static addUserToCourse(courseId : string, userToAddRoleId : string): Promise<any> {
+        return $course.post<Array<CourseResponse>>(`addUserToCourse`, {courseId, userToAddRoleId}).then(res =>{
+            return res
+        }).catch(e => console.log(e))
+    }
+
 }

@@ -13,6 +13,12 @@ export enum ButtonItems {
     EDIT_LECTURE = 'editLecture',
 }
 
+export enum ButtonItems {
+    EDIT_COURSE = 'editCourse',
+    ADD_LECTURE = 'addLecture',
+    EDIT_LECTURE = 'editLecture',
+}
+
 interface ManageCourseProps {
     selectedCourse: ICourse,
     setVisibleEditPanel: (bool: boolean) => void,
