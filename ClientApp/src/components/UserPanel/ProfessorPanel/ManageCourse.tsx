@@ -4,14 +4,7 @@ import AddLection from "./AddLection";
 import {ICourse} from "../../../models/ICourse";
 import closeIcon from "../../../assets/img/close-svgrepo-com.svg";
 import EditCourse from "../EditCourse";
-import EditLecture from "../EditLecture";
 import LecturesList from "../LecturesList";
-
-export enum ButtonItems {
-    EDIT_COURSE = 'editCourse',
-    ADD_LECTURE = 'addLecture',
-    EDIT_LECTURE = 'editLecture',
-}
 
 export enum ButtonItems {
     EDIT_COURSE = 'editCourse',
