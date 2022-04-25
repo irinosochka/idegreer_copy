@@ -43,6 +43,10 @@ export default class CourseService {
             return res
         }).catch(e => console.log(e))
     }
+    // верхня функція - при загрузці сторінки має відправлятись запит з айді актуального курсу,
+    // який верне масив айдішок всіх юзерів записаних на цей курс.
+    // Перевірити чи авторизований є в списку і не висвітлювати йому кнопку і ціну.
+    // При додавані юзера виствітлити комунікат
 
     static getUserCourseList(userId : string): Promise<any> {
         return $course.get<Array<CourseResponse>>(`getUserCourseList/${userId}`).then(res =>{
@@ -50,10 +54,9 @@ export default class CourseService {
         }).catch(e => console.log(e))
     }
 
-    static addUserToCourse(courseId : string, userToAddRoleId : string): Promise<any> {
-        return $course.post<Array<CourseResponse>>(`addUserToCourse`, {courseId, userToAddRoleId}).then(res =>{
+    static addUserToCourse(courseId : string, userId : string): Promise<any> {
+        return $course.post<Array<CourseResponse>>(`/addUserToCourse`, {courseId, userId}).then(res =>{
             return res
         }).catch(e => console.log(e))
     }
-
 }

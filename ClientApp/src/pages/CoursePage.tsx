@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import LessonList from "../components/CourseItem/Lesson/LessonList";
 import {useParams} from "react-router-dom";
-import {getOneCourse} from "../reduxStore/course-reducer";
+import {addUserToCourse, getOneCourse} from "../reduxStore/course-reducer";
 import {connect} from "react-redux";
 import {AppStateType} from "../reduxStore/store";
 import {ICourse} from "../models/ICourse";
@@ -19,7 +19,8 @@ interface CoursePage {
     getAllLectionsFromCourse: (courseId: string) => void,
     setLection: () => void,
     lections: ILection[],
-    authUser: IUser
+    authUser: IUser,
+    addUserToCourse: (courseId: string, userId: string) => void
 }
 
 const CoursePage: FC<CoursePage> = ({
@@ -27,7 +28,8 @@ const CoursePage: FC<CoursePage> = ({
                                         course,
                                         lections,
                                         getOneCourse,
-                                        getAllLectionsFromCourse
+                                        getAllLectionsFromCourse,
+                                        addUserToCourse
                                     }) => {
     const [activeLection, setActiveLection] = useState<ILection | null>();
     const {id} = useParams();
@@ -62,7 +64,7 @@ const CoursePage: FC<CoursePage> = ({
                     </div>
                     {course.author && authUser._id !== course.author._id && <div className="course__price">
                         <h2>Price: ${course.price}</h2>
-                        <Button>Add to cart</Button>
+                        <Button onClick={() => addUserToCourse(course._id, authUser._id)}>Add to cart</Button>
                     </div>}
                 </div>
             </div>
@@ -96,5 +98,6 @@ export default connect(mapStateToProps, {
     setLection: lectionActions.setLections,
     setLoading: actions.setLoading,
     getOneCourse,
-    getAllLectionsFromCourse
+    getAllLectionsFromCourse,
+    addUserToCourse
 })(CoursePage);

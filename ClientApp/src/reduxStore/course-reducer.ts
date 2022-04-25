@@ -226,4 +226,21 @@ export const getAllMembersFromCourse = (courseId: string): ThunkType => {
     }
 }
 
+export const addUserToCourse = (courseId: string, userId: string): ThunkType => {
+    return async (dispatch: Dispatch<any>) => {
+        try {
+            const response = await CourseService.addUserToCourse(courseId, userId);
+            console.log(courseId);
+            console.log(userId);
+            console.log(response);
+            if (response.data.resultCode === 1) {
+                console.log('added');
+            } else {
+            }
+        } catch(e) {
+            console.log(e);
+        }
+    }
+}
+
 export default courseReducer;
