@@ -5,7 +5,7 @@ import {getCoursesOfUser} from "../../../reduxStore/course-reducer";
 import {ICourse} from "../../../models/ICourse";
 import CourseItem from "../../CourseItem/CourseItem";
 import {IUser} from "../../../models/IUser";
-import {useNavigate} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 
 interface UserCourseListProps {
     authUser: IUser,
@@ -28,12 +28,7 @@ const UserCourseList: FC<UserCourseListProps> = ({courses, getCoursesOfUser, aut
         <>
             <div className="courses__container">
                 {courses.length !== 0 ? courses.map((course: ICourse) => {
-                        return <div key={course._id}
-                                    onClick={() => {
-
-                                    }} style={{cursor: 'pointer'}}>
-                            <CourseItem key={course._id} course={course}/>
-                        </div>
+                        return <NavLink key={course._id} to={`/course/${course._id}`}><CourseItem course={course} /></NavLink>
                     }
                 ) : <div style={{marginTop: '70px', width: '100%'}}>
                     <h3 style={{fontWeight: 'inherit', textAlign: 'center', display: 'flex', justifyContent: 'center' }}>You don't have a course.
