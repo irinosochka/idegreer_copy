@@ -12,6 +12,7 @@ import {actions as lectionActions, getAllLectionsFromCourse} from "../reduxStore
 import {ILection} from "../models/ILection";
 import YouTube from "react-youtube";
 import {IUser} from "../models/IUser";
+import Message, {MessageType} from "../common/Messages/Message";
 
 interface CoursePage {
     getOneCourse: (courseId: string) => void,
@@ -20,7 +21,9 @@ interface CoursePage {
     setLection: () => void,
     lections: ILection[],
     authUser: IUser,
-    addUserToCourse: (courseId: string, userId: string) => void
+    addUserToCourse: (courseId: string, userId: string) => void,
+    addUserToCourseError: boolean,
+    addUserToCourseSuccess: boolean,
 }
 
 const CoursePage: FC<CoursePage> = ({
@@ -29,7 +32,9 @@ const CoursePage: FC<CoursePage> = ({
                                         lections,
                                         getOneCourse,
                                         getAllLectionsFromCourse,
-                                        addUserToCourse
+                                        addUserToCourse,
+                                        addUserToCourseSuccess,
+                                        addUserToCourseError
                                     }) => {
     const [activeLection, setActiveLection] = useState<ILection | null>();
     const {id} = useParams();
@@ -67,6 +72,8 @@ const CoursePage: FC<CoursePage> = ({
                         <Button onClick={() => addUserToCourse(course._id, authUser._id)}>Add to cart</Button>
                     </div>}
                 </div>
+                {addUserToCourseSuccess && <Message type={MessageType.SUCCESS}>The course has been added</Message>}
+                {addUserToCourseError && <Message type={MessageType.ERROR}>The course hasn't been added</Message>}
             </div>
 
 
@@ -90,7 +97,9 @@ const mapStateToProps = (state: AppStateType) => {
         authUser: state.auth.authUser,
         course: state.course.course,
         isLoading: state.auth.isLoading,
-        lections: state.lection.lections
+        lections: state.lection.lections,
+        addUserToCourseSuccess: state.course.addUserToCourseSuccess,
+        addUserToCourseError: state.course.addUserToCourseError,
     }
 }
 
