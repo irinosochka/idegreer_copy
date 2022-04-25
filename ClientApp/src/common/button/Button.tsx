@@ -3,7 +3,7 @@ import './button.scss'
 
 interface ButtonProps {
     width?: number
-    onClick?: () => void
+    onClick?: (e ?: React.FormEvent<EventTarget>)  => void
 }
 
 const Button: FC<ButtonProps> = ({children, width, onClick}) => {

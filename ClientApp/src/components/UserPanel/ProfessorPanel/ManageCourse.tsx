@@ -4,6 +4,14 @@ import AddLection from "./AddLection";
 import {ICourse} from "../../../models/ICourse";
 import closeIcon from "../../../assets/img/close-svgrepo-com.svg";
 import EditCourse from "../EditCourse";
+import EditLecture from "../EditLecture";
+import LecturesList from "../LecturesList";
+
+export enum ButtonItems {
+    EDIT_COURSE = 'editCourse',
+    ADD_LECTURE = 'addLecture',
+    EDIT_LECTURE = 'editLecture',
+}
 
 export enum ButtonItems {
     EDIT_COURSE = 'editCourse',
@@ -38,6 +46,7 @@ const ManageCourse: React.FC<ManageCourseProps> = ({ selectedCourse,  setVisible
             </div>
             {slideItem === ButtonItems.EDIT_COURSE && <EditCourse selectedCourse={selectedCourse}/>}
             {slideItem === ButtonItems.ADD_LECTURE && <AddLection selectedCourse={selectedCourse}/>}
+            {slideItem === ButtonItems.EDIT_LECTURE && <LecturesList selectedCourse={selectedCourse}/>}
         </div>
     );
 };
