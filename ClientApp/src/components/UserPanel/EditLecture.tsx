@@ -1,10 +1,7 @@
-import React, {ChangeEvent, useState} from 'react';
-import {AppStateType} from "../../reduxStore/store";
+import React, {useState} from 'react';
 import {connect} from "react-redux";
-import {actions, changeCourseData} from "../../reduxStore/course-reducer";
-import {changeLectionData, deleteLection, getAllLectionsFromCourse} from "../../reduxStore/lection-reducer";
+import {changeLectionData, deleteLection} from "../../reduxStore/lection-reducer";
 import {ILection} from "../../models/ILection";
-import {ICourse} from "../../models/ICourse";
 import Button from "../../common/button/Button";
 import closeIcon from "../../assets/img/close-svgrepo-com.svg";
 import Message, {MessageType} from "../../common/Messages/Message";
@@ -23,10 +20,10 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
                                                          setVisibleEditLection,
                                                          setVisibleLections,
                                                          deleteLection}) => {
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [duration, setDuration] = useState('');
-    const [link, setLink] = useState('');
+    const [title, setTitle] = useState(selectedLection.title);
+    const [description, setDescription] = useState(selectedLection.description);
+    const [duration, setDuration] = useState(selectedLection.duration);
+    const [link, setLink] = useState(selectedLection.link);
     const [linkError, setLinkError] = useState(false);
     const [isError, setError] = useState(false);
 
