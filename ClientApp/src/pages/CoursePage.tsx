@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import LessonList from "../components/CourseItem/Lesson/LessonList";
 import {useParams} from "react-router-dom";
-import {getOneCourse} from "../reduxStore/course-reducer";
+import {addUserToCourse, getOneCourse} from "../reduxStore/course-reducer";
 import {connect} from "react-redux";
 import {AppStateType} from "../reduxStore/store";
 import {ICourse} from "../models/ICourse";
@@ -12,6 +12,7 @@ import {actions as lectionActions, getAllLectionsFromCourse} from "../reduxStore
 import {ILection} from "../models/ILection";
 import YouTube from "react-youtube";
 import {IUser} from "../models/IUser";
+import Message, {MessageType} from "../common/Messages/Message";
 
 interface CoursePage {
     getOneCourse: (courseId: string) => void,
@@ -19,7 +20,10 @@ interface CoursePage {
     getAllLectionsFromCourse: (courseId: string) => void,
     setLection: () => void,
     lections: ILection[],
-    authUser: IUser
+    authUser: IUser,
+    addUserToCourse: (courseId: string, userId: string) => void,
+    addUserToCourseError: boolean,
+    addUserToCourseSuccess: boolean,
 }
 
 const CoursePage: FC<CoursePage> = ({
@@ -27,7 +31,10 @@ const CoursePage: FC<CoursePage> = ({
                                         course,
                                         lections,
                                         getOneCourse,
-                                        getAllLectionsFromCourse
+                                        getAllLectionsFromCourse,
+                                        addUserToCourse,
+                                        addUserToCourseSuccess,
+                                        addUserToCourseError
                                     }) => {
     const [activeLection, setActiveLection] = useState<ILection | null>();
     const {id} = useParams();
@@ -62,9 +69,11 @@ const CoursePage: FC<CoursePage> = ({
                     </div>
                     {course.author && authUser._id !== course.author._id && <div className="course__price">
                         <h2>Price: ${course.price}</h2>
-                        <Button>Add to cart</Button>
+                        <Button onClick={() => addUserToCourse(course._id, authUser._id)}>Add to cart</Button>
                     </div>}
                 </div>
+                {addUserToCourseSuccess && <Message type={MessageType.SUCCESS}>The course has been added</Message>}
+                {addUserToCourseError && <Message type={MessageType.ERROR}>The course hasn't been added</Message>}
             </div>
 
 
@@ -88,7 +97,9 @@ const mapStateToProps = (state: AppStateType) => {
         authUser: state.auth.authUser,
         course: state.course.course,
         isLoading: state.auth.isLoading,
-        lections: state.lection.lections
+        lections: state.lection.lections,
+        addUserToCourseSuccess: state.course.addUserToCourseSuccess,
+        addUserToCourseError: state.course.addUserToCourseError,
     }
 }
 
@@ -96,5 +107,6 @@ export default connect(mapStateToProps, {
     setLection: lectionActions.setLections,
     setLoading: actions.setLoading,
     getOneCourse,
-    getAllLectionsFromCourse
+    getAllLectionsFromCourse,
+    addUserToCourse
 })(CoursePage);

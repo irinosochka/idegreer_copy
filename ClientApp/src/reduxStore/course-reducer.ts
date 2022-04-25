@@ -19,10 +19,12 @@ const INITIAL_STATE = {
     /* Errors */
     getAllCourseError: false,
     addCourseError: false,
+    addUserToCourseError: false,
 
     /*Success*/
     courseDataChangedSuccess: false,
-    deleteCourseByIdSuccess: false
+    deleteCourseByIdSuccess: false,
+    addUserToCourseSuccess: false
 }
 
 const courseReducer = (state: InitialStateType = INITIAL_STATE, action: ActionsType) => {
@@ -33,30 +35,35 @@ const courseReducer = (state: InitialStateType = INITIAL_STATE, action: ActionsT
                 getAllCourseError: action.payload
             }
         }
+
         case "SET_COURSES": {
             return {
                 ...state,
                 courses: action.payload
             }
         }
+
         case "SET_COURSE": {
             return {
                 ...state,
                 course: action.payload
             }
         }
+
         case "SET_ADD_COURSE_ERROR": {
             return {
                 ...state,
                 addCourseError: action.payload
             }
         }
+
         case "ADD_NEW_COURSE": {
             return {
                 ...state,
                 courses: [...state.courses, action.payload]
             }
         }
+
         case "SET_COURSE_DATA_CHANGING_SUCCESS": {
             return {
                 ...state,
@@ -77,16 +84,32 @@ const courseReducer = (state: InitialStateType = INITIAL_STATE, action: ActionsT
                 authorCourses: action.payload
             }
         }
+
         case "SET_USER_COURSES": {
             return {
                 ...state,
                 userCourses: action.payload
             }
         }
+
         case "GET_ALL_MEMBERS_FROM_COURSE": {
             return {
                 ...state,
                 members: action.payload
+            }
+        }
+
+        case "SET_ADD_USER_TO_COURSE_ERROR": {
+            return {
+                ...state,
+                addUserToCourseError: action.payload
+            }
+        }
+
+        case "SET_ADD_USER_TO_COURSE_SUCCESS": {
+            return {
+                ...state,
+                addUserToCourseSuccess: action.payload
             }
         }
 
@@ -109,6 +132,8 @@ export const actions = {
     setAuthorCourses: (courses: Array<ICourse>) => ({type: "SET_AUTHOR_COURSES", payload: courses} as const),
     setUserCourses: (courses: Array<ICourse>) => ({type: "SET_USER_COURSES", payload: courses} as const),
     getAllMembersFromCourse: (members: Array<IUser>) => ({type: "GET_ALL_MEMBERS_FROM_COURSE", payload: members} as const),
+    setAddUserToCourseError: (bool: boolean) => ({type: "SET_ADD_USER_TO_COURSE_ERROR", payload: bool} as const),
+    setAddUserToCourseSuccess: (bool: boolean) => ({type: "SET_ADD_USER_TO_COURSE_SUCCESS", payload: bool} as const),
 }
 
 export const addCourse = (userId: string, title: string, theme: string, description: string, price: string): ThunkType =>
@@ -164,7 +189,7 @@ export const getCoursesOfAuthor = (authorId: string): ThunkType =>
             if (response.data.resultCode === 1) {
                 dispatch(actions.setAuthorCourses(response.data.data.courses))
             } else {
-                console.log(`Can\'t get courses of the author ${authorId}`);
+                console.log(`Can't get courses of the author ${authorId}`);
             }
         } catch (e) {
             console.log(e);
@@ -219,6 +244,22 @@ export const getAllMembersFromCourse = (courseId: string): ThunkType => {
             if (response.data.resultCode === 1) {
                 dispatch(actions.getAllMembersFromCourse(response.data.data.userList))
             } else {
+            }
+        } catch(e) {
+            console.log(e);
+        }
+    }
+}
+
+export const addUserToCourse = (courseId: string, userId: string): ThunkType => {
+    return async (dispatch: Dispatch<any>) => {
+        try {
+            const response = await CourseService.addUserToCourse(courseId, userId);
+            if (response.data.resultCode === 1) {
+                console.log(`User ${userId} was added to course ${courseId}`);
+                dispatch(actions.setAddUserToCourseSuccess(true));
+            } else {
+                dispatch(actions.setAddUserToCourseError(true));
             }
         } catch(e) {
             console.log(e);
