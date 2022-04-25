@@ -44,8 +44,8 @@ export default class CourseService {
         }).catch(e => console.log(e))
     }
 
-    static getUserCourseList(courseId : string): Promise<any> {
-        return $course.get<Array<CourseResponse>>(`getUserCourseList/${courseId}`).then(res =>{
+    static getUserCourseList(userId : string): Promise<any> {
+        return $course.get<Array<CourseResponse>>(`getUserCourseList/${userId}`).then(res =>{
             return res
         }).catch(e => console.log(e))
     }
