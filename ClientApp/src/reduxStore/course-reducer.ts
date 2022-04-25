@@ -2,6 +2,7 @@ import {BaseThunkType, InferActionsTypes} from "./store";
 import {ICourse} from "../models/ICourse";
 import CourseService from "../services/CourseService";
 import {Dispatch} from "react";
+import {IUser} from "../models/IUser";
 
 export type InitialStateType = typeof INITIAL_STATE;
 type ActionsType = InferActionsTypes<typeof actions>
@@ -12,6 +13,8 @@ const INITIAL_STATE = {
     course: {} as ICourse,
     courses: [] as Array<ICourse>,
     authorCourses: [] as Array<ICourse>,
+    userCourses: [] as Array<ICourse>,
+    members: [] as Array<any>, //to change
 
     /* Errors */
     getAllCourseError: false,
@@ -74,6 +77,18 @@ const courseReducer = (state: InitialStateType = INITIAL_STATE, action: ActionsT
                 authorCourses: action.payload
             }
         }
+        case "SET_USER_COURSES": {
+            return {
+                ...state,
+                userCourses: action.payload
+            }
+        }
+        case "GET_ALL_MEMBERS_FROM_COURSE": {
+            return {
+                ...state,
+                members: action.payload
+            }
+        }
 
         default:
             return state
@@ -92,6 +107,8 @@ export const actions = {
     addNewCourse: (course: ICourse) => ({type: "ADD_NEW_COURSE", payload: course} as const),
     setDeleteCourseByIdSuccess: (bool: boolean) => ({type: "SET_DELETE_COURSE_BY_ID_SUCCESS", payload: bool} as const),
     setAuthorCourses: (courses: Array<ICourse>) => ({type: "SET_AUTHOR_COURSES", payload: courses} as const),
+    setUserCourses: (courses: Array<ICourse>) => ({type: "SET_USER_COURSES", payload: courses} as const),
+    getAllMembersFromCourse: (members: Array<IUser>) => ({type: "GET_ALL_MEMBERS_FROM_COURSE", payload: members} as const),
 }
 
 export const addCourse = (userId: string, title: string, theme: string, description: string, price: string): ThunkType =>
@@ -154,7 +171,18 @@ export const getCoursesOfAuthor = (authorId: string): ThunkType =>
         }
     }
 
-
+export const getCoursesOfUser = (userId: string): ThunkType =>
+    async (dispatch: Dispatch<any>) => {
+        try {
+            const response = await CourseService.getUserCourseList(userId);
+            if (response.data.resultCode === 1) {
+                dispatch(actions.setUserCourses(response.data.data.userCourseList))
+            } else {
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
 export const deleteCourseById = (courseId: string): ThunkType =>
     async (dispatch: Dispatch<any>) => {
@@ -183,5 +211,19 @@ export const getOneCourse = (courseId: string): ThunkType =>
             console.log(e);
         }
     }
+
+export const getAllMembersFromCourse = (courseId: string): ThunkType => {
+    return async (dispatch: Dispatch<any>) => {
+        try {
+            const response = await CourseService.getAllUsersFromCourse(courseId);
+            if (response.data.resultCode === 1) {
+                dispatch(actions.getAllMembersFromCourse(response.data.data.userList))
+            } else {
+            }
+        } catch(e) {
+            console.log(e);
+        }
+    }
+}
 
 export default courseReducer;

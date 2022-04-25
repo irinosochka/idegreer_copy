@@ -58,13 +58,13 @@ const ChangePassword: FC<ChangePasswordProps> = ({authUser, passwordChanging, se
     }
 
     return (
-        <div style={{width: '600px', margin: '0 auto'}}>
-            {emptyError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
-            {!emptyError && repeatPasswordError && <Message type={MessageType.ERROR}>Password should be the same</Message>}
-            {badPasswordLengthError && <Message type={MessageType.ERROR}>Password length should be more than 8 signs</Message>}
-            {passwordChangingSuccess && <Message type={MessageType.SUCCESS}>Success</Message>}
-            {passwordChangingError && <Message type={MessageType.ERROR}>Bad old or new password</Message>}
+        <div style={{margin: '0 20px', padding: '15px', background: "white", border: '#ee9a46 solid', borderRadius: '20px', position: 'absolute', zIndex: '10' }}>
             <form onSubmit={handleSubmit}>
+                {emptyError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
+                {!emptyError && repeatPasswordError && <Message type={MessageType.ERROR}>Password should be the same</Message>}
+                {badPasswordLengthError && <Message type={MessageType.ERROR}>Password length should be more than 8 signs</Message>}
+                {passwordChangingSuccess && <Message type={MessageType.SUCCESS}>Success</Message>}
+                {passwordChangingError && <Message type={MessageType.ERROR}>Bad old or new password</Message>}
                 <div className="input-wrapper">
                     <input className="form-control"
                         onChange={(event) => {
