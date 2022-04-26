@@ -24,6 +24,7 @@ interface CoursePage {
     addUserToCourse: (courseId: string, userId: string) => void,
     addUserToCourseError: boolean,
     addUserToCourseSuccess: boolean,
+    members: Array<string>,
     getAllMembersFromCourse: (courseId: string) => void,
 }
 
@@ -36,10 +37,10 @@ const CoursePage: FC<CoursePage> = ({
                                         addUserToCourse,
                                         addUserToCourseSuccess,
                                         addUserToCourseError,
+                                        members,
                                         getAllMembersFromCourse,
                                     }) => {
     const [activeLection, setActiveLection] = useState<ILection | null>();
-    const [visibleButton, setVisibleButton] = useState(false);
     const {id} = useParams();
 
     useEffect(() => {
@@ -51,7 +52,15 @@ const CoursePage: FC<CoursePage> = ({
 
     useEffect(() => {
        getAllMembersFromCourse(course._id);
-    }, [course])
+    }, [members])
+
+    const isMember = () => {
+        for(let i=0; i<members.length; i++) {
+            if(authUser._id === members[i]) {
+                return true;
+            }
+        } return false;
+    }
 
     return (
         <div className="course-page">
@@ -74,12 +83,12 @@ const CoursePage: FC<CoursePage> = ({
                     <div className="course__author" style={{marginTop: '30px'}}>
                         {course.author && <div>Course author: {course.author.name}</div>}
                     </div>
-                    {course.author && authUser._id !== course.author._id && <div className="course__price">
-                        <h2>Price: ${course.price}</h2>
-                        {authUser._id === course._id ? visibleButton : !visibleButton && <Button onClick={() => {
+                    <div className="course__price">
+                        {!isMember() && <h2>Price: ${course.price}</h2>}
+                        {course.author && authUser._id !== course.author._id && !isMember() && <Button onClick={() => {
                             addUserToCourse(course._id, authUser._id);
                         }}>Add to cart</Button>}
-                    </div>}
+                    </div>
                 </div>
                 <div style={{width: '300px', margin: '0 auto'}}>
                     {addUserToCourseSuccess && <Message type={MessageType.SUCCESS}>The course has been added</Message>}
@@ -110,6 +119,7 @@ const mapStateToProps = (state: AppStateType) => {
         lections: state.lection.lections,
         addUserToCourseSuccess: state.course.addUserToCourseSuccess,
         addUserToCourseError: state.course.addUserToCourseError,
+        members: state.course.members
     }
 }
 
