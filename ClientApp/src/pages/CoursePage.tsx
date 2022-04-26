@@ -7,7 +7,8 @@ import {AppStateType} from "../reduxStore/store";
 import {ICourse} from "../models/ICourse";
 import Button from "../common/button/Button";
 import './coursePage.css'
-import {actions} from "../reduxStore/auth-reducer";
+import {actions as authActions} from "../reduxStore/auth-reducer";
+import {actions as courseActions} from "../reduxStore/course-reducer";
 import {actions as lectionActions, getAllLectionsFromCourse} from "../reduxStore/lection-reducer";
 import {ILection} from "../models/ILection";
 import YouTube from "react-youtube";
@@ -26,6 +27,8 @@ interface CoursePage {
     addUserToCourseSuccess: boolean,
     members: Array<string>,
     getAllMembersFromCourse: (courseId: string) => void,
+    setAddUserToCourseSuccess: (bool: boolean) => void
+    setAddUserToCourseError: (bool: boolean) => void
 }
 
 const CoursePage: FC<CoursePage> = ({
@@ -39,6 +42,8 @@ const CoursePage: FC<CoursePage> = ({
                                         addUserToCourseError,
                                         members,
                                         getAllMembersFromCourse,
+                                        setAddUserToCourseSuccess,
+                                        setAddUserToCourseError
                                     }) => {
     const [activeLection, setActiveLection] = useState<ILection | null>();
     const [visibleButtonAndPrice, setVisibleButtonAndPrice] = useState(true);
@@ -49,6 +54,10 @@ const CoursePage: FC<CoursePage> = ({
         if (id) {
             getOneCourse(id);
             getAllLectionsFromCourse(id);
+        }
+        return () => {
+            setAddUserToCourseSuccess(false)
+            setAddUserToCourseError(false)
         }
     }, []);
 
@@ -128,7 +137,9 @@ const mapStateToProps = (state: AppStateType) => {
 
 export default connect(mapStateToProps, {
     setLection: lectionActions.setLections,
-    setLoading: actions.setLoading,
+    setLoading: authActions.setLoading,
+    setAddUserToCourseSuccess: courseActions.setAddUserToCourseSuccess,
+    setAddUserToCourseError: courseActions.setAddUserToCourseError,
     getOneCourse,
     getAllLectionsFromCourse,
     addUserToCourse,
