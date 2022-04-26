@@ -41,6 +41,8 @@ const CoursePage: FC<CoursePage> = ({
                                         getAllMembersFromCourse,
                                     }) => {
     const [activeLection, setActiveLection] = useState<ILection | null>();
+    const [visibleButtonAndPrice, setVisibleButtonAndPrice] = useState(true);
+
     const {id} = useParams();
 
     useEffect(() => {
@@ -84,9 +86,10 @@ const CoursePage: FC<CoursePage> = ({
                         {course.author && <div>Course author: {course.author.name}</div>}
                     </div>
                     <div className="course__price">
-                        {!isMember() && <h2>Price: ${course.price}</h2>}
-                        {course.author && authUser._id !== course.author._id && !isMember() && <Button onClick={() => {
+                        {course.author && authUser._id !== course.author._id && !isMember() && <h2>Price: ${course.price}</h2>}
+                        {course.author && authUser._id !== course.author._id && !isMember() && visibleButtonAndPrice && <Button onClick={() => {
                             addUserToCourse(course._id, authUser._id);
+                            setVisibleButtonAndPrice(false);
                         }}>Add to cart</Button>}
                     </div>
                 </div>
