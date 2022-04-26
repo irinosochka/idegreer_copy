@@ -63,7 +63,7 @@ const CoursePage: FC<CoursePage> = ({
 
     useEffect(() => {
        getAllMembersFromCourse(course._id);
-    }, [members])
+    }, [])
 
     const isMember = () => {
         for(let i=0; i<members.length; i++) {

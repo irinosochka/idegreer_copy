@@ -5,6 +5,7 @@ import {ILection} from "../../models/ILection";
 import Button from "../../common/button/Button";
 import closeIcon from "../../assets/img/close-svgrepo-com.svg";
 import Message, {MessageType} from "../../common/Messages/Message";
+import {setCourseChanges} from "../../reduxStore/course-reducer";
 
 interface SelectedLectionProps {
     selectedLection: ILection,
@@ -12,6 +13,7 @@ interface SelectedLectionProps {
     setVisibleEditLection: (bool: boolean) => void,
     setVisibleLections: (bool: boolean) => void,
     deleteLection: (lectionId: string) => void,
+    setCourseChanges: (courseId: string) => void
 }
 
 const EditLecture: React.FC<SelectedLectionProps> = ({
@@ -19,14 +21,14 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
                                                          changeLectionData,
                                                          setVisibleEditLection,
                                                          setVisibleLections,
-                                                         deleteLection}) => {
+                                                         deleteLection,
+                                                         setCourseChanges}) => {
     const [title, setTitle] = useState(selectedLection.title);
     const [description, setDescription] = useState(selectedLection.description);
     const [duration, setDuration] = useState(selectedLection.duration);
     const [link, setLink] = useState(selectedLection.link);
     const [linkError, setLinkError] = useState(false);
     const [isError, setError] = useState(false);
-
     const handleClose = (event: any) => {
         event.preventDefault();
         setVisibleEditLection(false);
@@ -38,7 +40,6 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
             deleteLection(selectedLection._id);
             setVisibleLections(true);
             setVisibleEditLection(false);
-            console.log(selectedLection);
         }
     }
 
@@ -53,6 +54,7 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
             setVisibleLections(true);
             setVisibleEditLection(false);
             changeLectionData(selectedLection._id, title, description, duration, link);
+            setCourseChanges(selectedLection.course._id)
             setTitle('');
             setDescription('');
             setDuration('')
@@ -105,4 +107,5 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
 export default connect(null, {
     changeLectionData,
     deleteLection,
+    setCourseChanges
 })(EditLecture);
