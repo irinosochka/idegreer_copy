@@ -77,7 +77,7 @@ const CoursePage: FC<CoursePage> = ({
                             Course evaluation: <span>★★★★★</span>
                         </div>
                         <div className="course__members">
-                            Number of members: 18
+                            Number of members: {members.length}
                         </div>
                     </div>
                 </div>
