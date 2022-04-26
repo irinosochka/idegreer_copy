@@ -93,8 +93,10 @@ const Profile: FC<ProfileProps> = ({authUser, roleRequest, rolePleaserSuccess, s
                     {isChangePassword && <ChangePassword/>}
                 </div>
             </div>
-            <div>
-                <UserCourseList />
+            <hr style={{borderTop: '3px solid orange'}}></hr>
+            <div style={{marginTop: '25px'}}>
+                <h3 style={{fontWeight: '400', fontSize: '24px', textAlign: 'center'}}>Your Courses:</h3>
+                <div style={{marginTop: '-40px'}}><UserCourseList/></div>
             </div>
         </>
     );

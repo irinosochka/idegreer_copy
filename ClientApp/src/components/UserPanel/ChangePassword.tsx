@@ -112,7 +112,7 @@ const ChangePassword: FC<ChangePasswordProps> = ({authUser, passwordChanging, se
                         placeholder="Repeat password"
                     /><label htmlFor="input" className="control-label">Repeat password:</label>
                 </div>
-                <Button width={260}>Change password</Button>
+                <Button width={240}>Change password</Button>
             </form>
         </div>
     );
