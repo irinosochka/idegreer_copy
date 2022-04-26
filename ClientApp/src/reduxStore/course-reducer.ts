@@ -267,4 +267,19 @@ export const addUserToCourse = (courseId: string, userId: string): ThunkType => 
     }
 }
 
+export const setCourseChanges = (courseId: string): ThunkType => {
+    return async (dispatch: Dispatch<any>) => {
+        try {
+            const response = await CourseService.setCourseChanges(courseId);
+            if (response.data.resultCode === 1) {
+                console.log(`Course ${courseId} was changed`);
+            } else {
+                console.log('course changing error')
+            }
+        } catch(e) {
+            console.log(e);
+        }
+    }
+}
+
 export default courseReducer;

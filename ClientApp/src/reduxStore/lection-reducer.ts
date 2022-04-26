@@ -9,7 +9,6 @@ type ThunkType = BaseThunkType<ActionsType>
 
 const INITIAL_STATE = {
     lections: [] as Array<ILection>,
-
     successGettingLection: false,
     errorGettingLection: false,
     successAddingLection: false,

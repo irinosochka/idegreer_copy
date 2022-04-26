@@ -6,7 +6,8 @@ const CourseModel = new Schema({
     description: {type: String},
     price: {type: String},
     author: { type: Object },
-    userList: [{type: String}]
+    userList: [{type: String}],
+    wasChanges: {type: Boolean}
 })
 
 module.exports = model('CourseModel', CourseModel)

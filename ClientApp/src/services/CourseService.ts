@@ -60,4 +60,10 @@ export default class CourseService {
             return res
         }).catch(e => console.log(e))
     }
+
+    static setCourseChanges(courseId : string): Promise<any> {
+        return $course.post<Array<CourseResponse>>(`/setCourseChanges`, {courseId}).then(res =>{
+            return res
+        }).catch(e => console.log(e))
+    }
 }

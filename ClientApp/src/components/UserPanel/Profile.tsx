@@ -14,6 +14,7 @@ import EditProfile from "./EditProfile";
 import editPhoto from "../../assets/img/edit-svgrepo-com.svg"
 import UserCourseList from "./UserPanel/UserCourseList";
 import ChangePassword from "./ChangePassword";
+import {ICourse} from "../../models/ICourse";
 
 interface ProfileProps {
     authUser: IUser,
@@ -21,10 +22,11 @@ interface ProfileProps {
     roleRequest: (userId: string) => void,
     rolePleaserSuccess: boolean,
     setRolePleasedSuccess: (bool: boolean) => void,
-    setRequestToRole: (bool: boolean) => void
+    setRequestToRole: (bool: boolean) => void,
+    courses: Array<ICourse>
 }
 
-const Profile: FC<ProfileProps> = ({authUser, roleRequest, rolePleaserSuccess, setRolePleasedSuccess, setRequestToRole}) => {
+const Profile: FC<ProfileProps> = ({authUser, courses, roleRequest, rolePleaserSuccess, setRolePleasedSuccess, setRequestToRole}) => {
     const [isEditProfile, setIsEditProfile] = useState(false);
     const [isChangePassword, setIsChangePassword] = useState(false);
     const [buttonVisible, setButtonVisible] = useState(true);
@@ -93,6 +95,14 @@ const Profile: FC<ProfileProps> = ({authUser, roleRequest, rolePleaserSuccess, s
                     {isChangePassword && <ChangePassword/>}
                 </div>
             </div>
+            <div style={{textAlign: 'left', marginTop: '20px', marginBottom: '20px'}}>
+                Notifications:
+                {courses.map(c => {
+                    if(c.wasChanged) {
+                        return <p>Course {c.title} was changed</p>
+                    }
+                })}
+            </div>
             <hr style={{borderTop: '3px solid orange'}}></hr>
             <div style={{marginTop: '25px'}}>
                 <h3 style={{fontWeight: '400', fontSize: '24px', textAlign: 'center'}}>Your Courses:</h3>
@@ -106,6 +116,7 @@ const mapStateToProps = (state: AppStateType) => {
     return {
         authUser: state.auth.authUser,
         rolePleaserSuccess: state.role.rolePleaserSuccess,
+        courses: state.course.userCourses,
     }
 }
 

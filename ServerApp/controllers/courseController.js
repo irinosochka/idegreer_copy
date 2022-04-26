@@ -89,6 +89,17 @@ class CourseController {
             return res.json({message: "delete course error", resultCode: 0})
         }
     }
+
+    async setCourseChanges(req, res) {
+        try {
+           const {courseId} = req.body;
+           const data = await courseService.setCourseChanges(courseId);
+           return res.json({data, resultCode: 1})
+        } catch {
+           return res.json({message: "was changes error", resultCode: 0})
+        }
+    }
+
 }
 
 module.exports = new CourseController()

@@ -107,6 +107,35 @@ class CourseService {
             deletedCourse
         }
     }
+
+    async setCourseChanges(courseId) {
+        const course = await CourseModel.findOne({_id: courseId});
+        if(!course) {
+            throw new Error('This course dont exists')
+        }
+        const updatedCourse = await CourseModel.updateOne({
+            _id: courseId
+        }, {
+            $set: {
+                wasChanged: true
+            }
+        });
+        return {
+            updatedCourse
+        }
+    }
+
+    async getUserCoursesWithChanges(courseId, userId) {
+        const user = await UserModel.findOne({_id: userId});
+        if (!user) {
+            throw new Error('This user dont exists')
+        }
+        const course = await CourseModel.findOne({_id: courseId});
+        if(!course) {
+            throw new Error('This course dont exists')
+        }
+        return CourseModel.find({wasChanges: true})
+    }
 }
 
 module.exports = new CourseService()

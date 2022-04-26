@@ -6,5 +6,6 @@ export interface ICourse {
     theme: string,
     description: string,
     author: IUser,
-    price: string
+    price: string,
+    wasChanged: boolean
 }
