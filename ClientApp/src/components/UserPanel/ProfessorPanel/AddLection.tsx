@@ -6,13 +6,15 @@ import {actions, addLection} from "../../../reduxStore/lection-reducer";
 import {connect} from "react-redux";
 import {ICourse} from "../../../models/ICourse";
 import '../userPanel.css'
+import {setCourseChanges} from "../../../reduxStore/course-reducer";
 
 interface AddLectionProps {
     selectedCourse: ICourse,
     onSuccessAddingLection: (bool: boolean) => void,
     addLection: (title: string, description: string, duration: string, link: string, courseId: string) => void,
     successAddingLection: boolean,
-    errorAddingLection: boolean
+    errorAddingLection: boolean,
+    setCourseChanges: (courseId: string) => void
 }
 
 const AddLection: FC<AddLectionProps> = ({
@@ -20,7 +22,8 @@ const AddLection: FC<AddLectionProps> = ({
                                              successAddingLection,
                                              errorAddingLection,
                                              onSuccessAddingLection,
-                                             addLection
+                                             addLection,
+                                             setCourseChanges
                                          }) => {
 
     const [title, setTitle] = useState('');
@@ -47,6 +50,7 @@ const AddLection: FC<AddLectionProps> = ({
             setLinkError(true);
         } else {
             addLection(title, description, duration, link, selectedCourse._id);
+            setCourseChanges(selectedCourse._id)
             setTitle('');
             setDescription('');
             setDuration('');
@@ -106,5 +110,6 @@ const mapStateToProps = (state: AppStateType) => {
 export default connect(mapStateToProps, {
     onErrorAddingError: actions.onErrorAddingLection,
     onSuccessAddingLection: actions.onSuccessAddingLection,
+    setCourseChanges,
     addLection
 })(AddLection);
