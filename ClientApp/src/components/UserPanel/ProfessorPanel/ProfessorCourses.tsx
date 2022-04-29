@@ -30,7 +30,7 @@ const ProfessorCourses: FC<ProfessorCoursesProps> = ({courses, getCoursesOfAutho
     }
 
     return (
-        <>
+        <div style={{background: '#fff', borderRadius: '10px', padding: '20px'}}>
             {visibleList && <div className="courses__container">
                 {courses.length !== 0 ? courses.map((course: ICourse) => {
                         return <div key={course._id}
@@ -43,7 +43,7 @@ const ProfessorCourses: FC<ProfessorCoursesProps> = ({courses, getCoursesOfAutho
                 ) : 'No courses'}
             </div>}
             {visibleEditPanel && selectedCourse && <ManageCourse selectedCourse={selectedCourse} setVisibleEditPanel={setVisibleEditPanel} setVisibleList={setVisibleList}/>}
-        </>
+        </div>
     );
 };
 

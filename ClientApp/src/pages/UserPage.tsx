@@ -1,8 +1,5 @@
 import React, {FC, useState} from 'react';
 import AddCourse from "../components/UserPanel/ProfessorPanel/AddCourse";
-import Profile from "../components/UserPanel/Profile";
-import {NavLink} from "react-router-dom";
-import PhotoMockup, {sizeTypes} from "../common/photoMockup/PhotoMockup";
 import EditProfileButton from "../components/UserPanel/EditProfileButton";
 import {AppStateType} from "../reduxStore/store";
 import {connect} from "react-redux";
@@ -17,11 +14,13 @@ import addCourseIcon from '../assets/img/add-svgrepo-com.svg';
 import requestIcon from '../assets/img/question-svgrepo-com.svg';
 import courseList from '../assets/img/list-svgrepo-com.svg';
 import ManageCourses from "../components/UserPanel/AdminPanel/ManageCourses";
+import RightMenu from "../components/UserPanel/RightMenuPanel/RightMenu";
+import UserCourseList from "../components/UserPanel/UserPanel/UserCourseList";
 
 
 export enum UserPageSlidesItems {
     ADD_COURSE = 'addCourse',
-    INFO_PROFILE = 'infoProfile',
+    USER_COURSES = 'userCourses',
     MANAGE_ROLE = 'manageRole',
     EDIT_COURSE = 'editCourse',
     PROFESSOR_COURSES = 'professorCourses',
@@ -33,23 +32,14 @@ interface UserPageProps {
 
 const UserPage: FC<UserPageProps> = ({authUser}) => {
 
-    const [slideItem, setSlideItem] = useState('infoProfile');
+    const [slideItem, setSlideItem] = useState('userCourses');
 
     return (
         <div style={{display: 'flex'}}>
-            <div style={{width: '300px', flexGrow: '0', background: 'rgb(77, 98, 67)', height: 'calc(100vh - 85px)'}}>
+            <div style={{width: '300px', flexGrow: '0', background: '#6675bc', height: 'calc(100vh - 85px)'}}>
                 <div className="leftMenu__wrapper">
-                    <div>
-                        <NavLink to={'/profile'} style={{}}>
-                            <div style={{margin: '0 auto'}}><PhotoMockup size={sizeTypes.small}/></div>
-                            <div>
-                                <h1 style={{fontSize: '20px', textAlign: 'center', marginTop: '20px'}}>
-                                    <b>{authUser.name}</b></h1>
-                            </div>
-                        </NavLink>
-                    </div>
                     <div className="btn__menu">
-                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.INFO_PROFILE} icon={profileIcon}  onClick={() => setSlideItem(UserPageSlidesItems.INFO_PROFILE)}>Profile</EditProfileButton>
+                        <EditProfileButton isActive={slideItem === UserPageSlidesItems.USER_COURSES} icon={profileIcon} onClick={() => setSlideItem(UserPageSlidesItems.USER_COURSES)}>Your Courses</EditProfileButton>
                         {authUser && authUser.roles && authUser.roles.includes('PROFESSOR') && <EditProfileButton isActive={slideItem === UserPageSlidesItems.PROFESSOR_COURSES} icon={courseList} onClick={() => setSlideItem(UserPageSlidesItems.PROFESSOR_COURSES)}>Course list</EditProfileButton>}
                         {authUser && authUser.roles && authUser.roles.includes('PROFESSOR') && <EditProfileButton isActive={slideItem === UserPageSlidesItems.ADD_COURSE} icon={addCourseIcon} onClick={() => setSlideItem(UserPageSlidesItems.ADD_COURSE)}>Add course</EditProfileButton>}
                         {authUser && authUser.roles && authUser.roles.includes('ADMIN') && <EditProfileButton isActive={slideItem === UserPageSlidesItems.MANAGE_ROLE} icon={requestIcon} onClick={() => setSlideItem(UserPageSlidesItems.MANAGE_ROLE)}>Manage roles</EditProfileButton>}
@@ -57,10 +47,10 @@ const UserPage: FC<UserPageProps> = ({authUser}) => {
                     </div>
                 </div>
             </div>
-            <div style={{flexGrow: '1', background: 'rgb(77, 98, 67)', height: 'calc(100vh - 85px)'}}>
-                <div style={{background: '#fff', borderRadius: '50px 0 0 0', height: 'calc(100vh - 85px)'}}>
-                    <div className="edit__container">
-                        {slideItem === UserPageSlidesItems.INFO_PROFILE && <Profile/>}
+            <div style={{height: 'calc(100vh - 85px)', width: '1100px'}}>
+                <div style={{background: '#e6ebff', height: 'calc(100vh - 85px)'}}>
+                    <div className="edit__container" >
+                        {slideItem === UserPageSlidesItems.USER_COURSES && <UserCourseList/>}
                         {slideItem === UserPageSlidesItems.PROFESSOR_COURSES && authUser && authUser.roles.includes('PROFESSOR') && <ProfessorCourses/>}
                         {slideItem === UserPageSlidesItems.ADD_COURSE && authUser && authUser.roles.includes('PROFESSOR') &&
                         <AddCourse/>}
@@ -70,6 +60,9 @@ const UserPage: FC<UserPageProps> = ({authUser}) => {
                         <ManageRoles/>}
                     </div>
                 </div>
+            </div>
+            <div className="rightMenu__wrapper" style={{width: '400px', background: '#e6ebff'}}>
+                <RightMenu />
             </div>
         </div>
     );

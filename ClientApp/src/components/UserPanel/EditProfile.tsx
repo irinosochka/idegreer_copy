@@ -55,7 +55,7 @@ const EditProfile: FC<EditProfileProps> = ({
 
 
     return (
-        <div style={{margin: '0 20px', padding: '15px', background: "white", border: '#ee9a46 solid', borderRadius: '20px', position: 'absolute', zIndex: '10' }}>
+        <div>
             <form onSubmit={handleSubmit}>
                 {isError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
                 {userDataChangingError && <Message type={MessageType.ERROR}>User with this username or email actually exists</Message>}

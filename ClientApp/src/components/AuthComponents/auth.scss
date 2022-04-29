@@ -48,17 +48,17 @@ button {
     color: #b8b8b8;
     text-align: center;
     padding: 10px 15px;
-    border: 1px solid #4d6243;
+    border: 1px solid #6675bc;
 }
 
 .reg__btn.active {
     color: #fff;
-    border-bottom: 3px solid #ee9a46;
+    border-bottom: 3px solid #e6ebff;
 }
 
 .auth__btn {
     margin-top: 40px;
-    background: #ee9a46;
+    background: #e6ebff;
     width: 150px;
     border-radius: 50px;
 }
@@ -112,7 +112,6 @@ span{
 }
 
 .course__item {
-    border: 1px solid black;
     border-radius: 2px;
     padding: 10px 20px;
 }

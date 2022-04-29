@@ -16,12 +16,12 @@ input{
 }
 
 .edit__btn.active{
-    background: #ee9a46;
+    background: #8691ca;
     border-radius: 50px;
 }
 
 .edit__container{
-    padding: 60px;
+    padding: 20px;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -29,6 +29,10 @@ input{
 
 .leftMenu__wrapper {
     padding: 0 50px;
+}
+
+.rightMenu__wrapper {
+
 }
 
 .btn__menu{
@@ -42,7 +46,7 @@ input{
 
 .profile__icon{
     border-radius: 50%;
-    background-color: #ee9a46;
+    background-color: #6675bc;
     width: 140px;
     height: 140px;
     cursor: default;
@@ -59,24 +63,19 @@ input{
     margin-bottom: 12px;
 }
 
-.profile__info{
+.profile__info {
     margin-right: 10px;
     text-align: center;
     font-size: 13px;
     padding: 8px 20px;
     border-radius: 8px;
-    background: #DCDCDC;
+    background: #8691ca;
 }
-
-.profile__subtitle{
-    color: #5d5d5d;
-}
-
 
 .uploadButton {
     display: block;
     width: 140px;
-    background: #ee9a46;
+    background: #6675bc;
     padding: 10px;
     color: #FFF;
     font-size: 16px;
@@ -128,7 +127,7 @@ input{
 }
 
 .photo__wrapper .edit__pencil__btn {
-    background-color: orange;
+    background-color: #6675bc;
     display: inline-block;
     width: 30px;
     height: 30px;
