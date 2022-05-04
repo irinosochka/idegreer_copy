@@ -19,9 +19,9 @@ const CourseMembersList: React.FC< CourseMembersListProps> = ({selectedCourse, g
 
     return (
         <div className={"edit__container"}>
-            <div style={{position: 'absolute'}}>{members.length !== 0 ? members.map((member : string) => {
+            <div>{members.length !== 0 ? members.map((member : string) => {
                 return <div key={member}
-                    style={{backgroundColor: 'orange', margin: '10px', padding: '12px'}}> {member} </div>
+                    style={{backgroundColor: '#8691ca', margin: '10px', padding: '12px'}}> {member} </div>
             }): 'No members'}</div>
         </div>
     );

@@ -3,20 +3,20 @@
 .lesson {
     display: flex;
     padding: 10px;
-    border: 1px solid #4d6243;
+    border: 1px solid #6675bc;
     margin-bottom: 1px;
     justify-content: space-between;
     align-items: center;
-    color: #4d6243;
+    color: #6675bc;
     border-radius: 50px;
     margin-top: 5px;
     cursor: pointer;
 }
 
 .lesson:hover {
-    border: 1px solid #ee9a46;
+    border: 1px solid #8691ca;
     color: #FFFFFF;
-    background-color: #ee9a46;
+    background-color: #8691ca;
 }
 
 .video-lessons-list-content {

@@ -35,18 +35,19 @@ const PhotoMockup: FC<PhotoMockupProps> = ({size, photo, authUser, isAuth}) => {
         <>
             <div style={{
                 borderRadius: '50%',
-                backgroundColor: '#ee9a46',
+                backgroundColor: '#6675bc',
                 width: size,
                 height: size,
                 cursor: 'pointer',
                 display: 'flex',
                 marginRight: '10px',
                 margin: '0 auto',
-                fontSize: size === sizeTypes.large ? '40px' : 'normal'
+                fontSize: size === sizeTypes.large ? '40px' : 'normal',
+                border: '1px solid #fff'
             }}>
                 {photo && photo.path ? <img src={`http://localhost:5000/uploads/${photo.path.slice(8)}`} alt="avatar"
                               style={{borderRadius: '50%', height: size, width: size}}/> :
-                    <h2 style={{margin: 'auto', color: '#4d6243', fontWeight: 400}}>
+                    <h2 style={{margin: 'auto', color: '#e6ebff', fontWeight: 400}}>
                         {initial()}
                     </h2>}
             </div>
