@@ -96,7 +96,7 @@ const ChangePassword: FC<ChangePasswordProps> = ({authUser, passwordChanging, se
                         placeholder="New password"
                     /><label htmlFor="input" className="control-label">New password:</label>
                 </div>
-                <div className="input-wrapper">
+                <div className="input-wrapper" style={{marginBottom: '10px'}}>
                     <input className="form-control"
                         onChange={(event) => {
                             setSecondPassword(event.target.value);
