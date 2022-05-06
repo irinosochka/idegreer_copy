@@ -4,6 +4,7 @@
 
 .navbar__content_wrapper {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     color: white;
     padding: 20px;

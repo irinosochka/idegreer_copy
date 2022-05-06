@@ -32,7 +32,7 @@ input{
 }
 
 .leftMenu__wrapper {
-    padding: 0 50px;
+    padding: 0 30px;
 }
 
 .rightMenu__wrapper {
@@ -41,7 +41,6 @@ input{
 
 .btn__menu{
     line-height: 10px;
-    margin-top: 50px;
 }
 
 .save__btn, .reset__btn{

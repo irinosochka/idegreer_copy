@@ -21,8 +21,9 @@ const Navbar: FC<NavbarProps> = ({logout}) => {
 
     return (
         <div className={'navbar__wrapper'}>
-            <div className={'navbar__content_wrapper'} style={{justifyContent: `${location.pathname === '/' || location.pathname === '/course/:id' ? 'space-between' : 'end'}`}}>
-                {(location.pathname === '/' || location.pathname === '/course/:id') && <Logo />}
+            <div className={'navbar__content_wrapper'}>
+                {/*{(location.pathname === '/' || location.pathname === '/course/:id') && <Logo />}*/}
+                <Logo />
                 <div className={'icons__wrapper'}>
                     <NavbarIcon icon={homeIcon} link={'/'} />
                     <NavbarIcon icon={profileIcon} link={'/profile'} />

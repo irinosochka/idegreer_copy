@@ -27,7 +27,7 @@ const UserCourseList: FC<UserCourseListProps> = ({courses, getCoursesOfUser, aut
     return (
         <div style={{background: '#fff', borderRadius: '10px', padding: '20px'}}>
             <h3 style={{fontWeight: '400', letterSpacing: '2px', fontSize: '24px', textAlign: 'center'}}>Your Courses:</h3>
-            <div className="courses__container" style={{marginTop: '-30px'}}>
+            <div className="courses__container" style={{marginTop: '-30px', paddingLeft: '65px'}}>
                 {courses.length !== 0 ? courses.map((course: ICourse) => {
                         return <NavLink key={course._id} to={`/course/${course._id}`}><CourseItem course={course} /></NavLink>
                     }
