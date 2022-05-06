@@ -8,7 +8,11 @@ input{
     background: none;
     border-bottom: 1px solid #a8a8a8;
     font-size: 18px;
-    color: #8d8d8d;
+    color: white;
+}
+
+.rightMenu__wrapper input::placeholder{
+    color: #cacaca;
 }
 
 .edit__btn{
@@ -28,7 +32,7 @@ input{
 }
 
 .leftMenu__wrapper {
-    padding: 0 50px;
+    padding: 0 30px;
 }
 
 .rightMenu__wrapper {
@@ -37,7 +41,6 @@ input{
 
 .btn__menu{
     line-height: 10px;
-    margin-top: 50px;
 }
 
 .save__btn, .reset__btn{
@@ -106,7 +109,7 @@ input{
     position: absolute;
     opacity: 0;
     bottom: 1.9rem;
-    color: #5d5d5d;
+    color: #cacaca;
     transition: 0.2s ease-in-out transform;
     font-size: 14px;
 }
@@ -136,4 +139,44 @@ input{
     left: calc(100% - 40px);
     bottom: calc(100% - 140px);
     /*background-image: url(./src/assets/img/edit-svgrepo-com.svg);*/
+}
+
+.svg-color{
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(25%) hue-rotate(70deg) brightness(108%) contrast(108%);
+    cursor: pointer;
+}
+
+.svg-color:hover{
+    opacity: 0.8;
+}
+
+.svg-color.active{
+    filter: brightness(0) saturate(100%) invert(93%) sepia(2%) saturate(757%) hue-rotate(212deg) brightness(111%) contrast(58%);
+}
+
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #8691ca;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px 0;
+
+    font-size: 14px;
+    position: absolute;
+    z-index: 1;
+    top: 130%;
+    left: 50%;
+    margin-left: -100px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
 }

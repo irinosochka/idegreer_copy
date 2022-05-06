@@ -93,20 +93,20 @@ const EditProfile: FC<EditProfileProps> = ({
                         value={email}
                     /><label htmlFor="input" className="control-label">Email:</label>
                 </div>
-                {/*<div style={{display: 'flex', alignItems: 'center'}}>*/}
-                {/*    <label htmlFor="uploadButton" className="uploadButton">*/}
-                {/*        Choose the photo*/}
-                {/*    </label>*/}
-                {/*    <span style={{fontSize: '14px', paddingLeft: '10px'}}>{image ? image!.name : ''}</span>*/}
-                {/*    <input className="uploadButton" id="uploadButton" style={{visibility: "hidden"}} name={'userImage'}*/}
-                {/*           type={"file"}*/}
-                {/*           onChange={(event) => {*/}
-                {/*               setImage(event.target!.files![0]);*/}
-                {/*               setError(false);*/}
-                {/*               setUserDataChangingError(false);*/}
-                {/*               setUserDataChangingSuccess(false);*/}
-                {/*           }}/>*/}
-                {/*</div>*/}
+                <div style={{display: 'flex', alignItems: 'center'}}>
+                    <label htmlFor="uploadButton" className="uploadButton">
+                        Choose the photo
+                    </label>
+                    <span style={{fontSize: '14px', paddingLeft: '10px'}}>{image ? image!.name : ''}</span>
+                    <input className="uploadButton" id="uploadButton" style={{display: 'none'}} name={'userImage'}
+                           type={"file"}
+                           onChange={(event) => {
+                               setImage(event.target!.files![0]);
+                               setError(false);
+                               setUserDataChangingError(false);
+                               setUserDataChangingSuccess(false);
+                           }}/>
+                </div>
                 <div>
                     <Button width={240}>Submit changes</Button>
                 </div>
