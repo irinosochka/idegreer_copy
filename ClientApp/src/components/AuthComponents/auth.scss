@@ -116,6 +116,10 @@ span{
     padding: 10px 20px;
 }
 
+.course__item:hover{
+    box-shadow: 1px 1px 10px 0 rgba(0,0,0,0.50);
+}
+
 h2, h3, p, .course__item{
     text-align: left;
 }

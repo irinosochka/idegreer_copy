@@ -23,19 +23,19 @@
 
 .item_title {
   padding-top: 5px;
-  font-size: 32px;
+  font-size: 40px;
   font-weight: 800;
   color: #fff;
 }
 
 .item_theme {
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 600;
   color: #fff;
 }
 
 .item_author {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   color: #fff;
 }
@@ -44,7 +44,7 @@
   width: 20%;
   height: 100%;
   text-align: right;
-  font-size: 26px;
+  font-size: 30px;
   font-weight: 800;
   color: #fff;
 }
