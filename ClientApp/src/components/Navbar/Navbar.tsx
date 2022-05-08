@@ -28,7 +28,7 @@ const Navbar: FC<NavbarProps> = ({logout}) => {
                 <div className={'icons__wrapper'}>
                     <NavbarIcon icon={homeIcon} link={'/'} />
                     <NavbarIcon icon={profileIcon} link={'/profile'} />
-                    <NavbarIcon icon={cartIcon} link={'/'} />
+                    <NavbarIcon icon={cartIcon} link={'/cart'} />
                     <NavbarIcon icon={logoutIcon} func={logout} bg={'rgb(217 115 115)'} />
                 </div>
             </div>

@@ -10,6 +10,7 @@ import {connect} from "react-redux";
 import {AppStateType} from "./reduxStore/store";
 import {checkAuth} from "./reduxStore/auth-reducer";
 import CoursePage from "./pages/CoursePage";
+import CartPage from "./pages/CartPage";
 
 interface AppProps {
     isAuth: boolean,
@@ -44,6 +45,7 @@ const App: FC<AppProps> = ({isAuth, isLoading, checkAuth}) => {
                     <Route path={'/'} element={<MainPage/>}/>
                     <Route path={'/auth'} element={<AuthPage/>}/>
                     <Route path={'/profile'} element={<UserPage/>}/>
+                    <Route path={'/cart'} element={<CartPage/>}/>
                     <Route path={'/course/:id'} element={<CoursePage/>}/>
                 </Routes>
 
