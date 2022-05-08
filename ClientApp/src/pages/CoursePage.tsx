@@ -65,13 +65,13 @@ const CoursePage: FC<CoursePage> = ({
        getAllMembersFromCourse(course._id);
     }, [])
 
-    const isMember = () => {
-        for(let i=0; i<members.length; i++) {
-            if(authUser._id === members[i]) {
-                return true;
-            }
-        } return false;
-    }
+    // const isMember = () => {
+    //     for(let i=0; i<members.length; i++) {
+    //         if(authUser._id === members[i]) {
+    //             return true;
+    //         }
+    //     } return false;
+    // }
 
     return (
         <div className="course-page">
@@ -95,8 +95,9 @@ const CoursePage: FC<CoursePage> = ({
                         {course.author && <div>Course author: {course.author.name}</div>}
                     </div>
                     <div className="course__price">
-                        {course.author && authUser._id !== course.author._id && !isMember() && visibleButtonAndPrice && <h2>Price: ${course.price}</h2>}
-                        {course.author && authUser._id !== course.author._id && !isMember() && visibleButtonAndPrice && <Button onClick={() => {
+                        {course.author && authUser._id !== course.author._id && !members.includes(authUser._id) && visibleButtonAndPrice &&
+                        <h2>Price: ${course.price}</h2> &&
+                        <Button onClick={() => {
                             addUserToCourse(course._id, authUser._id);
                             setVisibleButtonAndPrice(false);
                         }}>Add to cart</Button>}

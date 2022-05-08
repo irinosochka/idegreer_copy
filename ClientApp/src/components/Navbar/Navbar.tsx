@@ -5,9 +5,10 @@ import {logout} from "../../reduxStore/auth-reducer";
 import './navbar.css'
 
 /* IMG */
-import logoutIcon from '../../assets/img/logout-svgrepo-com.svg'
-import homeIcon from '../../assets/img/home-svgrepo-com.svg'
-import profileIcon from '../../assets/img/user-profile-svgrepo-com.svg'
+import logoutIcon from '../../assets/img/logout-svgrepo-com.svg';
+import homeIcon from '../../assets/img/home-svgrepo-com.svg';
+import profileIcon from '../../assets/img/user-profile-svgrepo-com.svg';
+import cartIcon from '../../assets/img/shopping-cart-svgrepo-com.svg';
 import NavbarIcon from "./NavbarIcon";
 import Logo from "../../common/Logo";
 
@@ -27,6 +28,7 @@ const Navbar: FC<NavbarProps> = ({logout}) => {
                 <div className={'icons__wrapper'}>
                     <NavbarIcon icon={homeIcon} link={'/'} />
                     <NavbarIcon icon={profileIcon} link={'/profile'} />
+                    <NavbarIcon icon={cartIcon} link={'/'} />
                     <NavbarIcon icon={logoutIcon} func={logout} bg={'rgb(217 115 115)'} />
                 </div>
             </div>
