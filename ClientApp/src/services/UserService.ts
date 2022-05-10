@@ -46,4 +46,16 @@ export default class UserService {
             return res
         }).catch(e => console.log('err ' + e))
     }
+
+    static addNotification(date: string, courseId: string, type: string): Promise<any> {
+        return $user.post('/addNotification', {date, courseId, type}).then(res => {
+            return res
+        }).catch(e => console.log('err ' + e))
+    }
+
+    static getNotification(id: string): Promise<any> {
+        return $user.get(`/getNotifications/${id}`).then(res => {
+            return res
+        }).catch(e => console.log('err ' + e))
+    }
 }

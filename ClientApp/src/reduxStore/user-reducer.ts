@@ -12,7 +12,8 @@ const INITIAL_STATE = {
     user: {} as IUser,
     usersList: [] as any,
     passwordChangingError: false,
-    passwordChangingSuccess: false
+    passwordChangingSuccess: false,
+    userNotifications: [] as any
 }
 
 const userReducer = (state = INITIAL_STATE, action: ActionsType): InitialStateType => {
@@ -41,6 +42,12 @@ const userReducer = (state = INITIAL_STATE, action: ActionsType): InitialStateTy
                 passwordChangingSuccess: action.payload
             }
         }
+        case "SET_NOTIFICATIONS": {
+            return {
+                ...state,
+                userNotifications: action.payload
+            }
+        }
         default:
             return state
     }
@@ -52,6 +59,7 @@ export const actions = {
     setUserList: (users: any) => ({type: "SET_USER_LIST", payload: users} as const),
     setPasswordChangingError: (bool: boolean) => ({type: "SET_PASSWORD_CHANGING_ERROR", payload: bool} as const),
     setPasswordChangingSuccess: (bool: boolean) => ({type: "SET_PASSWORD_CHANGING_SUCCESS", payload: bool} as const),
+    setNotifications: (notifications: any) => ({type: "SET_NOTIFICATIONS", payload: notifications} as const),
 }
 
 export const getAllUsers = (): ThunkType =>
@@ -99,13 +107,38 @@ export const changeUserRoleRequest = (userId: string): ThunkType =>
         try {
             const response = await UserService.changeUserRoleRequest(userId);
             if (response.data.resultCode === 1) {
-                return response
+                return response.data.data;
             }
         } catch (e) {
             console.log(e);
         }
     }
 
+export const getNotification = (courseId: string): ThunkType =>
+    async (dispatch: Dispatch<any>) => {
+        try {
+            const response = await UserService.getNotification(courseId);
+            if (response.data.resultCode === 1) {
+                dispatch(actions.setNotifications(response.data.data.notifications))
+                return response.data.data;
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+export const addNotification = (date: string, courseId: string, type: string): ThunkType => {
+    return async () => {
+        try {
+            const response = await UserService.addNotification(date, courseId, type);
+            if (response.data.resultCode === 1) {
+                return response.data.data;
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
 
 
 export default userReducer;

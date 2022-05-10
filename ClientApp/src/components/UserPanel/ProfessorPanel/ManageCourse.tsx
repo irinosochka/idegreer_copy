@@ -3,8 +3,8 @@ import "../AdminPanel/adminPanel.css";
 import AddLection from "./AddLection";
 import {ICourse} from "../../../models/ICourse";
 import closeIcon from "../../../assets/img/close-svgrepo-com.svg";
-import EditCourse from "../EditCourse";
-import LecturesList from "../LecturesList";
+import EditCourse from "./EditCourse";
+import LecturesList from "./LecturesList";
 import CourseMembersList from "./CourseMembersList";
 
 export enum ButtonItems {

@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {connect} from "react-redux";
-import {changeLectionData, deleteLection} from "../../reduxStore/lection-reducer";
-import {ILection} from "../../models/ILection";
-import Button from "../../common/button/Button";
-import closeIcon from "../../assets/img/close-svgrepo-com.svg";
-import Message, {MessageType} from "../../common/Messages/Message";
-import {setCourseChanges} from "../../reduxStore/course-reducer";
+import {changeLectionData, deleteLection} from "../../../reduxStore/lection-reducer";
+import {ILection} from "../../../models/ILection";
+import Button from "../../../common/button/Button";
+import closeIcon from "../../../assets/img/close-svgrepo-com.svg";
+import Message, {MessageType} from "../../../common/Messages/Message";
+import {setCourseChanges} from "../../../reduxStore/course-reducer";
+import {addNotification} from "../../../reduxStore/user-reducer";
 
 interface SelectedLectionProps {
     selectedLection: ILection,
@@ -13,7 +14,8 @@ interface SelectedLectionProps {
     setVisibleEditLection: (bool: boolean) => void,
     setVisibleLections: (bool: boolean) => void,
     deleteLection: (lectionId: string) => void,
-    setCourseChanges: (courseId: string) => void
+    setCourseChanges: (courseId: string) => void,
+    addNotification: (date: string, courseId: string, type: string) => void
 }
 
 const EditLecture: React.FC<SelectedLectionProps> = ({
@@ -22,7 +24,8 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
                                                          setVisibleEditLection,
                                                          setVisibleLections,
                                                          deleteLection,
-                                                         setCourseChanges}) => {
+                                                         setCourseChanges,
+                                                         addNotification}) => {
     const [title, setTitle] = useState(selectedLection.title);
     const [description, setDescription] = useState(selectedLection.description);
     const [duration, setDuration] = useState(selectedLection.duration);
@@ -54,6 +57,7 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
             setVisibleLections(true);
             setVisibleEditLection(false);
             changeLectionData(selectedLection._id, title, description, duration, link);
+            addNotification(new Date().toLocaleDateString(), selectedLection.course._id, `changing lection ${selectedLection.title} on course ${selectedLection.course.title}`)
             setCourseChanges(selectedLection.course._id)
             setTitle('');
             setDescription('');
@@ -107,5 +111,6 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
 export default connect(null, {
     changeLectionData,
     deleteLection,
-    setCourseChanges
+    setCourseChanges,
+    addNotification
 })(EditLecture);

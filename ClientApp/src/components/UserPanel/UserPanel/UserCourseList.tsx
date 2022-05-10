@@ -1,24 +1,18 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 import {AppStateType} from "../../../reduxStore/store";
 import {connect} from "react-redux";
-import {getCoursesOfUser} from "../../../reduxStore/course-reducer";
 import {ICourse} from "../../../models/ICourse";
 import CourseItem from "../../CourseItem/CourseItem";
 import {IUser} from "../../../models/IUser";
 import {NavLink, useNavigate} from "react-router-dom";
 
 interface UserCourseListProps {
-    authUser: IUser,
     courses: ICourse[],
-    getCoursesOfUser: (userId: string) => void
 }
 
-const UserCourseList: FC<UserCourseListProps> = ({courses, getCoursesOfUser, authUser}) => {
+const UserCourseList: FC<UserCourseListProps> = ({courses}) => {
     const navigator = useNavigate();
 
-    useEffect(() => {
-        getCoursesOfUser(authUser._id);
-    }, [])
 
     function handleClick() {
         navigator('/');
@@ -44,9 +38,8 @@ const UserCourseList: FC<UserCourseListProps> = ({courses, getCoursesOfUser, aut
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        courses: state.course.userCourses,
-        authUser: state.auth.authUser
+        courses: state.course.userCourses
     }
 }
 
-export default connect(mapStateToProps, {getCoursesOfUser})(UserCourseList);
+export default connect(mapStateToProps, {})(UserCourseList);

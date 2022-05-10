@@ -65,6 +65,26 @@ class UserController {
            return res.json({message: "Getting user using id error", resultCode: 0})
         }
     }
+
+    async addNotification(req, res) {
+        try {
+           const {date, courseId, type} = req.body;
+           const data = await userService.addNotification(date, courseId, type);
+           return res.json({data, resultCode: 1})
+        } catch {
+           return res.json({message: 'add notification error', resultCode: 0})
+        }
+    }
+
+    async getNotification(req, res) {
+        try {
+           const id = req.params.id;
+           const data = await userService.getNotification(id);
+           return res.json({data, resultCode: 1})
+        } catch {
+           return res.json({message: 'get notification error', resultCode: 0})
+        }
+    }
 }
 
 module.exports = new UserController()

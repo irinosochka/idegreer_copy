@@ -7,28 +7,26 @@ import {ICourse} from "../../../models/ICourse";
 import {connect} from "react-redux";
 
 interface NotificationsProps {
-    courses: Array<ICourse>
+    notifications: Array<any>
 }
 
-const Notifications: FC<NotificationsProps> = ({courses}) => {
+const Notifications: FC<NotificationsProps> = ({ notifications}) => {
 
     return (
-        <div style={{background: '#8691ca', borderRadius: '10px', margin: '10px', padding: '20px', color: '#fff'}}>
+        <div style={{background: '#8691ca', borderRadius: '10px', margin: '10px', padding: '20px', color: '#fff', height: '100%', maxHeight: '300px',
+            overflowY: 'scroll'}}>
 
                 <h3 style={{fontSize: '22px',marginBottom: '10px', fontWeight: '500', letterSpacing: '0.8px'}}>Notifications:</h3>
-                {courses.map(c => {
-                    if(c.wasChanged) {
-                        return <p style={{fontSize: '18px', marginLeft: '10px'}}>Course {c.title} was changed</p>
-                    }
-                })}
-
+            {notifications.map(n => {
+                return <p key={n._id} style={{fontSize: '18px', marginLeft: '10px'}}>{n.date} | Course {n.courseId} was changed: {n.type}</p>
+            })}
         </div>
     );
 };
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        courses: state.course.userCourses,
+        notifications: state.user.userNotifications
     }
 }
 

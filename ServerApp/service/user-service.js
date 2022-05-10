@@ -1,4 +1,6 @@
 const UserModel = require("../models/user-model");
+const CourseModel = require("../models/course-model");
+const NotificationModel = require("../models/notification-model");
 const bcrypt = require("bcrypt");
 const UserDto = require("../dtos/user-dto");
 const tokenService = require("./token-service");
@@ -165,6 +167,29 @@ class UserService {
             updatedUser
         }
     }
+
+    async addNotification(date, courseId, type) {
+        const course = await CourseModel.findOne({_id: courseId});
+        if(!course) {
+            throw new Error(`There is not exists course with id ${courseId}`)
+        }
+        const notification = await NotificationModel.create({date, courseId, type});
+        return {
+            notification
+        }
+    }
+
+    async getNotification(id) {
+        const course = await CourseModel.findOne({_id: id});
+        if (!course) {
+            throw new Error(`There is not exists course with id ${id}`)
+        }
+        const notifications = await NotificationModel.find({courseId: id})
+        return {
+            notifications
+        }
+    }
+
 }
 
 module.exports = new UserService()

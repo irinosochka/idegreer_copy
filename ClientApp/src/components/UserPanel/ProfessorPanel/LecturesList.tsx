@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {ICourse} from "../../models/ICourse";
-import {AppStateType} from "../../reduxStore/store";
+import {ICourse} from "../../../models/ICourse";
+import {AppStateType} from "../../../reduxStore/store";
 import {connect} from "react-redux";
-import {getAllLectionsFromCourse} from "../../reduxStore/lection-reducer";
-import {ILection} from "../../models/ILection";
+import {getAllLectionsFromCourse} from "../../../reduxStore/lection-reducer";
+import {ILection} from "../../../models/ILection";
 import EditLecture from "./EditLecture";
 
 interface ListOfLecturesProps {

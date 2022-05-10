@@ -32,7 +32,7 @@ const ProfessorCourses: FC<ProfessorCoursesProps> = ({courses, getCoursesOfAutho
     return (
         <div style={{background: '#fff', borderRadius: '10px', padding: '20px'}}>
             <h3 style={{fontWeight: '400', letterSpacing: '2px', fontSize: '24px', textAlign: 'center'}}>You are the Author of this courses:</h3>
-            {visibleList && <div className="courses__container" style={{marginTop: '-30px', paddingLeft: '65px'}}>
+            {visibleList && <div className="courses__container">
                 {courses.length !== 0 ? courses.map((course: ICourse) => {
                         return <div key={course._id}
                             onClick={() => {

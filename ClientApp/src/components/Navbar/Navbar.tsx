@@ -7,7 +7,6 @@ import './navbar.css'
 /* IMG */
 import logoutIcon from '../../assets/img/logout-svgrepo-com.svg';
 import homeIcon from '../../assets/img/home-svgrepo-com.svg';
-import profileIcon from '../../assets/img/user-profile-svgrepo-com.svg';
 import cartIcon from '../../assets/img/shopping-cart-svgrepo-com.svg';
 import NavbarIcon from "./NavbarIcon";
 import Logo from "../../common/Logo";
@@ -18,8 +17,6 @@ interface NavbarProps {
 
 const Navbar: FC<NavbarProps> = ({logout}) => {
 
-    const location = useLocation();
-
     return (
         <div className={'navbar__wrapper'}>
             <div className={'navbar__content_wrapper'}>
@@ -27,7 +24,6 @@ const Navbar: FC<NavbarProps> = ({logout}) => {
                 <Logo />
                 <div className={'icons__wrapper'}>
                     <NavbarIcon icon={homeIcon} link={'/'} />
-                    <NavbarIcon icon={profileIcon} link={'/profile'} />
                     <NavbarIcon icon={cartIcon} link={'/cart'} />
                     <NavbarIcon icon={logoutIcon} func={logout} bg={'rgb(217 115 115)'} />
                 </div>

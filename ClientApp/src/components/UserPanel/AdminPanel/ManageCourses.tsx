@@ -7,7 +7,7 @@ import "./adminPanel.css";
 import SearchComponent from "../../../common/SearchComponent/SearchComponent";
 import Message, {MessageType} from "../../../common/Messages/Message";
 import Button from "../../../common/button/Button";
-import EditCourse from "../EditCourse";
+import EditCourse from "../ProfessorPanel/EditCourse";
 
 
 interface ManageCourseProps {
