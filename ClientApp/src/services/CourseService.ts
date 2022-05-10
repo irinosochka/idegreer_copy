@@ -1,5 +1,7 @@
 import {$course} from "../http";
 import {CourseResponse} from "../models/response/CourseResponse";
+import {inspect} from "util";
+// import replDefaults = module;
 
 export default class CourseService {
     static addCourse(userId: string, title: string, theme: string, description: string, price: string): Promise<any> {
@@ -41,13 +43,8 @@ export default class CourseService {
     static getAllUsersFromCourse(courseId : string): Promise<any> {
         return $course.get<Array<CourseResponse>>(`getAllUsersFromCourse/${courseId}`).then(res =>{
             return res
-            console.log(res);
         }).catch(e => console.log(e))
     }
-    // верхня функція - при загрузці сторінки має відправлятись запит з айді актуального курсу,
-    // який верне масив айдішок всіх юзерів записаних на цей курс.
-    // Перевірити чи авторизований є в списку і не висвітлювати йому кнопку і ціну.
-    // При додавані юзера виствітлити комунікат - done
 
     static getUserCourseList(userId : string): Promise<any> {
         return $course.get<Array<CourseResponse>>(`getUserCourseList/${userId}`).then(res =>{

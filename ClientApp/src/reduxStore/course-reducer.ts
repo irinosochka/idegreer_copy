@@ -15,6 +15,7 @@ const INITIAL_STATE = {
     authorCourses: [] as Array<ICourse>,
     userCourses: [] as Array<ICourse>,
     members: [] as Array<any>, //to change
+    cart: [] as Array<ICourse>,
 
     /* Errors */
     getAllCourseError: false,
@@ -113,6 +114,29 @@ const courseReducer = (state: InitialStateType = INITIAL_STATE, action: ActionsT
             }
         }
 
+        case "ADD_COURSE_TO_CART": {
+            const courseItem = state.courses.find((crs) => crs._id === action.payload._id);
+
+            const inCart = state.cart.find((courseItem) => courseItem._id === action.payload._id);
+            return {
+                ...state,
+                cart: [...state.courses, action.payload]
+            }
+        }
+
+        case "DELETE_COURSE_FROM_CART": {
+            return {
+                ...state,
+                cart: [...state.courses.filter((crs) => crs._id !== action.payload._id)]
+            }
+        }
+
+        // case "REMOVE_ALL_COURSES_FROM_CART": {
+        //     return {
+        //         ...state
+        //     }
+        // }
+
         default:
             return state
     }
@@ -134,6 +158,9 @@ export const actions = {
     getAllMembersFromCourse: (members: Array<IUser>) => ({type: "GET_ALL_MEMBERS_FROM_COURSE", payload: members} as const),
     setAddUserToCourseError: (bool: boolean) => ({type: "SET_ADD_USER_TO_COURSE_ERROR", payload: bool} as const),
     setAddUserToCourseSuccess: (bool: boolean) => ({type: "SET_ADD_USER_TO_COURSE_SUCCESS", payload: bool} as const),
+    addCourseToCart: (course: ICourse) => ({type: "ADD_COURSE_TO_CART", payload: course} as const),
+    deleteCourseFromCart: (course: ICourse) => ({type: "DELETE_COURSE_FROM_CART", payload: course} as const),
+    removeAllCoursesFromCart: (courses: ICourse) => ({type: "REMOVE_ALL_COURSES_FROM_CART", payload: courses} as const),
 }
 
 export const addCourse = (userId: string, title: string, theme: string, description: string, price: string): ThunkType =>

@@ -1,9 +1,24 @@
-import React from 'react';
+import React, {FC, useEffect} from 'react';
 import UserCart from "../components/UserPanel/UserCart";
 import '../pages/cartPage.css';
 import Button from "../common/button/Button";
+import {connect} from "react-redux";
+import {getCoursesOfUser} from "../reduxStore/course-reducer";
+import {AppStateType} from "../reduxStore/store";
+import {IUser} from "../models/IUser";
+import {ICourse} from "../models/ICourse";
 
-const CartPage = () => {
+interface CartPageProps {
+    authUser: IUser
+}
+
+const CartPage: FC<CartPageProps> = ({authUser}) => {
+
+    useEffect(() => {
+        getCoursesOfUser(authUser._id);
+    }, [])
+
+
     return (
         <div className="shopping__cart">
             <div className="shopping__cart__header">
@@ -28,4 +43,11 @@ const CartPage = () => {
     );
 };
 
-export default CartPage;
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        authUser: state.auth.authUser,
+        courses: state.course.userCourses,
+    }
+}
+
+export default connect(mapStateToProps, {getCoursesOfUser})(CartPage);

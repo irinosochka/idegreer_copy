@@ -132,7 +132,8 @@ const mapStateToProps = (state: AppStateType) => {
         lections: state.lection.lections,
         addUserToCourseSuccess: state.course.addUserToCourseSuccess,
         addUserToCourseError: state.course.addUserToCourseError,
-        members: state.course.members
+        members: state.course.members,
+        cartCourses: state.course.courses
     }
 }
 
