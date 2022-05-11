@@ -4,17 +4,15 @@ import {connect} from "react-redux";
 import {getCoursesOfUser} from "../../reduxStore/course-reducer";
 import {ICourse} from "../../models/ICourse";
 import {IUser} from "../../models/IUser";
-import {useNavigate} from "react-router-dom";
 import CartItem from "../CourseItem/CartItem";
 
 interface UserCourseListProps {
     authUser: IUser,
-    courses: ICourse[],
-    getCoursesOfUser: (userId: string) => void
+    getCoursesOfUser: (userId: string) => void,
+    cartList: Array<ICourse>
 }
 
-const UserCourseList: FC<UserCourseListProps> = ({courses, getCoursesOfUser, authUser}) => {
-    const navigator = useNavigate();
+const UserCourseList: FC<UserCourseListProps> = ({cartList, getCoursesOfUser, authUser}) => {
 
     useEffect(() => {
         getCoursesOfUser(authUser._id);
@@ -22,7 +20,7 @@ const UserCourseList: FC<UserCourseListProps> = ({courses, getCoursesOfUser, aut
 
     return (
         <div>
-            {courses.length !== 0 ? courses.map((course: ICourse) => {
+            {cartList.length !== 0 ? cartList.map((course: ICourse) => {
                 return <CartItem course={course}/>
                     // return <NavLink key={course._id} to={`/course/${course._id}`}><CartItem
                     //     course={course}/></NavLink>
@@ -41,7 +39,7 @@ const UserCourseList: FC<UserCourseListProps> = ({courses, getCoursesOfUser, aut
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        courses: state.course.userCourses,
+        cartList: state.user.cartList,
         authUser: state.auth.authUser
     }
 }

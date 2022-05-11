@@ -3,12 +3,15 @@ import '../CourseItem/cartItem.css';
 import {ICourse} from "../../models/ICourse";
 import progIcon from "../../assets/img/programmingIcon.svg";
 import removeIcon from "../../assets/img/remove-svgrepo-com.svg";
+import {connect} from "react-redux";
+import {actions} from "../../reduxStore/user-reducer";
 
 interface CourseItemProps {
-    course: ICourse
+    course: ICourse,
+    removeOneCourseFromCart: (courseId: string) => void
 }
 
-const CourseItem: FC<CourseItemProps> = ({course}) => {
+const CourseItem: FC<CourseItemProps> = ({course, removeOneCourseFromCart}) => {
     return (
         <div className={"cart__item"}>
             <div className={"cart__item__img"}>
@@ -26,10 +29,10 @@ const CourseItem: FC<CourseItemProps> = ({course}) => {
             </div>
 
             <div className={"cart__item__img remove_icon"}>
-                <img style={{height: '30px'}} src={removeIcon} alt=""/>
+                <img style={{height: '30px'}} src={removeIcon} alt="" onClick={() => removeOneCourseFromCart(course._id)}/>
             </div>
         </div>
     );
 };
 
-export default CourseItem;
+export default connect(null, {removeOneCourseFromCart: actions.removeOneCourseFromCart})(CourseItem);

@@ -3,20 +3,14 @@ import {AppStateType} from "../../../reduxStore/store";
 import {connect} from "react-redux";
 import {ICourse} from "../../../models/ICourse";
 import CourseItem from "../../CourseItem/CourseItem";
-import {IUser} from "../../../models/IUser";
-import {NavLink, useNavigate} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
 interface UserCourseListProps {
     courses: ICourse[],
 }
 
 const UserCourseList: FC<UserCourseListProps> = ({courses}) => {
-    const navigator = useNavigate();
 
-
-    function handleClick() {
-        navigator('/');
-    }
 
     return (
         <div style={{background: '#fff', borderRadius: '10px', padding: '20px'}}>
@@ -27,8 +21,7 @@ const UserCourseList: FC<UserCourseListProps> = ({courses}) => {
                     }
                 ) : <div style={{marginTop: '70px', width: '100%'}}>
                     <h3 style={{fontWeight: 'inherit', textAlign: 'center', display: 'flex', justifyContent: 'center' }}>You don't have a course.
-                        <div style={{color: '#6675bc', cursor: 'pointer', textDecoration: 'underline', margin: '0 5px'}} onClick={handleClick}>
-                            Buy it</div>
+                            Buy it
                         for starting learning new programing language now.</h3>
                     </div>}
             </div>

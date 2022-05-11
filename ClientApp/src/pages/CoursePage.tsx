@@ -8,12 +8,11 @@ import {ICourse} from "../models/ICourse";
 import Button from "../common/button/Button";
 import './coursePage.css'
 import {actions as authActions} from "../reduxStore/auth-reducer";
-import {actions as courseActions} from "../reduxStore/course-reducer";
 import {actions as lectionActions, getAllLectionsFromCourse} from "../reduxStore/lection-reducer";
+import {actions as userActions} from "../reduxStore/user-reducer";
 import {ILection} from "../models/ILection";
 import YouTube from "react-youtube";
 import {IUser} from "../models/IUser";
-import Message, {MessageType} from "../common/Messages/Message";
 
 interface CoursePage {
     getOneCourse: (courseId: string) => void,
@@ -22,13 +21,11 @@ interface CoursePage {
     setLection: () => void,
     lections: ILection[],
     authUser: IUser,
-    addUserToCourse: (courseId: string, userId: string) => void,
-    addUserToCourseError: boolean,
-    addUserToCourseSuccess: boolean,
     members: Array<string>,
     getAllMembersFromCourse: (courseId: string) => void,
-    setAddUserToCourseSuccess: (bool: boolean) => void
-    setAddUserToCourseError: (bool: boolean) => void
+    setAddUserToCourseSuccess: (bool: boolean) => void,
+    setAddUserToCourseError: (bool: boolean) => void,
+    addCourseToCart: (course: ICourse) => void
 }
 
 const CoursePage: FC<CoursePage> = ({
@@ -37,13 +34,11 @@ const CoursePage: FC<CoursePage> = ({
                                         lections,
                                         getOneCourse,
                                         getAllLectionsFromCourse,
-                                        addUserToCourse,
-                                        addUserToCourseSuccess,
-                                        addUserToCourseError,
                                         members,
                                         getAllMembersFromCourse,
                                         setAddUserToCourseSuccess,
-                                        setAddUserToCourseError
+                                        setAddUserToCourseError,
+                                        addCourseToCart
                                     }) => {
     const [activeLection, setActiveLection] = useState<ILection | null>();
     const [visibleButtonAndPrice, setVisibleButtonAndPrice] = useState(true);
@@ -62,7 +57,7 @@ const CoursePage: FC<CoursePage> = ({
     }, []);
 
     useEffect(() => {
-       getAllMembersFromCourse(course._id);
+        getAllMembersFromCourse(course._id);
     }, [])
 
     // const isMember = () => {
@@ -96,16 +91,15 @@ const CoursePage: FC<CoursePage> = ({
                     </div>
                     <div className="course__price">
                         {course.author && authUser._id !== course.author._id && !members.includes(authUser._id) && visibleButtonAndPrice &&
-                        <h2>Price: ${course.price}</h2> &&
-                        <Button onClick={() => {
-                            addUserToCourse(course._id, authUser._id);
-                            setVisibleButtonAndPrice(false);
-                        }}>Add to cart</Button>}
+                            <h2>Price: ${course.price}</h2> &&
+                            <Button onClick={() => {
+                                // addUserToCourse(course._id, authUser._id);
+                                addCourseToCart(course);
+                                setVisibleButtonAndPrice(false);
+                            }}>Add to cart</Button>}
                     </div>
                 </div>
                 <div style={{width: '300px', margin: '0 auto'}}>
-                    {addUserToCourseSuccess && <Message type={MessageType.SUCCESS}>The course has been added</Message>}
-                    {addUserToCourseError && <Message type={MessageType.ERROR}>The course hasn't been added</Message>}
                 </div>
             </div>
 
@@ -115,8 +109,8 @@ const CoursePage: FC<CoursePage> = ({
                     {activeLection && <header className="content-header">
                         {activeLection?.title}
                     </header>}
-                    {activeLection &&<div className="video-player-wrapper">
-                        <YouTube videoId={activeLection?.link} />;
+                    {activeLection && <div className="video-player-wrapper">
+                        <YouTube videoId={activeLection?.link}/>;
                     </div>}
                 </div>
             </div>
@@ -139,10 +133,9 @@ const mapStateToProps = (state: AppStateType) => {
 export default connect(mapStateToProps, {
     setLection: lectionActions.setLections,
     setLoading: authActions.setLoading,
-    setAddUserToCourseSuccess: courseActions.setAddUserToCourseSuccess,
-    setAddUserToCourseError: courseActions.setAddUserToCourseError,
+    addCourseToCart: userActions.addCourseToCart,
     getOneCourse,
     getAllLectionsFromCourse,
     addUserToCourse,
-    getAllMembersFromCourse
+    getAllMembersFromCourse,
 })(CoursePage);

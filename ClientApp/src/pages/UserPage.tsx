@@ -41,13 +41,15 @@ interface UserPageProps {
 }
 
 const UserPage: FC<UserPageProps> = ({authUser, courses, getCoursesOfUser, getNotification}) => {
-    console.log('render')
     const [slideItem, setSlideItem] = useState(UserPageSlidesItems.USER_COURSES);
 
     useEffect(() => {
-        getCoursesOfUser(authUser._id);
-        courses.forEach(c => getNotification(c._id))
+            getCoursesOfUser(authUser._id);
     }, [])
+
+    useEffect(() => {
+        courses.forEach(c => getNotification(c._id))
+    }, [courses])
 
     return (
         <div style={{display: 'flex'}}>
@@ -82,7 +84,7 @@ const UserPage: FC<UserPageProps> = ({authUser, courses, getCoursesOfUser, getNo
                     </div>
                 </div>
             </div>
-            <div style={{height: 'calc(100vh - 85px)', width: '1100px'}}>
+            <div style={{height: 'calc(100vh - 85px)', width: '1300px'}}>
                 <div style={{background: '#e6ebff', height: 'calc(100vh - 85px)'}}>
                     <div className="edit__container">
                         {slideItem === UserPageSlidesItems.ALL_COURSES_LIST && <CourseCatalog/>}

@@ -10,24 +10,20 @@ import {AppStateType} from "./reduxStore/store";
 import {checkAuth} from "./reduxStore/auth-reducer";
 import CoursePage from "./pages/CoursePage";
 import CartPage from "./pages/CartPage";
-import {ICourse} from "./models/ICourse";
 
 interface AppProps {
     isAuth: boolean,
     isLoading: boolean,
-    checkAuth: () => void,
-    courses: Array<ICourse>
+    checkAuth: () => void
 }
 
-const App: FC<AppProps> = ({isAuth, courses, isLoading, checkAuth}) => {
-
+const App: FC<AppProps> = ({isAuth, isLoading, checkAuth}) => {
         const navigate = useNavigate()
 
         useEffect(() => {
             if (localStorage.getItem('token')) {
                 checkAuth();
             }
-            console.log(courses)
         }, []);
 
         useEffect(() => {
@@ -46,7 +42,6 @@ const App: FC<AppProps> = ({isAuth, courses, isLoading, checkAuth}) => {
                 <Routes>
                     <Route path={'/'} element={<UserPage/>}/>
                     <Route path={'/auth'} element={<AuthPage/>}/>
-                    {/*<Route path={'/profile'} element={<UserPage/>}/>*/}
                     <Route path={'/cart'} element={<CartPage/>}/>
                     <Route path={'/course/:id'} element={<CoursePage/>}/>
                 </Routes>
@@ -59,8 +54,7 @@ const App: FC<AppProps> = ({isAuth, courses, isLoading, checkAuth}) => {
 const mapStateToProps = (state: AppStateType) => {
     return {
         isAuth: state.auth.isAuth,
-        isLoading: state.auth.isLoading,
-        courses: state.course.userCourses
+        isLoading: state.auth.isLoading
     }
 }
 

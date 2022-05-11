@@ -3,7 +3,6 @@ import React, {FC} from 'react';
 import "../userPanel.css"
 
 import {AppStateType} from "../../../reduxStore/store";
-import {ICourse} from "../../../models/ICourse";
 import {connect} from "react-redux";
 
 interface NotificationsProps {

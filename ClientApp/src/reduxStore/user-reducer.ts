@@ -3,6 +3,7 @@ import {IUser} from "../models/IUser";
 import AuthService from "../services/AuthService";
 import {Dispatch} from "react";
 import UserService from "../services/UserService";
+import {ICourse} from "../models/ICourse";
 
 export type InitialStateType = typeof INITIAL_STATE;
 type ActionsType = InferActionsTypes<typeof actions>
@@ -13,7 +14,8 @@ const INITIAL_STATE = {
     usersList: [] as any,
     passwordChangingError: false,
     passwordChangingSuccess: false,
-    userNotifications: [] as any
+    userNotifications: [] as any,
+    cartList: [] as Array<ICourse>
 }
 
 const userReducer = (state = INITIAL_STATE, action: ActionsType): InitialStateType => {
@@ -48,6 +50,24 @@ const userReducer = (state = INITIAL_STATE, action: ActionsType): InitialStateTy
                 userNotifications: action.payload
             }
         }
+        case "ADD_COURSE_TO_CART": {
+            return {
+                ...state,
+                cartList: [...state.cartList, action.payload]
+            }
+        }
+        case "REMOVE_ALL_COURSES_FROM_CART": {
+            return {
+                ...state,
+                cartList: []
+            }
+        }
+        case "REMOVE_ONE_COURSE_FROM_CART": {
+            return {
+                ...state,
+                cartList: state.cartList.filter(item => item._id !== action.payload)
+            }
+        }
         default:
             return state
     }
@@ -60,6 +80,9 @@ export const actions = {
     setPasswordChangingError: (bool: boolean) => ({type: "SET_PASSWORD_CHANGING_ERROR", payload: bool} as const),
     setPasswordChangingSuccess: (bool: boolean) => ({type: "SET_PASSWORD_CHANGING_SUCCESS", payload: bool} as const),
     setNotifications: (notifications: any) => ({type: "SET_NOTIFICATIONS", payload: notifications} as const),
+    addCourseToCart: (course: ICourse) => ({type: "ADD_COURSE_TO_CART", payload: course} as const),
+    removeAllCourseFromCart: () => ({type: "REMOVE_ALL_COURSES_FROM_CART"} as const),
+    removeOneCourseFromCart: (courseId: string) => ({type: "REMOVE_ONE_COURSE_FROM_CART", payload: courseId} as const)
 }
 
 export const getAllUsers = (): ThunkType =>

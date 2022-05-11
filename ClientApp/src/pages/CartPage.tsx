@@ -1,31 +1,78 @@
-import React from 'react';
+import React, {FC, useEffect} from 'react';
 import UserCart from "../components/UserPanel/UserCart";
 import '../pages/cartPage.css';
 import Button from "../common/button/Button";
+import {connect} from "react-redux";
+import {actions} from "../reduxStore/user-reducer";
+import {AppStateType} from "../reduxStore/store";
+import {ICourse} from "../models/ICourse";
+import {actions as courseActions, addUserToCourse} from "../reduxStore/course-reducer";
+import {IUser} from "../models/IUser";
+import Message, {MessageType} from "../common/Messages/Message";
 
-const CartPage = () => {
+interface Props {
+    removeAllCoursesFromCart: () => void,
+    cartList: Array<ICourse>,
+    addUserToCourse: (courseId: string, userId: string) => void,
+    authUser: IUser,
+    addUserToCourseSuccess: boolean,
+    setAddUserToCourseSuccess: (bool: boolean) => void,
+}
+
+const CartPage: FC<Props> = ({cartList, removeAllCoursesFromCart, addUserToCourse, authUser, addUserToCourseSuccess, setAddUserToCourseSuccess}) => {
+
+    const coursePaymentSum = () => {
+        let sum = 0;
+        cartList.forEach(c => {
+            sum += +c.price
+        });
+        return sum
+    }
+
+    useEffect(() => {
+        return () => setAddUserToCourseSuccess(false);
+    }, [])
+
+    const addUserToCourses = () => {
+        cartList.forEach(item => {
+            addUserToCourse(item._id, authUser._id);
+        })
+        setAddUserToCourseSuccess(true);
+        removeAllCoursesFromCart()
+    }
+
     return (
         <div className="shopping__cart">
             <div className="shopping__cart__header">
                 <h3 className="cart_heading">Your shopping cart</h3>
-                <h5 className="cart_action">Remove all</h5>
+                <h5 className="cart_action" onClick={() => removeAllCoursesFromCart()}>Remove all</h5>
             </div>
 
+            {addUserToCourseSuccess && <Message type={MessageType.SUCCESS}>The course has been added</Message>}
             <UserCart/>
 
             <div className="shopping__cart__checkout">
                 <div className="cart_total">
                     <div>
                         <div className="total">Total</div>
-                        <div className="amount_items">99 items</div>
+                        <div className="amount_items">{cartList.length} items</div>
                     </div>
 
-                    <div className="total_amount">$99.99</div>
+                    <div className="total_amount">${coursePaymentSum()}</div>
                 </div>
-                <Button>Go to payment</Button>
+                <Button onClick={() => addUserToCourses()}>Go to payment</Button>
             </div>
         </div>
     );
 };
 
-export default CartPage;
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        cartList: state.user.cartList,
+        authUser: state.auth.authUser,
+        addUserToCourseSuccess: state.course.addUserToCourseSuccess,
+    }
+}
+
+export default connect(mapStateToProps, {removeAllCoursesFromCart: actions.removeAllCourseFromCart, addUserToCourse,
+    setAddUserToCourseSuccess: courseActions.setAddUserToCourseSuccess})(CartPage);
