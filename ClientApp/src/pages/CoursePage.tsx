@@ -23,8 +23,6 @@ interface CoursePage {
     authUser: IUser,
     members: Array<string>,
     getAllMembersFromCourse: (courseId: string) => void,
-    setAddUserToCourseSuccess: (bool: boolean) => void,
-    setAddUserToCourseError: (bool: boolean) => void,
     addCourseToCart: (course: ICourse) => void
 }
 
@@ -36,8 +34,6 @@ const CoursePage: FC<CoursePage> = ({
                                         getAllLectionsFromCourse,
                                         members,
                                         getAllMembersFromCourse,
-                                        setAddUserToCourseSuccess,
-                                        setAddUserToCourseError,
                                         addCourseToCart
                                     }) => {
     const [activeLection, setActiveLection] = useState<ILection | null>();
@@ -49,10 +45,6 @@ const CoursePage: FC<CoursePage> = ({
         if (id) {
             getOneCourse(id);
             getAllLectionsFromCourse(id);
-        }
-        return () => {
-            setAddUserToCourseSuccess(false)
-            setAddUserToCourseError(false)
         }
     }, []);
 
@@ -137,5 +129,5 @@ export default connect(mapStateToProps, {
     getOneCourse,
     getAllLectionsFromCourse,
     addUserToCourse,
-    getAllMembersFromCourse,
+    getAllMembersFromCourse
 })(CoursePage);
