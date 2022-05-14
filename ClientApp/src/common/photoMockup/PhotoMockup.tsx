@@ -4,7 +4,7 @@ import {AppStateType} from "../../reduxStore/store";
 import {IUser} from "../../models/IUser";
 
 export enum sizeTypes {
-    small = '90px',
+    small = '50px',
     large = '140px'
 }
 
@@ -41,8 +41,8 @@ const PhotoMockup: FC<PhotoMockupProps> = ({size, photo, authUser, isAuth}) => {
                 cursor: 'pointer',
                 display: 'flex',
                 marginRight: '10px',
-                margin: '0 auto',
-                fontSize: size === sizeTypes.large ? '40px' : 'normal',
+                margin: size === sizeTypes.large ? '0 auto' : '0',
+                fontSize: size === sizeTypes.large ? '40px' : '15px',
                 border: '1px solid #fff'
             }}>
                 {photo && photo.path ? <img src={`http://localhost:5000/uploads/${photo.path.slice(8)}`} alt="avatar"

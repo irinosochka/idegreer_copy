@@ -22,7 +22,7 @@ const CourseCatalog: FC<CourseCatalogProps> = ({courses, getAllCourses}) => {
     return (
         <div style={{background: '#fff', borderRadius: '10px', padding: '20px'}}>
             <h3 style={{fontWeight: '400', letterSpacing: '2px', fontSize: '24px', textAlign: 'center'}}>All Courses:</h3>
-            <div className="courses__container">
+            <div className="courses__container" style={{marginTop: '-30px', paddingLeft: '65px'}}>
                 {courses.map((course: ICourse) => {
                             return <NavLink key={course._id} to={`/course/${course._id}`}><CourseItem course={course} /></NavLink>
                         }

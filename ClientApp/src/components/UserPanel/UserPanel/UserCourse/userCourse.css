@@ -1,0 +1,88 @@
+.user_course{
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-evenly;
+  padding: 40px 20px;
+}
+
+.back__container{
+  margin-top: 3px;
+  width: 35px;
+  cursor: pointer;
+}
+
+.back__container img {
+  width: 25px;
+}
+
+.course-info__container{
+  width: 350px;
+}
+
+.user_course h2{
+  margin-bottom: 25px;
+  letter-spacing: 1px;
+  font-weight: 400;
+}
+
+.user_course p{
+  color: #a1a1a1;
+}
+
+.evaluation{
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.evaluation span {
+  color: #ee9a46;
+  font-size: 1.2em;
+}
+
+.mentor-info{
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.mentor-info h4{
+  font-weight: 500;
+}
+
+.lecture-description{
+  width: 300px;
+  margin-bottom: 20px;
+  font-weight: lighter;
+  text-align: start;
+}
+
+.lecture-player__container{
+  width: 650px;
+}
+
+.homework{
+  display: flex;
+  margin-top: 20px;
+}
+
+.homework h3{
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.add-homework{
+  margin-left: 50px;
+  display: flex;
+  margin-top: 30px;
+}
+
+.add-homework form{
+  width: 100%;
+}
+
+.add-homework textarea{
+  resize: none;
+  padding: 10px 15px;
+  width: calc(100% - 32px);
+}
