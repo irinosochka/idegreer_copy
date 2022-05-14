@@ -8,7 +8,7 @@ import {ICourse} from "../../../models/ICourse";
 import '../userPanel.css'
 import {addNotification} from "../../../reduxStore/user-reducer";
 
-interface AddLectionProps {
+interface AddLectureProps {
     selectedCourse: ICourse,
     onSuccessAddingLection: (bool: boolean) => void,
     addLection: (title: string, description: string, duration: string, link: string, courseId: string) => void,
@@ -17,7 +17,7 @@ interface AddLectionProps {
     addNotification: (date: string, courseId: string, type: string) => void
 }
 
-const AddLection: FC<AddLectionProps> = ({
+const AddLecture: FC<AddLectureProps> = ({
                                              selectedCourse,
                                              successAddingLection,
                                              errorAddingLection,
@@ -30,6 +30,7 @@ const AddLection: FC<AddLectionProps> = ({
     const [description, setDescription] = useState('');
     const [duration, setDuration] = useState('');
     const [link, setLink] = useState('');
+    const [homework, setHomework] = useState('');
     const [linkError, setLinkError] = useState(false);
     const [isError, setError] = useState(false);
     //const [course, setCourse] = useState('');
@@ -96,6 +97,16 @@ const AddLection: FC<AddLectionProps> = ({
                            placeholder={'Link'}
                     /><label htmlFor="input" className="control-label">Link:</label>
                 </div>
+                <div className="input-wrapper">
+                    <textarea className="form-control"
+                              onChange={(event) => {
+                                  setHomework(event.target.value);
+                              }}
+                              value={homework}
+                              placeholder={'Homework'}
+                              style={{resize: "none", marginBottom: '10px', padding: '5px 15px', width: 'calc(100% - 32px)', height: '80px', borderRadius: '5px'}}
+                    /><label style={{ transform: 'translateY(-70px)'}} htmlFor="input" className="control-label">Homework:</label>
+                </div>
                 <Button width={240}>Add</Button>
             </form>
         </>
@@ -114,4 +125,4 @@ export default connect(mapStateToProps, {
     onSuccessAddingLection: actions.onSuccessAddingLection,
     addLection,
     addNotification
-})(AddLection);
+})(AddLecture);

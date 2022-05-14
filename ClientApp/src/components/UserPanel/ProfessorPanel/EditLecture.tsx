@@ -30,6 +30,7 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
     const [description, setDescription] = useState(selectedLection.description);
     const [duration, setDuration] = useState(selectedLection.duration);
     const [link, setLink] = useState(selectedLection.link);
+    const [homework, setHomework] = useState('');
     const [linkError, setLinkError] = useState(false);
     const [isError, setError] = useState(false);
     const handleClose = (event: any) => {
@@ -100,6 +101,16 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
                            }}
                            placeholder={`Link: ${selectedLection.link}`}
                     /><label htmlFor="input" className="control-label">Link:</label>
+                </div>
+                <div className="input-wrapper">
+                    <textarea className="form-control"
+                              onChange={(event) => {
+                                  setHomework(event.target.value);
+                              }}
+                              value={homework}
+                              placeholder={'Homework'}
+                              style={{resize: "none", marginBottom: '10px', padding: '5px 15px', width: 'calc(100% - 32px)', height: '80px', borderRadius: '5px'}}
+                    /><label style={{ transform: 'translateY(-70px)'}} htmlFor="input" className="control-label">Homework:</label>
                 </div>
                 <Button onClick={(e) => handleSubmit(e!)} width={240}>Edit</Button>
                 <Button onClick={() => handleDelete()} width={240}>Delete</Button>

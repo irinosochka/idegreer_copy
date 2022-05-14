@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import "../AdminPanel/adminPanel.css";
-import AddLection from "./AddLection";
+import AddLection from "./AddLecture";
 import {ICourse} from "../../../models/ICourse";
 import closeIcon from "../../../assets/img/close-svgrepo-com.svg";
 import EditCourse from "./EditCourse";
