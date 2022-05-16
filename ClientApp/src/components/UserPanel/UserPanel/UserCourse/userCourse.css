@@ -2,7 +2,6 @@
   display: flex;
   margin-top: 20px;
   justify-content: space-evenly;
-  padding: 40px 20px;
 }
 
 .back__container{
@@ -85,4 +84,11 @@
   resize: none;
   padding: 10px 15px;
   width: calc(100% - 32px);
+}
+
+.no-courses__info{
+  font-weight: inherit;
+  text-align: center;
+  display: flex;
+  justify-content: center;
 }

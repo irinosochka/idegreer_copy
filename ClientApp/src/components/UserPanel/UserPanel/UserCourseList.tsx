@@ -21,10 +21,10 @@ const UserCourseList: FC<UserCourseListProps> = ({courses}) => {
     }
 
     return (
-        <div style={{background: '#fff', borderRadius: '10px'}}>
+        <div className="page__content">
             {visibleList &&
-            <div style={{background: '#fff', borderRadius: '10px', padding: '20px'}}>
-            <h3 style={{fontWeight: '400', letterSpacing: '2px', fontSize: '24px', textAlign: 'center'}}>Your Courses:</h3>
+            <>
+            <h3 className="page__title">Your Courses:</h3>
             <div className="courses__container" style={{marginTop: '-30px', paddingLeft: '65px'}}>
                 {courses.length !== 0 ? courses.map((course: ICourse) => {
                         return <div key={course._id}
@@ -36,17 +36,10 @@ const UserCourseList: FC<UserCourseListProps> = ({courses}) => {
                         // return <NavLink key={course._id} to={`/course/${course._id}`}><CourseItem course={course} /></NavLink>
                     }
                 ) : <div style={{marginTop: '70px', width: '100%'}}>
-                    <h3 style={{
-                        fontWeight: 'inherit',
-                        textAlign: 'center',
-                        display: 'flex',
-                        justifyContent: 'center'
-                    }}>You don't have a course.
-                        Buy it
-                        for starting learning new programing language now.</h3>
+                    <h3 className="no-courses__info">You don't have a course. Buy it for starting learning new programing language now.</h3>
                 </div>}
             </div>
-            </div>
+            </>
             }
             {visibleEditPanel && selectedCourse && <UserCourse selectedCourse={selectedCourse} setVisibleEditPanel={setVisibleEditPanel} setVisibleList={setVisibleList}/>}
         </div>

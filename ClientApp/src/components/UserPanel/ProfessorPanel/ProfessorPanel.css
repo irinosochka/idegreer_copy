@@ -1,0 +1,73 @@
+td, th {
+  padding: 8px;
+}
+
+th {
+  text-align: start;
+  font-weight: 300;
+  font-size: 14px;
+  color: #acacac;
+}
+
+td { font-family: 'Avenir Next', 'Segoe UI', 'Lucida Grande', sans-serif; }
+
+.table {
+  margin-top: 20px;
+  width: 100%;
+  padding: 16px;
+  text-align: start;
+}
+
+
+.course__icon{
+  filter: brightness(0) saturate(100%) invert(99%) sepia(0%) saturate(4685%) hue-rotate(303deg) brightness(118%) contrast(100%);
+  cursor: pointer;
+  width: 34px;
+  margin-left: 8px;
+}
+
+.star__icon{
+  filter: brightness(0) saturate(100%) invert(78%) sepia(18%) saturate(4726%) hue-rotate(192deg) brightness(84%) contrast(86%);
+  width: 15px;
+  margin-right: 5px;
+}
+
+.course-info__content{
+  display: flex;
+  align-items: center;
+}
+
+.course-title__text{
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.author__text{
+  font-size: 14px;
+  font-weight: 300;
+  color: #acacac;
+}
+
+.rate__text{
+  color: #8691ca;
+  display: flex;
+  align-items: center;
+}
+
+.type__text{
+  background: #f2f2fa;
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: inline-block;
+}
+
+.course-icon__content{
+  border-radius: 20%;
+  background-color: #6675bc;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  margin-right: 10px;
+  border: 1px solid #fff;
+}
