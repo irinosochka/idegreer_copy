@@ -1,0 +1,85 @@
+.modal__window__wrapper {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0,0,0,.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.modal__window__wrapper.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal__window__payment {
+  max-width: 360px;
+  height: auto;
+  margin: 80px auto;
+  border: 2px #6675bc solid;
+  border-radius: 30px;
+  background-color: #fff;
+  padding: 20px;
+  position: relative;
+  transform: scale(0.5);
+  transition: .4s all;
+}
+
+.modal__window__payment.active {
+  transform: scale(1);
+}
+
+.modal__window__payment h2 {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+.form .label {
+  display: block;
+  color: #555555;
+  margin-bottom: 6px;
+}
+
+.modal_form .input {
+  padding: 13px 0 13px 25px;
+  width: 100%;
+  text-align: center;
+  border: 2px solid #dddddd;
+  border-radius: 15px;
+  letter-spacing: 1px;
+  outline: none;
+  font-size: 16px;
+  color: #555555;
+}
+
+.card_grp {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card_item {
+  width: 48%;
+}
+
+.space {
+  margin-bottom: 20px;
+}
+
+.icon_relative {
+  position: relative;
+}
+
+.icon_relative .icon {
+  position: absolute;
+  height: 25px;
+  bottom: 33px;
+  left: 15px;
+}
+
+
+

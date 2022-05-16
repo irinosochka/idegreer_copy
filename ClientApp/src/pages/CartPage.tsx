@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import UserCart from "../components/UserPanel/UserCart";
 import '../pages/cartPage.css';
 import Button from "../common/button/Button";
@@ -9,6 +9,7 @@ import {ICourse} from "../models/ICourse";
 import {actions as courseActions, addUserToCourse} from "../reduxStore/course-reducer";
 import {IUser} from "../models/IUser";
 import Message, {MessageType} from "../common/Messages/Message";
+import ModalWindow from "../components/UserPanel/ModalWindow";
 
 interface Props {
     removeAllCoursesFromCart: () => void,
@@ -26,7 +27,7 @@ const CartPage: FC<Props> = ({cartList, removeAllCoursesFromCart, addUserToCours
         cartList.forEach(c => {
             sum += +c.price
         });
-        return sum
+        return sum;
     }
 
     useEffect(() => {
@@ -40,6 +41,8 @@ const CartPage: FC<Props> = ({cartList, removeAllCoursesFromCart, addUserToCours
         setAddUserToCourseSuccess(true);
         removeAllCoursesFromCart()
     }
+
+    const [modalActive, setModalActive] = useState(false);
 
     return (
         <div className="shopping__cart">
@@ -60,8 +63,11 @@ const CartPage: FC<Props> = ({cartList, removeAllCoursesFromCart, addUserToCours
 
                     <div className="total_amount">${coursePaymentSum()}</div>
                 </div>
-                <Button onClick={() => addUserToCourses()}>Go to payment</Button>
+                {/*<Button onClick={() => addUserToCourses()}>Go to payment</Button>*/}
+                <Button onClick={() => setModalActive(true)}>Go to payment</Button>
             </div>
+
+            <ModalWindow active={modalActive} setActive={setModalActive} buyCourse={addUserToCourses} cartTotal={coursePaymentSum()}/>
         </div>
     );
 };
