@@ -1,3 +1,7 @@
+input {
+  margin: 5px 0;
+}
+
 .modal__window__wrapper {
   height: 100vh;
   width: 100vw;
@@ -8,7 +12,7 @@
   z-index: 1000;
   opacity: 0;
   pointer-events: none;
-  transition: .5s;
+  transition: .3s;
 }
 
 .modal__window__wrapper.active {
@@ -26,7 +30,7 @@
   padding: 20px;
   position: relative;
   transform: scale(0.5);
-  transition: .4s all;
+  transition: .3s all;
 }
 
 .modal__window__payment.active {
@@ -63,7 +67,7 @@
 }
 
 .card_item {
-  width: 48%;
+  width: 45%;
 }
 
 .space {
@@ -77,9 +81,17 @@
 .icon_relative .icon {
   position: absolute;
   height: 25px;
-  bottom: 33px;
+  top: 40px;
   left: 15px;
 }
 
+.input_error {
+  color: red;
+}
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
