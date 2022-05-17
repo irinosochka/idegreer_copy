@@ -13,7 +13,7 @@ import cvvImg from "../../assets/img/card/secure-access-svgrepo-com.svg"
 interface ModalWindowProps {
     active: boolean,
     setActive: (bool: boolean) => void,
-    cartTotal: number,
+    cartTotal: () => number,
     buyCourse: () => void
 }
 
@@ -48,7 +48,7 @@ const ModalWindow: FC<ModalWindowProps>= ({active, setActive, cartTotal, buyCour
                             <img className="icon" src={cvvImg} alt=""/>
                         </div>
                     </div>
-                    <Button onClick={() => buyCourse()}>Pay ${cartTotal}</Button>
+                    <Button onClick={() => buyCourse()}>Pay ${cartTotal()}</Button>
                 </form>
             </div>
         </div>

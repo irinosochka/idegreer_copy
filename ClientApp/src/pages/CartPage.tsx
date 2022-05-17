@@ -67,7 +67,7 @@ const CartPage: FC<Props> = ({cartList, removeAllCoursesFromCart, addUserToCours
                 <Button onClick={() => setModalActive(true)}>Go to payment</Button>
             </div>
 
-            <ModalWindow active={modalActive} setActive={setModalActive} buyCourse={addUserToCourses} cartTotal={coursePaymentSum()}/>
+            <ModalWindow active={modalActive} setActive={setModalActive} buyCourse={addUserToCourses} cartTotal={coursePaymentSum}/>
         </div>
     );
 };
