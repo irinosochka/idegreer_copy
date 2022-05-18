@@ -173,7 +173,7 @@ class UserService {
         if(!course) {
             throw new Error(`There is not exists course with id ${courseId}`)
         }
-        const notification = await NotificationModel.create({date, courseId, type});
+        const notification = await NotificationModel.create({date, course, type});
         return {
             notification
         }

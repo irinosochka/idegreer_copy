@@ -17,7 +17,7 @@ const Notifications: FC<NotificationsProps> = ({ notifications}) => {
 
                 <h3 style={{fontSize: '22px',marginBottom: '10px', fontWeight: '500', letterSpacing: '0.8px'}}>Notifications:</h3>
             {notifications.map(n => {
-                return <p key={n._id} style={{fontSize: '18px', marginLeft: '10px'}}>{n.date} | Course {n.courseId} was changed: {n.type}</p>
+                return <p key={n._id} style={{fontSize: '18px', marginLeft: '10px'}}>{n.date} | Course {n.course.title} was changed: {n.type}</p>
             })}
         </div>
     );
