@@ -21,7 +21,7 @@ input {
 }
 
 .modal__window__payment {
-  max-width: 360px;
+  max-width: 300px;
   height: auto;
   margin: 80px auto;
   border: 2px #6675bc solid;
@@ -81,7 +81,7 @@ input {
 .icon_relative .icon {
   position: absolute;
   height: 25px;
-  top: 40px;
+  top: 36px;
   left: 15px;
 }
 
