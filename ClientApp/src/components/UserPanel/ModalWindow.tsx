@@ -63,7 +63,7 @@ const ModalWindow: FC<ModalWindowProps> = ({active, setActive, cartTotal, buyCou
 
     const nameHandler = (e: any) => {
       setName(e.target.value);
-      const re = /^[a-zA-Z]+$/;
+      const re = /^[a-zA-Z\s]*$/;
       if (!re.test(String(e.target.value).toLowerCase())) {
           setNameError("Incorrect value: letters only");
           if(!e.target.value) {
@@ -95,7 +95,7 @@ const ModalWindow: FC<ModalWindowProps> = ({active, setActive, cartTotal, buyCou
     const expiryHandler = (e: any) => {
         setExpiry(e.target.value.replace(/\//g, "").match(/.{1,2}/g)?.join("/").substring(0, 5) || "");
         const re = /^(0[1-9]|1[0-2])\/?([0-9]{2})$/;
-        if (!re.test(e.target.value)) {
+        if (!re.test(e.target.value) || e.target.value.length < 5) {
             setExpiryError("Incorrect value");
             if(!e.target.value) {
                 setExpiryError("Expiry is required");
@@ -108,7 +108,7 @@ const ModalWindow: FC<ModalWindowProps> = ({active, setActive, cartTotal, buyCou
     const cvvHandler = (e: any) => {
         setCvv(e.target.value.match(/.{1}/g)?.join("").substring(0,3) || "");
         const re = /^\d{3}$/;
-        if (!re.test(e.target.value)) {
+        if (!re.test(e.target.value) || e.target.value.length < 3) {
             setCvvError("Incorrect value");
             if(!e.target.value) {
                 setCvvError("CVV is required");
@@ -131,6 +131,10 @@ const ModalWindow: FC<ModalWindowProps> = ({active, setActive, cartTotal, buyCou
         setExpiry("");
         setCvv("");
         setFormValid(false);
+        setNumberDirty(false);
+        setNameDirty(false);
+        setExpiryDirty(false);
+        setCvvDirty(false);
     }
 
     return (
