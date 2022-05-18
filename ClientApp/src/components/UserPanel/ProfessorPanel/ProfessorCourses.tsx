@@ -3,9 +3,10 @@ import {AppStateType} from "../../../reduxStore/store";
 import {connect} from "react-redux";
 import {getCoursesOfAuthor} from "../../../reduxStore/course-reducer";
 import {ICourse} from "../../../models/ICourse";
-import CourseItem from "../../CourseItem/CourseItem";
 import {IUser} from "../../../models/IUser";
 import ManageCourse from "./ManageCourse";
+import './ProfessorPanel.css'
+import ProfessorCourseItem from "./ProfessorCourseItem";
 
 interface ProfessorCoursesProps {
     authUser: IUser,
@@ -30,20 +31,25 @@ const ProfessorCourses: FC<ProfessorCoursesProps> = ({courses, getCoursesOfAutho
     }
 
     return (
-        <div style={{background: '#fff', borderRadius: '10px', padding: '20px'}}>
-            <h3 style={{fontWeight: '400', letterSpacing: '2px', fontSize: '24px', textAlign: 'center'}}>You are the Author of this courses:</h3>
-            {visibleList && <div className="courses__container">
-                {courses.length !== 0 ? courses.map((course: ICourse) => {
-                        return <div key={course._id}
-                            onClick={() => {
-                                handleSelecting(course)
-                            }} style={{cursor: 'pointer'}}>
-                                <CourseItem key={course._id} course={course}/>
-                            </div>
-                    }
-                ) : 'No courses'}
-            </div>}
+        <div className="page__content">
+            <h3 className="page__title">You are the Author of this courses:</h3>
             {visibleEditPanel && selectedCourse && <ManageCourse selectedCourse={selectedCourse} setVisibleEditPanel={setVisibleEditPanel} setVisibleList={setVisibleList}/>}
+
+            { visibleList && courses.length !==0 &&
+                <table className="table">
+                    <tr>
+                        <th className="table__heading">Course name</th>
+                        <th className="table__heading">Rate</th>
+                        <th className="table__heading">Type</th>
+                        <th className="table__heading">Members</th>
+                        <th className="table__heading">Lectures</th>
+                    </tr>
+                    {courses.map((course: ICourse) => {
+                    return <ProfessorCourseItem key={course._id} courseItem={course} onClick={() => handleSelecting(course)} />
+                    })
+                    }
+                </table>
+            }
         </div>
     );
 };
