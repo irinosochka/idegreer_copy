@@ -41,7 +41,7 @@ const EditProfile: FC<EditProfileProps> = ({
         event.preventDefault();
         const formData = new FormData();
         formData.append('userImage', image!)
-        formData.append('username', authUser.username)
+        formData.append('id', authUser._id)
         formData.append('newUsername', username)
         formData.append('newName', name)
         formData.append('newEmail', email)

@@ -103,7 +103,7 @@ class UserService {
             user: updatedUser
         }
     }
-    async userDataChanging(username, newUsername, newName, newEmail, image) {
+    async userDataChanging(id, newUsername, newName, newEmail, image) {
         // const user = await UserModel.findOne({username: newUsername})
         // if (user) {
         //     throw new Error('User with this username exists')
@@ -113,7 +113,7 @@ class UserService {
         //     throw new Error('This email exists')
         // }
         const userWithNewPassword = await UserModel.updateOne({
-            username: username
+            _id: id
         }, {
             $set: {
                 username: newUsername,

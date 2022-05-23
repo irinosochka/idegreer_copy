@@ -25,7 +25,7 @@ const LecturesList: React.FC<ListOfLecturesProps> = ({selectedCourse, getAllLect
 
     useEffect(() => {
         getAllLectionsFromCourse(selectedCourse._id);
-    }, [lections])
+    }, [])
 
     return (
         <div className={"edit__container"}>

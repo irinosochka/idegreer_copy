@@ -1,5 +1,6 @@
 const CourseModel = require('../models/course-model');
 const LectionModel = require('../models/lection-model');
+const {ObjectId} = require("mongodb");
 
 class LectionService {
     async addLection(title, description, duration, link, courseId) {
@@ -52,8 +53,9 @@ class LectionService {
         if (!course) {
             throw new Error(`No course with id ${courseId}`)
         }
-        const lections = await LectionModel.find({course: course});
-        if (!lections) {
+        const lections = await LectionModel.find({ 'course._id': ObjectId(courseId) });
+        console.log(lections)
+        if (!lections || lections.length === 0) {
             throw new Error(`No lections for course with id ${courseId}`)
         }
         return {
