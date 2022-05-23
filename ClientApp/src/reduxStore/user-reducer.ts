@@ -100,8 +100,8 @@ export const getUser = (id: string): ThunkType =>
         try {
             const response = await UserService.getUserUsingId(id)
             if (response.data.resultCode === 1) {
-                dispatch(actions.setUser(response.data.data))
-                return response.data.data
+                dispatch(actions.setUser(response.data.data.user))
+                return response.data.data.user
             } else {
                 console.log('get user by id error')
             }

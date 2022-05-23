@@ -5,6 +5,7 @@ const baseAuthURL = `http://localhost:5000/auth`
 const baseUserURL = `http://localhost:5000/user`
 const baseCourseURL = `http://localhost:5000/course`
 const baseLectionURL = `http://localhost:5000/lection`
+const baseMailURL = `http://localhost:5000/mail`
 
 export const $auth = axios.create({
     withCredentials: true,
@@ -23,6 +24,10 @@ export const $course = axios.create({
 export const $lection = axios.create({
     withCredentials: true,
     baseURL: baseLectionURL
+})
+export const $mail = axios.create({
+    withCredentials: true,
+    baseURL: baseMailURL
 })
 
 $auth.interceptors.request.use((config) => {

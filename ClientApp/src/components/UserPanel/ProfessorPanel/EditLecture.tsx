@@ -5,17 +5,23 @@ import {ILection} from "../../../models/ILection";
 import Button from "../../../common/button/Button";
 import closeIcon from "../../../assets/img/close-svgrepo-com.svg";
 import Message, {MessageType} from "../../../common/Messages/Message";
-import {setCourseChanges} from "../../../reduxStore/course-reducer";
-import {addNotification} from "../../../reduxStore/user-reducer";
+import {getAllMembersFromCourse, setCourseChanges} from "../../../reduxStore/course-reducer";
+import {addNotification, getUser} from "../../../reduxStore/user-reducer";
+import {mailMessageType, sendEditMail} from "../../../reduxStore/mail-reducer";
+import {AppStateType} from "../../../reduxStore/store";
+import {IUser} from "../../../models/IUser";
 
 interface SelectedLectionProps {
+    user: IUser,
     selectedLection: ILection,
+    courseMembers: Array<string>,
     changeLectionData: (lectionId: string, title: string, description: string, duration: string, link: string) => void,
     setVisibleEditLection: (bool: boolean) => void,
     setVisibleLections: (bool: boolean) => void,
     deleteLection: (lectionId: string) => void,
     setCourseChanges: (courseId: string) => void,
-    addNotification: (date: string, courseId: string, type: string) => void
+    addNotification: (date: string, courseId: string, type: string) => void,
+    sendEditLectionMail: (courseId: string, lectionTitle: string, messageType: mailMessageType) => void,
 }
 
 const EditLecture: React.FC<SelectedLectionProps> = ({
@@ -25,7 +31,9 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
                                                          setVisibleLections,
                                                          deleteLection,
                                                          setCourseChanges,
-                                                         addNotification}) => {
+                                                         addNotification,
+                                                         sendEditLectionMail
+}) => {
     const [title, setTitle] = useState(selectedLection.title);
     const [description, setDescription] = useState(selectedLection.description);
     const [duration, setDuration] = useState(selectedLection.duration);
@@ -47,7 +55,7 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
         }
     }
 
-    const handleSubmit = (e:React.FormEvent<EventTarget>) => {
+    const handleSubmit = async (e:React.FormEvent<EventTarget>) => {
         e.preventDefault();
         if(title.length === 0 && description.length === 0 && duration.length === 0 && link.length === 0){
             setError(true);
@@ -60,6 +68,7 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
             changeLectionData(selectedLection._id, title, description, duration, link);
             addNotification(new Date().toLocaleDateString(), selectedLection.course._id, `changing lection ${selectedLection.title} on course ${selectedLection.course.title}`)
             setCourseChanges(selectedLection.course._id)
+            sendEditLectionMail(selectedLection.course._id, selectedLection.title, mailMessageType.EDIT_LECTION)
             setTitle('');
             setDescription('');
             setDuration('')
@@ -119,9 +128,20 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
     );
 };
 
-export default connect(null, {
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        authUser: state.auth.authUser,
+        courseMembers: state.course.members,
+        user: state.user.user
+    }
+}
+
+export default connect(mapStateToProps, {
     changeLectionData,
     deleteLection,
     setCourseChanges,
-    addNotification
+    addNotification,
+    sendEditLectionMail: sendEditMail,
+    getAllMembersFromCourse,
+    getUser
 })(EditLecture);

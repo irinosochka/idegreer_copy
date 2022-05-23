@@ -5,9 +5,9 @@ import {ICourse} from "../../../models/ICourse";
 import {actions, changeCourseData, setCourseChanges} from "../../../reduxStore/course-reducer";
 import {AppStateType} from "../../../reduxStore/store";
 import Button from "../../../common/button/Button";
-import Message from "../../../common/Messages/Message";
-import {MessageType} from "../../../common/Messages/Message";
+import Message, {MessageType} from "../../../common/Messages/Message";
 import {addNotification} from "../../../reduxStore/user-reducer";
+import {mailMessageType, sendEditMail} from "../../../reduxStore/mail-reducer";
 
 interface ListOfCourseProps {
     selectedCourse: ICourse,
@@ -15,10 +15,11 @@ interface ListOfCourseProps {
     changeCourseData: (courseId: string, title: string, theme: string, description: string, price: string) => void,
     setCourseChanges: (courseId: string) => void,
     courseDataChangedSuccess: boolean,
-    addNotification: (date: string, courseId: string, type: string) => void
+    addNotification: (date: string, courseId: string, type: string) => void,
+    sendEditLectionMail: (email: string, lectionTitle: string, messageType: mailMessageType) => void,
 }
 
-const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourse, setCourseDataChangedSuccess, changeCourseData, addNotification, courseDataChangedSuccess, setCourseChanges }) => {
+const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourse, setCourseDataChangedSuccess, changeCourseData, addNotification, courseDataChangedSuccess, setCourseChanges, sendEditLectionMail }) => {
 
     // const [title, setTitle] = useState(selectedCourse.title);
     // const [theme, setTheme] = useState(selectedCourse.theme);
@@ -43,6 +44,7 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourse, setCourseDataC
             setTimeout(() => setCourseDataChangedSuccess(false), 3000);
             addNotification(new Date().toLocaleDateString(), selectedCourse._id, `Changing the data of the course ${selectedCourse.title}`)
             setCourseChanges(selectedCourse._id)
+            sendEditLectionMail(selectedCourse._id, selectedCourse.title, mailMessageType.EDIT_COURSE)
         } else {
             setError(true);
         }
@@ -122,5 +124,6 @@ export default connect(mapStateToProps, {
     changeCourseData,
     setCourseDataChangedSuccess: actions.setCourseDataChangedSuccess,
     setCourseChanges,
-    addNotification
+    addNotification,
+    sendEditLectionMail: sendEditMail
 })(EditCourse);

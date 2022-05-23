@@ -5,6 +5,7 @@ const courseRouter = require("./routers/courseRouter");
 const userRouter = require("./routers/userRouter");
 const imageRouter = require("./routers/imageRouter");
 const lectionRouter = require("./routers/lectionRouter");
+const mailRouter = require("./routers/mailRouter");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -24,6 +25,7 @@ app.use('/auth', authRouter)
 app.use('/course', courseRouter)
 app.use('/user', userRouter)
 app.use('/lection', lectionRouter)
+app.use('/mail', mailRouter)
 app.use('/', imageRouter)
 
 const start = async () => {

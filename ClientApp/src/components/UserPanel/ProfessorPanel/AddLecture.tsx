@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import {ICourse} from "../../../models/ICourse";
 import '../userPanel.css'
 import {addNotification} from "../../../reduxStore/user-reducer";
+import {mailMessageType, sendEditMail} from "../../../reduxStore/mail-reducer";
 
 interface AddLectureProps {
     selectedCourse: ICourse,
@@ -14,7 +15,8 @@ interface AddLectureProps {
     addLection: (title: string, description: string, duration: string, link: string, courseId: string) => void,
     successAddingLection: boolean,
     errorAddingLection: boolean,
-    addNotification: (date: string, courseId: string, type: string) => void
+    addNotification: (date: string, courseId: string, type: string) => void,
+    sendEditLectionMail: (email: string, lectionTitle: string, messageType: mailMessageType) => void,
 }
 
 const AddLecture: FC<AddLectureProps> = ({
@@ -23,7 +25,8 @@ const AddLecture: FC<AddLectureProps> = ({
                                              errorAddingLection,
                                              onSuccessAddingLection,
                                              addLection,
-                                             addNotification
+                                             addNotification,
+                                             sendEditLectionMail
                                          }) => {
 
     const [title, setTitle] = useState('');
@@ -53,6 +56,7 @@ const AddLecture: FC<AddLectureProps> = ({
             addLection(title, description, duration, link, selectedCourse._id);
             const now = new Date().toLocaleDateString();
             addNotification(now, selectedCourse._id, 'adding lection')
+            sendEditLectionMail(selectedCourse._id, selectedCourse.title, mailMessageType.ADD_LECTION)
             // setCourseChanges(selectedCourse._id)
             setTitle('');
             setDescription('');
@@ -124,5 +128,6 @@ export default connect(mapStateToProps, {
     onErrorAddingError: actions.onErrorAddingLection,
     onSuccessAddingLection: actions.onSuccessAddingLection,
     addLection,
-    addNotification
+    addNotification,
+    sendEditLectionMail: sendEditMail
 })(AddLecture);
