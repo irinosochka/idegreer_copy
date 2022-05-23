@@ -1,5 +1,6 @@
 const CourseModel = require('../models/course-model');
 const UserModel = require("../models/user-model")
+const {ObjectId} = require("mongodb");
 
 class CourseService {
     async addCourse(userId, title, theme, description, price) {
@@ -46,7 +47,7 @@ class CourseService {
         if (!user) {
             throw new Error(`User with id ${authorId} not exists`);
         }
-        const courses = await CourseModel.find({author: user});
+        const courses = await CourseModel.find({ 'author._id': ObjectId(authorId) });
         if(!courses) {
             throw new Error(`There is not courses of the author ${user.username}`)
         }
