@@ -92,3 +92,12 @@
   display: flex;
   justify-content: center;
 }
+
+.message-sentHomework{
+  /*border: 1px #acacac solid;*/
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  background: #ddecd8;
+}

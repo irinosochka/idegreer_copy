@@ -19,6 +19,7 @@ import LectureList from "../../../CourseItem/Lecture/LectureList";
 import "./userCourse.css"
 import Button from "../../../../common/button/Button";
 import {IUser} from "../../../../models/IUser";
+import Message, {MessageType} from "../../../../common/Messages/Message";
 
 interface UserCourseProps {
     authUser: IUser,
@@ -43,6 +44,8 @@ const UserCourse: FC<UserCourseProps> = ({
                                          }) => {
     const [activeLection, setActiveLection] = useState<ILection | null>();
     const [homeworkText, setHomeworkText] = useState('');
+    const [isError, setError] = useState(false);
+    const [sentHomework, setSentHomework] = useState(false);
 
 
     useEffect(() => {
@@ -61,8 +64,11 @@ const UserCourse: FC<UserCourseProps> = ({
 
     const onHomeworkSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (authUser && selectedCourse && activeLection && homeworkText) {
-            addHomeworkResponse(authUser._id, selectedCourse._id, activeLection._id, homeworkText)
+        if (authUser && selectedCourse && activeLection && homeworkText.length !== 0) {
+            addHomeworkResponse(authUser._id, selectedCourse._id, activeLection._id, homeworkText);
+            setSentHomework(true);
+        } else {
+            setError(true);
         }
     }
 
@@ -125,20 +131,29 @@ const UserCourse: FC<UserCourseProps> = ({
                             <div style={{marginRight: '10px'}}>
                                 <PhotoMockup size={sizeTypes.small}/>
                             </div>
-                            <form onSubmit={onHomeworkSubmit}>
-                                <div className="input-wrapper" style={{margin: '0'}}>
-                                 <textarea className="form-control"
-                                           onChange={(event) => {
-                                               setHomeworkText(event.target.value)
-                                           }}
-                                           value={homeworkText}
-                                           name="textarea"
-                                           id="homework_text"
-                                           placeholder='Enter your homework'
-                                 />
+                            { !sentHomework &&
+                                <form onSubmit={onHomeworkSubmit}>
+                                    {isError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
+                                    <div className="input-wrapper" style={{marginTop: '10px'}}>
+                                     <textarea className="form-control"
+                                               onChange={(event) => {
+                                                   setHomeworkText(event.target.value)
+                                               }}
+                                               value={homeworkText}
+                                               name="textarea"
+                                               id="homework_text"
+                                               placeholder='Enter your homework'
+                                     />
+                                    </div>
+                                    <Button>Submit</Button>
+                                </form>
+                            }
+                            { sentHomework &&
+                                <div className="message-sentHomework" style={{marginTop: '10px'}}>
+                                    Homework was sent
                                 </div>
-                                <Button>Submit</Button>
-                            </form>
+
+                            }
                         </div>
                     </div>}
             </div>

@@ -3,8 +3,8 @@
     background-color: rgb(252, 235, 226);
     padding: 15px 0;
     border-radius: 10px;
-    border-left: 4px solid rgb(77, 98, 67);
-    border-right: 4px solid rgb(77, 98, 67);
+    border-left: 4px solid #8691ca;
+    border-right: 4px solid #8691ca;
     margin-top: 15px;
 }
 .message-error {
