@@ -29,7 +29,7 @@ const CartPage: FC<Props> = ({cartList, removeAllCoursesFromCart, addUserToCours
         });
         return sum;
     }
-
+    console.log(cartList);
     useEffect(() => {
         return () => setAddUserToCourseSuccess(false);
     }, [])
@@ -64,7 +64,7 @@ const CartPage: FC<Props> = ({cartList, removeAllCoursesFromCart, addUserToCours
                     <div className="total_amount">${coursePaymentSum()}</div>
                 </div>
                 {/*<Button onClick={() => addUserToCourses()}>Go to payment</Button>*/}
-                <Button onClick={() => setModalActive(true)}>Go to payment</Button>
+                {cartList.length !== 0 && <Button onClick={() => setModalActive(true)}>Go to payment</Button>}
             </div>
 
             <ModalWindow active={modalActive} setActive={setModalActive} buyCourse={addUserToCourses} cartTotal={coursePaymentSum}/>
@@ -80,5 +80,7 @@ const mapStateToProps = (state: AppStateType) => {
     }
 }
 
-export default connect(mapStateToProps, {removeAllCoursesFromCart: actions.removeAllCourseFromCart, addUserToCourse,
+export default connect(mapStateToProps, {
+    removeAllCoursesFromCart: actions.removeAllCourseFromCart,
+    addUserToCourse,
     setAddUserToCourseSuccess: courseActions.setAddUserToCourseSuccess})(CartPage);
