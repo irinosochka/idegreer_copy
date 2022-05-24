@@ -8,7 +8,7 @@ class CourseService {
         if (!user) {
             throw new Error(`User with id ${userId} not exists`)
         }
-        const course = await CourseModel.create({title, theme, description, price, author: user});
+        const course = await CourseModel.create({title, theme, description, price, 'author._id': ObjectId(userId)});
         // const courseDto = new CourseDto(course) //id, title, theme, desc, price, author
         return {
             course
