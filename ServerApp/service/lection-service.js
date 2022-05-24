@@ -8,7 +8,7 @@ class LectionService {
         if (!course) {
             throw new Error(`Course with id ${courseId} not exists`);
         }
-        const lection = await LectionModel.create({title, description, duration, link, course: course});
+        const lection = await LectionModel.create({title, description, duration, link, 'course._id': ObjectId(courseId) });
         if (!lection) {
             throw new Error('Lection creating error');
         }
