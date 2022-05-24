@@ -5,6 +5,7 @@ const LectionModel = new Schema({
     description: {type: String},
     duration: {type: String},
     link: {type: String, required: true},
+    homework: {type: String},
     course: {type: Object }
 })
 

@@ -99,7 +99,7 @@ const UserCourse: FC<UserCourseProps> = ({
                                  {selectedCourse.author.name}
                              </h3>}
                              <p>
-                                 Curabitur nunc ipsum, venenatis et molestie in, tristique eu velit. In hac habitasse platea dictumst. Integer id volutpat mi. Ut hendrerit lorem a ullamcorper iaculis.
+                                 {activeLection.homework}
                              </p>
                          </div>
                      </div>

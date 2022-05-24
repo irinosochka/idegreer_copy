@@ -12,7 +12,7 @@ import {mailMessageType, sendEditMail} from "../../../reduxStore/mail-reducer";
 interface AddLectureProps {
     selectedCourse: ICourse,
     onSuccessAddingLection: (bool: boolean) => void,
-    addLection: (title: string, description: string, duration: string, link: string, courseId: string) => void,
+    addLection: (title: string, description: string, duration: string, link: string, homework: string, courseId: string) => void,
     successAddingLection: boolean,
     errorAddingLection: boolean,
     addNotification: (date: string, courseId: string, type: string) => void,
@@ -53,7 +53,7 @@ const AddLecture: FC<AddLectureProps> = ({
         else if (link.length !== 11 ) {
             setLinkError(true);
         } else {
-            addLection(title, description, duration, link, selectedCourse._id);
+            addLection(title, description, duration, link, homework, selectedCourse._id);
             const now = new Date().toLocaleDateString();
             addNotification(now, selectedCourse._id, 'adding lection')
             sendEditLectionMail(selectedCourse._id, selectedCourse.title, mailMessageType.ADD_LECTION)

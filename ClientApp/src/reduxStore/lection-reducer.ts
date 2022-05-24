@@ -68,6 +68,7 @@ const lectionReducer = (state: InitialStateType = INITIAL_STATE, action: Actions
                        l.link = action.payload.link;
                        l.duration = action.payload.duration;
                        l.description = action.payload.description;
+                       l.homework = action.payload.homework
                     }
                 })
             }
@@ -88,10 +89,10 @@ export const actions = {
     changeLectionData: (body: any) => ({type: "CHANGE_LECTION_DATA", payload: body} as const)
 }
 
-export const addLection = (title: string, description: string, duration: string, link: string, courseId: string): ThunkType => {
+export const addLection = (title: string, description: string, duration: string, link: string, homework: string, courseId: string): ThunkType => {
     return async (dispatch: Dispatch<any>) => {
         try {
-            const response = await LectionService.addLection(title, description, duration, link, courseId);
+            const response = await LectionService.addLection(title, description, duration, link, courseId, homework);
             if (response.data.resultCode === 1) {
                 dispatch(actions.onSuccessAddingLection(true));
             } else {
@@ -120,12 +121,12 @@ export const getAllLectionsFromCourse = (courseId: string): ThunkType => {
     }
 }
 
-export const changeLectionData = (lectionId: string, title: string, description: string, duration: string, link: string): ThunkType =>
+export const changeLectionData = (lectionId: string, title: string, description: string, duration: string, link: string, homework: string): ThunkType =>
     async (dispatch: Dispatch<any>) => {
         try {
-            const response = await LectionService.updateLectionData(lectionId, title, description, duration, link)
+            const response = await LectionService.updateLectionData(lectionId, title, description, duration, link, homework)
             if (response.data.resultCode === 1) {
-                dispatch(actions.changeLectionData({lectionId, title, description, duration, link}));
+                dispatch(actions.changeLectionData({lectionId, title, description, duration, link, homework}));
                 return response.data.data
             } else {
                 console.log('change lection error')

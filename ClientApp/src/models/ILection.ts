@@ -6,5 +6,6 @@ export interface ILection {
     description: string,
     duration: string,
     link: string,
+    homework: string,
     course: ICourse
 }

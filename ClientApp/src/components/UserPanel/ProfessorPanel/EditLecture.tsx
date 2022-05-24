@@ -15,7 +15,7 @@ interface SelectedLectionProps {
     user: IUser,
     selectedLection: ILection,
     courseMembers: Array<string>,
-    changeLectionData: (lectionId: string, title: string, description: string, duration: string, link: string) => void,
+    changeLectionData: (lectionId: string, title: string, description: string, duration: string, link: string, homework: string) => void,
     setVisibleEditLection: (bool: boolean) => void,
     setVisibleLections: (bool: boolean) => void,
     deleteLection: (lectionId: string) => void,
@@ -38,7 +38,7 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
     const [description, setDescription] = useState(selectedLection.description);
     const [duration, setDuration] = useState(selectedLection.duration);
     const [link, setLink] = useState(selectedLection.link);
-    const [homework, setHomework] = useState('');
+    const [homework, setHomework] = useState(selectedLection.homework);
     const [linkError, setLinkError] = useState(false);
     const [isError, setError] = useState(false);
     const handleClose = (event: any) => {
@@ -65,7 +65,7 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
         } else {
             setVisibleLections(true);
             setVisibleEditLection(false);
-            changeLectionData(selectedLection._id, title, description, duration, link);
+            changeLectionData(selectedLection._id, title, description, duration, link, homework);
             addNotification(new Date().toLocaleDateString(), selectedLection.course._id, `changing lection ${selectedLection.title} on course ${selectedLection.course.title}`)
             setCourseChanges(selectedLection.course._id)
             sendEditLectionMail(selectedLection.course._id, selectedLection.title, mailMessageType.EDIT_LECTION)

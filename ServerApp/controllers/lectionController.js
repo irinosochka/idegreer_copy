@@ -3,8 +3,8 @@ const lectionService = require('../service/lection-service')
 class LectionController {
     async addLection(req, res) {
         try {
-            const {title, description, duration, link, courseId} = req.body;
-            const data = await lectionService.addLection(title, description, duration, link, courseId)
+            const {title, description, duration, link, homework, courseId} = req.body;
+            const data = await lectionService.addLection(title, description, duration, link, homework, courseId)
             return res.json({data, resultCode: 1})
         } catch (e) {
             return res.json({message: "Add lection error", resultCode: 0})
@@ -23,8 +23,8 @@ class LectionController {
 
     async changeLectionData(req, res) {
         try {
-            const {lectionId, title, description, duration, link} = req.body;
-            const data = await lectionService.changeLectionData(lectionId, title, description, duration, link);
+            const {lectionId, title, description, duration, link, homework} = req.body;
+            const data = await lectionService.changeLectionData(lectionId, title, description, duration, link, homework);
             return res.json({data, resultCode: 1})
         } catch {
             return res.json({message: "Change lection data error", resultCode: 0})
