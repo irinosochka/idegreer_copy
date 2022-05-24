@@ -26,4 +26,10 @@ export default class AddService {
                 return res
             }).catch(e => console.log(e))
     }
+
+    static addHomeworkResponse(userId: string, courseId: string, lectionId: string, response: string): Promise<any> {
+        return $lection.post<CourseResponse>('/addHomeworkResponse', {userId, courseId, lectionId, response}).then(res => {
+            return res
+        }).catch(e => console.log(e))
+    }
 }

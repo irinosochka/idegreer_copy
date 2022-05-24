@@ -1,5 +1,7 @@
 const CourseModel = require('../models/course-model');
 const LectionModel = require('../models/lection-model');
+const UserModel = require('../models/user-model');
+const HomeworkModel = require('../models/homework-model');
 const {ObjectId} = require("mongodb");
 
 class LectionService {
@@ -63,6 +65,27 @@ class LectionService {
             lections
         }
     }
+
+    async addHomeworkResponse(userId, courseId, lectionId, response) {
+        const user = await UserModel.findOne({_id: userId})
+        if (!user) {
+            throw new Error(`No user with id ${userId}`)
+        }
+        const course = await CourseModel.findOne({_id: courseId})
+        if (!course) {
+            throw new Error(`No course with id ${courseId}`)
+        }
+        const lection = await LectionModel.findOne({_id: lectionId})
+        if (!lection) {
+            throw new Error(`No lection with id ${lectionId}`)
+        }
+        const homework = await HomeworkModel.create({userId, courseId, lectionId, response});
+        return {
+            homework
+        }
+    }
+
+
 }
 
 module.exports = new LectionService();

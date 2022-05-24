@@ -40,6 +40,16 @@ class LectionController {
             return res.json({message: "Add lection error", resultCode: 0})
         }
     }
+
+    async addHomeworkResponse(req, res) {
+        try {
+           const {userId, courseId, lectionId, response} = req.body;
+           const data = await lectionService.addHomeworkResponse(userId, courseId, lectionId, response);
+           return res.json({data, resultCode: 1})
+        } catch (e) {
+            return res.json({message: "Add homework response error", resultCode: 0})
+        }
+    }
 }
 
 module.exports = new LectionController()

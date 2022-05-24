@@ -152,4 +152,14 @@ export const deleteLection = (lectionId: string): ThunkType => {
     }
 }
 
+export const addHomeworkResponse = (userId: string, courseId: string, lectionId: string, resp: string): ThunkType => {
+    return async () => {
+        try {
+            return await LectionService.addHomeworkResponse(userId, courseId, lectionId, resp)
+        } catch(e) {
+            console.log(e);
+        }
+    }
+}
+
 export default lectionReducer;
