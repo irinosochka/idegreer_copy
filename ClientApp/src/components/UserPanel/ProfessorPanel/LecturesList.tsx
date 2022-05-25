@@ -17,15 +17,16 @@ const LecturesList: React.FC<ListOfLecturesProps> = ({selectedCourse, getAllLect
     const [visibleEditLection, setVisibleEditLection] = useState(false);
     const [visibleLections, setVisibleLections] = useState(true);
 
+    useEffect(() => {
+        getAllLectionsFromCourse(selectedCourse._id);
+    }, [])
+
+
     const handleSelectingLection = (lection: ILection) => {
         setSelectedLection(lection);
         setVisibleEditLection(true);
         setVisibleLections(false);
     }
-
-    useEffect(() => {
-        getAllLectionsFromCourse(selectedCourse._id);
-    }, [])
 
     return (
         <div className={"edit__container"}>

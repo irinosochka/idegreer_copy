@@ -41,6 +41,8 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
     const [homework, setHomework] = useState(selectedLection.homework);
     const [linkError, setLinkError] = useState(false);
     const [isError, setError] = useState(false);
+    const [lectureDataChangedSuccess, setLectureDataChangedSuccess] = useState(false);
+
     const handleClose = (event: any) => {
         event.preventDefault();
         setVisibleEditLection(false);
@@ -63,8 +65,9 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
         else if (link.length !== 11 ) {
             setLinkError(true);
         } else {
-            setVisibleLections(true);
-            setVisibleEditLection(false);
+            // setVisibleEditLection(false);
+            // setVisibleLections(true);
+            setLectureDataChangedSuccess(true);
             changeLectionData(selectedLection._id, title, description, duration, link, homework);
             addNotification(new Date().toLocaleDateString(), selectedLection.course._id, `changing lection ${selectedLection.title} on course ${selectedLection.course.title}`)
             setCourseChanges(selectedLection.course._id)
@@ -73,6 +76,7 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
             setDescription('');
             setDuration('')
             setLink('');
+            setHomework('');
         }
     }
 
@@ -80,6 +84,7 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
         <>
             {isError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
             {linkError && <Message type={MessageType.ERROR}>Bad length of the link to lecture</Message>}
+            {lectureDataChangedSuccess && <Message type={MessageType.SUCCESS}>Success data changing</Message>}
             <form onSubmit={(e) => e.preventDefault} className="edit__box" >
                 <div style={{cursor: 'pointer', width: '10px', position: 'absolute', left: '450px', top:'-40px'}} onClick={handleClose}>
                     <img src={closeIcon} alt=""/>
