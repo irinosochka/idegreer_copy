@@ -24,13 +24,13 @@ const ModalWindow: FC<ModalWindowProps> = ({active, setActive, cartTotal, buyCou
     const [expiry, setExpiry] = useState("");
     const [cvv, setCvv] = useState("");
 
-    const [numberDirty, setNumberDirty] = useState(false);
     const [nameDirty, setNameDirty] = useState(false);
+    const [numberDirty, setNumberDirty] = useState(false);
     const [expiryDirty, setExpiryDirty] = useState(false);
     const [cvvDirty, setCvvDirty] = useState(false);
 
-    const [numberError, setNumberError] = useState("Card number is required");
     const [nameError, setNameError] = useState("Cardholder name is required");
+    const [numberError, setNumberError] = useState("Card number is required");
     const [expiryError, setExpiryError] = useState("Expiry is required");
     const [cvvError, setCvvError] = useState("CVV is required");
 
@@ -46,11 +46,11 @@ const ModalWindow: FC<ModalWindowProps> = ({active, setActive, cartTotal, buyCou
 
     const blurHandler = (e: any) => {
         switch (e.target.name) {
-            case 'number':
-                setNumberDirty(true);
-                break;
             case 'name':
                 setNameDirty(true);
+                break;
+            case 'number':
+                setNumberDirty(true);
                 break;
             case 'expiry':
                 setExpiryDirty(true);
@@ -62,9 +62,10 @@ const ModalWindow: FC<ModalWindowProps> = ({active, setActive, cartTotal, buyCou
     }
 
     const nameHandler = (e: any) => {
-      setName(e.target.value);
-      const re = /^[a-zA-Z\s]*$/;
-      if (!re.test(String(e.target.value).toLowerCase())) {
+        setName(e.target.value);
+        console.log(e.target.value);
+        const re = /^[a-zA-Z\s]+$/;
+      if (!re.test( e.target.value.toString())) {
           setNameError("Incorrect value: letters only");
           if(!e.target.value) {
               setNameError("Cardholder name is required");
@@ -77,9 +78,7 @@ const ModalWindow: FC<ModalWindowProps> = ({active, setActive, cartTotal, buyCou
     const numberHandler = (e: any) => {
         setNumber(e.target.value.replace(/\s/g, "").match(/.{1,4}/g)?.join(" ").substring(0, 19) || "");
         const re = /^(?=.*\d)[\d ]+$/;
-        console.log(e.target.value.length);
-        console.log(e.target.value);
-        if (!re.test(String(e.target.value).toLowerCase())) {
+        if (!re.test(e.target.value)) {
             setNumberError("Incorrect format");
             if(!e.target.value) {
                 setNumberError("Card number is required");

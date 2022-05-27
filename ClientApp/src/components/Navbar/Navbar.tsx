@@ -1,5 +1,4 @@
 import React, {FC} from 'react';
-import {useLocation} from "react-router-dom";
 import {connect} from "react-redux";
 import {logout} from "../../reduxStore/auth-reducer";
 import './navbar.css'
@@ -10,12 +9,15 @@ import homeIcon from '../../assets/img/home-svgrepo-com.svg';
 import cartIcon from '../../assets/img/shopping-cart-svgrepo-com.svg';
 import NavbarIcon from "./NavbarIcon";
 import Logo from "../../common/Logo";
+import {ICourse} from "../../models/ICourse";
+import {AppStateType} from "../../reduxStore/store";
 
 interface NavbarProps {
-    logout: () => void
+    logout: () => void,
+    cartList: Array<ICourse>,
 }
 
-const Navbar: FC<NavbarProps> = ({logout}) => {
+const Navbar: FC<NavbarProps> = ({logout, cartList}) => {
 
     return (
         <div className={'navbar__wrapper'}>
@@ -24,7 +26,10 @@ const Navbar: FC<NavbarProps> = ({logout}) => {
                 <Logo />
                 <div className={'icons__wrapper'}>
                     <NavbarIcon icon={homeIcon} link={'/'} />
-                    <NavbarIcon icon={cartIcon} link={'/cart'} />
+                    <div className="cart-icon">
+                        {cartList.length !== 0 && <span className="cart-items-counter">{cartList.length}</span>}
+                        <NavbarIcon icon={cartIcon} link={'/cart'} />
+                    </div>
                     <NavbarIcon icon={logoutIcon} func={logout} bg={'rgb(217 115 115)'} />
                 </div>
             </div>
@@ -32,4 +37,10 @@ const Navbar: FC<NavbarProps> = ({logout}) => {
     );
 };
 
-export default connect(null, {logout})(Navbar);
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        cartList: state.user.cartList,
+    }
+}
+
+export default connect(mapStateToProps, {logout})(Navbar);
