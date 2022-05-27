@@ -1,15 +1,15 @@
 import React, {FC, useEffect, useState} from 'react';
-import UserCart from "../components/UserPanel/UserCart";
-import '../pages/cartPage.css';
-import Button from "../common/button/Button";
+import UserCart from "../../components/Navbar/Cart/UserCart";
+import './cartPage.css';
+import Button from "../../common/button/Button";
 import {connect} from "react-redux";
-import {actions} from "../reduxStore/user-reducer";
-import {AppStateType} from "../reduxStore/store";
-import {ICourse} from "../models/ICourse";
-import {actions as courseActions, addUserToCourse} from "../reduxStore/course-reducer";
-import {IUser} from "../models/IUser";
-import Message, {MessageType} from "../common/Messages/Message";
-import ModalWindow from "../components/UserPanel/ModalWindow";
+import {actions} from "../../reduxStore/user-reducer";
+import {AppStateType} from "../../reduxStore/store";
+import {ICourse} from "../../models/ICourse";
+import {actions as courseActions, addUserToCourse} from "../../reduxStore/course-reducer";
+import {IUser} from "../../models/IUser";
+import Message, {MessageType} from "../../common/Messages/Message";
+import ModalWindow from "../../components/Navbar/Cart/ModalWindow";
 
 interface Props {
     removeAllCoursesFromCart: () => void,

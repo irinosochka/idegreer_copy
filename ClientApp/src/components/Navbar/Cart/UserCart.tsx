@@ -1,10 +1,10 @@
 import React, {FC, useEffect} from 'react';
-import {AppStateType} from "../../reduxStore/store";
+import {AppStateType} from "../../../reduxStore/store";
 import {connect} from "react-redux";
-import {getCoursesOfUser} from "../../reduxStore/course-reducer";
-import {ICourse} from "../../models/ICourse";
-import {IUser} from "../../models/IUser";
-import CartItem from "../CourseItem/CartItem";
+import {getCoursesOfUser} from "../../../reduxStore/course-reducer";
+import {ICourse} from "../../../models/ICourse";
+import {IUser} from "../../../models/IUser";
+import CartItem from "../../CourseItem/CartItem";
 
 interface UserCourseListProps {
     authUser: IUser,

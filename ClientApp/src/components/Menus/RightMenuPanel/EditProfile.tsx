@@ -1,13 +1,13 @@
 import React, {FC, useEffect, useState} from 'react';
 
-import "./userPanel.css"
-import Button from "../../common/button/Button";
-import Message, {MessageType} from "../../common/Messages/Message";
-import {AppStateType} from "../../reduxStore/store";
+import "../../UserPanel/userPanel.css"
+import Button from "../../../common/button/Button";
+import Message, {MessageType} from "../../../common/Messages/Message";
+import {AppStateType} from "../../../reduxStore/store";
 import {connect} from "react-redux";
-import {actions, userDataChanging} from "../../reduxStore/auth-reducer";
-import {changePhoto} from "../../reduxStore/file-reducer";
-import {IUser} from "../../models/IUser";
+import {actions, userDataChanging} from "../../../reduxStore/auth-reducer";
+import {changePhoto} from "../../../reduxStore/file-reducer";
+import {IUser} from "../../../models/IUser";
 
 interface EditProfileProps {
     authUser: IUser,

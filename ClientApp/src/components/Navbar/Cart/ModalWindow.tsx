@@ -1,15 +1,15 @@
 import React, {FC, useEffect, useState} from 'react';
-import '../UserPanel/modalWindow.css';
-import Button from "../../common/button/Button";
+import './modalWindow.css';
+import Button from "../../../common/button/Button";
 import {connect} from "react-redux";
-import {addUserToCourse} from "../../reduxStore/course-reducer";
-import {AppStateType} from "../../reduxStore/store";
+import {addUserToCourse} from "../../../reduxStore/course-reducer";
+import {AppStateType} from "../../../reduxStore/store";
 import swal from 'sweetalert';
 
-import userImg from "../../assets/img/card/person-svgrepo-com.svg"
-import cardImg from "../../assets/img/card/credit-card-svgrepo-com.svg"
-import dateImg from "../../assets/img/card/date-svgrepo-com.svg"
-import cvvImg from "../../assets/img/card/secure-access-svgrepo-com.svg"
+import userImg from "../../../assets/img/card/person-svgrepo-com.svg"
+import cardImg from "../../../assets/img/card/credit-card-svgrepo-com.svg"
+import dateImg from "../../../assets/img/card/date-svgrepo-com.svg"
+import cvvImg from "../../../assets/img/card/secure-access-svgrepo-com.svg"
 
 interface ModalWindowProps {
     active: boolean,

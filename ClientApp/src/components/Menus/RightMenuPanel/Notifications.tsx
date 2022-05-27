@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 
-import "../userPanel.css"
+import "../../UserPanel/userPanel.css"
 
 import {AppStateType} from "../../../reduxStore/store";
 import {connect} from "react-redux";

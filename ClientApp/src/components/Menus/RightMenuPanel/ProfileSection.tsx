@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 
-import "../userPanel.css"
-import EditProfile from "../EditProfile";
-import ChangePassword from "../ChangePassword";
+import "../../UserPanel/userPanel.css"
+import EditProfile from "./EditProfile";
+import ChangePassword from "./ChangePassword";
 import editPhoto from "../../../assets/img/edit-svgrepo-com.svg";
 import changePassword from "../../../assets/img/password-svgrepo-com.svg";
 

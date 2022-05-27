@@ -1,13 +1,13 @@
 import React, {FC, useEffect, useState} from 'react';
 
-import "./userPanel.css"
-import Button from "../../common/button/Button";
-import Message, {MessageType} from "../../common/Messages/Message";
+import "../../UserPanel/userPanel.css"
+import Button from "../../../common/button/Button";
+import Message, {MessageType} from "../../../common/Messages/Message";
 import {connect} from "react-redux";
-import {AppStateType} from "../../reduxStore/store";
-import {actions} from "../../reduxStore/auth-reducer";
-import {actions as userActions, passwordChanging} from "../../reduxStore/user-reducer";
-import {IUser} from "../../models/IUser";
+import {AppStateType} from "../../../reduxStore/store";
+import {actions} from "../../../reduxStore/auth-reducer";
+import {actions as userActions, passwordChanging} from "../../../reduxStore/user-reducer";
+import {IUser} from "../../../models/IUser";
 
 interface ChangePasswordProps {
     authUser: IUser,

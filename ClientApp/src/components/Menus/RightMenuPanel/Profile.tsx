@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useState} from 'react';
 
-import "../userPanel.css"
+import "../../UserPanel/userPanel.css"
 import PhotoMockup, {sizeTypes} from "../../../common/photoMockup/PhotoMockup";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../reduxStore/store";

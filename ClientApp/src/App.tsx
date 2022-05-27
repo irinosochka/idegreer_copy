@@ -2,20 +2,20 @@ import React, {FC, useEffect} from 'react';
 import './App.css'
 import {Route, Routes, useNavigate} from 'react-router-dom';
 import AuthPage from "./pages/AuthPage/AuthPage";
-import UserPage from "./pages/UserPage";
+import UserPage from "./components/Menus/LeftMenu";
 import Navbar from "./components/Navbar/Navbar";
 import Loader from "./common/Loader/Loader";
 import {connect} from "react-redux";
 import {AppStateType} from "./reduxStore/store";
 import {checkAuth} from "./reduxStore/auth-reducer";
-import CartPage from "./pages/CartPage";
-import CourseCatalog from "./components/UserPanel/CourseCatalog";
-import RightMenu from "./components/UserPanel/RightMenuPanel/RightMenu";
-import UserCourseList from "./components/UserPanel/UserPanel/UserCourseList";
-import ProfessorCourses from "./components/UserPanel/ProfessorPanel/ProfessorCourses";
+import CartPage from "./pages/CartPage/CartPage";
+import CourseCatalog from "./pages/CourseCatalogPage";
+import RightMenu from "./components/Menus/RightMenuPanel/RightMenu";
+import UserCourseList from "./pages/UserCourseList/UserCourseListPage";
+import ProfessorCourses from "./pages/CoursesPageOfProfessor";
 import AddCourse from "./components/UserPanel/ProfessorPanel/AddCourse";
 import ManageRoles from "./components/UserPanel/AdminPanel/ManageRoles";
-import UserCourse from "./components/UserPanel/UserPanel/UserCourse/UserCourse";
+import UserCourse from "./pages/UserCourseList/UserCoursePage/UserCoursePage";
 import ManageCourse from "./components/UserPanel/ProfessorPanel/ManageCourse";
 
 interface AppProps {

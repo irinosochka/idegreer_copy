@@ -1,11 +1,11 @@
 import React, {FC, useEffect} from 'react';
-import {AppStateType} from "../../../reduxStore/store";
+import {AppStateType} from "../reduxStore/store";
 import {connect} from "react-redux";
-import {getCoursesOfAuthor} from "../../../reduxStore/course-reducer";
-import {ICourse} from "../../../models/ICourse";
-import {IUser} from "../../../models/IUser";
-import './ProfessorPanel.css'
-import ProfessorCourseItem from "./ProfessorCourseItem";
+import {getCoursesOfAuthor} from "../reduxStore/course-reducer";
+import {ICourse} from "../models/ICourse";
+import {IUser} from "../models/IUser";
+import '../components/UserPanel/ProfessorPanel/ProfessorPanel.css'
+import ProfessorCourseItem from "../components/UserPanel/ProfessorPanel/ProfessorCourseItem";
 
 interface ProfessorCoursesProps {
     authUser: IUser,
@@ -13,7 +13,7 @@ interface ProfessorCoursesProps {
     getCoursesOfAuthor: (authorId: string) => void
 }
 
-const ProfessorCourses: FC<ProfessorCoursesProps> = ({courses, getCoursesOfAuthor, authUser}) => {
+const CoursesPageOfProfessor: FC<ProfessorCoursesProps> = ({courses, getCoursesOfAuthor, authUser}) => {
 
     useEffect(() => {
         getCoursesOfAuthor(authUser._id);
@@ -49,4 +49,4 @@ const mapStateToProps = (state: AppStateType) => {
     }
 }
 
-export default connect(mapStateToProps, {getCoursesOfAuthor})(ProfessorCourses);
+export default connect(mapStateToProps, {getCoursesOfAuthor})(CoursesPageOfProfessor);

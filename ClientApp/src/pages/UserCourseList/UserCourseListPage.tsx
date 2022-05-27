@@ -1,18 +1,18 @@
 import React, {FC, useState} from 'react';
-import {AppStateType} from "../../../reduxStore/store";
+import {AppStateType} from "../../reduxStore/store";
 import {connect} from "react-redux";
-import {ICourse} from "../../../models/ICourse";
-import CourseItem from "../../CourseItem/CourseItem";
+import {ICourse} from "../../models/ICourse";
+import CourseItem from "../../components/CourseItem/CourseItem";
 import {NavLink} from "react-router-dom";
 
 interface UserCourseListProps {
     courses: ICourse[],
 }
 
-const UserCourseList: FC<UserCourseListProps> = ({courses}) => {
+const UserCourseListPage: FC<UserCourseListProps> = ({courses}) => {
     const [visibleList, setVisibleList] = useState(true);
 
-    const handleSelecting = (course: ICourse) => {
+    const handleSelecting = () => {
         setVisibleList(false);
     }
 
@@ -25,7 +25,7 @@ const UserCourseList: FC<UserCourseListProps> = ({courses}) => {
                 {courses.length !== 0 ? courses.map((course: ICourse) => {
                         return <div key={course._id}
                                     onClick={() => {
-                                        handleSelecting(course)
+                                        handleSelecting()
                                     }} style={{cursor: 'pointer'}}>
                            <NavLink to={`/course/${course._id}`} ><CourseItem key={course._id} course={course}/></NavLink>
                         </div>
@@ -47,4 +47,4 @@ const mapStateToProps = (state: AppStateType) => {
     }
 }
 
-export default connect(mapStateToProps, {})(UserCourseList);
+export default connect(mapStateToProps, {})(UserCourseListPage);

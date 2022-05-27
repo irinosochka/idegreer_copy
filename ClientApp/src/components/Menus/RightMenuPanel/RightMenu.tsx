@@ -1,6 +1,6 @@
 import React from 'react';
 
-import "../userPanel.css"
+import "../../UserPanel/userPanel.css"
 import ProfileSection from "./ProfileSection";
 import Notifications from "./Notifications";
 

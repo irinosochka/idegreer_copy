@@ -1,24 +1,24 @@
 import React, {FC, useEffect, useState} from 'react';
 import {connect} from "react-redux";
-import {actions as authActions} from "../../../../reduxStore/auth-reducer";
+import {actions as authActions} from "../../../reduxStore/auth-reducer";
 import {
     actions as lectionActions,
     addHomeworkResponse,
     getAllLectionsFromCourse
-} from "../../../../reduxStore/lection-reducer";
+} from "../../../reduxStore/lection-reducer";
 import YouTube from "react-youtube";
-import {ICourse} from "../../../../models/ICourse";
-import {ILection} from "../../../../models/ILection";
-import {AppStateType} from "../../../../reduxStore/store";
-import {addUserToCourse, getAllMembersFromCourse, getOneCourse} from "../../../../reduxStore/course-reducer";
-import PhotoMockup, {sizeTypes} from "../../../../common/photoMockup/PhotoMockup";
+import {ICourse} from "../../../models/ICourse";
+import {ILection} from "../../../models/ILection";
+import {AppStateType} from "../../../reduxStore/store";
+import {addUserToCourse, getAllMembersFromCourse, getOneCourse} from "../../../reduxStore/course-reducer";
+import PhotoMockup, {sizeTypes} from "../../../common/photoMockup/PhotoMockup";
 
-import backIcon from "../../../../assets/img/back-svgrepo-com.svg"
-import LectureList from "../../../CourseItem/Lecture/LectureList";
+import backIcon from "../../../assets/img/back-svgrepo-com.svg"
+import LectureList from "../../../components/CourseItem/Lecture/LectureList";
 
-import "./userCourse.css"
-import Button from "../../../../common/button/Button";
-import {IUser} from "../../../../models/IUser";
+import "./userCoursePage.css"
+import Button from "../../../common/button/Button";
+import {IUser} from "../../../models/IUser";
 import {useParams} from "react-router-dom";
 
 interface UserCourseProps {
@@ -32,7 +32,7 @@ interface UserCourseProps {
     addHomeworkResponse: (userId: string, courseId: string, lectionId: string, resp: string) => void
 }
 
-const UserCourse: FC<UserCourseProps> = ({
+const UserCoursePage: FC<UserCourseProps> = ({
                                              course,
                                              authUser,
                                              lections,
@@ -163,4 +163,4 @@ export default connect(mapStateToProps, {
     addUserToCourse,
     getAllMembersFromCourse,
     addHomeworkResponse
-})(UserCourse);
+})(UserCoursePage);

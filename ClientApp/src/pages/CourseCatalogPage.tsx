@@ -3,17 +3,17 @@ import React, {FC, useEffect} from 'react';
 import {connect} from "react-redux";
 
 import {NavLink} from "react-router-dom";
-import {ICourse} from "../../models/ICourse";
-import CourseItem from "../CourseItem/CourseItem";
-import {AppStateType} from "../../reduxStore/store";
-import {getAllCourses} from "../../reduxStore/course-reducer";
+import {ICourse} from "../models/ICourse";
+import CourseItem from "../components/CourseItem/CourseItem";
+import {AppStateType} from "../reduxStore/store";
+import {getAllCourses} from "../reduxStore/course-reducer";
 
 interface CourseCatalogProps {
     courses: ICourse[],
     getAllCourses: () => void
 }
 
-const CourseCatalog: FC<CourseCatalogProps> = ({courses, getAllCourses}) => {
+const CourseCatalogPage: FC<CourseCatalogProps> = ({courses, getAllCourses}) => {
 
     useEffect(() => {
         getAllCourses()
@@ -38,4 +38,4 @@ const mapStateToProps = (state: AppStateType) => {
     }
 }
 
-export default connect(mapStateToProps, {getAllCourses})(CourseCatalog);
+export default connect(mapStateToProps, {getAllCourses})(CourseCatalogPage);

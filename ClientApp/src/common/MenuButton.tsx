@@ -8,7 +8,7 @@ interface EditProfileButtonProps {
     path: string
 }
 
-const EditProfileButton: FC<EditProfileButtonProps> = ({icon, path, onClick, children}) => {
+const MenuButton: FC<EditProfileButtonProps> = ({icon, path, onClick, children}) => {
 
     return (
         <NavLink to={path} className={({isActive}) =>
@@ -36,4 +36,4 @@ const EditProfileButton: FC<EditProfileButtonProps> = ({icon, path, onClick, chi
     );
 };
 
-export default EditProfileButton;
+export default MenuButton;
