@@ -19,7 +19,7 @@ import LectureList from "../../../components/CourseItem/Lecture/LectureList";
 import "./userCoursePage.css"
 import Button from "../../../common/button/Button";
 import {IUser} from "../../../models/IUser";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 interface UserCourseProps {
     authUser: IUser,
@@ -44,6 +44,7 @@ const UserCoursePage: FC<UserCourseProps> = ({
     const [homeworkText, setHomeworkText] = useState('');
 
     const {id} = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (id) {
@@ -67,7 +68,7 @@ const UserCoursePage: FC<UserCourseProps> = ({
     return (
         <div className="user_course">
             <div className="back__container" onClick={handleClose}>
-                <img src={backIcon} alt=""/>
+                <img src={backIcon} onClick={() => navigate(-1)} alt=""/>
             </div>
 
             <div className="course-info__container">
