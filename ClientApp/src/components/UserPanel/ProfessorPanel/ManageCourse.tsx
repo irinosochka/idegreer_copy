@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import "../AdminPanel/adminPanel.css";
 import AddLection from "./AddLecture";
-import {ICourse} from "../../../models/ICourse";
 import closeIcon from "../../../assets/img/close-svgrepo-com.svg";
 import EditCourse from "./EditCourse";
 import LecturesList from "./LecturesList";
 import CourseMembersList from "./CourseMembersList";
+import {useParams} from "react-router-dom";
 
 export enum ButtonItems {
     EDIT_COURSE = 'editCourse',
@@ -15,18 +15,15 @@ export enum ButtonItems {
 }
 
 interface ManageCourseProps {
-    selectedCourse: ICourse,
-    setVisibleEditPanel: (bool: boolean) => void,
-    setVisibleList: (bool: boolean) => void
 }
 
-const ManageCourse: React.FC<ManageCourseProps> = ({ selectedCourse,  setVisibleEditPanel, setVisibleList }) => {
+const ManageCourse: React.FC<ManageCourseProps> = ({ }) => {
     const [slideItem, setSlideItem] = useState('editCourse');
+
+    const {id} = useParams();
 
     const handleClose = (event: any) => {
         event.preventDefault();
-        setVisibleEditPanel(false);
-        setVisibleList(true);
     };
 
     return (
@@ -40,10 +37,10 @@ const ManageCourse: React.FC<ManageCourseProps> = ({ selectedCourse,  setVisible
                     <img src={closeIcon} alt=""/>
                 </div>
             </div>
-            {slideItem === ButtonItems.EDIT_COURSE && <EditCourse selectedCourse={selectedCourse}/>}
-            {slideItem === ButtonItems.ADD_LECTURE && <AddLection selectedCourse={selectedCourse}/>}
-            {slideItem === ButtonItems.EDIT_LECTURE && <LecturesList selectedCourse={selectedCourse}/>}
-            {slideItem === ButtonItems.SHOW_MEMBERS && <CourseMembersList selectedCourse={selectedCourse}/>}
+            {slideItem === ButtonItems.EDIT_COURSE && <EditCourse selectedCourseId={id}/>}
+            {slideItem === ButtonItems.ADD_LECTURE && <AddLection selectedCourseId={id}/>}
+            {slideItem === ButtonItems.EDIT_LECTURE && <LecturesList selectedCourseId={id}/>}
+            {slideItem === ButtonItems.SHOW_MEMBERS && <CourseMembersList selectedCourseId={id}/>}
         </div>
     );
 };

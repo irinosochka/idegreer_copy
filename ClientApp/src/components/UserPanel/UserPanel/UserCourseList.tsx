@@ -3,21 +3,17 @@ import {AppStateType} from "../../../reduxStore/store";
 import {connect} from "react-redux";
 import {ICourse} from "../../../models/ICourse";
 import CourseItem from "../../CourseItem/CourseItem";
-import UserCourse from "./UserCourse/UserCourse";
+import {NavLink} from "react-router-dom";
 
 interface UserCourseListProps {
     courses: ICourse[],
 }
 
 const UserCourseList: FC<UserCourseListProps> = ({courses}) => {
-    const [selectedCourse, setSelectedCourse] = useState<ICourse>();
     const [visibleList, setVisibleList] = useState(true);
-    const [visibleEditPanel, setVisibleEditPanel] = useState(false);
 
     const handleSelecting = (course: ICourse) => {
         setVisibleList(false);
-        setVisibleEditPanel(true);
-        setSelectedCourse(course);
     }
 
     return (
@@ -31,7 +27,7 @@ const UserCourseList: FC<UserCourseListProps> = ({courses}) => {
                                     onClick={() => {
                                         handleSelecting(course)
                                     }} style={{cursor: 'pointer'}}>
-                            <CourseItem key={course._id} course={course}/>
+                           <NavLink to={`/course/${course._id}`} ><CourseItem key={course._id} course={course}/></NavLink>
                         </div>
                         // return <NavLink key={course._id} to={`/course/${course._id}`}><CourseItem course={course} /></NavLink>
                     }
@@ -41,7 +37,6 @@ const UserCourseList: FC<UserCourseListProps> = ({courses}) => {
             </div>
             </>
             }
-            {visibleEditPanel && selectedCourse && <UserCourse selectedCourse={selectedCourse} setVisibleEditPanel={setVisibleEditPanel} setVisibleList={setVisibleList}/>}
         </div>
     );
 };

@@ -1,20 +1,21 @@
 import React, {useEffect} from 'react';
-import {ICourse} from "../../../models/ICourse";
 import {AppStateType} from "../../../reduxStore/store";
 import {connect} from "react-redux";
 
 import {getAllMembersFromCourse} from "../../../reduxStore/course-reducer";
 
 interface CourseMembersListProps {
-    selectedCourse: ICourse,
+    selectedCourseId: string | undefined,
     members: Array<string>,
     getAllMembersFromCourse: (courseId: string) => void,
 }
 
-const CourseMembersList: React.FC< CourseMembersListProps> = ({selectedCourse, getAllMembersFromCourse, members}) => {
+const CourseMembersList: React.FC< CourseMembersListProps> = ({selectedCourseId, getAllMembersFromCourse, members}) => {
 
     useEffect(() => {
-        getAllMembersFromCourse(selectedCourse._id);
+        if(selectedCourseId) {
+            getAllMembersFromCourse(selectedCourseId);
+        }
     }, [])
 
     return (

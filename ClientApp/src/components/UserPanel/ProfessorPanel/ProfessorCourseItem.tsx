@@ -7,6 +7,7 @@ import {addUserToCourse, getAllMembersFromCourse} from "../../../reduxStore/cour
 import {getAllLectionsFromCourse} from "../../../reduxStore/lection-reducer";
 import progIcon from "../../../assets/img/programmingIcon.svg";
 import starIcon from "../../../assets/img/star-svgrepo-com.svg"
+import {useNavigate} from "react-router-dom";
 
 interface CourseItemProps {
     courseItem: ICourse,
@@ -14,7 +15,6 @@ interface CourseItemProps {
     lections: ILection[],
     members: Array<string>,
     getAllMembersFromCourse: (courseId: string) => void,
-    onClick?: (e ?: React.FormEvent<EventTarget>)  => void
 }
 
 const CourseItem: FC<CourseItemProps> = ({
@@ -23,7 +23,6 @@ const CourseItem: FC<CourseItemProps> = ({
                                         getAllLectionsFromCourse,
                                         members,
                                         getAllMembersFromCourse,
-                                             onClick
                                     }) => {
 
     useEffect(() => {
@@ -34,9 +33,13 @@ const CourseItem: FC<CourseItemProps> = ({
         getAllMembersFromCourse(courseItem._id);
     }, [courseItem]);
 
+    const navigate = useNavigate()
 
+    const handleRowClick = () => {
+        navigate(`/manage-course/${courseItem._id}`)
+    }
     return (
-        <tr className="table__row" onClick={onClick} style={{cursor: "pointer"}}>
+        <tr onClick={()=> handleRowClick()} className="table__row" style={{cursor: "pointer"}}>
             <td className="table__content course-info__content" data-heading="Course name">
                 <div className="course-icon__content">
                     <img className="course__icon" src={progIcon} alt=""/>

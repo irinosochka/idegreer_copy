@@ -1,15 +1,21 @@
 import React, {FC} from 'react';
+import {NavLink} from "react-router-dom";
 
 interface EditProfileButtonProps {
     icon: string,
     onClick: () => any,
-    isActive: boolean
+    isActive: boolean,
+    path: string
 }
 
-const EditProfileButton: FC<EditProfileButtonProps> = ({icon, isActive, onClick, children}) => {
+const EditProfileButton: FC<EditProfileButtonProps> = ({icon, path, onClick, children}) => {
+
     return (
-        <div className={`edit__btn ${isActive && 'active'}`}
-             style={{display: 'flex', alignItems: 'center', marginTop: '30px', cursor: 'pointer'}}  onClick={onClick}>
+        <NavLink to={path} className={({isActive}) =>
+            isActive ? 'edit__btn active' : 'edit__btn'
+        }
+                 style={{display: 'flex', alignItems: 'center', marginTop: '30px', cursor: 'pointer'}}
+                 onClick={onClick}>
             <div style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -20,8 +26,13 @@ const EditProfileButton: FC<EditProfileButtonProps> = ({icon, isActive, onClick,
             }}>
                 <img src={icon} style={{width: '20px', height: '20px'}} alt=""/>
             </div>
-            <button style={{textAlign: 'left', fontSize: '15px', paddingLeft: '30px', textTransform: 'initial'}}>{children}</button>
-        </div>
+            <button style={{
+                textAlign: 'left',
+                fontSize: '15px',
+                paddingLeft: '30px',
+                textTransform: 'initial'
+            }}>{children}</button>
+        </NavLink>
     );
 };
 

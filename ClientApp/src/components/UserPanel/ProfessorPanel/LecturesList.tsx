@@ -1,18 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {ICourse} from "../../../models/ICourse";
 import {AppStateType} from "../../../reduxStore/store";
 import {connect} from "react-redux";
 import {getAllLectionsFromCourse} from "../../../reduxStore/lection-reducer";
 import {ILection} from "../../../models/ILection";
 import EditLecture from "./EditLecture";
+import {getOneCourse} from "../../../reduxStore/course-reducer";
 
 interface ListOfLecturesProps {
-    selectedCourse: ICourse,
+    selectedCourseId: string | undefined,
     lections: ILection[],
     getAllLectionsFromCourse: (courseId: string) => void,
+    getOneCourse: (courseId: string) => void
 }
 
-const LecturesList: React.FC<ListOfLecturesProps> = ({selectedCourse, getAllLectionsFromCourse, lections}) => {
+const LecturesList: React.FC<ListOfLecturesProps> = ({selectedCourseId, getAllLectionsFromCourse, lections, getOneCourse}) => {
     const [selectedLection, setSelectedLection] = useState<ILection>();
     const [visibleEditLection, setVisibleEditLection] = useState(false);
     const [visibleLections, setVisibleLections] = useState(true);
@@ -24,7 +25,10 @@ const LecturesList: React.FC<ListOfLecturesProps> = ({selectedCourse, getAllLect
     }
 
     useEffect(() => {
-        getAllLectionsFromCourse(selectedCourse._id);
+        if(selectedCourseId) {
+            getOneCourse(selectedCourseId)
+            getAllLectionsFromCourse(selectedCourseId);
+        }
     }, [])
 
     return (
@@ -45,9 +49,11 @@ const LecturesList: React.FC<ListOfLecturesProps> = ({selectedCourse, getAllLect
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        lections: state.lection.lections
+        lections: state.lection.lections,
+        course: state.course.course
     }
 }
 export default connect(mapStateToProps, {
-    getAllLectionsFromCourse
+    getAllLectionsFromCourse,
+    getOneCourse
 })(LecturesList);

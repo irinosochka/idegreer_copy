@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import "../AdminPanel/adminPanel.css"
 import {ICourse} from "../../../models/ICourse";
-import {actions, changeCourseData, setCourseChanges} from "../../../reduxStore/course-reducer";
+import {actions, changeCourseData, getOneCourse, setCourseChanges} from "../../../reduxStore/course-reducer";
 import {AppStateType} from "../../../reduxStore/store";
 import Button from "../../../common/button/Button";
 import Message, {MessageType} from "../../../common/Messages/Message";
@@ -10,16 +10,18 @@ import {addNotification} from "../../../reduxStore/user-reducer";
 import {mailMessageType, sendEditMail} from "../../../reduxStore/mail-reducer";
 
 interface ListOfCourseProps {
-    selectedCourse: ICourse,
+    selectedCourseId: string | undefined,
+    course: ICourse,
     setCourseDataChangedSuccess: (bool: boolean) => void,
     changeCourseData: (courseId: string, title: string, theme: string, description: string, price: string) => void,
     setCourseChanges: (courseId: string) => void,
     courseDataChangedSuccess: boolean,
     addNotification: (date: string, courseId: string, type: string) => void,
     sendEditLectionMail: (email: string, lectionTitle: string, messageType: mailMessageType) => void,
+    getOneCourse: (courseId: string) => void
 }
 
-const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourse, setCourseDataChangedSuccess, changeCourseData, addNotification, courseDataChangedSuccess, setCourseChanges, sendEditLectionMail }) => {
+const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourseId, course, setCourseDataChangedSuccess, changeCourseData, addNotification, courseDataChangedSuccess, setCourseChanges, sendEditLectionMail, getOneCourse }) => {
 
     // const [title, setTitle] = useState(selectedCourse.title);
     // const [theme, setTheme] = useState(selectedCourse.theme);
@@ -34,17 +36,21 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourse, setCourseDataC
     const [isError, setError] = useState(false);
 
     useEffect(() => {
+        if (selectedCourseId) {
+            getOneCourse(selectedCourseId)
+        }
         setCourseDataChangedSuccess(false);
     }, []);
 
+
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        if (selectedCourse && title.length !== 0 && theme.length !== 0 && price.length !== 0 && description.length !== 0) {
-            changeCourseData(selectedCourse._id, title, theme, description, price);
+        if (course && title.length !== 0 && theme.length !== 0 && price.length !== 0 && description.length !== 0) {
+            changeCourseData(course._id, title, theme, description, price);
             setTimeout(() => setCourseDataChangedSuccess(false), 3000);
-            addNotification(new Date().toLocaleDateString(), selectedCourse._id, `Changing the data of the course ${selectedCourse.title}`)
-            setCourseChanges(selectedCourse._id)
-            sendEditLectionMail(selectedCourse._id, selectedCourse.title, mailMessageType.EDIT_COURSE)
+            addNotification(new Date().toLocaleDateString(), course._id, `Changing the data of the course ${course.title}`)
+            setCourseChanges(course._id)
+            sendEditLectionMail(course._id, course.title, mailMessageType.EDIT_COURSE)
         } else {
             setError(true);
         }
@@ -66,7 +72,7 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourse, setCourseDataC
                            type="text"
                            id="course_name"
                            value={title}
-                           placeholder={"Title: "+ selectedCourse.title}
+                           placeholder={"Title: "+ course.title}
                     /><label htmlFor="input" className="control-label">Title:</label>
                 </div>
                 <div className="input-wrapper">
@@ -79,7 +85,7 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourse, setCourseDataC
                            type="text"
                            id="course_topic"
                            value={theme}
-                           placeholder={"Theme: " +  selectedCourse.theme}
+                           placeholder={"Theme: " +  course.theme}
                     /><label htmlFor="input" className="control-label">Topic:</label>
                 </div>
                 <div className="input-wrapper">
@@ -92,7 +98,7 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourse, setCourseDataC
                            type="number"
                            id="course_price"
                            value={price}
-                           placeholder={"Price: " + selectedCourse.price}
+                           placeholder={"Price: " + course.price}
                     /><label htmlFor="input" className="control-label">Price:</label>
                 </div>
                 <div className="input-wrapper" style={{marginBottom: '10px'}}>
@@ -105,11 +111,11 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourse, setCourseDataC
                               value={description}
                               name="textarea"
                               id="course_description"
-                              placeholder={"Description: " + selectedCourse.description}
+                              placeholder={"Description: " + course.description}
                               style={{resize: "none", marginBottom: '10px', padding: '5px 15px', width: 'calc(100% - 32px)', height: '80px', borderRadius: '5px'}}
                     /><label style={{ transform: 'translateY(-70px)'}} htmlFor="input" className="control-label">Description:</label>
                 </div>
-                <p style={{color: 'slategrey'}}>Author: {selectedCourse.author.name}</p>
+                {course.author && <p style={{color: 'slategrey'}}>Author: {course.author.name}</p>}
                 <Button width={240}>Submit changes</Button>
             </form>
         </>
@@ -118,6 +124,7 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourse, setCourseDataC
 const mapStateToProps = (state: AppStateType) => {
     return {
         courseDataChangedSuccess: state.course.courseDataChangedSuccess,
+        course: state.course.course
     }
 }
 export default connect(mapStateToProps, {
@@ -125,5 +132,6 @@ export default connect(mapStateToProps, {
     setCourseDataChangedSuccess: actions.setCourseDataChangedSuccess,
     setCourseChanges,
     addNotification,
-    sendEditLectionMail: sendEditMail
+    sendEditLectionMail: sendEditMail,
+    getOneCourse
 })(EditCourse);

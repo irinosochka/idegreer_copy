@@ -8,25 +8,30 @@ import {ICourse} from "../../../models/ICourse";
 import '../userPanel.css'
 import {addNotification} from "../../../reduxStore/user-reducer";
 import {mailMessageType, sendEditMail} from "../../../reduxStore/mail-reducer";
+import {getOneCourse} from "../../../reduxStore/course-reducer";
 
 interface AddLectureProps {
-    selectedCourse: ICourse,
+    selectedCourseId: string | undefined,
+    course: ICourse,
     onSuccessAddingLection: (bool: boolean) => void,
     addLection: (title: string, description: string, duration: string, link: string, homework: string, courseId: string) => void,
     successAddingLection: boolean,
     errorAddingLection: boolean,
     addNotification: (date: string, courseId: string, type: string) => void,
     sendEditLectionMail: (email: string, lectionTitle: string, messageType: mailMessageType) => void,
+    getOneCourse: (courseId: string) => void
 }
 
 const AddLecture: FC<AddLectureProps> = ({
-                                             selectedCourse,
+                                             selectedCourseId,
+                                             course,
                                              successAddingLection,
                                              errorAddingLection,
                                              onSuccessAddingLection,
                                              addLection,
                                              addNotification,
-                                             sendEditLectionMail
+                                             sendEditLectionMail,
+                                             getOneCourse
                                          }) => {
 
     const [title, setTitle] = useState('');
@@ -39,6 +44,9 @@ const AddLecture: FC<AddLectureProps> = ({
     //const [course, setCourse] = useState('');
 
     useEffect(() => {
+        if (selectedCourseId) {
+            getOneCourse(selectedCourseId)
+        }
         return () => {
             onSuccessAddingLection(false)
             setLinkError(false)
@@ -53,10 +61,10 @@ const AddLecture: FC<AddLectureProps> = ({
         else if (link.length !== 11 ) {
             setLinkError(true);
         } else {
-            addLection(title, description, duration, link, homework, selectedCourse._id);
+            addLection(title, description, duration, link, homework, course._id);
             const now = new Date().toLocaleDateString();
-            addNotification(now, selectedCourse._id, 'adding lection')
-            sendEditLectionMail(selectedCourse._id, selectedCourse.title, mailMessageType.ADD_LECTION)
+            addNotification(now, course._id, 'adding lection')
+            sendEditLectionMail(course._id, course.title, mailMessageType.ADD_LECTION)
             // setCourseChanges(selectedCourse._id)
             setTitle('');
             setDescription('');
@@ -120,7 +128,8 @@ const AddLecture: FC<AddLectureProps> = ({
 const mapStateToProps = (state: AppStateType) => {
     return {
         successAddingLection: state.lection.successAddingLection,
-        errorAddingLection: state.lection.errorAddingLection
+        errorAddingLection: state.lection.errorAddingLection,
+        course: state.course.course
     }
 }
 
@@ -129,5 +138,6 @@ export default connect(mapStateToProps, {
     onSuccessAddingLection: actions.onSuccessAddingLection,
     addLection,
     addNotification,
-    sendEditLectionMail: sendEditMail
+    sendEditLectionMail: sendEditMail,
+    getOneCourse
 })(AddLecture);

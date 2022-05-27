@@ -19,50 +19,48 @@ import LectureList from "../../../CourseItem/Lecture/LectureList";
 import "./userCourse.css"
 import Button from "../../../../common/button/Button";
 import {IUser} from "../../../../models/IUser";
+import {useParams} from "react-router-dom";
 
 interface UserCourseProps {
     authUser: IUser,
+    course: ICourse,
     getOneCourse: (courseId: string) => void,
     getAllLectionsFromCourse: (courseId: string) => void,
     setLection: () => void,
     lections: ILection[],
     getAllMembersFromCourse: (courseId: string) => void,
-    selectedCourse: ICourse,
-    setVisibleEditPanel: (bool: boolean) => void,
-    setVisibleList: (bool: boolean) => void,
     addHomeworkResponse: (userId: string, courseId: string, lectionId: string, resp: string) => void
 }
 
 const UserCourse: FC<UserCourseProps> = ({
+                                             course,
                                              authUser,
                                              lections,
                                              getOneCourse,
                                              getAllLectionsFromCourse,
-                                             selectedCourse, setVisibleEditPanel, setVisibleList,
                                              addHomeworkResponse
                                          }) => {
     const [activeLection, setActiveLection] = useState<ILection | null>();
     const [homeworkText, setHomeworkText] = useState('');
 
+    const {id} = useParams();
 
     useEffect(() => {
-        if (selectedCourse) {
-            getOneCourse(selectedCourse._id);
-            getAllLectionsFromCourse(selectedCourse._id);
+        if (id) {
+            getOneCourse(id);
+            getAllLectionsFromCourse(id);
         }
     }, []);
 
 
     const handleClose = (event: React.FormEvent) => {
         event.preventDefault();
-        setVisibleEditPanel(false);
-        setVisibleList(true);
     };
 
     const onHomeworkSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (authUser && selectedCourse && activeLection && homeworkText) {
-            addHomeworkResponse(authUser._id, selectedCourse._id, activeLection._id, homeworkText)
+        if (authUser && activeLection && homeworkText && id) {
+            addHomeworkResponse(authUser._id, id, activeLection._id, homeworkText)
         }
     }
 
@@ -73,7 +71,7 @@ const UserCourse: FC<UserCourseProps> = ({
             </div>
 
             <div className="course-info__container">
-                <h2>{selectedCourse.title}</h2>
+                <h2>{course.title}</h2>
                 <div className="evaluation">
                     <span>★★★★★</span>
                     <p style={{marginLeft: '8px'}}>5/5 (236 reviews)</p>
@@ -82,7 +80,7 @@ const UserCourse: FC<UserCourseProps> = ({
                     <PhotoMockup size={sizeTypes.small}/>
                     <div style={{marginLeft: '10px'}}>
                         <p>Mentor</p>
-                        {selectedCourse.author && <h4>{selectedCourse.author.name}</h4>}
+                        {course.author && <h4>{course.author.name}</h4>}
                     </div>
                 </div>
 
@@ -111,9 +109,9 @@ const UserCourse: FC<UserCourseProps> = ({
                             </div>
 
                             <div>
-                                {selectedCourse.author &&
+                                {course.author &&
                                     <h3>
-                                        {selectedCourse.author.name}
+                                        {course.author.name}
                                     </h3>}
                                 <p>
                                     {activeLection.homework}
@@ -151,6 +149,7 @@ const mapStateToProps = (state: AppStateType) => {
         authUser: state.auth.authUser,
         isLoading: state.auth.isLoading,
         lections: state.lection.lections,
+        course: state.course.course,
         addUserToCourseSuccess: state.course.addUserToCourseSuccess,
         addUserToCourseError: state.course.addUserToCourseError,
     }
