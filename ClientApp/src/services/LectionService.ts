@@ -3,14 +3,14 @@ import {CourseResponse} from "../models/response/CourseResponse";
 import {LectionResponse} from "../models/response/LectionResponse";
 
 export default class AddService {
-    static addLection(title: string, description: string, duration: string, link: string, homework: string, courseId: string): Promise<any> {
-        return $lection.post<CourseResponse>('/addLection', {title, description, duration, link, homework, courseId}).then(res => {
+    static addLection(title: string, description: string, link: string, homework: string, courseId: string): Promise<any> {
+        return $lection.post<CourseResponse>('/addLection', {title, description, link, homework, courseId}).then(res => {
             return res
         }).catch(e => console.log(e))
     }
 
-    static updateLectionData(lectionId: string, title: string, description: string, duration: string, link: string, homework: string): Promise<any> {
-        return $lection.post<CourseResponse>('/updateLectionData', {lectionId, title, description, duration, link, homework}).then(res => {
+    static updateLectionData(lectionId: string, title: string, description: string, link: string, homework: string): Promise<any> {
+        return $lection.post<CourseResponse>('/updateLectionData', {lectionId, title, description, link, homework}).then(res => {
             return res
         }).catch(e => console.log(e))
     }

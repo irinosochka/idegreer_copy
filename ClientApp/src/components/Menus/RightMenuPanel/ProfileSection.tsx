@@ -23,7 +23,7 @@ const ProfileSection = () => {
     }
 
     return (
-        <div style={{background: '#6675bc', borderRadius: '10px', margin: '10px', padding: '10px', color: '#fff'}}>
+        <div style={{background: '#6675bc', borderRadius: '10px', margin: '10px', padding: '10px 10px 0', color: '#fff'}}>
             <div style={{display: 'flex', justifyContent: 'flex-end' ,marginTop: '5px'}}>
 
 

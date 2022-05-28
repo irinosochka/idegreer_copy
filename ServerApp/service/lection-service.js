@@ -5,12 +5,12 @@ const HomeworkModel = require('../models/homework-model');
 const {ObjectId} = require("mongodb");
 
 class LectionService {
-    async addLection(title, description, duration, link, homework, courseId) {
+    async addLection(title, description, link, homework, courseId) {
         const course = await CourseModel.findOne({_id: courseId});
         if (!course) {
             throw new Error(`Course with id ${courseId} not exists`);
         }
-        const lection = await LectionModel.create({title, description, duration, link, homework, 'course._id': ObjectId(courseId) });
+        const lection = await LectionModel.create({title, description, link, homework, 'course._id': ObjectId(courseId) });
         if (!lection) {
             throw new Error('Lection creating error');
         }
@@ -30,7 +30,7 @@ class LectionService {
         }
     }
 
-    async changeLectionData(lectionId, title, description, duration, link, homework) {
+    async changeLectionData(lectionId, title, description, link, homework) {
         const lection = await LectionModel.findOne({_id: lectionId})
         if (!lection) {
             throw new Error(`No lection with id ${lectionId}`)
@@ -41,7 +41,6 @@ class LectionService {
             $set: {
                 title: title,
                 description: description,
-                duration: duration,
                 link: link,
                 homework: homework
             }
