@@ -23,7 +23,7 @@ const CoursesPageOfProfessor: FC<ProfessorCoursesProps> = ({courses, getCoursesO
         <div className="page__content">
             <h3 className="page__title">You are the Author of this courses:</h3>
 
-            { courses.length !==0 &&
+            {courses.length !== 0 &&
                 <table className="table">
                     <thead></thead>
                     <tbody>
@@ -35,17 +35,17 @@ const CoursesPageOfProfessor: FC<ProfessorCoursesProps> = ({courses, getCoursesO
                         <th className="table__heading">Lectures</th>
                     </tr>
                     {courses.map((course: ICourse) => {
-                        return <ProfessorCourseItem key={course._id} courseItem={course} />
+                        return <ProfessorCourseItem key={course._id} courseItem={course}/>
                     })
                     }
-                </table>}
-            { courses.length ===0 &&
-                <div style={{marginTop: '40px', width: '100%'}}>
-                    <h3 className="no-courses__info">You don't have a course. Add new course for starting teach in our platform.</h3>
-                </div>}
                     </tbody>
                     <tfoot></tfoot>
-                </table>
+                </table>}
+            {courses.length === 0 &&
+                <div style={{marginTop: '40px', width: '100%'}}>
+                    <h3 className="no-courses__info">You don't have a course. Add new course for starting teach in our
+                        platform.</h3>
+                </div>
             }
         </div>
     );
