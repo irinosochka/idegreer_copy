@@ -93,8 +93,15 @@ class CourseService {
         if (!course) {
             throw new Error('This course dont exists');
         }
+
+        let userFullInfoList = [];
+
+        for (const u of course.userList) {
+            await UserModel.findOne({_id: ObjectId(u)}).then(res => userFullInfoList.push(res));
+        }
+
         return {
-            userList: course.userList
+            userList: userFullInfoList
         }
     }
 

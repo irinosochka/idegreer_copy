@@ -1,10 +1,10 @@
 import React, {FC} from 'react';
 import './cartItem.css';
-import {ICourse} from "../../models/ICourse";
-import progIcon from "../../assets/img/programmingIcon.svg";
-import removeIcon from "../../assets/img/remove-svgrepo-com.svg";
+import {ICourse} from "../../../models/ICourse";
+import progIcon from "../../../assets/img/programmingIcon.svg";
+import removeIcon from "../../../assets/img/remove-svgrepo-com.svg";
 import {connect} from "react-redux";
-import {actions} from "../../reduxStore/user-reducer";
+import {actions} from "../../../reduxStore/user-reducer";
 
 interface CourseItemProps {
     course: ICourse,

@@ -56,7 +56,6 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourseId, course, setC
         }
     };
 
-    // @ts-ignore
     return (
         <>
             <form className="edit__box" onSubmit={handleSubmit}>
