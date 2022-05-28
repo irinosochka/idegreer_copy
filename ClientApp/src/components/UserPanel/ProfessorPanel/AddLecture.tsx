@@ -75,6 +75,7 @@ const AddLecture: FC<AddLectureProps> = ({
             setLink('');
             onSuccessAddingLection(false);
             setLinkError(false);
+            setHomework('');
         }
     }
 

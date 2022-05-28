@@ -23,10 +23,13 @@ const CourseCatalogPage: FC<CourseCatalogProps> = ({courses, getAllCourses}) => 
         <div className="page__content">
             <h3 className="page__title">All Courses:</h3>
             <div className="courses__container" style={{marginTop: '-30px', paddingLeft: '65px'}}>
-                {courses.map((course: ICourse) => {
+                {courses.length !== 0 ? courses.map((course: ICourse) => {
                             return <NavLink key={course._id} to={`/course/${course._id}`}><CourseItem course={course} /></NavLink>
                         }
-                    )}
+                    ) :
+                    <div style={{marginTop: '40px', width: '100%'}}>
+                        <h3 className="no-courses__info">Failed to load courses. Please try again later.</h3>
+                    </div>}
             </div>
         </div>
 );

@@ -38,6 +38,11 @@ const CoursesPageOfProfessor: FC<ProfessorCoursesProps> = ({courses, getCoursesO
                         return <ProfessorCourseItem key={course._id} courseItem={course} />
                     })
                     }
+                </table>}
+            { courses.length ===0 &&
+                <div style={{marginTop: '40px', width: '100%'}}>
+                    <h3 className="no-courses__info">You don't have a course. Add new course for starting teach in our platform.</h3>
+                </div>}
                     </tbody>
                     <tfoot></tfoot>
                 </table>
