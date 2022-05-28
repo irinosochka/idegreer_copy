@@ -7,9 +7,10 @@ import {ICourse} from "../models/ICourse";
 import CourseItem from "../components/CourseItem/CourseItem";
 import {AppStateType} from "../reduxStore/store";
 import {getAllCourses} from "../reduxStore/course-reducer";
+import {IUser} from "../models/IUser";
 
 interface CourseCatalogProps {
-    courses: ICourse[],
+    courses: Array<{ course: ICourse, author: IUser }>,
     getAllCourses: () => void
 }
 
@@ -23,8 +24,8 @@ const CourseCatalogPage: FC<CourseCatalogProps> = ({courses, getAllCourses}) => 
         <div className="page__content">
             <h3 className="page__title">All Courses:</h3>
             <div className="courses__container" style={{marginTop: '-30px', paddingLeft: '65px'}}>
-                {courses.length !== 0 ? courses.map((course: ICourse) => {
-                            return <NavLink key={course._id} to={`/course/${course._id}`}><CourseItem course={course} /></NavLink>
+                {courses.length !== 0 ? courses.map((course: { course: ICourse, author: IUser }) => {
+                            return <NavLink key={course.course._id} to={`/course/${course.course._id}`}><CourseItem course={course} /></NavLink>
                         }
                     ) :
                     <div style={{marginTop: '40px', width: '100%'}}>
