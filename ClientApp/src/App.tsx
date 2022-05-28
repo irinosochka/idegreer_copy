@@ -15,7 +15,7 @@ import UserCourseList from "./pages/UserCourseList/UserCourseListPage";
 import ProfessorCourses from "./pages/CoursesPageOfProfessor";
 import AddCourse from "./components/UserPanel/ProfessorPanel/AddCourse";
 import ManageRoles from "./components/UserPanel/AdminPanel/ManageRoles";
-import UserCourse from "./pages/UserCourseList/UserCoursePage/UserCoursePage";
+import UserCourse from "./pages/UserCourseList/UserCoursePage/CoursePage";
 import ManageCourse from "./components/UserPanel/ProfessorPanel/ManageCourse";
 
 interface AppProps {
