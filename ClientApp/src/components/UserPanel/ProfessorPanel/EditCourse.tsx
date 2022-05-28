@@ -8,10 +8,11 @@ import Button from "../../../common/button/Button";
 import Message, {MessageType} from "../../../common/Messages/Message";
 import {addNotification} from "../../../reduxStore/user-reducer";
 import {mailMessageType, sendEditMail} from "../../../reduxStore/mail-reducer";
+import {IUser} from "../../../models/IUser";
 
 interface ListOfCourseProps {
     selectedCourseId: string | undefined,
-    course: ICourse,
+    course: { course: ICourse, author: IUser },
     setCourseDataChangedSuccess: (bool: boolean) => void,
     changeCourseData: (courseId: string, title: string, theme: string, description: string, price: string) => void,
     setCourseChanges: (courseId: string) => void,
@@ -46,11 +47,11 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourseId, course, setC
     const handleSubmit = (event: any) => {
         event.preventDefault();
         if (course && title.length !== 0 && theme.length !== 0 && price.length !== 0 && description.length !== 0) {
-            changeCourseData(course._id, title, theme, description, price);
+            changeCourseData(course.course._id, title, theme, description, price);
             setTimeout(() => setCourseDataChangedSuccess(false), 3000);
-            addNotification(new Date().toLocaleDateString(), course._id, `Changing the data of the course ${course.title}`)
-            setCourseChanges(course._id)
-            sendEditLectionMail(course._id, course.title, mailMessageType.EDIT_COURSE)
+            addNotification(new Date().toLocaleDateString(), course.course._id, `Changing the data of the course ${course.course.title}`)
+            setCourseChanges(course.course._id)
+            sendEditLectionMail(course.course._id, course.course.title, mailMessageType.EDIT_COURSE)
         } else {
             setError(true);
         }
@@ -71,7 +72,7 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourseId, course, setC
                            type="text"
                            id="course_name"
                            value={title}
-                           placeholder={"Title: "+ course.title}
+                           placeholder={"Title: "+ course.course.title}
                     /><label htmlFor="input" className="control-label">Title:</label>
                 </div>
                 <div className="input-wrapper">
@@ -84,7 +85,7 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourseId, course, setC
                            type="text"
                            id="course_topic"
                            value={theme}
-                           placeholder={"Theme: " +  course.theme}
+                           placeholder={"Theme: " +  course.course.theme}
                     /><label htmlFor="input" className="control-label">Topic:</label>
                 </div>
                 <div className="input-wrapper">
@@ -97,7 +98,7 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourseId, course, setC
                            type="number"
                            id="course_price"
                            value={price}
-                           placeholder={"Price: " + course.price}
+                           placeholder={"Price: " + course.course.price}
                     /><label htmlFor="input" className="control-label">Price:</label>
                 </div>
                 <div className="input-wrapper" style={{marginBottom: '10px'}}>
@@ -110,7 +111,7 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourseId, course, setC
                               value={description}
                               name="textarea"
                               id="course_description"
-                              placeholder={"Description: " + course.description}
+                              placeholder={"Description: " + course.course.description}
                               style={{resize: "none", marginBottom: '10px', padding: '5px 15px', width: 'calc(100% - 32px)', height: '80px', borderRadius: '5px'}}
                     /><label style={{ transform: 'translateY(-70px)'}} htmlFor="input" className="control-label">Description:</label>
                 </div>

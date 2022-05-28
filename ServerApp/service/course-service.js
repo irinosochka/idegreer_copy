@@ -28,7 +28,16 @@ class CourseService {
     }
 
     async getCourseById(courseId) {
-        return CourseModel.findOne({_id: courseId})
+        const course = await CourseModel.findOne({_id: courseId})
+        if (!course) {
+            throw new Error(`Course with id ${courseId} doesn't exist`)
+        }
+        console.log(course)
+        const user = await UserModel.findOne({_id: course.author._id});
+        console.log(user)
+        return {
+            course: {course: course, author: user}
+        }
     }
 
     async changeCourseData(courseId, newTitle, newTheme, newDescription, newPrice) {

@@ -15,7 +15,7 @@ import UserCourse from "../../../components/CoursePageComponets/UserCourse";
 import {ICourse} from "../../../models/ICourse";
 
 interface UserCourseProps {
-    course: ICourse,
+    course: { course: ICourse, author: IUser },
     authUser: IUser,
     getOneCourse: (courseId: string) => void,
     members: Array<IUser>,
@@ -42,8 +42,14 @@ const UserCoursePage: FC<UserCourseProps> = ({
         }
     }, []);
 
-
-    // members.forEach(e => e._id === authUser._id ? setMember(true) : setMember(false));
+    useEffect(() => {
+        members.forEach(m => {
+            if (m._id === authUser._id) {
+                setMember(true);
+                return
+            }
+        })
+    }, [members])
 
     return (
         <div>

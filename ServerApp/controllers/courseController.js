@@ -36,7 +36,7 @@ class CourseController {
             const data = await courseService.getCourseById(id);
             return res.json({data, resultCode: 1})
         } catch {
-            return res.json({message: "Getting user using id error", resultCode: 0})
+            return res.json({message: "Getting course using id error", resultCode: 0})
         }
     }
 

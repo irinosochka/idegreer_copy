@@ -23,7 +23,7 @@ import {useNavigate, useParams} from "react-router-dom";
 
 interface UserCourseProps {
     authUser: IUser,
-    course: ICourse,
+    course: { course: ICourse, author: IUser },
     getOneCourse: (courseId: string) => void,
     getAllLectionsFromCourse: (courseId: string) => void,
     setLection: () => void,
@@ -71,7 +71,7 @@ const UserCourse: FC<UserCourseProps> = ({
             </div>
 
             <div className="course-info__container">
-                <h2>{course.title}</h2>
+                <h2>{course.course.title}</h2>
                 <div className="evaluation">
                     <span>★★★★★</span>
                     <p style={{marginLeft: '8px'}}>5/5 (236 reviews)</p>

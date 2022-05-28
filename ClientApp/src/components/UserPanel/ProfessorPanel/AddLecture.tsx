@@ -9,10 +9,11 @@ import '../userPanel.css'
 import {addNotification} from "../../../reduxStore/user-reducer";
 import {mailMessageType, sendEditMail} from "../../../reduxStore/mail-reducer";
 import {getOneCourse} from "../../../reduxStore/course-reducer";
+import {IUser} from "../../../models/IUser";
 
 interface AddLectureProps {
     selectedCourseId: string | undefined,
-    course: ICourse,
+    course: { course: ICourse, author: IUser },
     onSuccessAddingLection: (bool: boolean) => void,
     addLection: (title: string, description: string, link: string, homework: string, courseId: string) => void,
     successAddingLection: boolean,
@@ -67,8 +68,8 @@ const AddLecture: FC<AddLectureProps> = ({
                 addLection(title, description, link, homework, selectedCourseId);
             }
             const now = new Date().toLocaleDateString();
-            addNotification(now, course._id, 'adding lection')
-            sendEditLectionMail(course._id, course.title, mailMessageType.ADD_LECTION)
+            addNotification(now, course.course._id, 'adding lection')
+            sendEditLectionMail(course.course._id, course.course.title, mailMessageType.ADD_LECTION)
             // setCourseChanges(selectedCourse._id)
             setTitle('');
             setDescription('');
