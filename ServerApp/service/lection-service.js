@@ -57,7 +57,7 @@ class LectionService {
             throw new Error(`No course with id ${courseId}`)
         }
         const lections = await LectionModel.find({ 'course._id': ObjectId(courseId) });
-        console.log(lections)
+
         if (!lections || lections.length === 0) {
             throw new Error(`No lections for course with id ${courseId}`)
         }

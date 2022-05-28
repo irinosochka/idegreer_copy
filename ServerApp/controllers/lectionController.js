@@ -37,7 +37,7 @@ class LectionController {
             const data = await lectionService.getLectionsFromCourse(courseId)
             return res.json({data, resultCode: 1})
         } catch (e) {
-            return res.json({message: "Add lection error", resultCode: 0})
+            return res.json({message: "Get lections error", resultCode: 0})
         }
     }
 
