@@ -25,6 +25,8 @@ const CoursesPageOfProfessor: FC<ProfessorCoursesProps> = ({courses, getCoursesO
 
             { courses.length !==0 &&
                 <table className="table">
+                    <thead></thead>
+                    <tbody>
                     <tr>
                         <th className="table__heading">Course name</th>
                         <th className="table__heading">Rate</th>
@@ -36,6 +38,8 @@ const CoursesPageOfProfessor: FC<ProfessorCoursesProps> = ({courses, getCoursesO
                         return <ProfessorCourseItem key={course._id} courseItem={course} />
                     })
                     }
+                    </tbody>
+                    <tfoot></tfoot>
                 </table>
             }
         </div>

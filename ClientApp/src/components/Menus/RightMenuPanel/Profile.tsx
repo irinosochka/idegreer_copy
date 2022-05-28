@@ -39,7 +39,7 @@ const Profile: FC<ProfileProps> = ({authUser, roleRequest, rolePleaserSuccess, s
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '10px'}}>
                     <p className="profile__title">{authUser.name}</p>
                     {/*<p className="profile__subtitle">Proin vulputate arcu tellus venenatis.</p>*/}
-                    <div style={{display: 'flex'}}>
+                    <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap'}}>
                         <p className="profile__info">{authUser.username}</p>
                         <p className="profile__info">{authUser.email}</p>
                     </div>

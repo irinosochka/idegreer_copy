@@ -53,7 +53,8 @@ const LecturesList: React.FC<ListOfLecturesProps> = ({
                         cursor: 'pointer',
                         backgroundColor: '#8691ca',
                         margin: '10px',
-                        padding: '12px'
+                        padding: '12px',
+                        color: '#fff'
                     }}> {lection.title} </div>
             }) : 'No lectures'}</div>}
             {visibleEditLection &&

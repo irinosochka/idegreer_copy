@@ -29,7 +29,7 @@ const CartPage: FC<Props> = ({cartList, removeAllCoursesFromCart, addUserToCours
         });
         return sum;
     }
-    console.log(cartList);
+
     useEffect(() => {
         return () => setAddUserToCourseSuccess(false);
     }, [])

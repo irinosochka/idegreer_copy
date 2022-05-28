@@ -14,7 +14,7 @@ interface AddLectureProps {
     selectedCourseId: string | undefined,
     course: ICourse,
     onSuccessAddingLection: (bool: boolean) => void,
-    addLection: (title: string, description: string, duration: string, link: string, homework: string, courseId: string) => void,
+    addLection: (title: string, description: string, link: string, homework: string, courseId: string) => void,
     successAddingLection: boolean,
     errorAddingLection: boolean,
     addNotification: (date: string, courseId: string, type: string) => void,
@@ -36,7 +36,6 @@ const AddLecture: FC<AddLectureProps> = ({
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [duration, setDuration] = useState('');
     const [link, setLink] = useState('');
     const [homework, setHomework] = useState('');
     const [linkError, setLinkError] = useState(false);
@@ -58,14 +57,14 @@ const AddLecture: FC<AddLectureProps> = ({
 
     const handleSubmit = (e: React.FormEvent<EventTarget>) => {
         e.preventDefault()
-        if(title.length === 0 && description.length ===0 && duration.length ===0 && link.length === 0){
+        if(title.length === 0 && description.length ===0 && link.length === 0){
             setError(true);
         }
         else if (link.length !== 11 ) {
             setLinkError(true);
         } else {
             if(selectedCourseId) {
-                addLection(title, description, duration, link, homework, selectedCourseId);
+                addLection(title, description, link, homework, selectedCourseId);
             }
             const now = new Date().toLocaleDateString();
             addNotification(now, course._id, 'adding lection')
@@ -73,7 +72,6 @@ const AddLecture: FC<AddLectureProps> = ({
             // setCourseChanges(selectedCourse._id)
             setTitle('');
             setDescription('');
-            setDuration('');
             setLink('');
             onSuccessAddingLection(false);
             setLinkError(false);
@@ -98,12 +96,6 @@ const AddLecture: FC<AddLectureProps> = ({
                            onChange={(e) => setDescription(e.target.value)}
                         placeholder={'Description'}
                     /><label htmlFor="input" className="control-label">Description:</label>
-                </div>
-                <div className="input-wrapper">
-                    <input type="text" value={duration} className="form-control"
-                           onChange={(e) => setDuration(e.target.value)}
-                           placeholder={'Duration'}
-                    /><label htmlFor="input" className="control-label">Duration:</label>
                 </div>
                 <div className="input-wrapper">
                     <input type="text" value={link} className="form-control"
