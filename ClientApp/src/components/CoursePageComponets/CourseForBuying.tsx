@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import {actions as authActions} from "../../reduxStore/auth-reducer";
 import {
@@ -37,6 +37,8 @@ const CoursePage: FC<CourseProps> = ({
                                              addCourseToCart
                                          }) => {
 
+    const [isAdded, setAdded] = useState(false);
+
     const {id} = useParams();
     const navigate = useNavigate();
 
@@ -53,7 +55,6 @@ const CoursePage: FC<CourseProps> = ({
     };
 
 
-
     return (
         <div className="user_course" style={{marginLeft: '20px'}}>
             <div className="back__container" onClick={handleClose} style={{marginTop: '10px'}}>
@@ -61,11 +62,14 @@ const CoursePage: FC<CourseProps> = ({
             </div>
 
             <div className="course__container">
+                <div style={{backgroundColor: '#fff', borderRadius: '20px'}}>
                 <div className="programming-icon__container">
                     <img className="programming-icon" src={progIcon} alt=""/>
                 </div>
 
-                <div style={{display: "flex", justifyContent: 'space-between', marginTop: '20px'}}>
+
+
+                <div style={{display: "flex", justifyContent: 'space-between', marginTop: '20px', padding: '15px'}}>
                     <div style={{width: '600px'}}>
                         <h1 className="course-title">{course.title}</h1>
                         <p className="course-description">{course.description}</p>
@@ -77,9 +81,10 @@ const CoursePage: FC<CourseProps> = ({
                             <h3>Mentor: </h3>
                             {course.author && <p>{course.author.name}</p>}
                         </div>
-                        <Button onClick={() => {
+                        {!isAdded && <Button onClick={() => {
                             addCourseToCart(course);
-                        }}>Add to cart</Button>
+                            setAdded(true);
+                        }}>Add to cart</Button>}
                     </div>
                     <div>
                         <div className="info-container">
@@ -95,6 +100,7 @@ const CoursePage: FC<CourseProps> = ({
                             <p>{lections.length}</p>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
