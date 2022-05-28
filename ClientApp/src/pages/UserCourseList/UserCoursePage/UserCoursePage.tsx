@@ -40,13 +40,16 @@ const UserCoursePage: FC<UserCourseProps> = ({
             getAllLectionsFromCourse(id);
             getAllMembersFromCourse(id);
         }
+    }, []);
+
+    useEffect(() => {
         members.forEach(m => {
             if (m._id === authUser._id) {
                 setMember(true);
                 return
             }
         })
-    }, []);
+    }, [members])
 
     return (
         <div>
