@@ -33,13 +33,13 @@ interface UserCourseProps {
 }
 
 const UserCoursePage: FC<UserCourseProps> = ({
-                                             course,
-                                             authUser,
-                                             lections,
-                                             getOneCourse,
-                                             getAllLectionsFromCourse,
-                                             addHomeworkResponse
-                                         }) => {
+                                                 course,
+                                                 authUser,
+                                                 lections,
+                                                 getOneCourse,
+                                                 getAllLectionsFromCourse,
+                                                 addHomeworkResponse
+                                             }) => {
     const [activeLection, setActiveLection] = useState<ILection | null>();
     const [homeworkText, setHomeworkText] = useState('');
 
@@ -97,35 +97,35 @@ const UserCoursePage: FC<UserCourseProps> = ({
 
             <div className="lecture-player__container">
                 {activeLection &&
-                    <div>
-                        <h2 style={{textAlign: 'center'}}>{activeLection.title}</h2>
-                        <div style={{marginBottom: '20px'}}>
-                            <YouTube videoId={activeLection?.link}/>
+                <div>
+                    <h2 style={{textAlign: 'center'}}>{activeLection.title}</h2>
+                    <div style={{marginBottom: '20px'}}>
+                        <YouTube videoId={activeLection?.link}/>
+                    </div>
+
+                    <hr/>
+                    <div className="homework">
+                        <div style={{marginRight: '10px'}}>
+                            <PhotoMockup size={sizeTypes.small}/>
                         </div>
 
-                        <hr/>
-                        <div className="homework">
-                            <div style={{marginRight: '10px'}}>
-                                <PhotoMockup size={sizeTypes.small}/>
-                            </div>
-
-                            <div>
-                                {course.author &&
-                                    <h3>
-                                        {course.author.name}
-                                    </h3>}
-                                <p>
-                                    {activeLection.homework}
-                                </p>
-                            </div>
+                        <div>
+                            {course.author &&
+                            <h3>
+                                {course.author.name}
+                            </h3>}
+                            <p>
+                                {activeLection.homework}
+                            </p>
                         </div>
+                    </div>
 
-                        <div className="add-homework">
-                            <div style={{marginRight: '10px'}}>
-                                <PhotoMockup size={sizeTypes.small}/>
-                            </div>
-                            <form onSubmit={onHomeworkSubmit}>
-                                <div className="input-wrapper" style={{margin: '0'}}>
+                    <div className="add-homework">
+                        <div style={{marginRight: '10px'}}>
+                            <PhotoMockup size={sizeTypes.small}/>
+                        </div>
+                        <form onSubmit={onHomeworkSubmit}>
+                            <div className="input-wrapper" style={{margin: '0'}}>
                                  <textarea className="form-control"
                                            onChange={(event) => {
                                                setHomeworkText(event.target.value)
@@ -135,11 +135,11 @@ const UserCoursePage: FC<UserCourseProps> = ({
                                            id="homework_text"
                                            placeholder='Enter your homework'
                                  />
-                                </div>
-                                <Button>Submit</Button>
-                            </form>
-                        </div>
-                    </div>}
+                            </div>
+                            <Button>Submit</Button>
+                        </form>
+                    </div>
+                </div>}
             </div>
         </div>
     );
