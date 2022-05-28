@@ -17,6 +17,7 @@ import AddCourse from "./components/UserPanel/ProfessorPanel/AddCourse";
 import ManageRoles from "./components/UserPanel/AdminPanel/ManageRoles";
 import UserCourse from "./pages/UserCourseList/UserCoursePage/CoursePage";
 import ManageCourse from "./components/UserPanel/ProfessorPanel/ManageCourse";
+import UserCoursePage from "./pages/UserCourseList/UserCoursePage/UserCoursePage";
 
 interface AppProps {
     isAuth: boolean,
@@ -57,7 +58,7 @@ const App: FC<AppProps> = ({isAuth, isLoading, checkAuth}) => {
                             <Route path={'/add-course'} element={<AddCourse/>} />
                             <Route path={'/manage-roles'} element={<ManageRoles/>} />
                             <Route path={'/manage-course/:id'} element={<ManageCourse />} />
-                            <Route path={'/course/:id'} element={<UserCourse />} />
+                            <Route path={'/course/:id'} element={<UserCoursePage />} />
                             <Route path={'/cart'} element={<CartPage />} />
                         </Routes>
                     </div>

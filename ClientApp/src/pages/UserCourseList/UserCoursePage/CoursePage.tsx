@@ -8,7 +8,7 @@ import {
 import {ICourse} from "../../../models/ICourse";
 import {ILection} from "../../../models/ILection";
 import {AppStateType} from "../../../reduxStore/store";
-import {addUserToCourse, getOneCourse} from "../../../reduxStore/course-reducer";
+import {addUserToCourse, getAllMembersFromCourse, getOneCourse} from "../../../reduxStore/course-reducer";
 
 import backIcon from "../../../assets/img/back-svgrepo-com.svg"
 import "./userCoursePage.css"
@@ -125,4 +125,5 @@ export default connect(mapStateToProps, {
     getOneCourse,
     getAllLectionsFromCourse,
     addUserToCourse,
+    getAllMembersFromCourse
 })(CoursePage);

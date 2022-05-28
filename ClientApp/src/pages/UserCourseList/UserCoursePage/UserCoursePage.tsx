@@ -40,10 +40,13 @@ const UserCoursePage: FC<UserCourseProps> = ({
             getAllLectionsFromCourse(id);
             getAllMembersFromCourse(id);
         }
+        members.forEach(m => {
+            if (m._id === authUser._id) {
+                setMember(true);
+                return
+            }
+        })
     }, []);
-
-
-    // members.forEach(e => e._id === authUser._id ? setMember(true) : setMember(false));
 
     return (
         <div>
