@@ -16,7 +16,15 @@ class CourseService {
     }
 
     async getAllCourses(limit = 0) {
-        return CourseModel.find().limit(limit)
+        const courses = await CourseModel.find().limit(limit);
+        let coursesList = []
+        for (let i = 0; i < courses.length; ++i) {
+            const user = await UserModel.findOne({_id: courses[i].author._id});
+            coursesList.push({course: courses[i], author: user})
+        }
+        return {
+            courses: coursesList
+        }
     }
 
     async getCourseById(courseId) {
@@ -51,8 +59,13 @@ class CourseService {
         if(!courses) {
             throw new Error(`There is not courses of the author ${user.username}`)
         }
+        let coursesList = []
+        for (let i = 0; i < courses.length; ++i) {
+            const user = await UserModel.findOne({_id: courses[i].author._id});
+            coursesList.push({course: courses[i], author: user})
+        }
         return {
-            courses
+            courses: coursesList
         }
     }
 
@@ -83,8 +96,13 @@ class CourseService {
             throw new Error('This user dont exists')
         }
         const userCourseList = await CourseModel.find({ userList: { $all: [userId] } })
+        let coursesList = []
+        for (let i = 0; i < userCourseList.length; ++i) {
+            const user = await UserModel.findOne({_id: userCourseList[i].author._id});
+            coursesList.push({course: userCourseList[i], author: user})
+        }
         return {
-            userCourseList
+            courses: coursesList
         }
     }
 

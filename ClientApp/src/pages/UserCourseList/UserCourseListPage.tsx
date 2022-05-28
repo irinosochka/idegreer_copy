@@ -4,9 +4,10 @@ import {connect} from "react-redux";
 import {ICourse} from "../../models/ICourse";
 import CourseItem from "../../components/CourseItem/CourseItem";
 import {NavLink} from "react-router-dom";
+import {IUser} from "../../models/IUser";
 
 interface UserCourseListProps {
-    courses: ICourse[],
+    courses: Array<{ course: ICourse, author: IUser }>,
 }
 
 const UserCourseListPage: FC<UserCourseListProps> = ({courses}) => {
@@ -22,12 +23,12 @@ const UserCourseListPage: FC<UserCourseListProps> = ({courses}) => {
             <>
             <h3 className="page__title">Your Courses:</h3>
             <div className="courses__container" style={{marginTop: '-30px', paddingLeft: '65px'}}>
-                {courses.length !== 0 ? courses.map((course: ICourse) => {
-                        return <div key={course._id}
+                {courses.length !== 0 ? courses.map((course: { course: ICourse, author: IUser }) => {
+                        return <div key={course.course._id}
                                     onClick={() => {
                                         handleSelecting()
                                     }} style={{cursor: 'pointer'}}>
-                           <NavLink to={`/course/${course._id}`} ><CourseItem key={course._id} course={course}/></NavLink>
+                           <NavLink to={`/course/${course.course._id}`} ><CourseItem course={course}/></NavLink>
                         </div>
                         // return <NavLink key={course._id} to={`/course/${course._id}`}><CourseItem course={course} /></NavLink>
                     }
