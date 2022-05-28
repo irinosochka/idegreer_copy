@@ -25,6 +25,8 @@ const CoursesPageOfProfessor: FC<ProfessorCoursesProps> = ({courses, getCoursesO
 
             { courses.length !==0 &&
                 <table className="table">
+                    <thead></thead>
+                    <tbody>
                     <tr>
                         <th className="table__heading">Course name</th>
                         <th className="table__heading">Rate</th>
@@ -41,6 +43,10 @@ const CoursesPageOfProfessor: FC<ProfessorCoursesProps> = ({courses, getCoursesO
                 <div style={{marginTop: '40px', width: '100%'}}>
                     <h3 className="no-courses__info">You don't have a course. Add new course for starting teach in our platform.</h3>
                 </div>}
+                    </tbody>
+                    <tfoot></tfoot>
+                </table>
+            }
         </div>
     );
 };

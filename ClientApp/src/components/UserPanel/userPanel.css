@@ -89,6 +89,7 @@ input{
     padding: 8px 20px;
     border-radius: 8px;
     background: #8691ca;
+    margin-bottom: 10px;
 }
 
 .uploadButton {
