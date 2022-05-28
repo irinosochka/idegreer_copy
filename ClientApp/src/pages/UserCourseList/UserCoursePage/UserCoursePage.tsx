@@ -1,167 +1,69 @@
 import React, {FC, useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import {actions as authActions} from "../../../reduxStore/auth-reducer";
+import {actions as userActions} from "../../../reduxStore/user-reducer";
 import {
-    actions as lectionActions,
-    addHomeworkResponse,
     getAllLectionsFromCourse
 } from "../../../reduxStore/lection-reducer";
-import YouTube from "react-youtube";
-import {ICourse} from "../../../models/ICourse";
-import {ILection} from "../../../models/ILection";
 import {AppStateType} from "../../../reduxStore/store";
-import {addUserToCourse, getAllMembersFromCourse, getOneCourse} from "../../../reduxStore/course-reducer";
-import PhotoMockup, {sizeTypes} from "../../../common/photoMockup/PhotoMockup";
-
-import backIcon from "../../../assets/img/back-svgrepo-com.svg"
-import LectureList from "../../../components/CourseItem/Lecture/LectureList";
-
+import {getAllMembersFromCourse, getOneCourse} from "../../../reduxStore/course-reducer";
 import "./userCoursePage.css"
-import Button from "../../../common/button/Button";
 import {IUser} from "../../../models/IUser";
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
+import CourseForBuying from "../../../components/CoursePageComponets/CourseForBuying";
+import UserCourse from "../../../components/CoursePageComponets/UserCourse";
+import {ICourse} from "../../../models/ICourse";
 
 interface UserCourseProps {
-    authUser: IUser,
     course: ICourse,
+    authUser: IUser,
     getOneCourse: (courseId: string) => void,
-    getAllLectionsFromCourse: (courseId: string) => void,
-    setLection: () => void,
-    lections: ILection[],
+    members: Array<IUser>,
     getAllMembersFromCourse: (courseId: string) => void,
-    addHomeworkResponse: (userId: string, courseId: string, lectionId: string, resp: string) => void
+
 }
 
 const UserCoursePage: FC<UserCourseProps> = ({
                                                  course,
                                                  authUser,
-                                                 lections,
+                                                 members,
                                                  getOneCourse,
-                                                 getAllLectionsFromCourse,
-                                                 addHomeworkResponse
-                                             }) => {
-    const [activeLection, setActiveLection] = useState<ILection | null>();
-    const [homeworkText, setHomeworkText] = useState('');
+                                                 getAllMembersFromCourse,
+                                         }) => {
 
     const {id} = useParams();
-    const navigate = useNavigate();
+    const [isMember, setMember] = useState(false);
 
     useEffect(() => {
         if (id) {
             getOneCourse(id);
             getAllLectionsFromCourse(id);
+            getAllMembersFromCourse(id);
         }
     }, []);
 
 
-    const handleClose = (event: React.FormEvent) => {
-        event.preventDefault();
-    };
-
-    const onHomeworkSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (authUser && activeLection && homeworkText && id) {
-            addHomeworkResponse(authUser._id, id, activeLection._id, homeworkText)
-        }
-    }
+    // members.forEach(e => e._id === authUser._id ? setMember(true) : setMember(false));
 
     return (
-        <div className="user_course">
-            <div className="back__container" onClick={handleClose}>
-                <img src={backIcon} onClick={() => navigate(-1)} alt=""/>
-            </div>
-
-            <div className="course-info__container">
-                <h2>{course.title}</h2>
-                <div className="evaluation">
-                    <span>★★★★★</span>
-                    <p style={{marginLeft: '8px'}}>5/5 (236 reviews)</p>
-                </div>
-                <div className="mentor-info">
-                    <PhotoMockup size={sizeTypes.small}/>
-                    <div style={{marginLeft: '10px'}}>
-                        <p>Mentor</p>
-                        {course.author && <h4>{course.author.name}</h4>}
-                    </div>
-                </div>
-
-                {activeLection && <div className="lecture-description">
-                    {activeLection.description}
-                </div>}
-
-
-                <hr style={{width: '300px'}}/>
-
-                <LectureList lessons={lections} setActiveLection={setActiveLection}/>
-            </div>
-
-            <div className="lecture-player__container">
-                {activeLection &&
-                <div>
-                    <h2 style={{textAlign: 'center'}}>{activeLection.title}</h2>
-                    <div style={{marginBottom: '20px'}}>
-                        <YouTube videoId={activeLection?.link}/>
-                    </div>
-
-                    <hr/>
-                    <div className="homework">
-                        <div style={{marginRight: '10px'}}>
-                            <PhotoMockup size={sizeTypes.small}/>
-                        </div>
-
-                        <div>
-                            {course.author &&
-                            <h3>
-                                {course.author.name}
-                            </h3>}
-                            <p>
-                                {activeLection.homework}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="add-homework">
-                        <div style={{marginRight: '10px'}}>
-                            <PhotoMockup size={sizeTypes.small}/>
-                        </div>
-                        <form onSubmit={onHomeworkSubmit}>
-                            <div className="input-wrapper" style={{margin: '0'}}>
-                                 <textarea className="form-control"
-                                           onChange={(event) => {
-                                               setHomeworkText(event.target.value)
-                                           }}
-                                           value={homeworkText}
-                                           name="textarea"
-                                           id="homework_text"
-                                           placeholder='Enter your homework'
-                                 />
-                            </div>
-                            <Button>Submit</Button>
-                        </form>
-                    </div>
-                </div>}
-            </div>
+        <div>
+            {isMember ? <UserCourse /> : <CourseForBuying />}
         </div>
     );
 };
 
 const mapStateToProps = (state: AppStateType) => {
     return {
+        course: state.course.course,
         authUser: state.auth.authUser,
         isLoading: state.auth.isLoading,
-        lections: state.lection.lections,
-        course: state.course.course,
-        addUserToCourseSuccess: state.course.addUserToCourseSuccess,
-        addUserToCourseError: state.course.addUserToCourseError,
+        members: state.course.members
     }
 }
 
 export default connect(mapStateToProps, {
-    setLection: lectionActions.setLections,
     setLoading: authActions.setLoading,
+    addCourseToCart: userActions.addCourseToCart,
     getOneCourse,
-    getAllLectionsFromCourse,
-    addUserToCourse,
     getAllMembersFromCourse,
-    addHomeworkResponse
 })(UserCoursePage);

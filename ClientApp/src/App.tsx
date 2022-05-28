@@ -48,7 +48,7 @@ const App: FC<AppProps> = ({isAuth, isLoading, checkAuth}) => {
                 {isAuth && <Navbar/>}
                 <div style={{display: 'flex'}}>
                     {isAuth && <UserPage/>}
-                    <div style={{width: `${isAuth ? 'calc(100% - 700px)' : '100%'}`, background: 'rgb(212 206 250)', padding: '20px' }}>
+                    <div style={{width: `${isAuth ? 'calc(100% - 700px)' : '100%'}`, background: '#e0e3f1', padding: '10px' }}>
                         <Routes>
                             <Route path={'/auth'} element={<AuthPage/>} />
                             <Route path={'/'} element={<CourseCatalog/>} />
@@ -63,7 +63,7 @@ const App: FC<AppProps> = ({isAuth, isLoading, checkAuth}) => {
                     </div>
                     {
                         isAuth &&
-                        <div className="rightMenu__wrapper" style={{width: '400px', background: 'rgb(212 206 250)'}}>
+                        <div className="rightMenu__wrapper" style={{width: '400px', background: '#e0e3f1'}}>
                             <RightMenu/>
                         </div>
                     }
