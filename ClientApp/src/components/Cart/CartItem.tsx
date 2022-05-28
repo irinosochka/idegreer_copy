@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import '../CourseItem/cartItem.css';
+import './cartItem.css';
 import {ICourse} from "../../models/ICourse";
 import progIcon from "../../assets/img/programmingIcon.svg";
 import removeIcon from "../../assets/img/remove-svgrepo-com.svg";

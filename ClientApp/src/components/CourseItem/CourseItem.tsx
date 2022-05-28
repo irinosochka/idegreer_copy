@@ -24,7 +24,7 @@ const CourseItem: FC<CourseItemProps> = ({course}) => {
                 }
                 <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                     <p className="course__description" style={{textAlign: 'center', fontWeight: 'bold', fontSize: '24px'}}>{course.price !== '0' ? '$' + course.price : 'Free'}</p>
-                    <div style={{cursor: 'pointer', background: '#e6ebff', padding: '10px', borderRadius: '50px', height: '20px', width: '20px', textAlign: 'center', color: '#8691ca'}}>+</div>
+                    {/*<div style={{cursor: 'pointer', background: '#e6ebff', padding: '10px', borderRadius: '50px', height: '20px', width: '20px', textAlign: 'center', color: '#8691ca'}}>+</div>*/}
                 </div>
             </div>
         </div>

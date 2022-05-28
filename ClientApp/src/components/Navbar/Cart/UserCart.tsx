@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {getCoursesOfUser} from "../../../reduxStore/course-reducer";
 import {ICourse} from "../../../models/ICourse";
 import {IUser} from "../../../models/IUser";
-import CartItem from "../../CourseItem/CartItem";
+import CartItem from "../../Cart/CartItem";
 
 interface UserCourseListProps {
     authUser: IUser,
