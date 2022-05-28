@@ -8,9 +8,10 @@ import {getAllLectionsFromCourse} from "../../../reduxStore/lection-reducer";
 import progIcon from "../../../assets/img/programmingIcon.svg";
 import starIcon from "../../../assets/img/star-svgrepo-com.svg"
 import {useNavigate} from "react-router-dom";
+import {IUser} from "../../../models/IUser";
 
 interface CourseItemProps {
-    courseItem: ICourse,
+    courseItem: { course: ICourse, author: IUser },
     getAllLectionsFromCourse: (courseId: string) => void,
     lections: ILection[],
     members: Array<string>,
@@ -26,17 +27,17 @@ const CourseItem: FC<CourseItemProps> = ({
                                     }) => {
 
     useEffect(() => {
-        getAllLectionsFromCourse(courseItem._id);
+        getAllLectionsFromCourse(courseItem.course._id);
     }, [courseItem]);
 
     useEffect(() => {
-        getAllMembersFromCourse(courseItem._id);
+        getAllMembersFromCourse(courseItem.course._id);
     }, []);
 
     const navigate = useNavigate()
 
     const handleRowClick = () => {
-        navigate(`/manage-course/${courseItem._id}`)
+        navigate(`/manage-course/${courseItem.course._id}`)
     }
     return (
         <tr onClick={()=> handleRowClick()} className="table__row" style={{cursor: "pointer"}}>
@@ -45,7 +46,7 @@ const CourseItem: FC<CourseItemProps> = ({
                     <img className="course__icon" src={progIcon} alt=""/>
                 </div>
                 <div>
-                    <p className="course-title__text">{courseItem.title}</p>
+                    <p className="course-title__text">{courseItem.course.title}</p>
                     <p className="author__text">{courseItem.author.name}</p>
                 </div>
             </td>
@@ -57,7 +58,7 @@ const CourseItem: FC<CourseItemProps> = ({
             </td>
             <td className="table__content" data-heading="Type">
                 <div className="type__text">
-                    <p>{courseItem.theme}</p>
+                    <p>{courseItem.course.theme}</p>
                 </div>
             </td>
 

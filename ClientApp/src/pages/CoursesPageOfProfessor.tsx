@@ -9,7 +9,7 @@ import ProfessorCourseItem from "../components/UserPanel/ProfessorPanel/Professo
 
 interface ProfessorCoursesProps {
     authUser: IUser,
-    courses: ICourse[],
+    courses: Array<{ course: ICourse, author: IUser }>,
     getCoursesOfAuthor: (authorId: string) => void
 }
 
@@ -34,8 +34,8 @@ const CoursesPageOfProfessor: FC<ProfessorCoursesProps> = ({courses, getCoursesO
                         <th className="table__heading">Members</th>
                         <th className="table__heading">Lectures</th>
                     </tr>
-                    {courses.map((course: ICourse) => {
-                        return <ProfessorCourseItem key={course._id} courseItem={course}/>
+                    {courses.map((course: { course: ICourse, author: IUser }) => {
+                        return <ProfessorCourseItem key={course.course._id} courseItem={course}/>
                     })
                     }
                     </tbody>

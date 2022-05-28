@@ -11,9 +11,9 @@ type ThunkType = BaseThunkType<ActionsType>
 const INITIAL_STATE = {
 
     course: {} as ICourse,
-    courses: [] as Array<ICourse>,
-    authorCourses: [] as Array<ICourse>,
-    userCourses: [] as Array<ICourse>,
+    courses: [] as Array<any>,
+    authorCourses: [] as Array<any>,
+    userCourses: [] as Array<any>,
     members: [] as Array<any>, //to change
 
     /* Errors */
@@ -120,7 +120,7 @@ const courseReducer = (state: InitialStateType = INITIAL_STATE, action: ActionsT
 
 export const actions = {
     setGetAllCourseError: (bool: boolean) => ({type: "GET_ALL_COURSE_ERROR", payload: bool} as const),
-    setCourses: (courses: Array<ICourse>) => ({type: "SET_COURSES", payload: courses} as const),
+    setCourses: (courses: Array<any>) => ({type: "SET_COURSES", payload: courses} as const),
     setCourse: (course: ICourse) => ({type: "SET_COURSE", payload: course} as const),
     setAddCourseError: (bool: boolean) => ({type: "SET_ADD_COURSE_ERROR", payload: bool} as const),
     setCourseDataChangedSuccess: (bool: boolean) => ({
@@ -129,8 +129,8 @@ export const actions = {
     } as const),
     addNewCourse: (course: ICourse) => ({type: "ADD_NEW_COURSE", payload: course} as const),
     setDeleteCourseByIdSuccess: (bool: boolean) => ({type: "SET_DELETE_COURSE_BY_ID_SUCCESS", payload: bool} as const),
-    setAuthorCourses: (courses: Array<ICourse>) => ({type: "SET_AUTHOR_COURSES", payload: courses} as const),
-    setUserCourses: (courses: Array<ICourse>) => ({type: "SET_USER_COURSES", payload: courses} as const),
+    setAuthorCourses: (courses: Array<any>) => ({type: "SET_AUTHOR_COURSES", payload: courses} as const),
+    setUserCourses: (courses: Array<any>) => ({type: "SET_USER_COURSES", payload: courses} as const),
     getAllMembersFromCourse: (members: Array<IUser>) => ({type: "GET_ALL_MEMBERS_FROM_COURSE", payload: members} as const),
     setAddUserToCourseError: (bool: boolean) => ({type: "SET_ADD_USER_TO_COURSE_ERROR", payload: bool} as const),
     setAddUserToCourseSuccess: (bool: boolean) => ({type: "SET_ADD_USER_TO_COURSE_SUCCESS", payload: bool} as const),
@@ -173,7 +173,7 @@ export const getAllCourses = (): ThunkType =>
         try {
             const response = await CourseService.getCourses();
             if (response.data.resultCode === 1) {
-                dispatch(actions.setCourses(response.data.data))
+                dispatch(actions.setCourses(response.data.data.courses))
             } else {
                 dispatch(actions.setGetAllCourseError(true))
             }
@@ -201,7 +201,7 @@ export const getCoursesOfUser = (userId: string): ThunkType =>
         try {
             const response = await CourseService.getUserCourseList(userId);
             if (response.data.resultCode === 1) {
-                dispatch(actions.setUserCourses(response.data.data.userCourseList))
+                dispatch(actions.setUserCourses(response.data.data.courses))
             } else {
             }
         } catch (e) {
