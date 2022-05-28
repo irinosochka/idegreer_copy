@@ -20,7 +20,7 @@ import {actions as userActions} from "../../reduxStore/user-reducer";
 
 interface CourseProps {
     authUser: IUser,
-    course: ICourse,
+    course: { course: ICourse, author: IUser },
     getOneCourse: (courseId: string) => void,
     getAllLectionsFromCourse: (courseId: string) => void,
     lections: ILection[],
@@ -67,24 +67,24 @@ const CoursePage: FC<CourseProps> = ({
 
                 <div style={{display: "flex", justifyContent: 'space-between', marginTop: '20px'}}>
                     <div style={{width: '600px'}}>
-                        <h1 className="course-title">{course.title}</h1>
-                        <p className="course-description">{course.description}</p>
+                        <h1 className="course-title">{course.course.title}</h1>
+                        <p className="course-description">{course.course.description}</p>
                         <div className="info">
                             <h3>Type: </h3>
-                            <p>{course.theme}</p>
+                            <p>{course.course.theme}</p>
                         </div>
                         <div className="info">
                             <h3>Mentor: </h3>
                             {course.author && <p>{course.author.name}</p>}
                         </div>
                         <Button onClick={() => {
-                            addCourseToCart(course);
+                            addCourseToCart(course.course);
                         }}>Add to cart</Button>
                     </div>
                     <div>
                         <div className="info-container">
                             <h3>Price: </h3>
-                            <p>$ {course.price}</p>
+                            <p>$ {course.course.price}</p>
                         </div>
                         <div className="info-container">
                             <h3>Rate: </h3>

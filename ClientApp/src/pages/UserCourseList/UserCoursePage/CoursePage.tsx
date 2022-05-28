@@ -14,9 +14,10 @@ import backIcon from "../../../assets/img/back-svgrepo-com.svg"
 import "./userCoursePage.css"
 import {useNavigate, useParams} from "react-router-dom";
 import progIcon from "../../../assets/img/programmingIcon.svg";
+import {IUser} from "../../../models/IUser";
 
 interface UserCourseProps {
-    course: ICourse,
+    course: { course: ICourse, author: IUser },
     getOneCourse: (courseId: string) => void,
     getAllLectionsFromCourse: (courseId: string) => void,
     setLection: () => void,
@@ -59,11 +60,11 @@ const CoursePage: FC<UserCourseProps> = ({
 
                 <div style={{display: "flex", justifyContent: 'space-between', marginTop: '20px'}}>
                     <div style={{width: '600px'}}>
-                        <h1 className="course-title">{course.title}</h1>
-                        <p className="course-description">{course.description}</p>
+                        <h1 className="course-title">{course.course.title}</h1>
+                        <p className="course-description">{course.course.description}</p>
                         <div className="info">
                             <h3>Type: </h3>
-                            <p>{course.theme}</p>
+                            <p>{course.course.theme}</p>
                         </div>
                         <div className="info">
                             <h3>Mentor: </h3>
@@ -73,7 +74,7 @@ const CoursePage: FC<UserCourseProps> = ({
                     <div>
                         <div className="info-container">
                             <h3>Price: </h3>
-                            <p>$ {course.price}</p>
+                            <p>$ {course.course.price}</p>
                         </div>
                         <div className="info-container">
                             <h3>Rate: </h3>

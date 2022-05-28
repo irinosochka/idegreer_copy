@@ -15,7 +15,7 @@ import UserCourse from "../../../components/CoursePageComponets/UserCourse";
 import {ICourse} from "../../../models/ICourse";
 
 interface UserCourseProps {
-    course: ICourse,
+    course: { course: ICourse, author: IUser },
     authUser: IUser,
     getOneCourse: (courseId: string) => void,
     members: Array<IUser>,

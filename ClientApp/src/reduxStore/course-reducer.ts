@@ -10,7 +10,7 @@ type ThunkType = BaseThunkType<ActionsType>
 
 const INITIAL_STATE = {
 
-    course: {} as ICourse,
+    course: {} as { course: ICourse, author: IUser },
     courses: [] as Array<any>,
     authorCourses: [] as Array<any>,
     userCourses: [] as Array<any>,
@@ -121,7 +121,7 @@ const courseReducer = (state: InitialStateType = INITIAL_STATE, action: ActionsT
 export const actions = {
     setGetAllCourseError: (bool: boolean) => ({type: "GET_ALL_COURSE_ERROR", payload: bool} as const),
     setCourses: (courses: Array<any>) => ({type: "SET_COURSES", payload: courses} as const),
-    setCourse: (course: ICourse) => ({type: "SET_COURSE", payload: course} as const),
+    setCourse: (course: { course: ICourse, author: IUser }) => ({type: "SET_COURSE", payload: course} as const),
     setAddCourseError: (bool: boolean) => ({type: "SET_ADD_COURSE_ERROR", payload: bool} as const),
     setCourseDataChangedSuccess: (bool: boolean) => ({
         type: "SET_COURSE_DATA_CHANGING_SUCCESS",
@@ -229,7 +229,7 @@ export const getOneCourse = (courseId: string): ThunkType =>
         try {
             const response = await CourseService.getCourse(courseId);
             if (response.data.resultCode === 1) {
-                dispatch(actions.setCourse(response.data.data))
+                dispatch(actions.setCourse(response.data.data.course))
             } else {
             }
         } catch (e) {
