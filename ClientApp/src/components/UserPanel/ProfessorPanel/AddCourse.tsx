@@ -47,6 +47,7 @@ const AddCourse: FC<AddCourseProps> = ({authUser, courses, addCourse}) => {
 
     return (
         <div className="user__container"  style={{background: '#fff', borderRadius: '10px', padding: '20px'}}>
+            <h3 className="page__title">Add Course:</h3>
             <form onSubmit={onAddCourseHandler}>
                 {emptyError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
                 {successAddCourse && <Message type={MessageType.SUCCESS}>The course was successfully added</Message>}
