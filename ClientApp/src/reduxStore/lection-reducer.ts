@@ -92,7 +92,7 @@ export const actions = {
 export const addLection = (title: string, description: string, duration: string, link: string, homework: string, courseId: string): ThunkType => {
     return async (dispatch: Dispatch<any>) => {
         try {
-            const response = await LectionService.addLection(title, description, duration, link, courseId, homework);
+            const response = await LectionService.addLection(title, description, duration, link, homework, courseId);
             if (response.data.resultCode === 1) {
                 dispatch(actions.onSuccessAddingLection(true));
             } else {

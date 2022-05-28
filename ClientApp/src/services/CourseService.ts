@@ -20,6 +20,12 @@ export default class CourseService {
         }).catch(e => console.log(e))
     }
 
+    static getMembersCountOfCourse(courseId: string): Promise<any> {
+        return $course.get<Array<CourseResponse>>(`/getMembersCountOfCourse/${courseId}`).then(res => {
+            return res
+        }).catch(e => console.log(e))
+    }
+
     static getCoursesOfAuthor(authorId: string): Promise<any> {
         return $course.get<Array<CourseResponse>>(`/getCoursesByAuthorId/${authorId}`).then(res => {
             return res
@@ -41,7 +47,6 @@ export default class CourseService {
     static getAllUsersFromCourse(courseId : string): Promise<any> {
         return $course.get<Array<CourseResponse>>(`getAllUsersFromCourse/${courseId}`).then(res =>{
             return res
-            console.log(res);
         }).catch(e => console.log(e))
     }
     // верхня функція - при загрузці сторінки має відправлятись запит з айді актуального курсу,

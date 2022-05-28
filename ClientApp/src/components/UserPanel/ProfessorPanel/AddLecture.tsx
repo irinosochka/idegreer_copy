@@ -47,6 +47,9 @@ const AddLecture: FC<AddLectureProps> = ({
         if (selectedCourseId) {
             getOneCourse(selectedCourseId)
         }
+    }, [])
+
+    useEffect(() => {
         return () => {
             onSuccessAddingLection(false)
             setLinkError(false)
@@ -61,7 +64,9 @@ const AddLecture: FC<AddLectureProps> = ({
         else if (link.length !== 11 ) {
             setLinkError(true);
         } else {
-            addLection(title, description, duration, link, homework, course._id);
+            if(selectedCourseId) {
+                addLection(title, description, duration, link, homework, selectedCourseId);
+            }
             const now = new Date().toLocaleDateString();
             addNotification(now, course._id, 'adding lection')
             sendEditLectionMail(course._id, course.title, mailMessageType.ADD_LECTION)

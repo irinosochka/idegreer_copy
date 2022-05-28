@@ -100,6 +100,15 @@ class CourseController {
         }
     }
 
+    async getMembersCountOfCourse(req, res) {
+        try {
+            const id = req.params.id
+            const data = await courseService.getMembersCountOfCourse(id);
+            return res.json({data, resultCode: 1})
+        } catch {
+            return res.json({message: "Getting members count of course error", resultCode: 0})
+        }
+    }
 }
 
 module.exports = new CourseController()

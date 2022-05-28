@@ -31,7 +31,7 @@ const CourseItem: FC<CourseItemProps> = ({
 
     useEffect(() => {
         getAllMembersFromCourse(courseItem._id);
-    }, [courseItem]);
+    }, []);
 
     const navigate = useNavigate()
 

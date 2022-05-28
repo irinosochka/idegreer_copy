@@ -20,7 +20,6 @@ const ManageCourse: React.FC<ManageCourseProps> = ({ }) => {
     const [slideItem, setSlideItem] = useState('editCourse');
 
     const {id} = useParams();
-
     return (
         <div className="user__container">
             <div style={{display: 'inline-flex', width: '540px'}}>

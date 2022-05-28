@@ -243,7 +243,6 @@ export const getAllMembersFromCourse = (courseId: string): ThunkType => {
             const response = await CourseService.getAllUsersFromCourse(courseId);
             if (response.data.resultCode === 1) {
                 dispatch(actions.getAllMembersFromCourse(response.data.data.userList))
-            } else {
             }
         } catch(e) {
             console.log(e);
@@ -268,11 +267,26 @@ export const addUserToCourse = (courseId: string, userId: string): ThunkType => 
 }
 
 export const setCourseChanges = (courseId: string): ThunkType => {
-    return async (dispatch: Dispatch<any>) => {
+    return async () => {
         try {
             const response = await CourseService.setCourseChanges(courseId);
             if (response.data.resultCode === 1) {
                 console.log(`Course ${courseId} was changed`);
+            } else {
+                console.log('course changing error')
+            }
+        } catch(e) {
+            console.log(e);
+        }
+    }
+}
+
+export const getMembersCountOfCourse = (courseId: string): ThunkType => {
+    return async () => {
+        try {
+            const response = await CourseService.getMembersCountOfCourse(courseId);
+            if (response.data.resultCode === 1) {
+                return response.data.data.membersCount
             } else {
                 console.log('course changing error')
             }

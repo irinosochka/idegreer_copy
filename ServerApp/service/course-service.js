@@ -144,6 +144,16 @@ class CourseService {
         }
         return CourseModel.find({wasChanges: true})
     }
+
+    async getMembersCountOfCourse(courseId) {
+        const course = await CourseModel.findOne({_id: courseId});
+        if(!course) {
+            throw new Error('This course doesn\'t exists')
+        }
+        return {
+            membersCount: course.userList.length
+        }
+    }
 }
 
 module.exports = new CourseService()

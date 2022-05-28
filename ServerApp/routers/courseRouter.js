@@ -13,6 +13,7 @@ router.get('/getCoursesByAuthorId/:id', courseController.getCoursesOfAuthor)
 router.get('/getUserCourseList/:id', courseController.getUserCourseList)
 router.get('/getAllUsersFromCourse/:id', courseController.getAllUsersFromCourse)
 router.get('/getAllUsersFromCourse/:id', courseController.getAllUsersFromCourse)
+router.get('/getMembersCountOfCourse/:id', courseController.getMembersCountOfCourse)
 router.delete('/deleteCourseById/:id', courseController.deleteCourseById)
 
 module.exports = router;
