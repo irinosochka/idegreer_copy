@@ -1,33 +1,40 @@
 import React, {FC, useEffect} from 'react';
 import {connect} from "react-redux";
 import {actions as authActions} from "../../reduxStore/auth-reducer";
-import { getAllLectionsFromCourse } from "../../reduxStore/lection-reducer";
+import {
+    getAllLectionsFromCourse
+} from "../../reduxStore/lection-reducer";
 import {ICourse} from "../../models/ICourse";
 import {ILection} from "../../models/ILection";
 import {AppStateType} from "../../reduxStore/store";
-import {addUserToCourse, getAllMembersFromCourse, getOneCourse} from "../../reduxStore/course-reducer";
+import {getOneCourse} from "../../reduxStore/course-reducer";
 
 import backIcon from "../../assets/img/back-svgrepo-com.svg"
 
 import "./course.css"
-
+import Button from "../../common/button/Button";
+import {IUser} from "../../models/IUser";
 import {useNavigate, useParams} from "react-router-dom";
-
 import progIcon from "../../assets/img/programmingIcon.svg";
+import {actions as userActions} from "../../reduxStore/user-reducer";
 
 interface CourseProps {
+    authUser: IUser,
     course: ICourse,
     getOneCourse: (courseId: string) => void,
     getAllLectionsFromCourse: (courseId: string) => void,
     lections: ILection[],
-    getAllMembersFromCourse: (courseId: string) => void,
+    addCourseToCart: (course: ICourse) => void,
+
 }
 
-const CourseForBuying: FC<CourseProps> = ({
+const CoursePage: FC<CourseProps> = ({
                                              course,
+                                             authUser,
                                              lections,
                                              getOneCourse,
                                              getAllLectionsFromCourse,
+                                             addCourseToCart
                                          }) => {
 
     const {id} = useParams();
@@ -44,6 +51,8 @@ const CourseForBuying: FC<CourseProps> = ({
     const handleClose = (event: React.FormEvent) => {
         event.preventDefault();
     };
+
+
 
     return (
         <div className="user_course" style={{marginLeft: '20px'}}>
@@ -66,8 +75,11 @@ const CourseForBuying: FC<CourseProps> = ({
                         </div>
                         <div className="info">
                             <h3>Mentor: </h3>
-                            <p>{course.author.name}</p>
+                            {course.author && <p>{course.author.name}</p>}
                         </div>
+                        <Button onClick={() => {
+                            addCourseToCart(course);
+                        }}>Add to cart</Button>
                     </div>
                     <div>
                         <div className="info-container">
@@ -85,24 +97,6 @@ const CourseForBuying: FC<CourseProps> = ({
                     </div>
                 </div>
             </div>
-
-            {/*<div className="course-info__container">*/}
-            {/*    <h2>{course.title}</h2>*/}
-            {/*    <div className="evaluation">*/}
-            {/*        <span>★★★★★</span>*/}
-            {/*        <p style={{marginLeft: '8px'}}>5/5 (236 reviews)</p>*/}
-            {/*    </div>*/}
-            {/*    <div className="mentor-info">*/}
-            {/*        <PhotoMockup size={sizeTypes.small}/>*/}
-            {/*        <div style={{marginLeft: '10px'}}>*/}
-            {/*            <p>Mentor</p>*/}
-            {/*            {course.author && <h4>{course.author.name}</h4>}*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-
-            {/*    <hr style={{width: '300px'}}/>*/}
-
-            {/*</div>*/}
         </div>
     );
 };
@@ -112,6 +106,7 @@ const mapStateToProps = (state: AppStateType) => {
         authUser: state.auth.authUser,
         isLoading: state.auth.isLoading,
         lections: state.lection.lections,
+        course: state.course.course,
     }
 }
 
@@ -119,6 +114,6 @@ export default connect(mapStateToProps, {
     setLoading: authActions.setLoading,
     getOneCourse,
     getAllLectionsFromCourse,
-    addUserToCourse,
-    getAllMembersFromCourse,
-})(CourseForBuying);
+    addCourseToCart: userActions.addCourseToCart,
+})(CoursePage);
+

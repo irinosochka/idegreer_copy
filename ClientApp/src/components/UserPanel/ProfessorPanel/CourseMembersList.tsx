@@ -7,7 +7,7 @@ import {IUser} from "../../../models/IUser";
 
 interface CourseMembersListProps {
     selectedCourseId: string | undefined,
-    members: Array<IUser>,
+    members: Array<any>,
     getAllMembersFromCourse: (courseId: string) => void,
 }
 
