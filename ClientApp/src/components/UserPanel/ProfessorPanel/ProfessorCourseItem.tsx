@@ -1,7 +1,6 @@
 import React, {FC, useEffect} from 'react';
 import {connect} from "react-redux";
 import {ICourse} from "../../../models/ICourse";
-import {ILection} from "../../../models/ILection";
 import {AppStateType} from "../../../reduxStore/store";
 import {addUserToCourse, getAllMembersFromCourse} from "../../../reduxStore/course-reducer";
 import {getAllLectionsFromCourse} from "../../../reduxStore/lection-reducer";
@@ -12,19 +11,11 @@ import {IUser} from "../../../models/IUser";
 
 interface CourseItemProps {
     courseItem: { course: ICourse, author: IUser },
-    getAllLectionsFromCourse: (courseId: string) => void,
-    lections: ILection[],
-    members: Array<string>,
-    getAllMembersFromCourse: (courseId: string) => void,
 }
 
 const CourseItem: FC<CourseItemProps> = ({
-                                        courseItem,
-                                        lections,
-                                        getAllLectionsFromCourse,
-                                        members,
-                                        getAllMembersFromCourse,
-                                    }) => {
+                                             courseItem,
+                                         }) => {
 
     useEffect(() => {
         getAllLectionsFromCourse(courseItem.course._id);
@@ -36,11 +27,16 @@ const CourseItem: FC<CourseItemProps> = ({
 
     const navigate = useNavigate()
 
-    const handleRowClick = () => {
+    const handleManageCourse = () => {
         navigate(`/manage-course/${courseItem.course._id}`)
     }
+
+    const handleShowHomeworks = () => {
+        navigate(`/homeworks-list/${courseItem.course._id}`)
+    }
+
     return (
-        <tr onClick={()=> handleRowClick()} className="table__row" style={{cursor: "pointer"}}>
+        <tr className="table__row">
             <td className="table__content course-info__content" data-heading="Course name">
                 <div className="course-icon__content">
                     <img className="course__icon" src={progIcon} alt=""/>
@@ -62,21 +58,17 @@ const CourseItem: FC<CourseItemProps> = ({
                 </div>
             </td>
 
-            <td className="table__content" data-heading="Members">{members.length}</td>
-            <td className="table__content" data-heading="Lectures">{lections.length}</td>
+            <td className="table-button__content" data-heading="Lectures" onClick={()=> handleShowHomeworks()}>Show homeworks</td>
+            <td className="table-button__content" data-heading="Course" onClick={()=> handleManageCourse()}>Manage course</td>
         </tr>
     );
 };
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        lections: state.lection.lections,
-        members: state.course.members
     }
 }
 
 export default connect(mapStateToProps, {
-    getAllLectionsFromCourse,
     addUserToCourse,
-    getAllMembersFromCourse
 })(CourseItem);
