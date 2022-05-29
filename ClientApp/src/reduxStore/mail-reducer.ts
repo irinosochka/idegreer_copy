@@ -29,16 +29,16 @@ export const sendEditMail = (courseId: string, lectionTitle: string, messageType
     let message;
         switch (messageType) {
             case 'addLection':
-                message = `Lection was added to course ${lectionTitle}, go to iDegreer page and see it`
+                message = `Lection was added to course ${lectionTitle}.`
                 break;
             case 'editLection':
-                message = `Lection ${lectionTitle} was edited, go to iDegreer page and see it`
+                message = `Lection ${lectionTitle} was edited.`
                 break;
             case 'editCourse':
-                message = `Course ${lectionTitle} was edited, go to iDegreer page and see it`
+                message = `Course ${lectionTitle} was edited.`
                 break;
             default:
-                message = `Lection ${lectionTitle} was deleted, go to iDegreer page and see it`
+                message = `Lection ${lectionTitle} was deleted.`
                 break;
         }
         return await MailService.sendMailAboutLectionChange(courseId, message)

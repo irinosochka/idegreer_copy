@@ -122,7 +122,7 @@ const EditLecture: React.FC<SelectedLectionProps> = ({
                                   setHomework(event.target.value);
                               }}
                               value={homework}
-                              placeholder={'Homework'}
+                              placeholder={`Homework: ${selectedLection.homework}`}
                               style={{resize: "none", marginBottom: '10px', padding: '5px 15px', width: 'calc(100% - 32px)', height: '80px', borderRadius: '5px'}}
                     /><label style={{ transform: 'translateY(-70px)'}} htmlFor="input" className="control-label">Homework:</label>
                 </div>

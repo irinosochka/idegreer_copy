@@ -29,6 +29,25 @@ class MailController {
             to: mailList, // list of receivers
             subject: 'IDegreer updates', // Subject line
             text: userMessage, // plain text body
+            html: `<body style="width: 500px;
+                      font-family: BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+                      text-align: center">
+                      <div style="background-color: #6675bc; color: #fff; height: 100px; ">
+                        <h1 style="font-weight: 500">iDegreer</h1>
+                        <h3 style="font-weight: 400">You have a new notification</h3>
+                      </div>
+                      <div style="margin-bottom: 30px">
+                        <p style="color: #000">Hi,</p>
+                        <p style="color: #000">${userMessage}</p>
+                        <p style="color: #000">Please go to iDegreer see changes.</p>
+                      </div>
+                      <div style="background-color: #cacaca;
+                        height: auto;
+                        padding: 15px;
+                        margin-top: 20px">
+                        <h3 style="font-weight: 500; color: #000">Thanks for using iDegreer</h3>
+                      </div>
+                    </body>`
         }
 
         transporter.sendMail(message, (err, info) => {
