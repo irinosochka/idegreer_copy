@@ -30,7 +30,7 @@ class MailController {
             subject: 'IDegreer updates', // Subject line
             text: userMessage, // plain text body
             html: `<body style="width: 500px;
-                      margin-right: 20px ;
+                      margin-right: 10px;
                       font-family: BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
                       text-align: center">
                       <div style="background-color: #6675bc; color: #fff; height: 100px; ">
