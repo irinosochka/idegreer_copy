@@ -15,7 +15,6 @@ import UserCourseList from "./pages/UserCourseList/UserCourseListPage";
 import ProfessorCourses from "./pages/CoursesPageOfProfessor";
 import AddCourse from "./components/UserPanel/ProfessorPanel/AddCourse";
 import ManageRoles from "./components/UserPanel/AdminPanel/ManageRoles";
-import UserCourse from "./pages/UserCourseList/UserCoursePage/CoursePage";
 import ManageCourse from "./components/UserPanel/ProfessorPanel/ManageCourse";
 import UserCoursePage from "./pages/UserCourseList/UserCoursePage/UserCoursePage";
 
@@ -47,7 +46,7 @@ const App: FC<AppProps> = ({isAuth, isLoading, checkAuth}) => {
         return (
             <div>
                 {isAuth && <Navbar/>}
-                <div style={{display: 'flex'}}>
+                <div style={{display: 'flex', backgroundColor: 'rgb(102, 117, 188)'}}>
                     {isAuth && <UserPage/>}
                     <div style={{width: `${isAuth ? 'calc(100% - 700px)' : '100%'}`, background: '#e0e3f1', padding: '10px' }}>
                         <Routes>

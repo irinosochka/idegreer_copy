@@ -50,12 +50,12 @@ const CourseItem: FC<CourseItemProps> = ({
                     <p className="author__text">{courseItem.author.name}</p>
                 </div>
             </td>
-            <td className="table__content" data-heading="Rate">
-                <div className="rate__text">
-                    <img className="star__icon" src={starIcon} alt=""/>
-                    <p>4.8</p>
-                </div>
-            </td>
+            {/*<td className="table__content" data-heading="Rate">*/}
+            {/*    <div className="rate__text">*/}
+            {/*        <img className="star__icon" src={starIcon} alt=""/>*/}
+            {/*        <p>4.8</p>*/}
+            {/*    </div>*/}
+            {/*</td>*/}
             <td className="table__content" data-heading="Type">
                 <div className="type__text">
                     <p>{courseItem.course.theme}</p>
