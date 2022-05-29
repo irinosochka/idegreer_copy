@@ -1,16 +1,12 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {connect} from "react-redux";
 import {actions as authActions} from "../../reduxStore/auth-reducer";
-import {
-    actions as lectionActions,
-    addHomeworkResponse,
-    getAllLectionsFromCourse
-} from "../../reduxStore/lection-reducer";
+import {actions as lectionActions, addHomeworkResponse} from "../../reduxStore/lection-reducer";
 import YouTube from "react-youtube";
 import {ICourse} from "../../models/ICourse";
 import {ILection} from "../../models/ILection";
 import {AppStateType} from "../../reduxStore/store";
-import {addUserToCourse, getOneCourse} from "../../reduxStore/course-reducer";
+import {addUserToCourse} from "../../reduxStore/course-reducer";
 import PhotoMockup, {sizeTypes} from "../../common/photoMockup/PhotoMockup";
 
 import backIcon from "../../assets/img/back-svgrepo-com.svg"
@@ -25,8 +21,6 @@ import Message, {MessageType} from "../../common/Messages/Message";
 interface UserCourseProps {
     authUser: IUser,
     course: { course: ICourse, author: IUser },
-    getOneCourse: (courseId: string) => void,
-    getAllLectionsFromCourse: (courseId: string) => void,
     setLection: () => void,
     lections: ILection[],
     addHomeworkResponse: (userId: string, courseId: string, lectionId: string, resp: string) => void
@@ -36,8 +30,6 @@ const UserCourse: FC<UserCourseProps> = ({
                                                  course,
                                                  authUser,
                                                  lections,
-                                                 getOneCourse,
-                                                 getAllLectionsFromCourse,
                                                  addHomeworkResponse
                                              }) => {
     const [activeLection, setActiveLection] = useState<ILection | null>(lections[0]);
@@ -47,14 +39,6 @@ const UserCourse: FC<UserCourseProps> = ({
 
     const {id} = useParams();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (id) {
-            getOneCourse(id);
-            getAllLectionsFromCourse(id);
-        }
-    }, []);
-
 
     const handleClose = (event: React.FormEvent) => {
         event.preventDefault();
@@ -91,8 +75,8 @@ const UserCourse: FC<UserCourseProps> = ({
             </div>
 
             <div className="course-info__container">
-                <h2>{course.course.title}</h2>
-                {/*<div className="evaluation">
+                <h2>{course.course && course.course.title}</h2>
+                <div className="evaluation">
                     <span>★★★★★</span>
                     <p style={{marginLeft: '8px'}}>5/5 (236 reviews)</p>
                 </div>*/}
@@ -195,8 +179,6 @@ const mapStateToProps = (state: AppStateType) => {
 export default connect(mapStateToProps, {
     setLection: lectionActions.setLections,
     setLoading: authActions.setLoading,
-    getOneCourse,
-    getAllLectionsFromCourse,
     addUserToCourse,
     addHomeworkResponse
 })(UserCourse);
