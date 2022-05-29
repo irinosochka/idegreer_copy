@@ -71,7 +71,7 @@ const UserCourse: FC<UserCourseProps> = ({
             </div>
 
             <div className="course-info__container">
-                <h2>{course.course.title}</h2>
+                <h2>{course.course && course.course.title}</h2>
                 <div className="evaluation">
                     <span>★★★★★</span>
                     <p style={{marginLeft: '8px'}}>5/5 (236 reviews)</p>
