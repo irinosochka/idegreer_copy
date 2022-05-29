@@ -19,7 +19,6 @@ import progIcon from "../../assets/img/programmingIcon.svg";
 import {actions as userActions} from "../../reduxStore/user-reducer";
 
 interface CourseProps {
-    authUser: IUser,
     course: { course: ICourse, author: IUser },
     getOneCourse: (courseId: string) => void,
     getAllLectionsFromCourse: (courseId: string) => void,
@@ -28,18 +27,17 @@ interface CourseProps {
 
 }
 
-const CoursePage: FC<CourseProps> = ({
-                                             course,
-                                             authUser,
-                                             lections,
-                                             getOneCourse,
-                                             getAllLectionsFromCourse,
-                                             addCourseToCart
-                                         }) => {
+const CourseForBuying: FC<CourseProps> = ({
+                                              course,
+                                              lections,
+                                              getOneCourse,
+                                              getAllLectionsFromCourse,
+                                              addCourseToCart
+                                          }) => {
 
-    const {id} = useParams();
+
     const navigate = useNavigate();
-
+    const {id} = useParams();
     useEffect(() => {
         if (id) {
             getOneCourse(id);
@@ -51,7 +49,6 @@ const CoursePage: FC<CourseProps> = ({
     const handleClose = (event: React.FormEvent) => {
         event.preventDefault();
     };
-
 
 
     return (
@@ -67,11 +64,11 @@ const CoursePage: FC<CourseProps> = ({
 
                 <div style={{display: "flex", justifyContent: 'space-between', marginTop: '20px'}}>
                     <div style={{width: '600px'}}>
-                        <h1 className="course-title">{course.course.title}</h1>
-                        <p className="course-description">{course.course.description}</p>
+                        <h1 className="course-title">{course.course ? course.course.title : ''}</h1>
+                        <p className="course-description">{course.course && course.course.description}</p>
                         <div className="info">
                             <h3>Type: </h3>
-                            <p>{course.course.theme}</p>
+                            <p>{course.course && course.course.theme}</p>
                         </div>
                         <div className="info">
                             <h3>Mentor: </h3>
@@ -84,7 +81,7 @@ const CoursePage: FC<CourseProps> = ({
                     <div>
                         <div className="info-container">
                             <h3>Price: </h3>
-                            <p>$ {course.course.price}</p>
+                            <p>$ {course.course && course.course.price}</p>
                         </div>
                         <div className="info-container">
                             <h3>Rate: </h3>
@@ -103,7 +100,6 @@ const CoursePage: FC<CourseProps> = ({
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        authUser: state.auth.authUser,
         isLoading: state.auth.isLoading,
         lections: state.lection.lections,
         course: state.course.course,
@@ -115,5 +111,5 @@ export default connect(mapStateToProps, {
     getOneCourse,
     getAllLectionsFromCourse,
     addCourseToCart: userActions.addCourseToCart,
-})(CoursePage);
+})(CourseForBuying);
 
