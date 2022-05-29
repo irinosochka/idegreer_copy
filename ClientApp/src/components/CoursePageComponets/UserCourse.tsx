@@ -47,7 +47,6 @@ const UserCourse: FC<UserCourseProps> = ({
 
     useEffect(() => {
         if (id) {
-            console.log(id)
             getOneCourse(id);
             getAllLectionsFromCourse(id);
         }
