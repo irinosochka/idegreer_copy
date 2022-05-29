@@ -15,7 +15,7 @@ import LectureList from "../../components/CourseItem/Lecture/LectureList";
 import "./course.css"
 import Button from "../../common/button/Button";
 import {IUser} from "../../models/IUser";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import Message, {MessageType} from "../../common/Messages/Message";
 
 interface UserCourseProps {
@@ -37,7 +37,6 @@ const UserCourse: FC<UserCourseProps> = ({
     const [isError, setError] = useState(false);
     const [sentHomework, setSentHomework] = useState(false);
 
-    const {id} = useParams();
     const navigate = useNavigate();
 
     const handleClose = (event: React.FormEvent) => {
@@ -76,10 +75,10 @@ const UserCourse: FC<UserCourseProps> = ({
 
             <div className="course-info__container">
                 <h2>{course.course && course.course.title}</h2>
-                <div className="evaluation">
-                    <span>★★★★★</span>
-                    <p style={{marginLeft: '8px'}}>5/5 (236 reviews)</p>
-                </div>*/}
+                {/*<div className="evaluation">*/}
+                {/*    <span>★★★★★</span>*/}
+                {/*    <p style={{marginLeft: '8px'}}>5/5 (236 reviews)</p>*/}
+                {/*</div>*/}
                 <div className="mentor-info">
                     {/*<PhotoMockup size={sizeTypes.small}/>*/}
 
