@@ -39,7 +39,7 @@ class MailController {
                       <div style="margin-bottom: 30px">
                         <p style="color: #000">Hi,</p>
                         <p style="color: #000">${userMessage}</p>
-                        <p style="color: #000">Please go to iDegreer see changes.</p>
+                        <p style="color: #000">Please go to iDegreer to see changes.</p>
                       </div>
                       <div style="background-color: #cacaca;
                         height: auto;
