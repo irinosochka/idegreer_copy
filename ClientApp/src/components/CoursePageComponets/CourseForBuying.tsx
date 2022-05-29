@@ -1,26 +1,22 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 import {connect} from "react-redux";
 import {actions as authActions} from "../../reduxStore/auth-reducer";
-import {
-    getAllLectionsFromCourse
-} from "../../reduxStore/lection-reducer";
+import {getAllLectionsFromCourse} from "../../reduxStore/lection-reducer";
 import {ICourse} from "../../models/ICourse";
 import {ILection} from "../../models/ILection";
 import {AppStateType} from "../../reduxStore/store";
-import {getOneCourse} from "../../reduxStore/course-reducer";
 
 import backIcon from "../../assets/img/back-svgrepo-com.svg"
 
 import "./course.css"
 import Button from "../../common/button/Button";
 import {IUser} from "../../models/IUser";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import progIcon from "../../assets/img/programmingIcon.svg";
 import {actions as userActions} from "../../reduxStore/user-reducer";
 
 interface CourseProps {
     course: { course: ICourse, author: IUser },
-    getOneCourse: (courseId: string) => void,
     getAllLectionsFromCourse: (courseId: string) => void,
     lections: ILection[],
     addCourseToCart: (course: ICourse) => void,
@@ -30,21 +26,11 @@ interface CourseProps {
 const CourseForBuying: FC<CourseProps> = ({
                                               course,
                                               lections,
-                                              getOneCourse,
-                                              getAllLectionsFromCourse,
                                               addCourseToCart
                                           }) => {
 
 
     const navigate = useNavigate();
-    const {id} = useParams();
-    useEffect(() => {
-        if (id) {
-            getOneCourse(id);
-            getAllLectionsFromCourse(id);
-        }
-    }, []);
-
 
     const handleClose = (event: React.FormEvent) => {
         event.preventDefault();
@@ -108,7 +94,6 @@ const mapStateToProps = (state: AppStateType) => {
 
 export default connect(mapStateToProps, {
     setLoading: authActions.setLoading,
-    getOneCourse,
     getAllLectionsFromCourse,
     addCourseToCart: userActions.addCourseToCart,
 })(CourseForBuying);
