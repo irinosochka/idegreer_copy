@@ -24,28 +24,28 @@ const CoursesPageOfProfessor: FC<ProfessorCoursesProps> = ({courses, getCoursesO
             <h3 className="page__title">You are the Author of this courses:</h3>
 
             {courses.length !== 0 &&
-                <table className="table">
-                    <thead></thead>
-                    <tbody>
-                    <tr>
-                        <th className="table__heading">Course name</th>
-                        {/*<th className="table__heading">Rate</th>*/}
-                        <th className="table__heading">Type</th>
-                        <th className="table__heading">Members</th>
-                        <th className="table__heading">Lectures</th>
-                    </tr>
-                    {courses.map((course: { course: ICourse, author: IUser }) => {
-                        return <ProfessorCourseItem key={course.course._id} courseItem={course}/>
-                    })
-                    }
-                    </tbody>
-                    <tfoot></tfoot>
-                </table>}
+            <table className="table">
+                <thead></thead>
+                <tbody>
+                <tr>
+                    <th className="table__heading">Course name</th>
+                    {/*<th className="table__heading">Rate</th>*/}
+                    <th className="table__heading">Type</th>
+                    <th className="table__heading"></th>
+                    <th className="table__heading"></th>
+                </tr>
+                {courses.map((course: { course: ICourse, author: IUser }) => {
+                    return <ProfessorCourseItem key={course.course._id} courseItem={course}/>
+                })
+                }
+                </tbody>
+                <tfoot></tfoot>
+            </table>}
             {courses.length === 0 &&
-                <div style={{marginTop: '40px', width: '100%'}}>
-                    <h3 className="no-courses__info">You don't have a course. Add new course for starting teach in our
-                        platform.</h3>
-                </div>
+            <div style={{marginTop: '40px', width: '100%'}}>
+                <h3 className="no-courses__info">You don't have a course. Add new course for starting teach in our
+                    platform.</h3>
+            </div>
             }
         </div>
     );

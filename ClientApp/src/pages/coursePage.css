@@ -85,3 +85,54 @@
 .lessons-container, .video-player-container {
     width: 500px;
 }
+
+
+
+ol {
+    counter-reset: li;
+    list-style: none;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+
+ol ol {
+    margin: 0 0 0 2em;
+}
+
+.rounded-list li{
+    position: relative;
+    display: block;
+    padding: 10px 10px 10px 30px;
+    margin: 10px 0;
+    background: #e0e3f1;
+    color: #444;
+    text-decoration: none;
+    border-radius: 7px;
+    transition: all .3s ease-out;
+}
+
+.rounded-list li:hover{
+    background: #eff1f8;
+}
+
+.rounded-list li:before{
+    content: counter(li);
+    counter-increment: li;
+    position: absolute;
+    left: -1.3em;
+    top: 50%;
+    margin-top: -1.3em;
+    background: #7582c2;
+    color: #fff;
+    height: 2em;
+    width: 2em;
+    line-height: 2em;
+    border: .3em solid #fff;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 2em;
+    transition: all .3s ease-out;
+}
+
+.check-icon{
+    width: 20px;
+}

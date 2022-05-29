@@ -21,7 +21,6 @@ td { font-family: 'Avenir Next', 'Segoe UI', 'Lucida Grande', sans-serif; }
 
 .course__icon{
   filter: brightness(0) saturate(100%) invert(99%) sepia(0%) saturate(4685%) hue-rotate(303deg) brightness(118%) contrast(100%);
-  cursor: pointer;
   width: 34px;
   margin-left: 8px;
 }
@@ -66,8 +65,18 @@ td { font-family: 'Avenir Next', 'Segoe UI', 'Lucida Grande', sans-serif; }
   background-color: #6675bc;
   width: 50px;
   height: 50px;
-  cursor: pointer;
   display: flex;
   margin-right: 10px;
   border: 1px solid #fff;
+}
+
+
+.table-button__content{
+  color: #6675bc;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.table-button__content:hover{
+  opacity: 0.7;
 }
