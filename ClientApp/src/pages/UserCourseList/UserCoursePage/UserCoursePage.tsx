@@ -7,7 +7,6 @@ import {
 } from "../../../reduxStore/lection-reducer";
 import {AppStateType} from "../../../reduxStore/store";
 import {getAllMembersFromCourse, getOneCourse} from "../../../reduxStore/course-reducer";
-import "./userCoursePage.css"
 import {IUser} from "../../../models/IUser";
 import {useParams} from "react-router-dom";
 import CourseForBuying from "../../../components/CoursePageComponets/CourseForBuying";
@@ -53,7 +52,7 @@ const UserCoursePage: FC<UserCourseProps> = ({
 
     return (
         <div>
-            {isMember ? <UserCourse /> : <CourseForBuying />}
+            {isMember ? <UserCourse /> : course.author && authUser._id === course.author._id ? <UserCourse /> : <CourseForBuying />}
         </div>
     );
 };

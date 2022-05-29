@@ -3,4 +3,5 @@
     display: flex;
     justify-content: center;
     align-content: center;
+    filter: brightness(0) saturate(100%) invert(49%) sepia(62%) saturate(399%) hue-rotate(192deg) brightness(84%) contrast(87%);
 }

@@ -32,14 +32,9 @@ const CourseForBuying: FC<CourseProps> = ({
 
     const navigate = useNavigate();
 
-    const handleClose = (event: React.FormEvent) => {
-        event.preventDefault();
-    };
-
-
     return (
-        <div className="user_course" style={{marginLeft: '20px'}}>
-            <div className="back__container" onClick={handleClose} style={{marginTop: '10px'}}>
+        <div className="user_course" style={{backgroundColor: 'rgb(224, 227, 241)', padding: '0'}}>
+            <div className="back__container" style={{marginTop: '10px'}}>
                 <img src={backIcon} onClick={() => navigate(-1)} alt=""/>
             </div>
 
@@ -48,7 +43,7 @@ const CourseForBuying: FC<CourseProps> = ({
                     <img className="programming-icon" src={progIcon} alt=""/>
                 </div>
 
-                <div style={{display: "flex", justifyContent: 'space-between', marginTop: '20px'}}>
+                <div className="course-info">
                     <div style={{width: '600px'}}>
                         <h1 className="course-title">{course.course ? course.course.title : ''}</h1>
                         <p className="course-description">{course.course && course.course.description}</p>
@@ -69,10 +64,10 @@ const CourseForBuying: FC<CourseProps> = ({
                             <h3>Price: </h3>
                             <p>$ {course.course && course.course.price}</p>
                         </div>
-                        <div className="info-container">
-                            <h3>Rate: </h3>
-                            <p>★ 4.8</p>
-                        </div>
+                        {/*<div className="info-container">*/}
+                        {/*    <h3>Rate: </h3>*/}
+                        {/*    <p>★ 4.8</p>*/}
+                        {/*</div>*/}
                         <div className="info-container">
                             <h3>Lectures: </h3>
                             <p>{lections.length}</p>

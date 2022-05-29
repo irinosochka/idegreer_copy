@@ -29,7 +29,7 @@ const CoursesPageOfProfessor: FC<ProfessorCoursesProps> = ({courses, getCoursesO
                     <tbody>
                     <tr>
                         <th className="table__heading">Course name</th>
-                        <th className="table__heading">Rate</th>
+                        {/*<th className="table__heading">Rate</th>*/}
                         <th className="table__heading">Type</th>
                         <th className="table__heading">Members</th>
                         <th className="table__heading">Lectures</th>

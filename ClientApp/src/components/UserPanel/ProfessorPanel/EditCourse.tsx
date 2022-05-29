@@ -58,7 +58,7 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourseId, course, setC
     };
 
     return (
-        <>
+        <>{course.course && course.author &&
             <form className="edit__box" onSubmit={handleSubmit}>
                 {isError && <Message type={MessageType.ERROR}>Fields can't be empty</Message>}
                 {courseDataChangedSuccess && <Message type={MessageType.SUCCESS}>Success data changing</Message>}
@@ -72,7 +72,7 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourseId, course, setC
                            type="text"
                            id="course_name"
                            value={title}
-                           placeholder={"Title: "+ course.course.title}
+                           placeholder={"Title: " + course.course.title}
                     /><label htmlFor="input" className="control-label">Title:</label>
                 </div>
                 <div className="input-wrapper">
@@ -85,7 +85,7 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourseId, course, setC
                            type="text"
                            id="course_topic"
                            value={theme}
-                           placeholder={"Theme: " +  course.course.theme}
+                           placeholder={"Theme: " + course.course.theme}
                     /><label htmlFor="input" className="control-label">Topic:</label>
                 </div>
                 <div className="input-wrapper">
@@ -112,12 +112,21 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourseId, course, setC
                               name="textarea"
                               id="course_description"
                               placeholder={"Description: " + course.course.description}
-                              style={{resize: "none", marginBottom: '10px', padding: '5px 15px', width: 'calc(100% - 32px)', height: '80px', borderRadius: '5px'}}
-                    /><label style={{ transform: 'translateY(-70px)'}} htmlFor="input" className="control-label">Description:</label>
+                              style={{
+                                  resize: "none",
+                                  marginBottom: '10px',
+                                  padding: '5px 15px',
+                                  width: 'calc(100% - 32px)',
+                                  height: '80px',
+                                  borderRadius: '5px'
+                              }}
+                    /><label style={{transform: 'translateY(-70px)'}} htmlFor="input"
+                             className="control-label">Description:</label>
                 </div>
                 {course.author && <p style={{color: 'slategrey'}}>Author: {course.author.name}</p>}
                 <Button width={240}>Submit changes</Button>
             </form>
+        }
         </>
     )}
 
