@@ -7,7 +7,6 @@ import Button from "../../../common/button/Button";
 import {ILection} from "../../../models/ILection";
 import {IUser} from "../../../models/IUser";
 import closeIcon from "../../../assets/img/close-svgrepo-com.svg";
-import Message, {MessageType} from "../../../common/Messages/Message";
 import swal from "sweetalert";
 
 interface ModalWindowProps {
@@ -69,16 +68,17 @@ const CheckHomeworkModal: FC<ModalWindowProps> = ({active, setActive, selectedLe
                         <div className="author-message">
                             <h4>{authUser.name}</h4>
                         </div>
-                        {isError && <Message type={MessageType.ERROR}>Points can't be empty or negative</Message>}
                         <div className="box arrow-top">
                             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                                 <input type="number"
                                        value={points}
                                        onChange={(e) => {
                                            setPoints(e.target.value);
+                                           setError(false);
                                        }}
                                        placeholder={'Points'}
                                        style={{width: '100px', textAlign: 'center'}}
+                                       className={`input-points ${isError ? 'input-points__error' : ''}`}
                                 />
                                 {!showNotice && <h4 onClick={() => setShowNotice(true)}>Add notice</h4>}
                                 {showNotice && <h4 onClick={() => setShowNotice(false)}>Hide notice</h4>}
