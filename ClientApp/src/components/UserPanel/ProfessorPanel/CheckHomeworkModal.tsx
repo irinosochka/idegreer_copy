@@ -6,6 +6,9 @@ import {AppStateType} from "../../../reduxStore/store";
 import Button from "../../../common/button/Button";
 import {ILection} from "../../../models/ILection";
 import {IUser} from "../../../models/IUser";
+import closeIcon from "../../../assets/img/close-svgrepo-com.svg";
+import Message, {MessageType} from "../../../common/Messages/Message";
+import swal from "sweetalert";
 
 interface ModalWindowProps {
     active: boolean,
@@ -18,9 +21,23 @@ const CheckHomeworkModal: FC<ModalWindowProps> = ({active, setActive, selectedLe
     const [notice, setNotice] = useState('');
     const [points, setPoints] = useState('');
     const [showNotice, setShowNotice] = useState(false);
+    const [isError, setError] = useState(false);
 
     const addFeedback = () => {
-        setActive(false);
+        let pointsNumber = parseInt(points);
+
+        if(points.length !== 0 && pointsNumber >= 0){
+            setActive(false);
+            swal({
+                title: "Remark was added",
+                text: "You have check homework!",
+                icon: "success",
+                buttons: [false],
+                timer: 1000
+            });
+        } else {
+            setError(true);
+        }
     }
 
     return (
@@ -28,7 +45,12 @@ const CheckHomeworkModal: FC<ModalWindowProps> = ({active, setActive, selectedLe
              onClick={() => setActive(false)}>
             <div className={active ? "modal__window__homework active" : "modal__window__homework"}
                  onClick={e => e.stopPropagation()}>
-                <h2 className='lecture__title'>{selectedLection.title}</h2>
+                <div className="lecture__title">
+                    <h2>{selectedLection.title}</h2>
+                    <div style={{paddingLeft: '20px', width: '25px', cursor: 'pointer', filter: 'brightness(0) saturate(100%) invert(99%) sepia(76%) saturate(0%) hue-rotate(337deg) brightness(104%) contrast(102%)'}}>
+                        <img src={closeIcon} onClick={() => setActive(false)} alt=""/>
+                    </div>
+                </div>
                 <div className="homework__container">
                     <div className="message">
                         <div className="author-message">
@@ -47,6 +69,7 @@ const CheckHomeworkModal: FC<ModalWindowProps> = ({active, setActive, selectedLe
                         <div className="author-message">
                             <h4>{authUser.name}</h4>
                         </div>
+                        {isError && <Message type={MessageType.ERROR}>Points can't be empty or negative</Message>}
                         <div className="box arrow-top">
                             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                                 <input type="number"
