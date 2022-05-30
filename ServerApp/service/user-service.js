@@ -168,12 +168,12 @@ class UserService {
         }
     }
 
-    async addNotification(date, courseId, type) {
+    async addNotification(date, courseId, type, change) {
         const course = await CourseModel.findOne({_id: courseId});
         if(!course) {
             throw new Error(`There is not exists course with id ${courseId}`)
         }
-        const notification = await NotificationModel.create({date, course, type});
+        const notification = await NotificationModel.create({date, course, type, change});
         return {
             notification
         }

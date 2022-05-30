@@ -18,7 +18,7 @@ interface AddLectureProps {
     addLection: (title: string, description: string, link: string, homework: string, courseId: string) => void,
     successAddingLection: boolean,
     errorAddingLection: boolean,
-    addNotification: (date: string, courseId: string, type: string) => void,
+    addNotification: (date: string, courseId: string, type: string, change: Array<string>) => void,
     sendEditLectionMail: (email: string, lectionTitle: string, messageType: mailMessageType) => void,
     getOneCourse: (courseId: string) => void
 }
@@ -42,6 +42,7 @@ const AddLecture: FC<AddLectureProps> = ({
     const [linkError, setLinkError] = useState(false);
     const [isError, setError] = useState(false);
     //const [course, setCourse] = useState('');
+    const [editChange, setEditChange] = useState([`lection ${title} was added`])
 
     useEffect(() => {
         if (selectedCourseId) {
@@ -52,7 +53,8 @@ const AddLecture: FC<AddLectureProps> = ({
     useEffect(() => {
         return () => {
             onSuccessAddingLection(false)
-            setLinkError(false)
+            setLinkError(false);
+            setEditChange([])
         }
     }, [])
 
@@ -68,7 +70,7 @@ const AddLecture: FC<AddLectureProps> = ({
                 addLection(title, description, link, homework, selectedCourseId);
             }
             const now = new Date().toLocaleDateString();
-            addNotification(now, course.course._id, 'adding lection')
+            addNotification(now, course.course._id, 'adding lection', editChange)
             sendEditLectionMail(course.course._id, course.course.title, mailMessageType.ADD_LECTION)
             // setCourseChanges(selectedCourse._id)
             setTitle('');

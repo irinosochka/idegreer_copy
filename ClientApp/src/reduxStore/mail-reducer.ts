@@ -29,7 +29,7 @@ export const sendEditMail = (courseId: string, lectionTitle: string, messageType
     let message;
         switch (messageType) {
             case 'addLection':
-                message = `Lection was added to course ${lectionTitle}.`
+                message = `Course ${lectionTitle} was edited.`
                 break;
             case 'editLection':
                 message = `Lection ${lectionTitle} was edited.`
@@ -38,7 +38,7 @@ export const sendEditMail = (courseId: string, lectionTitle: string, messageType
                 message = `Course ${lectionTitle} was edited.`
                 break;
             default:
-                message = `Lection ${lectionTitle} was deleted.`
+                message = `Course ${lectionTitle} was deleted.`
                 break;
         }
         return await MailService.sendMailAboutLectionChange(courseId, message)

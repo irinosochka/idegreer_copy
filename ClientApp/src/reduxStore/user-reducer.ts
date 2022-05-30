@@ -150,10 +150,10 @@ export const getNotification = (courseId: string): ThunkType =>
         }
     }
 
-export const addNotification = (date: string, courseId: string, type: string): ThunkType => {
+export const addNotification = (date: string, courseId: string, type: string, change?: Array<string>): ThunkType => {
     return async () => {
         try {
-            const response = await UserService.addNotification(date, courseId, type);
+            const response = await UserService.addNotification(date, courseId, type, change ? change : []);
             if (response.data.resultCode === 1) {
                 return response.data.data;
             }

@@ -17,12 +17,22 @@ interface ListOfCourseProps {
     changeCourseData: (courseId: string, title: string, theme: string, description: string, price: string) => void,
     setCourseChanges: (courseId: string) => void,
     courseDataChangedSuccess: boolean,
-    addNotification: (date: string, courseId: string, type: string) => void,
+    addNotification: (date: string, courseId: string, type: string, editChange: Array<string>) => void,
     sendEditLectionMail: (email: string, lectionTitle: string, messageType: mailMessageType) => void,
     getOneCourse: (courseId: string) => void
 }
 
-const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourseId, course, setCourseDataChangedSuccess, changeCourseData, addNotification, courseDataChangedSuccess, setCourseChanges, sendEditLectionMail, getOneCourse }) => {
+const EditCourse: React.FC<ListOfCourseProps> = ({
+                                                     selectedCourseId,
+                                                     course,
+                                                     setCourseDataChangedSuccess,
+                                                     changeCourseData,
+                                                     addNotification,
+                                                     courseDataChangedSuccess,
+                                                     setCourseChanges,
+                                                     sendEditLectionMail,
+                                                     getOneCourse
+                                                 }) => {
 
     // const [title, setTitle] = useState(selectedCourse.title);
     // const [theme, setTheme] = useState(selectedCourse.theme);
@@ -36,6 +46,7 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourseId, course, setC
 
     const [isError, setError] = useState(false);
 
+
     useEffect(() => {
         if (selectedCourseId) {
             getOneCourse(selectedCourseId)
@@ -43,18 +54,21 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourseId, course, setC
         setCourseDataChangedSuccess(false);
     }, []);
 
+    const [editChange, setEditChange] = useState<Array<string>>([])
 
-    const handleSubmit = (event: any) => {
+    const handleSubmit = async (event: any) => {
         event.preventDefault();
         if (course && title.length !== 0 && theme.length !== 0 && price.length !== 0 && description.length !== 0) {
+
             changeCourseData(course.course._id, title, theme, description, price);
             setTimeout(() => setCourseDataChangedSuccess(false), 3000);
-            addNotification(new Date().toLocaleDateString(), course.course._id, `Changing the data of the course ${course.course.title}`)
+            await addNotification(new Date().toLocaleDateString(), course.course._id, `Changing the data of the course ${course.course.title}`, editChange)
             setCourseChanges(course.course._id)
             sendEditLectionMail(course.course._id, course.course.title, mailMessageType.EDIT_COURSE)
         } else {
             setError(true);
         }
+        setEditChange([])
     };
 
     return (
@@ -69,6 +83,15 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourseId, course, setC
                                setError(false);
                                setCourseDataChangedSuccess(false);
                            }}
+                           onBlur={() => {
+                               if (!editChange.includes('Course name was changed')) {
+                                   if (course.course.title !== title) {
+                                       setEditChange([...editChange, 'Course name was changed'])
+                                   } else {
+                                       setEditChange(editChange.filter(e => e !== 'Course name was changed'))
+                                   }
+                               }
+                           }}
                            type="text"
                            id="course_name"
                            value={title}
@@ -81,6 +104,15 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourseId, course, setC
                                setTheme(event.target.value);
                                setError(false);
                                setCourseDataChangedSuccess(false);
+                           }}
+                           onBlur={() => {
+                               if (!editChange.includes('Course theme was changed')) {
+                                   if (course.course.theme !== theme) {
+                                       setEditChange([...editChange, 'Course theme was changed'])
+                                   } else {
+                                       setEditChange(editChange.filter(e => e !== 'Course theme was changed'))
+                                   }
+                               }
                            }}
                            type="text"
                            id="course_topic"
@@ -95,6 +127,15 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourseId, course, setC
                                setError(false);
                                setCourseDataChangedSuccess(false);
                            }}
+                           onBlur={() => {
+                               if (!editChange.includes('Course price was changed')) {
+                                   if (course.course.price !== price) {
+                                       setEditChange([...editChange, 'Course price was changed'])
+                                   } else {
+                                       setEditChange(editChange.filter(e => e !== 'Course price was changed'))
+                                   }
+                               }
+                           }}
                            type="number"
                            id="course_price"
                            value={price}
@@ -107,6 +148,15 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourseId, course, setC
                                   setDescription(event.target.value);
                                   setError(false);
                                   setCourseDataChangedSuccess(false);
+                              }}
+                              onBlur={() => {
+                                  if (!editChange.includes('Course description was changed')) {
+                                      if (course.course.description !== description) {
+                                          setEditChange([...editChange, 'Course description was changed'])
+                                      } else {
+                                          setEditChange(editChange.filter(e => e !== 'Course description was changed'))
+                                      }
+                                  }
                               }}
                               value={description}
                               name="textarea"
@@ -128,7 +178,8 @@ const EditCourse: React.FC<ListOfCourseProps> = ({selectedCourseId, course, setC
             </form>
         }
         </>
-    )}
+    )
+}
 
 const mapStateToProps = (state: AppStateType) => {
     return {

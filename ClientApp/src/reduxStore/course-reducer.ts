@@ -255,7 +255,6 @@ export const addUserToCourse = (courseId: string, userId: string): ThunkType => 
         try {
             const response = await CourseService.addUserToCourse(courseId, userId);
             if (response.data.resultCode === 1) {
-                console.log(`User ${userId} was added to course ${courseId}`);
                 dispatch(actions.setAddUserToCourseSuccess(true));
             } else {
                 dispatch(actions.setAddUserToCourseError(true));
@@ -269,12 +268,7 @@ export const addUserToCourse = (courseId: string, userId: string): ThunkType => 
 export const setCourseChanges = (courseId: string): ThunkType => {
     return async () => {
         try {
-            const response = await CourseService.setCourseChanges(courseId);
-            if (response.data.resultCode === 1) {
-                console.log(`Course ${courseId} was changed`);
-            } else {
-                console.log('course changing error')
-            }
+            await CourseService.setCourseChanges(courseId);
         } catch(e) {
             console.log(e);
         }

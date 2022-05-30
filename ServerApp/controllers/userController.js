@@ -68,8 +68,9 @@ class UserController {
 
     async addNotification(req, res) {
         try {
-           const {date, courseId, type} = req.body;
-           const data = await userService.addNotification(date, courseId, type);
+           const {date, courseId, type, change} = req.body;
+           console.log(change)
+           const data = await userService.addNotification(date, courseId, type, change);
            return res.json({data, resultCode: 1})
         } catch {
            return res.json({message: 'add notification error', resultCode: 0})
