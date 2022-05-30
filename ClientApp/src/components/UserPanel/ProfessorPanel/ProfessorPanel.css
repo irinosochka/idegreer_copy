@@ -156,9 +156,13 @@ td { font-family: 'Avenir Next', 'Segoe UI', 'Lucida Grande', sans-serif; }
   border-radius: 10px;
 }
 
-.box input{
+.box .input-points{
   padding: 0 0 12px 0;
   margin: 10px 0;
+}
+
+.box .input-points__error{
+  border-bottom: 2px solid red;
 }
 
 .box h4{
