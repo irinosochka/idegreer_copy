@@ -39,6 +39,7 @@ const CheckHomeworkModal: FC<ModalWindowProps> = ({active, setActive, selectedLe
         }
     }
 
+
     return (
         <div className={active ? "modal__window__wrapper active" : "modal__window__wrapper"}
              onClick={() => setActive(false)}>
@@ -70,12 +71,16 @@ const CheckHomeworkModal: FC<ModalWindowProps> = ({active, setActive, selectedLe
                         </div>
                         <div className="box arrow-top">
                             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                                <input type="number"
+                                <input type="number" min="0"
                                        value={points}
                                        onChange={(e) => {
-                                           setPoints(e.target.value);
-                                           setError(false);
+                                           let regex=/^(\s*|^\d*\.?\d)$/;
+                                           if (regex.test(e.target.value)){
+                                               setPoints(e.target.value);
+                                               setError(false);
+                                           }
                                        }}
+                                       pattern="^-?[0-9]d*(.d+)?$"
                                        placeholder={'Points'}
                                        style={{width: '100px', textAlign: 'center'}}
                                        className={`input-points ${isError ? 'input-points__error' : ''}`}
