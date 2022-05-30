@@ -108,6 +108,7 @@ ol ol {
     text-decoration: none;
     border-radius: 7px;
     transition: all .3s ease-out;
+    cursor: pointer;
 }
 
 .rounded-list li:hover{

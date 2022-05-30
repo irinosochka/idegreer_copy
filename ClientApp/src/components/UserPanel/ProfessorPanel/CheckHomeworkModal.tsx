@@ -4,13 +4,17 @@ import {connect} from "react-redux";
 import {addUserToCourse} from "../../../reduxStore/course-reducer";
 import {AppStateType} from "../../../reduxStore/store";
 import Button from "../../../common/button/Button";
+import {ILection} from "../../../models/ILection";
+import {IUser} from "../../../models/IUser";
 
 interface ModalWindowProps {
     active: boolean,
     setActive: (bool: boolean) => void,
+    selectedLection: ILection,
+    authUser: IUser,
 }
 
-const CheckHomeworkModal: FC<ModalWindowProps> = ({active, setActive}) => {
+const CheckHomeworkModal: FC<ModalWindowProps> = ({active, setActive, selectedLection, authUser}) => {
     const [notice, setNotice] = useState('');
     const [points, setPoints] = useState('');
     const [showNotice, setShowNotice] = useState(false);
@@ -24,13 +28,13 @@ const CheckHomeworkModal: FC<ModalWindowProps> = ({active, setActive}) => {
              onClick={() => setActive(false)}>
             <div className={active ? "modal__window__homework active" : "modal__window__homework"}
                  onClick={e => e.stopPropagation()}>
-                <h2 className='lecture__title'>Lection 2</h2>
+                <h2 className='lecture__title'>{selectedLection.title}</h2>
                 <div className="homework__container">
                     <div className="message">
                         <div className="author-message">
-                            <h4>Henryk Malinowski</h4>
+                            <h4>{authUser.name}</h4>
                         </div>
-                        <div className="box arrow-top">Nulla eleifend accumsan lectus, vitae maximus ante. Cras elementum sed elit sit amet lacinia. Donec elementum pharetra auctor. Nullam mattis nunc vitae mauris rhoncus volutpat. Suspendisse mattis ac mi eget maximus.</div>
+                        <div className="box arrow-top">{selectedLection.homework}</div>
                     </div>
                     <div className="message">
                         <div className="author-message">
@@ -41,7 +45,7 @@ const CheckHomeworkModal: FC<ModalWindowProps> = ({active, setActive}) => {
                     </div>
                     <div className="message">
                         <div className="author-message">
-                            <h4>Henryk Malinowski</h4>
+                            <h4>{authUser.name}</h4>
                         </div>
                         <div className="box arrow-top">
                             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
@@ -76,6 +80,7 @@ const CheckHomeworkModal: FC<ModalWindowProps> = ({active, setActive}) => {
 const mapStateToProps = (state: AppStateType) => {
     return {
         addUserToCourseSuccess: state.course.addUserToCourseSuccess,
+        authUser: state.auth.authUser
     }
 }
 
