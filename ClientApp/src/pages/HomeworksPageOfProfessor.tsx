@@ -8,6 +8,7 @@ import backIcon from "../assets/img/back-svgrepo-com.svg";
 import checkIcon from "../assets/img/check-svgrepo-com.svg"
 import {useNavigate} from "react-router-dom";
 import './coursePage.css'
+import CheckHomeworkModal from "../components/UserPanel/ProfessorPanel/CheckHomeworkModal";
 
 interface HomeworksProps {
     authUser: IUser,
@@ -18,6 +19,7 @@ interface HomeworksProps {
 const HomeworksPageOfProfessor: FC<HomeworksProps> = ({courses, getCoursesOfAuthor, authUser}) => {
     const navigate = useNavigate();
     const [showHomeworks, setShowHomeworks] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         getCoursesOfAuthor(authUser._id);
@@ -40,7 +42,7 @@ const HomeworksPageOfProfessor: FC<HomeworksProps> = ({courses, getCoursesOfAuth
                     <li>Lecture 1</li>
                     <li onClick={()=> handleHomework()}>Lecture 2
                         { showHomeworks && <ol>
-                            <li>
+                            <li onClick={()=> setShowModal(true)}>
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                     <p>Iryna Novoselska</p>
                                     <img className="check-icon" src={checkIcon} alt=""/>
@@ -64,6 +66,8 @@ const HomeworksPageOfProfessor: FC<HomeworksProps> = ({courses, getCoursesOfAuth
                 </ol>
 
             </div>
+
+            <CheckHomeworkModal active={showModal} setActive={setShowModal}/>
         </div>
     );
 };

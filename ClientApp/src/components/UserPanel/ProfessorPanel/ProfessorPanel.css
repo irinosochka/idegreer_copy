@@ -80,3 +80,108 @@ td { font-family: 'Avenir Next', 'Segoe UI', 'Lucida Grande', sans-serif; }
 .table-button__content:hover{
   opacity: 0.7;
 }
+
+/*homework modal window*/
+.modal__window__wrapper {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0,0,0,.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: .3s;
+}
+
+.modal__window__wrapper.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal__window__homework {
+  max-width: 700px;
+  height: auto;
+  margin: 80px auto;
+  /*border: 1px #6675bc solid;*/
+  border-radius: 20px;
+  background-color: #fff;
+  /*padding: 20px;*/
+  position: relative;
+  transform: scale(0.5);
+  transition: .3s all;
+}
+
+.modal__window__homework.active {
+  transform: scale(1);
+}
+
+.lecture__title {
+  text-align: center;
+  border-radius: 17px 17px 0 0;
+  color: #fff;
+  background-color: #6675bc;
+  padding: 15px;
+}
+
+.homework__container{
+  padding: 20px 20px 0 20px;
+}
+
+.message{
+
+}
+
+.author-message{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.author-message h4{
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.author-message p{
+  color: #acacac;
+}
+
+.box {
+  height: auto;
+  background-color: #e9e9e9;
+  padding: 20px;
+  position: relative;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.box input{
+  padding: 0 0 12px 0;
+  margin: 10px 0;
+}
+
+.box h4{
+  color: #6675bc;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.box h4:hover{
+  opacity: 0.7;
+}
+
+.box.arrow-top {
+  margin-top: 20px;
+}
+.box.arrow-top:after {
+  content: " ";
+  position: absolute;
+  left: 15px;
+  top: -15px;
+  border-top: none;
+  border-right: 12px solid transparent;
+  border-left: 12px solid transparent;
+  border-bottom: 17px solid #e9e9e9;
+}
