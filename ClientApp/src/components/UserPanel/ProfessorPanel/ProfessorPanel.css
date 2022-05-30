@@ -122,15 +122,14 @@ td { font-family: 'Avenir Next', 'Segoe UI', 'Lucida Grande', sans-serif; }
   border-radius: 17px 17px 0 0;
   color: #fff;
   background-color: #6675bc;
-  padding: 15px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .homework__container{
   padding: 20px 20px 0 20px;
-}
-
-.message{
-
 }
 
 .author-message{
