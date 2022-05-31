@@ -8,15 +8,18 @@ import {ILection} from "../../../models/ILection";
 import {IUser} from "../../../models/IUser";
 import closeIcon from "../../../assets/img/close-svgrepo-com.svg";
 import swal from "sweetalert";
+import {getHomeworkResponse} from "../../../reduxStore/lection-reducer";
 
 interface ModalWindowProps {
+    userId: any,
     active: boolean,
     setActive: (bool: boolean) => void,
     selectedLection: ILection,
     authUser: IUser,
+    getHomeworkResponse: (userId: string, courseId: string, lectionId: string) => void
 }
 
-const CheckHomeworkModal: FC<ModalWindowProps> = ({active, setActive, selectedLection, authUser}) => {
+const CheckHomeworkModal: FC<ModalWindowProps> = ({userId, active, setActive, selectedLection, authUser}) => {
     const [notice, setNotice] = useState('');
     const [points, setPoints] = useState('');
     const [showNotice, setShowNotice] = useState(false);
@@ -60,10 +63,10 @@ const CheckHomeworkModal: FC<ModalWindowProps> = ({active, setActive, selectedLe
                     </div>
                     <div className="message">
                         <div className="author-message">
-                            <h4>Iryna Novoselska</h4>
+                            <h4>{userId._id}</h4>
                             <p>10:23</p>
                         </div>
-                        <div className="box arrow-top">Etiam sit amet consequat arcu, non tincidunt ipsum. Sed luctus felis leo, eget suscipit velit tempor in. Proin vitae tortor tristique, dignissim urna eu, scelerisque erat.</div>
+                        <div className="box arrow-top">{userId.response}</div>
                     </div>
                     <div className="message">
                         <div className="author-message">
@@ -112,4 +115,4 @@ const mapStateToProps = (state: AppStateType) => {
     }
 }
 
-export default connect(mapStateToProps, {addUserToCourse})(CheckHomeworkModal);
+export default connect(mapStateToProps, {addUserToCourse, getHomeworkResponse})(CheckHomeworkModal);

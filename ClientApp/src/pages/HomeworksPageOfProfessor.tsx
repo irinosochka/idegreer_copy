@@ -5,22 +5,23 @@ import {getOneCourse} from "../reduxStore/course-reducer";
 import backIcon from "../assets/img/back-svgrepo-com.svg";
 import {useNavigate, useParams} from "react-router-dom";
 import './coursePage.css'
-import CheckHomeworkModal from "../components/UserPanel/ProfessorPanel/CheckHomeworkModal";
 import {ILection} from "../models/ILection";
-import {actions, getAllLectionsFromCourse} from "../reduxStore/lection-reducer";
+import {actions, getAllLectionsFromCourse, getMembersWithHomework} from "../reduxStore/lection-reducer";
+import HomeworksMembersListItem from "./HomeworksMembersListItem";
 
 interface HomeworksProps {
     getOneCourse: (courseId: string) => void,
     getAllLectionsFromCourse: (courseId: string) => void,
     lections: ILection[],
-    setLections: () => void
+    setLections: () => void,
+    getMembersWithHomework: (courseId: string, lectionId: string) => void
 }
 
 const HomeworksPageOfProfessor: FC<HomeworksProps> = ({
                                                           getAllLectionsFromCourse,
                                                           lections,
                                                           getOneCourse,
-                                                          setLections
+                                                          setLections,
                                                       }) => {
     const [showHomeworks, setShowHomeworks] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -42,16 +43,6 @@ const HomeworksPageOfProfessor: FC<HomeworksProps> = ({
     }, [id])
 
 
-    const handleHomework = () => {
-        showHomeworks ? setShowHomeworks(false) : setShowHomeworks(true);
-    }
-
-    const handleShowModal = (lection: ILection) => {
-        setSelectedLection(lection);
-        setShowModal(true);
-    }
-
-
     return (
         <div style={{display: 'flex'}}>
             <div style={{paddingTop: '30px', paddingLeft: '20px', width: '25px', cursor: 'pointer'}}>
@@ -59,47 +50,11 @@ const HomeworksPageOfProfessor: FC<HomeworksProps> = ({
             </div>
             <div className="user__container"  style={{background: '#fff', borderRadius: '10px', padding: '40px'}}>
                 <h3 className="page__title">Homeworks List:</h3>
-
-
                 <ol className="rounded-list">{lections.length !== 0 ? lections.map((lection: ILection) => {
-                    return <li
-                               key={lection._id}
-                               onClick={() =>
-                                   handleShowModal(lection)
-                               }
-                    >{lection.title}</li>
+                    return <React.Fragment key={lection._id}><HomeworksMembersListItem lection={lection}  /></React.Fragment>
                 }) : 'No lectures'}</ol>
-
-                {/*<ol className="rounded-list">*/}
-                {/*    <li>Lecture 1</li>*/}
-                {/*    <li onClick={()=> handleHomework()}>Lecture 2*/}
-                {/*        { showHomeworks && <ol>*/}
-                {/*            <li onClick={()=> setShowModal(true)}>*/}
-                {/*                <div style={{display: 'flex', justifyContent: 'space-between'}}>*/}
-                {/*                    <p>Iryna Novoselska</p>*/}
-                {/*                    <img className="check-icon" src={checkIcon} alt=""/>*/}
-                {/*                </div>*/}
-                {/*            </li>*/}
-                {/*            <li>*/}
-                {/*                <div style={{display: 'flex', justifyContent: 'space-between'}}>*/}
-                {/*                    <p>Vadym Hvozditskyi</p>*/}
-                {/*                    /!*<img className="check-icon" src={checkIcon} alt=""/>*!/*/}
-                {/*                </div>*/}
-                {/*            </li>*/}
-                {/*            <li>*/}
-                {/*                <div style={{display: 'flex', justifyContent: 'space-between'}}>*/}
-                {/*                    <p>Oleksandr Matushevskyi</p>*/}
-                {/*                    <img className="check-icon" src={checkIcon} alt=""/>*/}
-                {/*                </div>*/}
-                {/*            </li>*/}
-                {/*        </ol> }*/}
-                {/*    </li>*/}
-                {/*    <li>Lecture 3</li>*/}
-                {/*</ol>*/}
-
             </div>
 
-            {selectedLection && <CheckHomeworkModal active={showModal} setActive={setShowModal} selectedLection={selectedLection} />}
         </div>
     );
 };
@@ -111,4 +66,4 @@ const mapStateToProps = (state: AppStateType) => {
     }
 }
 
-export default connect(mapStateToProps, {getOneCourse, getAllLectionsFromCourse})(HomeworksPageOfProfessor);
+export default connect(mapStateToProps, {getOneCourse, getAllLectionsFromCourse, getMembersWithHomework})(HomeworksPageOfProfessor);

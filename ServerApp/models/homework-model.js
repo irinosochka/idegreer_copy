@@ -5,6 +5,7 @@ const HomeworkModel = new Schema({
     courseId: {type: String, required: true},
     lectionId: {type: String, required: true},
     response: {type: String, required: true},
+    mark: {type: Number | null},
 })
 
 module.exports = model('HomeworkModel', HomeworkModel)

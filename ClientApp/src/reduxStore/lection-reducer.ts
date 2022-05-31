@@ -13,6 +13,7 @@ const INITIAL_STATE = {
     errorGettingLection: false,
     successAddingLection: false,
     errorAddingLection: false,
+    membersWithHomework: [] as Array<any>
 }
 
 const lectionReducer = (state: InitialStateType = INITIAL_STATE, action: ActionsType) => {
@@ -59,6 +60,12 @@ const lectionReducer = (state: InitialStateType = INITIAL_STATE, action: Actions
                 lections: state.lections.filter(l => l._id !== action.payload)
             }
         }
+        case "SET_MEMBERS_WITH_HOMEWORK": {
+            return {
+                ...state,
+                membersWithHomework: action.payload
+            }
+        }
         case "CHANGE_LECTION_DATA": {
             return {
                 ...state,
@@ -85,7 +92,8 @@ export const actions = {
     onSuccessGettingLection: (bool: boolean) => ({type: "ON_SUCCESS_GETTING_LECTION", payload: bool} as const),
     onErrorGettingLection: (bool: boolean) => ({type: "ON_ERROR_GETTING_LECTION", payload: bool} as const),
     deleteLection: (lectionId: string) => ({type: "DELETE_LECTION", payload: lectionId} as const),
-    changeLectionData: (body: any) => ({type: "CHANGE_LECTION_DATA", payload: body} as const)
+    changeLectionData: (body: any) => ({type: "CHANGE_LECTION_DATA", payload: body} as const),
+    setMembersWithHomework: (members: any) => ({type: "SET_MEMBERS_WITH_HOMEWORK", payload: members} as const)
 }
 
 export const addLection = (title: string, description: string, link: string, homework: string, courseId: string): ThunkType => {
@@ -155,6 +163,31 @@ export const addHomeworkResponse = (userId: string, courseId: string, lectionId:
     return async () => {
         try {
             return await LectionService.addHomeworkResponse(userId, courseId, lectionId, resp)
+        } catch(e) {
+            console.log(e);
+        }
+    }
+}
+
+export const getHomeworkResponse = (userId: string, courseId: string, lectionId: string): ThunkType => {
+    return async () => {
+        try {
+            const response = await LectionService.getHomeworkResponse(userId, courseId, lectionId)
+            if (response.data.resultCode === 1) {
+            }
+        } catch(e) {
+            console.log(e);
+        }
+    }
+}
+
+export const getMembersWithHomework = (courseId: string, lectionId: string): ThunkType => {
+    return async (dispatch: Dispatch<any>) => {
+        try {
+            const response = await LectionService.getMembersWithHomework(courseId, lectionId)
+            if (response.data.resultCode === 1) {
+                dispatch(actions.setMembersWithHomework(response.data.data.usersWithHomeWork))
+            }
         } catch(e) {
             console.log(e);
         }

@@ -41,10 +41,30 @@ class LectionController {
         }
     }
 
+    async getHomeworkResponse(req, res) {
+        try {
+            const {courseId, userId, lectionId} = req.params;
+            const data = await lectionService.getHomeworkResponse(courseId, userId, lectionId)
+            return res.json({data, resultCode: 1})
+        } catch (e) {
+            return res.json({message: "Get lections error", resultCode: 0})
+        }
+    }
+
+    async getMembersWithHomework(req, res) {
+        try {
+            const {courseId, lectionId} = req.params;
+            const data = await lectionService.getMembersWithHomework(courseId, lectionId)
+            return res.json({data, resultCode: 1})
+        } catch (e) {
+            return res.json({message: "Get members error", resultCode: 0})
+        }
+    }
+
     async addHomeworkResponse(req, res) {
         try {
            const {userId, courseId, lectionId, response} = req.body;
-           const data = await lectionService.addHomeworkResponse(userId, courseId, lectionId, response);
+           const data = await lectionService.addHomeworkResponse(userId, courseId, lectionId, response, null);
            return res.json({data, resultCode: 1})
         } catch (e) {
             return res.json({message: "Add homework response error", resultCode: 0})

@@ -27,6 +27,19 @@ export default class AddService {
             }).catch(e => console.log(e))
     }
 
+
+    static getHomeworkResponse(userId: string, courseId: string, lectionId: string): Promise<any> {
+        return $lection.get<LectionResponse>(`/getHomeworkResponse/${courseId}/${userId}/${lectionId}`).then(res => {
+                return res
+            }).catch(e => console.log(e))
+    }
+
+    static getMembersWithHomework(courseId: string, lectionId: string): Promise<any> {
+        return $lection.get<LectionResponse>(`/getMembersWithHomework/${courseId}/${lectionId}`).then(res => {
+                return res
+            }).catch(e => console.log(e))
+    }
+
     static addHomeworkResponse(userId: string, courseId: string, lectionId: string, response: string): Promise<any> {
         return $lection.post<CourseResponse>('/addHomeworkResponse', {userId, courseId, lectionId, response}).then(res => {
             return res
