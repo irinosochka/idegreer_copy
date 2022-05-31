@@ -3,6 +3,11 @@ import MenuButton from "../../common/MenuButton";
 import {AppStateType} from "../../reduxStore/store";
 import {connect} from "react-redux";
 import {IUser} from "../../models/IUser";
+import './leftMenu.css';
+import {getCoursesOfUser} from "../../reduxStore/course-reducer";
+import {getNotification} from "../../reduxStore/user-reducer";
+import {ICourse} from "../../models/ICourse";
+import ManualWindow from "./ManualWindow/ManualWindow";
 
 /* IMG */
 import profileIcon from '../../assets/img/user-profile-svgrepo-com.svg';
@@ -11,9 +16,7 @@ import addCourseIcon from '../../assets/img/add-svgrepo-com.svg';
 import requestIcon from '../../assets/img/question-svgrepo-com.svg';
 import courseList from '../../assets/img/list-svgrepo-com.svg';
 import homeIcon from '../../assets/img/home-svgrepo-com.svg';
-import {getCoursesOfUser} from "../../reduxStore/course-reducer";
-import {getNotification} from "../../reduxStore/user-reducer";
-import {ICourse} from "../../models/ICourse";
+
 
 
 export enum UserPageSlidesItems {
@@ -35,7 +38,7 @@ interface UserPageProps {
 
 const LeftMenu: FC<UserPageProps> = ({authUser, courses, getCoursesOfUser, getNotification}) => {
     const [slideItem, setSlideItem] = useState(UserPageSlidesItems.USER_COURSES);
-
+    const [manualActive, setManualActive] = useState(false);
     useEffect(() => {
         getCoursesOfUser(authUser._id);
     }, [])
@@ -78,6 +81,8 @@ const LeftMenu: FC<UserPageProps> = ({authUser, courses, getCoursesOfUser, getNo
                                     isActive={slideItem === UserPageSlidesItems.EDIT_COURSE} icon={editIcon}
                                     onClick={() => setSlideItem(UserPageSlidesItems.EDIT_COURSE)}>Edit
                             course</MenuButton>}
+                    <button onClick={() => setManualActive(true)} className="manual-btn">?</button>
+                    <ManualWindow active={manualActive} setActive={setManualActive}/>
                 </div>
             </div>
         </div>

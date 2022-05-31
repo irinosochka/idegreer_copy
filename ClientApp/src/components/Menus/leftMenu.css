@@ -1,0 +1,16 @@
+.manual-btn {
+  background-color: #ffffff;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  color: #6675BCFF;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  position: fixed;
+  bottom: 50px;
+}
+
+.manual-btn:hover {
+  background-color: #c5c5c5;
+}
