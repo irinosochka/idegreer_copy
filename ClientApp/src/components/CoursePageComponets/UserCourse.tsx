@@ -73,7 +73,7 @@ const UserCourse: FC<UserCourseProps> = ({
     }
 
     const initial = () => {
-        if (course && course.author) {
+        if (course && course.author && course.author.name) {
             const splits = course.author.name.split(" ");
             let stringResult = "";
 
