@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {actions as authActions} from "../../../reduxStore/auth-reducer";
 import {actions as userActions} from "../../../reduxStore/user-reducer";
 import {actions as courseActions} from "../../../reduxStore/course-reducer";
+import {actions as lectionActions} from "../../../reduxStore/lection-reducer";
 import {
     getAllLectionsFromCourse
 } from "../../../reduxStore/lection-reducer";
@@ -20,6 +21,8 @@ interface UserCourseProps {
     getOneCourse: (courseId: string) => void,
     members: Array<IUser>,
     getAllMembersFromCourse: (courseId: string) => void,
+    getAllLectionsFromCourse: (courseId: string) => void,
+    setLections: () => void,
     clearMembers: () => void
 }
 
@@ -29,7 +32,9 @@ const UserCoursePage: FC<UserCourseProps> = ({
                                                  members,
                                                  getOneCourse,
                                                  getAllMembersFromCourse,
-                                                 clearMembers
+                                                 getAllLectionsFromCourse,
+                                                 clearMembers,
+                                                 setLections
                                              }) => {
 
     const {id} = useParams();
@@ -41,13 +46,15 @@ const UserCoursePage: FC<UserCourseProps> = ({
             getAllLectionsFromCourse(id);
             getAllMembersFromCourse(id);
         }
-        return () => clearMembers()
+        return () => {
+            clearMembers();
+            setLections();
+        }
     }, []);
 
     useEffect(() => {
         members.forEach(m => {
             if (m._id === authUser._id) {
-                console.log(m)
                 setMember(true);
                 return
             }
@@ -76,5 +83,7 @@ export default connect(mapStateToProps, {
     addCourseToCart: userActions.addCourseToCart,
     getOneCourse,
     getAllMembersFromCourse,
-    clearMembers: courseActions.clearMembers
+    getAllLectionsFromCourse,
+    clearMembers: courseActions.clearMembers,
+    setLections: lectionActions.setLections
 })(UserCoursePage);
