@@ -52,7 +52,7 @@ const UserCoursePage: FC<UserCourseProps> = ({
 
     return (
         <div>
-            {isMember ? <UserCourse /> : course.author && authUser._id === course.author._id ? <UserCourse /> : <CourseForBuying />}
+            {isMember ? <UserCourse course={course}  /> : course.author && authUser._id === course.author._id ? <UserCourse course={course}  /> : <CourseForBuying />}
         </div>
     );
 };

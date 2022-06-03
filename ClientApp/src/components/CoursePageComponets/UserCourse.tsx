@@ -31,7 +31,6 @@ interface UserCourseProps {
     lections: ILection[],
     addHomeworkResponse: (userId: string, courseId: string, lectionId: string, resp: string) => void,
     getAllLectionsFromCourse: (courseId: string) => void,
-    getOneCourse: (courseId: string) => void,
 }
 
 const UserCourse: FC<UserCourseProps> = ({
@@ -41,7 +40,6 @@ const UserCourse: FC<UserCourseProps> = ({
                                              lections,
                                              addHomeworkResponse,
                                              getAllLectionsFromCourse,
-                                             getOneCourse
                                          }) => {
     const [activeLection, setActiveLection] = useState<ILection | null>(lections[0]);
     const [homeworkText, setHomeworkText] = useState('');
@@ -52,7 +50,6 @@ const UserCourse: FC<UserCourseProps> = ({
 
     useEffect(() => {
         if (course) {
-            getOneCourse(course.course._id)
             getAllLectionsFromCourse(course.course._id);
         }
         return () => setCourse({course: {} as ICourse, author: {} as IUser})
@@ -188,7 +185,6 @@ const mapStateToProps = (state: AppStateType) => {
         authUser: state.auth.authUser,
         isLoading: state.auth.isLoading,
         lections: state.lection.lections,
-        course: state.course.course,
         addUserToCourseSuccess: state.course.addUserToCourseSuccess,
         addUserToCourseError: state.course.addUserToCourseError,
     }
@@ -200,6 +196,5 @@ export default connect(mapStateToProps, {
     addUserToCourse,
     addHomeworkResponse,
     getAllLectionsFromCourse,
-    getOneCourse,
     setCourse: courseActions.setCourse
 })(UserCourse);
