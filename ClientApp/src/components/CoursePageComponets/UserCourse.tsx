@@ -11,7 +11,7 @@ import YouTube from "react-youtube";
 import {ICourse} from "../../models/ICourse";
 import {ILection} from "../../models/ILection";
 import {AppStateType} from "../../reduxStore/store";
-import {addUserToCourse, getOneCourse} from "../../reduxStore/course-reducer";
+import {addUserToCourse} from "../../reduxStore/course-reducer";
 import PhotoMockup, {sizeTypes} from "../../common/photoMockup/PhotoMockup";
 
 import backIcon from "../../assets/img/back-svgrepo-com.svg"

@@ -30,7 +30,6 @@ const UserCourseListPage: FC<UserCourseListProps> = ({courses}) => {
                                     }} style={{cursor: 'pointer'}}>
                            <NavLink to={`/course/${course.course._id}`} ><CourseItem course={course}/></NavLink>
                         </div>
-                        // return <NavLink key={course._id} to={`/course/${course._id}`}><CourseItem course={course} /></NavLink>
                     }
                 ) : <div style={{marginTop: '70px', width: '100%'}}>
                     <h3 className="no-courses__info">You don't have a course. Buy it for starting learning new programing language now.</h3>

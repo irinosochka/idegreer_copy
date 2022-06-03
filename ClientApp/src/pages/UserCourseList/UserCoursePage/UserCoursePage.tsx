@@ -2,6 +2,7 @@ import React, {FC, useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import {actions as authActions} from "../../../reduxStore/auth-reducer";
 import {actions as userActions} from "../../../reduxStore/user-reducer";
+import {actions as courseActions} from "../../../reduxStore/course-reducer";
 import {
     getAllLectionsFromCourse
 } from "../../../reduxStore/lection-reducer";
@@ -19,7 +20,7 @@ interface UserCourseProps {
     getOneCourse: (courseId: string) => void,
     members: Array<IUser>,
     getAllMembersFromCourse: (courseId: string) => void,
-
+    clearMembers: () => void
 }
 
 const UserCoursePage: FC<UserCourseProps> = ({
@@ -28,7 +29,8 @@ const UserCoursePage: FC<UserCourseProps> = ({
                                                  members,
                                                  getOneCourse,
                                                  getAllMembersFromCourse,
-                                         }) => {
+                                                 clearMembers
+                                             }) => {
 
     const {id} = useParams();
     const [isMember, setMember] = useState(false);
@@ -39,11 +41,13 @@ const UserCoursePage: FC<UserCourseProps> = ({
             getAllLectionsFromCourse(id);
             getAllMembersFromCourse(id);
         }
+        return () => clearMembers()
     }, []);
 
     useEffect(() => {
         members.forEach(m => {
             if (m._id === authUser._id) {
+                console.log(m)
                 setMember(true);
                 return
             }
@@ -52,7 +56,8 @@ const UserCoursePage: FC<UserCourseProps> = ({
 
     return (
         <div>
-            {isMember ? <UserCourse course={course}  /> : course.author && authUser._id === course.author._id ? <UserCourse course={course}  /> : <CourseForBuying />}
+            {isMember ? <UserCourse course={course}/> : course.author && authUser._id === course.author._id ?
+                <UserCourse course={course}/> : <CourseForBuying/>}
         </div>
     );
 };
@@ -71,4 +76,5 @@ export default connect(mapStateToProps, {
     addCourseToCart: userActions.addCourseToCart,
     getOneCourse,
     getAllMembersFromCourse,
+    clearMembers: courseActions.clearMembers
 })(UserCoursePage);
