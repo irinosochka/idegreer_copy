@@ -1,6 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import {actions as authActions} from "../../reduxStore/auth-reducer";
+import {actions as courseActions} from "../../reduxStore/course-reducer";
 import {
     actions as lectionActions,
     addHomeworkResponse,
@@ -26,6 +27,7 @@ interface UserCourseProps {
     authUser: IUser,
     course: { course: ICourse, author: IUser },
     setLection: () => void,
+    setCourse: (course: { course: ICourse, author: IUser }) => void,
     lections: ILection[],
     addHomeworkResponse: (userId: string, courseId: string, lectionId: string, resp: string) => void,
     getAllLectionsFromCourse: (courseId: string) => void,
@@ -35,6 +37,7 @@ interface UserCourseProps {
 const UserCourse: FC<UserCourseProps> = ({
                                              course,
                                              authUser,
+                                             setCourse,
                                              lections,
                                              addHomeworkResponse,
                                              getAllLectionsFromCourse,
@@ -52,6 +55,7 @@ const UserCourse: FC<UserCourseProps> = ({
             getOneCourse(course.course._id)
             getAllLectionsFromCourse(course.course._id);
         }
+        return () => setCourse({course: {} as ICourse, author: {} as IUser})
     }, [])
 
     const handleClose = (event: React.FormEvent) => {
@@ -69,7 +73,7 @@ const UserCourse: FC<UserCourseProps> = ({
     }
 
     const initial = () => {
-        if (course.author) {
+        if (course && course.author) {
             const splits = course.author.name.split(" ");
             let stringResult = "";
 
@@ -196,5 +200,6 @@ export default connect(mapStateToProps, {
     addUserToCourse,
     addHomeworkResponse,
     getAllLectionsFromCourse,
-    getOneCourse
+    getOneCourse,
+    setCourse: courseActions.setCourse
 })(UserCourse);

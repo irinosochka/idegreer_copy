@@ -35,19 +35,23 @@ const HomeworksMembersListItem: FC<Props> = ({
                 if (lection.course._id && lection._id) {
                     getMembersWithHomework(lection.course._id, lection._id)
                 }
-                setShowHomeworks(true)
+                if (membersWithHomework.length > 0) {
+                    setShowHomeworks(true)
+                }
             }
             }
         >{lection.title}
             <div>
                 {showHomeworks && <ol>
                     {membersWithHomework.length > 0 && membersWithHomework.map((member: any) => {
-                        return <li key={member} onClick={() => setShowModal(true)}>
+                        return <li key={member}>
                             <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                                {member ? <p onClick={() => {
-                                    setPerson(member)
-                                    setShowModal(true)
-                                }}>{member.userId}</p> : 'no homeworks'}
+                                {member && member.userId && <p onClick={() => {
+                                    if (member.userId) {
+                                        setPerson(member)
+                                        setShowModal(true)
+                                    }
+                                }}>{member.userId}</p>}
                             </div>
                         </li>
                     })
