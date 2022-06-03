@@ -23,7 +23,8 @@ interface UserCourseProps {
     getAllMembersFromCourse: (courseId: string) => void,
     getAllLectionsFromCourse: (courseId: string) => void,
     setLections: () => void,
-    clearMembers: () => void
+    clearMembers: () => void,
+    clearCourse: () => void
 }
 
 const UserCoursePage: FC<UserCourseProps> = ({
@@ -34,7 +35,8 @@ const UserCoursePage: FC<UserCourseProps> = ({
                                                  getAllMembersFromCourse,
                                                  getAllLectionsFromCourse,
                                                  clearMembers,
-                                                 setLections
+                                                 setLections,
+                                                 clearCourse
                                              }) => {
 
     const {id} = useParams();
@@ -47,6 +49,7 @@ const UserCoursePage: FC<UserCourseProps> = ({
             getAllMembersFromCourse(id);
         }
         return () => {
+            clearCourse();
             clearMembers();
             setLections();
         }
@@ -85,5 +88,6 @@ export default connect(mapStateToProps, {
     getAllMembersFromCourse,
     getAllLectionsFromCourse,
     clearMembers: courseActions.clearMembers,
+    clearCourse: courseActions.clearCourse,
     setLections: lectionActions.setLections
 })(UserCoursePage);

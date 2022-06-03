@@ -1,17 +1,24 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {AppStateType} from "../../reduxStore/store";
 import {connect} from "react-redux";
 import {ICourse} from "../../models/ICourse";
 import CourseItem from "../../components/CourseItem/CourseItem";
 import {NavLink} from "react-router-dom";
 import {IUser} from "../../models/IUser";
+import {getCoursesOfUser} from "../../reduxStore/course-reducer";
 
 interface UserCourseListProps {
     courses: Array<{ course: ICourse, author: IUser }>,
+    authUser: IUser,
+    getCoursesOfUser: (userId: string) => void
 }
 
-const UserCourseListPage: FC<UserCourseListProps> = ({courses}) => {
+const UserCourseListPage: FC<UserCourseListProps> = ({courses, authUser, getCoursesOfUser}) => {
     const [visibleList, setVisibleList] = useState(true);
+
+    useEffect(() => {
+        getCoursesOfUser(authUser._id)
+    }, [])
 
     const handleSelecting = () => {
         setVisibleList(false);
@@ -43,8 +50,9 @@ const UserCourseListPage: FC<UserCourseListProps> = ({courses}) => {
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        courses: state.course.userCourses
+        courses: state.course.userCourses,
+        authUser: state.auth.authUser,
     }
 }
 
-export default connect(mapStateToProps, {})(UserCourseListPage);
+export default connect(mapStateToProps, {getCoursesOfUser})(UserCourseListPage);

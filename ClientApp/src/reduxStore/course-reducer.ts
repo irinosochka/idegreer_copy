@@ -120,6 +120,13 @@ const courseReducer = (state: InitialStateType = INITIAL_STATE, action: ActionsT
             }
         }
 
+        case "CLEAR_COURSE": {
+            return {
+                ...state,
+                course: {} as {course: ICourse, author: IUser}
+            }
+        }
+
         default:
             return state
     }
@@ -140,6 +147,7 @@ export const actions = {
     setUserCourses: (courses: Array<any>) => ({type: "SET_USER_COURSES", payload: courses} as const),
     getAllMembersFromCourse: (members: Array<IUser>) => ({type: "GET_ALL_MEMBERS_FROM_COURSE", payload: members} as const),
     clearMembers: () => ({type: "CLEAR_MEMBERS"} as const),
+    clearCourse: () => ({type: "CLEAR_COURSE"} as const),
     setAddUserToCourseError: (bool: boolean) => ({type: "SET_ADD_USER_TO_COURSE_ERROR", payload: bool} as const),
     setAddUserToCourseSuccess: (bool: boolean) => ({type: "SET_ADD_USER_TO_COURSE_SUCCESS", payload: bool} as const),
 }

@@ -22,7 +22,7 @@ import HomeworksPageOfProfessor from "./pages/HomeworksPageOfProfessor";
 interface AppProps {
     isAuth: boolean,
     isLoading: boolean,
-    checkAuth: () => void
+    checkAuth: () => void,
 }
 
 const App: FC<AppProps> = ({isAuth, isLoading, checkAuth}) => {
@@ -40,9 +40,6 @@ const App: FC<AppProps> = ({isAuth, isLoading, checkAuth}) => {
             }
         }, [isAuth]);
 
-        if (isLoading) {
-            return <div><Loader/></div>
-        }
 
         return (
             <div>
@@ -50,6 +47,7 @@ const App: FC<AppProps> = ({isAuth, isLoading, checkAuth}) => {
                 <div style={{display: 'flex', backgroundColor: 'rgb(102, 117, 188)'}}>
                     {isAuth && <UserPage/>}
                     <div style={{width: `${isAuth ? 'calc(100% - 700px)' : '100%'}`, background: '#e0e3f1', padding: '10px' }}>
+                        {!isLoading ?
                         <Routes>
                             <Route path={'/auth'} element={<AuthPage/>} />
                             <Route path={'/'} element={<CourseCatalog/>} />
@@ -59,9 +57,9 @@ const App: FC<AppProps> = ({isAuth, isLoading, checkAuth}) => {
                             <Route path={'/manage-roles'} element={<ManageRoles/>} />
                             <Route path={'/manage-course/:id'} element={<ManageCourse />} />
                             <Route path={'/homeworks-list/:id'} element={<HomeworksPageOfProfessor />} />
-                            <Route path={'/course/:id'} element={<UserCoursePage />} />
+                            <Route path={'/course/:id'} element={<UserCoursePage  />} />
                             <Route path={'/cart'} element={<CartPage />} />
-                        </Routes>
+                        </Routes> : <Loader />}
                     </div>
                     {
                         isAuth &&
