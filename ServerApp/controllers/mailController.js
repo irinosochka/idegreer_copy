@@ -12,7 +12,6 @@ class MailController {
 
 
         const notification = await NotificationModel.find({'course._id': ObjectId(courseId)}).sort({_id:-1}).limit(1);
-        console.log(notification[0].change)
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {

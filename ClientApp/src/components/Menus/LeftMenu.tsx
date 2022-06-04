@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import MenuButton from "../../common/MenuButton";
 import {AppStateType} from "../../reduxStore/store";
 import {connect} from "react-redux";
@@ -6,7 +6,6 @@ import {IUser} from "../../models/IUser";
 import './leftMenu.css';
 import {getCoursesOfUser} from "../../reduxStore/course-reducer";
 import {getNotification} from "../../reduxStore/user-reducer";
-import {ICourse} from "../../models/ICourse";
 import ManualWindow from "./ManualWindow/ManualWindow";
 
 /* IMG */
@@ -16,7 +15,6 @@ import addCourseIcon from '../../assets/img/add-svgrepo-com.svg';
 import requestIcon from '../../assets/img/question-svgrepo-com.svg';
 import courseList from '../../assets/img/list-svgrepo-com.svg';
 import homeIcon from '../../assets/img/home-svgrepo-com.svg';
-
 
 
 export enum UserPageSlidesItems {
@@ -30,22 +28,12 @@ export enum UserPageSlidesItems {
 
 interface UserPageProps {
     authUser: IUser,
-    getCoursesOfUser: (userId: string) => void,
-    getNotification: (id: string) => void,
-    notifications: Array<any>,
-    courses: Array<ICourse>
 }
 
-const LeftMenu: FC<UserPageProps> = ({authUser, courses, getCoursesOfUser, getNotification}) => {
+const LeftMenu: FC<UserPageProps> = ({authUser}) => {
     const [slideItem, setSlideItem] = useState(UserPageSlidesItems.USER_COURSES);
     const [manualActive, setManualActive] = useState(false);
-    useEffect(() => {
-        getCoursesOfUser(authUser._id);
-    }, [])
 
-    useEffect(() => {
-        courses.forEach(c => getNotification(c._id))
-    }, [courses])
 
     return (
         <div style={{width: '300px', flexGrow: '0', background: '#6675bc', height: 'calc(100vh - 85px)'}}>

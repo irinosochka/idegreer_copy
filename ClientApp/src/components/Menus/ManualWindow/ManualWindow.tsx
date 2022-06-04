@@ -22,15 +22,15 @@ const ManualWindow: FC<ManualWindow> = ({active, setActive}) => {
             <div onClick={e => e.stopPropagation()} className={active ? "manual__main active" : "manual__main"}>
 
                 <nav className="nav__steps">
-                    <a href="#1">Sign up</a>
-                    <a href="#2">Sign in</a>
-                    <a href="#3">Main page</a>
-                    <a href="#4">Left menu</a>
-                    <a href="#5">User</a>
-                    <a href="#6">Course</a>
-                    <a href="#7">Cart</a>
-                    <a href="#8">Payment</a>
-                    <p className="close-window" onClick={() => setActive(false)}>&#x2715;</p>
+                    <li><a href="#1">Sign up</a></li>
+                    <li><a href="#2">Sign in</a></li>
+                    <li><a href="#3">Main page</a></li>
+                    <li><a href="#4">Left menu</a></li>
+                    <li><a href="#5">User</a></li>
+                    <li><a href="#6">Course</a></li>
+                    <li><a href="#7">Cart</a></li>
+                    <li><a href="#8">Payment</a></li>
+                    <li><p className="close-window" onClick={() => setActive(false)}>&#x2715;</p></li>
                 </nav>
 
                 <div className="content">
