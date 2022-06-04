@@ -26,6 +26,7 @@ export const actions = {}
 
 export const sendEditMail = (courseId: string, lectionTitle: string, messageType: mailMessageType): ThunkType =>
     async () => {
+    console.log(messageType)
     let message;
         switch (messageType) {
             case 'addLection':
@@ -41,7 +42,9 @@ export const sendEditMail = (courseId: string, lectionTitle: string, messageType
                 message = `Course ${lectionTitle} was deleted.`
                 break;
         }
-        return await MailService.sendMailAboutLectionChange(courseId, message)
+        await MailService.sendMailAboutLectionChange(courseId, message)
+
+        return
     }
 
 

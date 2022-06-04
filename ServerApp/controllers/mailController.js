@@ -11,10 +11,8 @@ class MailController {
         const userMessage = req.body.message;
 
 
-
-        const notification = await NotificationModel.findOne({'course._id': ObjectId(courseId)}).sort({_id:-1}).limit(1);
-        console.log('not ' + notification)
-
+        const notification = await NotificationModel.find({'course._id': ObjectId(courseId)}).sort({_id:-1}).limit(1);
+        console.log(notification[0].change)
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -47,7 +45,7 @@ class MailController {
                       <div style="margin-bottom: 30px">
                         <p style="color: #000">Hi,</p>
                         <p style="color: #000">${userMessage}</p>
-                         <p style="color: #000">Change: ${notification.change.length > 0 && notification.change.join().toLowerCase()}.</p>
+                         <p style="color: #000">Change: ${notification[0].change.length > 0 && notification[0].change.join().toLowerCase()}.</p>
                         <p style="color: #000">Please go to iDegreer to see changes.</p>
                       </div>
                       <div style="background-color: #cacaca;
