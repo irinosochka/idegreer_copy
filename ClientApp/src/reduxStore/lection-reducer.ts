@@ -13,7 +13,8 @@ const INITIAL_STATE = {
     errorGettingLection: false,
     successAddingLection: false,
     errorAddingLection: false,
-    membersWithHomework: [] as Array<any>
+    membersWithHomework: [] as Array<any>,
+    homeworkResponse: {} as any
 }
 
 const lectionReducer = (state: InitialStateType = INITIAL_STATE, action: ActionsType) => {
@@ -79,6 +80,18 @@ const lectionReducer = (state: InitialStateType = INITIAL_STATE, action: Actions
                 })
             }
         }
+        case "SET_HOMEWORK_RESPONSE": {
+            return {
+                ...state,
+                homeworkResponse: action.payload
+            }
+        }
+        case "CLEAR_HOMEWORK_RESPONSE": {
+            return {
+                ...state,
+                homeworkResponse: []
+            }
+        }
         default:
             return state
     }
@@ -93,7 +106,9 @@ export const actions = {
     onErrorGettingLection: (bool: boolean) => ({type: "ON_ERROR_GETTING_LECTION", payload: bool} as const),
     deleteLection: (lectionId: string) => ({type: "DELETE_LECTION", payload: lectionId} as const),
     changeLectionData: (body: any) => ({type: "CHANGE_LECTION_DATA", payload: body} as const),
-    setMembersWithHomework: (members: any) => ({type: "SET_MEMBERS_WITH_HOMEWORK", payload: members} as const)
+    setMembersWithHomework: (members: any) => ({type: "SET_MEMBERS_WITH_HOMEWORK", payload: members} as const),
+    setHomeworkResponse: (resp: any) => ({type: "SET_HOMEWORK_RESPONSE", payload: resp} as const),
+    clearHomeworkResponse: () => ({type: "CLEAR_HOMEWORK_RESPONSE"} as const)
 }
 
 export const addLection = (title: string, description: string, link: string, homework: string, courseId: string): ThunkType => {
@@ -169,10 +184,12 @@ export const addHomeworkResponse = (userId: string, courseId: string, lectionId:
 }
 
 export const getHomeworkResponse = (userId: string, courseId: string, lectionId: string): ThunkType => {
-    return async () => {
+    return async (dispatch: Dispatch<any>) => {
         try {
             const response = await LectionService.getHomeworkResponse(userId, courseId, lectionId)
             if (response.data.resultCode === 1) {
+                dispatch(actions.setHomeworkResponse(response.data.data.homeworkResponse));
+                return response.data.data.homeworkResponse;
             }
         } catch(e) {
             console.log(e);

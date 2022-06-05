@@ -5,7 +5,7 @@ import {actions as courseActions} from "../../reduxStore/course-reducer";
 import {
     actions as lectionActions,
     addHomeworkResponse,
-    getAllLectionsFromCourse
+    getAllLectionsFromCourse, getHomeworkResponse
 } from "../../reduxStore/lection-reducer";
 import YouTube from "react-youtube";
 import {ICourse} from "../../models/ICourse";
@@ -27,19 +27,25 @@ interface UserCourseProps {
     authUser: IUser,
     course: { course: ICourse, author: IUser },
     setLection: () => void,
+    homeworkResponse: any,
     setCourse: (course: { course: ICourse, author: IUser }) => void,
+    clearHomeworkResponse: () => void
     lections: ILection[],
     addHomeworkResponse: (userId: string, courseId: string, lectionId: string, resp: string) => void,
     getAllLectionsFromCourse: (courseId: string) => void,
+    getHomeworkResponse: (userId: string, courseId: string, lectionId: string) => void
 }
 
 const UserCourse: FC<UserCourseProps> = ({
                                              course,
                                              authUser,
                                              setCourse,
+                                             homeworkResponse,
                                              lections,
                                              addHomeworkResponse,
+                                             clearHomeworkResponse,
                                              getAllLectionsFromCourse,
+                                             getHomeworkResponse
                                          }) => {
     const [activeLection, setActiveLection] = useState<ILection | null>(lections[0]);
     const [homeworkText, setHomeworkText] = useState('');
@@ -49,11 +55,23 @@ const UserCourse: FC<UserCourseProps> = ({
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (course && course.course._id) {
+        if (course && course.course._id && activeLection) {
             getAllLectionsFromCourse(course.course._id);
+            getHomeworkResponse(authUser._id, course.course._id, activeLection._id)
         }
-        return () => setCourse({course: {} as ICourse, author: {} as IUser})
+        return  () =>
+            setCourse({course: {} as ICourse, author: {} as IUser});
     }, [])
+
+    useEffect(() => {
+        if (activeLection) {
+            getHomeworkResponse(authUser._id, course.course._id, activeLection._id)
+        }
+        return () => {
+            clearHomeworkResponse();
+        }
+    }, [activeLection])
+
 
     const handleClose = (event: React.FormEvent) => {
         event.preventDefault();
@@ -147,7 +165,7 @@ const UserCourse: FC<UserCourseProps> = ({
                             </div>
                         </div>
 
-                        <div className="add-homework">
+                        {!homeworkResponse && <div className="add-homework">
                             <div style={{marginRight: '10px'}}>
                                 <PhotoMockup size={sizeTypes.small}/>
                             </div>
@@ -173,7 +191,10 @@ const UserCourse: FC<UserCourseProps> = ({
                                     Homework was sent
                                 </div>
                             }
-                        </div>
+                        </div>}
+                        {homeworkResponse && <div className="add-homework">
+                            Your answer was: {homeworkResponse.response}. {homeworkResponse.mark ? `Work was checked by professor and you have got ${homeworkResponse.mark}` : `Work have not checked yet`}
+                        </div> }
                     </div>}
             </div>
         </div>
@@ -187,6 +208,7 @@ const mapStateToProps = (state: AppStateType) => {
         lections: state.lection.lections,
         addUserToCourseSuccess: state.course.addUserToCourseSuccess,
         addUserToCourseError: state.course.addUserToCourseError,
+        homeworkResponse: state.lection.homeworkResponse
     }
 }
 
@@ -196,5 +218,7 @@ export default connect(mapStateToProps, {
     addUserToCourse,
     addHomeworkResponse,
     getAllLectionsFromCourse,
-    setCourse: courseActions.setCourse
+    setCourse: courseActions.setCourse,
+    getHomeworkResponse,
+    clearHomeworkResponse: lectionActions.clearHomeworkResponse
 })(UserCourse);
