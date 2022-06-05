@@ -20,9 +20,9 @@ interface ModalWindowProps {
 }
 
 const CheckHomeworkModal: FC<ModalWindowProps> = ({userId, active, setActive, selectedLection, authUser}) => {
-    const [notice, setNotice] = useState('');
+    // const [notice, setNotice] = useState('');
     const [points, setPoints] = useState('');
-    const [showNotice, setShowNotice] = useState(false);
+    // const [showNotice, setShowNotice] = useState(false);
     const [isError, setError] = useState(false);
 
     const addFeedback = () => {
@@ -88,17 +88,17 @@ const CheckHomeworkModal: FC<ModalWindowProps> = ({userId, active, setActive, se
                                        style={{width: '100px', textAlign: 'center'}}
                                        className={`input-points ${isError ? 'input-points__error' : ''}`}
                                 />
-                                {!showNotice && <h4 onClick={() => setShowNotice(true)}>Add notice</h4>}
-                                {showNotice && <h4 onClick={() => setShowNotice(false)}>Hide notice</h4>}
+                                {/*{!showNotice && <h4 onClick={() => setShowNotice(true)}>Add notice</h4>}*/}
+                                {/*{showNotice && <h4 onClick={() => setShowNotice(false)}>Hide notice</h4>}*/}
                             </div>
-                            {showNotice && <textarea className="form-control"
-                                          onChange={(event) => {
-                                              setNotice(event.target.value);
-                                          }}
-                                          value={notice}
-                                          placeholder={'Notice'}
-                                          style={{resize: "none", padding: '5px 15px', width: 'calc(100% - 32px)', height: '80px', borderRadius: '5px', marginRight: '10px'}}
-                                /> }
+                            {/*{showNotice && <textarea className="form-control"*/}
+                            {/*              onChange={(event) => {*/}
+                            {/*                  setNotice(event.target.value);*/}
+                            {/*              }}*/}
+                            {/*              value={notice}*/}
+                            {/*              placeholder={'Notice'}*/}
+                            {/*              style={{resize: "none", padding: '5px 15px', width: 'calc(100% - 32px)', height: '80px', borderRadius: '5px', marginRight: '10px'}}*/}
+                            {/*    /> }*/}
                         </div>
                     </div>
                     <Button width={100} onClick={() => addFeedback()}>Send</Button>
