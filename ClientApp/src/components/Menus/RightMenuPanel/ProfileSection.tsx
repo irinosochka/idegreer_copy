@@ -42,8 +42,8 @@ const ProfileSection = () => {
             </div>
             <div style={{margin: '20px 0'}}>
                 {slideItem === ButtonItems.PROFILE && <Profile/>}
-                {slideItem === ButtonItems.EDIT_PROFILE && <EditProfile/>}
-                {slideItem === ButtonItems.CHANGE_PASSWORD && <ChangePassword/>}
+                {slideItem === ButtonItems.EDIT_PROFILE && <EditProfile handleClose={handleClose}/>}
+                {slideItem === ButtonItems.CHANGE_PASSWORD && <ChangePassword handleClose={handleClose}/>}
             </div>
         </div>
     );

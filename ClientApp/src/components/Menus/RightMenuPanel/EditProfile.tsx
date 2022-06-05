@@ -15,7 +15,8 @@ interface EditProfileProps {
     userDataChanging: (formData: FormData) => void
     userDataChangingError: boolean,
     userDataChangedSuccess: boolean,
-    setUserDataChangingError: (bool: boolean) => void
+    setUserDataChangingError: (bool: boolean) => void,
+    handleClose: () => void,
 }
 
 const EditProfile: FC<EditProfileProps> = ({
@@ -24,7 +25,7 @@ const EditProfile: FC<EditProfileProps> = ({
                                                userDataChanging,
                                                userDataChangingError,
                                                userDataChangedSuccess,
-                                               setUserDataChangingError
+                                               setUserDataChangingError, handleClose
                                            }) => {
 
     const [name, setName] = useState(authUser.name);
@@ -45,6 +46,7 @@ const EditProfile: FC<EditProfileProps> = ({
         formData.append('newUsername', username)
         formData.append('newName', name)
         formData.append('newEmail', email)
+        setTimeout(handleClose, 1000)
         if (username.length !== 0 && name.length !== 0 && email.length !== 0) {
             userDataChanging(formData);
             changePhoto(formData);

@@ -16,10 +16,11 @@ interface ChangePasswordProps {
     passwordChangingError: boolean,
     setPasswordChangingSuccess: (bool: boolean) => void,
     setPasswordChangingError: (bool: boolean) => void,
-    setRegistrationError:  (bool: boolean) => void
+    setRegistrationError:  (bool: boolean) => void,
+    handleClose: () => void,
 }
 
-const ChangePassword: FC<ChangePasswordProps> = ({authUser, passwordChanging, setPasswordChangingSuccess, passwordChangingSuccess, setPasswordChangingError, passwordChangingError, setRegistrationError}) => {
+const ChangePassword: FC<ChangePasswordProps> = ({authUser, passwordChanging, setPasswordChangingSuccess, passwordChangingSuccess, setPasswordChangingError, passwordChangingError, setRegistrationError, handleClose}) => {
 
     const [currentPassword, setCurrentPassword] = useState('');
     const [firstPassword, setFirstPassword] = useState('');
@@ -48,6 +49,7 @@ const ChangePassword: FC<ChangePasswordProps> = ({authUser, passwordChanging, se
                 } else {
                     passwordChanging(authUser, currentPassword, firstPassword);
                     clearFields();
+                    setTimeout(handleClose, 1000)
                 }
             }else{
                 setRepeatPasswordError(true)
