@@ -27,9 +27,9 @@ input{
     color: white;
 }
 
-::-webkit-scrollbar {
-    display: none;
-}
+/*::-webkit-scrollbar {*/
+/*    display: none;*/
+/*}*/
 
 .rightMenu__wrapper input::placeholder{
     color: #cacaca;
