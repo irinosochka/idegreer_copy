@@ -163,5 +163,18 @@ export const addNotification = (date: string, courseId: string, type: string, ch
     }
 }
 
+export const setMark = (userId: string, courseId: string, lectionId: string, mark: string): ThunkType => {
+    return async () => {
+        try {
+            const response = await UserService.setMark(userId, courseId, lectionId, mark);
+            if (response.data.resultCode === 1) {
+                return response.data.data;
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
+
 
 export default userReducer;

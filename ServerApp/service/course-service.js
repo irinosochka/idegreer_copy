@@ -32,9 +32,7 @@ class CourseService {
         if (!course) {
             throw new Error(`Course with id ${courseId} doesn't exist`)
         }
-        console.log(course)
         const user = await UserModel.findOne({_id: course.author._id});
-        console.log(user)
         return {
             course: {course: course, author: user}
         }

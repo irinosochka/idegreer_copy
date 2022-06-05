@@ -147,7 +147,6 @@ export const deleteLection = (lectionId: string): ThunkType => {
     return async (dispatch: Dispatch<any>) => {
         try {
             const response = await LectionService.deleteLection(lectionId);
-            console.log(response);
             if (response.data.resultCode === 1) {
                 dispatch(actions.deleteLection(lectionId))
             } else {
@@ -182,11 +181,11 @@ export const getHomeworkResponse = (userId: string, courseId: string, lectionId:
 }
 
 export const getMembersWithHomework = (courseId: string, lectionId: string): ThunkType => {
-    return async (dispatch: Dispatch<any>) => {
+    return async () => {
         try {
             const response = await LectionService.getMembersWithHomework(courseId, lectionId)
-            if (response.data.resultCode === 1) {
-                dispatch(actions.setMembersWithHomework(response.data.data.usersWithHomeWork))
+            if (response.data.resultCode === 1 && response.data.data.usersWithHomeWork[0] !== null) {
+                return response.data.data.usersWithHomeWork
             }
         } catch(e) {
             console.log(e);

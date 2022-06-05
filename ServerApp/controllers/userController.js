@@ -69,7 +69,6 @@ class UserController {
     async addNotification(req, res) {
         try {
            const {date, courseId, type, change} = req.body;
-           console.log(change)
            const data = await userService.addNotification(date, courseId, type, change);
            return res.json({data, resultCode: 1})
         } catch {
@@ -84,6 +83,16 @@ class UserController {
            return res.json({data, resultCode: 1})
         } catch {
            return res.json({message: 'get notification error', resultCode: 0})
+        }
+    }
+
+    async setMark(req, res) {
+        try {
+            const {userId, courseId, lectionId, mark} = req.body;
+            const data = await userService.setMark(userId, courseId, lectionId, mark);
+            return res.json({data, resultCode: 1})
+        } catch {
+            return res.json({message: 'set mark error', resultCode: 0})
         }
     }
 }

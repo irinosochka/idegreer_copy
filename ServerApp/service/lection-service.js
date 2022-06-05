@@ -11,7 +11,13 @@ class LectionService {
         if (!course) {
             throw new Error(`Course with id ${courseId} not exists`);
         }
-        const lection = await LectionModel.create({title, description, link, homework, 'course._id': ObjectId(courseId) });
+        const lection = await LectionModel.create({
+            title,
+            description,
+            link,
+            homework,
+            'course._id': ObjectId(courseId)
+        });
         if (!lection) {
             throw new Error('Lection creating error');
         }
@@ -56,7 +62,7 @@ class LectionService {
         if (!course) {
             throw new Error(`No course with id ${courseId}`)
         }
-        const lections = await LectionModel.find({ 'course._id': ObjectId(courseId) });
+        const lections = await LectionModel.find({'course._id': ObjectId(courseId)});
 
         if (!lections || lections.length === 0) {
             throw new Error(`No lections for course with id ${courseId}`)
@@ -79,7 +85,7 @@ class LectionService {
         if (!lection) {
             throw new Error(`No lection with id ${lectionId}`)
         }
-        const homeworkResponse = await HomeworkModel.find({courseId:  courseId, userId: userId, lectionId: lectionId});
+        const homeworkResponse = await HomeworkModel.find({courseId: courseId, userId: userId, lectionId: lectionId});
         return {
             homeworkResponse: Array.isArray(homeworkResponse) ? homeworkResponse[0] : homeworkResponse
         }
@@ -104,6 +110,17 @@ class LectionService {
         }
     }
 
+    async getMemberWithHomework(userId, courseId, lectionId) {
+        const member = await HomeworkModel.findOne({
+            'new ObjectId(userId)': userId,
+            courseId: courseId,
+            lectionId: lectionId
+        })
+        return {
+            member
+        }
+    }
+
     async getMembersWithHomework(courseId, lectionId) {
         const course = await CourseModel.findOne({_id: courseId})
         if (!course) {
@@ -114,15 +131,19 @@ class LectionService {
             throw new Error(`No lection with id ${lectionId}`)
         }
         const users = await CourseService.getAllUsersFromCourse(courseId);
-        console.log(users)
         let usersWithHomeWork = [];
+        let userWithHomework;
 
-        for (let i = 0; i < users.userList.length; i++) {
-            const userWithHomework = await HomeworkModel.findOne({'ObjectId("userId")': users.userList[i]._id, courseId: courseId, lectionId: lectionId})
+        for await (const i of users.userList) {
+            userWithHomework = await HomeworkModel.find({
+                'new ObjectId(userId)': i._id,
+                courseId: courseId,
+                lectionId: lectionId
+            })
             usersWithHomeWork.push(userWithHomework)
         }
         return {
-            usersWithHomeWork
+            usersWithHomeWork: usersWithHomeWork[0]
         }
     }
 

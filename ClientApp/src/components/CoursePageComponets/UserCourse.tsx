@@ -49,7 +49,7 @@ const UserCourse: FC<UserCourseProps> = ({
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (course) {
+        if (course && course.course._id) {
             getAllLectionsFromCourse(course.course._id);
         }
         return () => setCourse({course: {} as ICourse, author: {} as IUser})

@@ -4,10 +4,11 @@ import {connect} from "react-redux";
 import {AppStateType} from "../reduxStore/store";
 import {actions, getMembersWithHomework} from "../reduxStore/lection-reducer";
 import CheckHomeworkModal from "../components/UserPanel/ProfessorPanel/CheckHomeworkModal";
+import HomeworksItemMemeberList from "./HomeworksItemMemeberList";
 
 interface Props {
     lection: ILection,
-    getMembersWithHomework: (courseId: string, lectionId: string) => void,
+    getMembersWithHomework: (courseId: string, lectionId: string) => any,
     membersWithHomework: any,
     setMembersWithHomework: (members: any) => void
 }
@@ -15,52 +16,41 @@ interface Props {
 const HomeworksMembersListItem: FC<Props> = ({
                                                  lection,
                                                  getMembersWithHomework,
-                                                 membersWithHomework,
-                                                 setMembersWithHomework
                                              }) => {
 
     const [showHomeworks, setShowHomeworks] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [person, setPerson] = useState<string>('')
+    const [member, setMember] = useState([])
+    //
+    // useEffect(() => {
+    //         getMembersWithHomework(lection.course._id, lection._id).then((res: any) => res && setMember(res))
+    // }, [])
 
     useEffect(() => {
-        return () => {
-            setShowHomeworks(false);
-            setMembersWithHomework([])
-        }
+        return () => setMember([])
     }, [])
+
     return (
-        <li
-            onClick={() => {
-                if (lection.course._id && lection._id) {
-                    getMembersWithHomework(lection.course._id, lection._id)
-                }
-                if (membersWithHomework.length > 0) {
-                    setShowHomeworks(true)
-                }
-            }
-            }
-        >{lection.title}
-            <div>
-                {showHomeworks && <ol>
-                    {membersWithHomework.length > 0 && membersWithHomework.map((member: any) => {
-                        return <li key={member}>
-                            <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                                {member && member.userId && <p onClick={() => {
-                                    if (member.userId) {
-                                        setPerson(member)
-                                        setShowModal(true)
-                                    }
-                                }}>{member.userId}</p>}
-                            </div>
-                        </li>
-                    })
-                    }
-                </ol>}
-            </div>
+        <>
+            <li onClick={async () => {
+                await getMembersWithHomework(lection.course._id, lection._id).then((res: any) => res && setMember(res))
+                setShowHomeworks(!showHomeworks)
+            }}>
+                <span>{lection.title}</span>
+                {showHomeworks && <div>
+                    <ol>
+                        {member.length > 0 && member.map((member: any) => {
+                            return <React.Fragment key={member._id}><HomeworksItemMemeberList member={member} setShowModal={setShowModal}
+                                                                             setPerson={setPerson}/></React.Fragment>
+                        })
+                        }
+                    </ol>
+                </div>}
+            </li>
             {showModal && <CheckHomeworkModal active={showModal} setActive={setShowModal} selectedLection={lection}
                                               userId={person}/>}
-        </li>
+        </>
     )
 }
 

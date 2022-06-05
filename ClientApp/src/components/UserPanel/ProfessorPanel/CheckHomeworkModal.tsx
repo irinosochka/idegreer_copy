@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import "./ProfessorPanel.css"
 import {connect} from "react-redux";
 import {addUserToCourse} from "../../../reduxStore/course-reducer";
@@ -9,23 +9,31 @@ import {IUser} from "../../../models/IUser";
 import closeIcon from "../../../assets/img/close-svgrepo-com.svg";
 import swal from "sweetalert";
 import {getHomeworkResponse} from "../../../reduxStore/lection-reducer";
+import {getUser, setMark} from "../../../reduxStore/user-reducer";
 
 interface ModalWindowProps {
     userId: any,
+    user: IUser,
     active: boolean,
     setActive: (bool: boolean) => void,
     selectedLection: ILection,
     authUser: IUser,
-    getHomeworkResponse: (userId: string, courseId: string, lectionId: string) => void
+    getHomeworkResponse: (userId: string, courseId: string, lectionId: string) => void,
+    getUser: (userId: string) => void,
+    setMark: (userId: string, courseId: string, lectionId: string, mark: string) => void
 }
 
-const CheckHomeworkModal: FC<ModalWindowProps> = ({userId, active, setActive, selectedLection, authUser}) => {
+const CheckHomeworkModal: FC<ModalWindowProps> = ({userId, user, active, setActive, selectedLection, authUser, getUser, setMark}) => {
     // const [notice, setNotice] = useState('');
     const [points, setPoints] = useState('');
-    // const [showNotice, setShowNotice] = useState(false);
     const [isError, setError] = useState(false);
 
+    useEffect(() => {
+        getUser(userId.userId)
+    }, [])
+
     const addFeedback = () => {
+        setMark(user._id, selectedLection.course._id, selectedLection._id, points);
         let pointsNumber = parseInt(points);
 
         if(points.length !== 0 && pointsNumber >= 0){
@@ -41,7 +49,6 @@ const CheckHomeworkModal: FC<ModalWindowProps> = ({userId, active, setActive, se
             setError(true);
         }
     }
-
 
     return (
         <div className={active ? "modal__window__wrapper active" : "modal__window__wrapper"}
@@ -63,12 +70,12 @@ const CheckHomeworkModal: FC<ModalWindowProps> = ({userId, active, setActive, se
                     </div>
                     <div className="message">
                         <div className="author-message">
-                            <h4>{userId._id}</h4>
+                            <h4>{user.name}</h4>
                             <p>10:23</p>
                         </div>
                         <div className="box arrow-top">{userId.response}</div>
                     </div>
-                    <div className="message">
+                    {!userId.mark ? <div className="message">
                         <div className="author-message">
                             <h4>{authUser.name}</h4>
                         </div>
@@ -100,7 +107,7 @@ const CheckHomeworkModal: FC<ModalWindowProps> = ({userId, active, setActive, se
                             {/*              style={{resize: "none", padding: '5px 15px', width: 'calc(100% - 32px)', height: '80px', borderRadius: '5px', marginRight: '10px'}}*/}
                             {/*    /> }*/}
                         </div>
-                    </div>
+                    </div> : <span className={'message'}>This user have got his mark: {userId.mark}</span>}
                     <Button width={100} onClick={() => addFeedback()}>Send</Button>
                 </div>
             </div>
@@ -111,8 +118,9 @@ const CheckHomeworkModal: FC<ModalWindowProps> = ({userId, active, setActive, se
 const mapStateToProps = (state: AppStateType) => {
     return {
         addUserToCourseSuccess: state.course.addUserToCourseSuccess,
-        authUser: state.auth.authUser
+        authUser: state.auth.authUser,
+        user: state.user.user
     }
 }
 
-export default connect(mapStateToProps, {addUserToCourse, getHomeworkResponse})(CheckHomeworkModal);
+export default connect(mapStateToProps, {addUserToCourse, getHomeworkResponse, getUser, setMark})(CheckHomeworkModal);

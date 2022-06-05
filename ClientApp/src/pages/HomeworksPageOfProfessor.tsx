@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect} from 'react';
 import {AppStateType} from "../reduxStore/store";
 import {connect} from "react-redux";
 import {getOneCourse} from "../reduxStore/course-reducer";
@@ -23,9 +23,6 @@ const HomeworksPageOfProfessor: FC<HomeworksProps> = ({
                                                           getOneCourse,
                                                           setLections,
                                                       }) => {
-    const [showHomeworks, setShowHomeworks] = useState(false);
-    const [showModal, setShowModal] = useState(false);
-    const [selectedLection, setSelectedLection] = useState<ILection>();
 
     const navigate = useNavigate();
     const {id} = useParams();
@@ -37,7 +34,6 @@ const HomeworksPageOfProfessor: FC<HomeworksProps> = ({
         }
     }, [])
 
-
     useEffect(() => {
         setLections()
     }, [id])
@@ -48,10 +44,10 @@ const HomeworksPageOfProfessor: FC<HomeworksProps> = ({
             <div style={{paddingTop: '30px', paddingLeft: '20px', width: '25px', cursor: 'pointer'}}>
                 <img src={backIcon} onClick={() => navigate(-1)} alt=""/>
             </div>
-            <div className="user__container"  style={{background: '#fff', borderRadius: '10px', padding: '40px'}}>
+            <div className="user__container" style={{background: '#fff', borderRadius: '10px', padding: '40px'}}>
                 <h3 className="page__title">Homeworks List:</h3>
                 <ol className="rounded-list">{lections.length !== 0 ? lections.map((lection: ILection) => {
-                    return <React.Fragment key={lection._id}><HomeworksMembersListItem lection={lection}  /></React.Fragment>
+                    return <div key={lection._id}><HomeworksMembersListItem lection={lection}   /></div>
                 }) : 'No lectures'}</ol>
             </div>
 
@@ -66,4 +62,8 @@ const mapStateToProps = (state: AppStateType) => {
     }
 }
 
-export default connect(mapStateToProps, {getOneCourse, getAllLectionsFromCourse, getMembersWithHomework})(HomeworksPageOfProfessor);
+export default connect(mapStateToProps, {
+    getOneCourse,
+    getAllLectionsFromCourse,
+    getMembersWithHomework
+})(HomeworksPageOfProfessor);

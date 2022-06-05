@@ -1,6 +1,8 @@
 const UserModel = require("../models/user-model");
 const CourseModel = require("../models/course-model");
+const LectionModel = require("../models/lection-model");
 const NotificationModel = require("../models/notification-model");
+const HomeworkModel = require("../models/homework-model");
 const bcrypt = require("bcrypt");
 const UserDto = require("../dtos/user-dto");
 const tokenService = require("./token-service");
@@ -187,6 +189,34 @@ class UserService {
         const notifications = await NotificationModel.find({courseId: id})
         return {
             notifications
+        }
+    }
+
+    async setMark(userId, courseId, lectionId, mark) {
+        const user = await UserModel.findOne({_id: userId});
+        if (!user) {
+            throw new Error(`There is not exists user with id ${userId}`)
+        }
+
+        const course = await CourseModel.findOne({_id: courseId});
+        if (!course) {
+            throw new Error(`There is not exists course with id ${courseId}`)
+        }
+
+        const lection = await LectionModel.findOne({_id: lectionId});
+        if (!lection) {
+            throw new Error(`There is not exists lection with id ${lectionId}`)
+        }
+        const homework = await HomeworkModel.findOne({userId: userId, courseId: courseId, lectionId: lectionId});
+        const userWithNewPassword = await HomeworkModel.updateOne({
+            _id: homework._id
+        }, {
+            $set: {
+                mark: mark
+            }
+        });
+        return {
+            userWithNewPassword
         }
     }
 

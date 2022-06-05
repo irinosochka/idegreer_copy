@@ -53,6 +53,12 @@ export default class UserService {
         }).catch(e => console.log('err ' + e))
     }
 
+    static setMark(userId: string, courseId: string, lectionId: string, mark: string): Promise<any> {
+        return $user.post('/setMark', {userId, courseId, lectionId, mark}).then(res => {
+            return res
+        }).catch(e => console.log('err ' + e))
+    }
+
     static getNotification(id: string): Promise<any> {
         return $user.get(`/getNotifications/${id}`).then(res => {
             return res
