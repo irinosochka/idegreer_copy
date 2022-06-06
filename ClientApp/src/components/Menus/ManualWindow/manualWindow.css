@@ -17,7 +17,7 @@
 }
 
 .manual__main {
-  max-width: 900px;
+  max-width: 955px;
   height: 600px;
   margin: 50px auto;
   border: 2px #6675bc solid;
@@ -66,6 +66,12 @@
   border-bottom: 3px solid rgba(102, 117, 188, 0.71);
 }
 
+.nav__steps .a-active {
+  color: #6675bc;
+  line-height: 1;
+  border-bottom: 3px solid rgba(102, 117, 188, 0.71);
+}
+
 .section {
   height: 570px;
   margin: 0 20px;
@@ -78,7 +84,7 @@ h2.section__header  {
 }
 
 .section__content {
-  margin-top: 25px;
+  margin-top: 20px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -87,13 +93,32 @@ h2.section__header  {
 .section__img {
   margin: 0 5px 0 10px;
   float: left;
-  width: 30%;
+  width: 40%;
 }
+
 img.section__img {
   border-radius: 5px;
 }
 
 .vertical {
+  border-radius: 2%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.vertical-lg {
+  border-radius: 2%;
+  object-fit: cover;
+  width: 75%;
+}
+
+.vertical-slg {
+  border-radius: 2%;
+  object-fit: cover;
+  width: 70%;
+}
+
+.square {
   border-radius: 2%;
   object-fit: cover;
   width: 100%;
@@ -105,7 +130,7 @@ img.section__img {
 }
 
 .section__txt {
-  width: 70%;
+  width: 60%;
   margin: 0 10px 0 5px;
   padding: 10px;
 }
@@ -116,7 +141,7 @@ img.section__img {
   text-align: justify;
 }
 
-.close-window {
+.close-window, .w-user {
   cursor: pointer;
 }
 

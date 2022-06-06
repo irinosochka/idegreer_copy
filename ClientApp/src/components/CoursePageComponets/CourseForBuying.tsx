@@ -20,13 +20,14 @@ interface CourseProps {
     getAllLectionsFromCourse: (courseId: string) => void,
     lections: ILection[],
     addCourseToCart: (course: ICourse) => void,
-
+    cartList: Array<ICourse>,
 }
 
 const CourseForBuying: FC<CourseProps> = ({
                                               course,
                                               lections,
-                                              addCourseToCart
+                                              addCourseToCart,
+                                              cartList
                                           }) => {
 
 
@@ -55,9 +56,9 @@ const CourseForBuying: FC<CourseProps> = ({
                             <h3>Mentor: </h3>
                             {course.author && <p>{course.author.name}</p>}
                         </div>
-                        <Button onClick={() => {
+                        {!cartList.includes(course.course) && <Button onClick={() => {
                             addCourseToCart(course.course);
-                        }}>Add to cart</Button>
+                        }}>Add to cart</Button>}
                     </div>
                     <div>
                         <div className="info-container">
@@ -84,6 +85,8 @@ const mapStateToProps = (state: AppStateType) => {
         isLoading: state.auth.isLoading,
         lections: state.lection.lections,
         course: state.course.course,
+        cartList: state.user.cartList,
+        authUser: state.auth.authUser,
     }
 }
 
