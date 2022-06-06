@@ -37,7 +37,7 @@ const HomeworksMembersListItem: FC<Props> = ({
                 await getMembersWithHomework(lection.course._id, lection._id).then((res: any) => res && setMember(res))
                 setShowHomeworks(!showHomeworks)
             }}>
-                <span>{lection.title}</span>
+                <p>{lection.title}</p>
                 {showHomeworks && <div>
                     <ol>
                         {member.length > 0 && member.map((member: any) => {

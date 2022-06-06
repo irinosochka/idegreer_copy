@@ -36,7 +36,7 @@ const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser,
 
     return (
         <div className="body">
-            <div className="user__container">
+            <div className="user__container" style={{display: 'flex', flexDirection: 'column'}}>
                 <h1>Add role</h1>
                 <SearchComponent setSelected={setSelectedUser} list={usersList} getList={getAllUsers} />
 

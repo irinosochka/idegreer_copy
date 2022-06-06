@@ -7,6 +7,7 @@ import "./adminPanel.css";
 import SearchComponent from "../../../common/SearchComponent/SearchComponent";
 import Message, {MessageType} from "../../../common/Messages/Message";
 import Button from "../../../common/button/Button";
+import EditCourse from "../ProfessorPanel/EditCourse";
 
 
 interface ManageCourseProps {
@@ -45,7 +46,7 @@ const ManageCourses: React.FC<ManageCourseProps> = ({courses, getAllCourses, del
                 {deleteCourseByIdSuccess && <Message type={MessageType.SUCCESS}>Course has been deleted</Message>}
                 {selectedCourse &&
                 <div style={{width: '550px', marginTop: '10px',display: 'inline-block'}}>
-                    {/*<EditCourse selectedCourse={selectedCourse} />*/}  {/* TO CHANGE */}
+                    <EditCourse selectedCourseId={selectedCourse._id} />
                     <form onSubmit={handleDelete} style={{margin: '10px'}}>
                         <div>
                             <Button width={240}>Delete course</Button>

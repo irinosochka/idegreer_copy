@@ -21,7 +21,7 @@ const RoleRequestList: FC<RoleRequestListProps> = ({getAllUsers, setRoleToUser, 
 
     return (
         <div style={{display: 'flex', flexWrap: 'wrap'}}>
-            {users.map(user => user.isRoleRequest && !user.roles.includes('PROFESSOR') ? <div key={user._id} style={{ borderRadius: '10px', marginRight: '40px', border: '1px solid #000', width: '220px', textAlign: 'left'}}>
+            {users.map(user => user.isRoleRequest && !user.roles.includes('PROFESSOR') ? <div key={user._id} style={{borderRadius: '10px', marginRight: '40px', border: '1px solid #000', width: '220px', textAlign: 'left', backgroundColor:'white'}}>
                <div style={{padding: '20px 20px 0 20px'}}>
                    <div>
                        User {user.name} with username {user.username} want to be as professor
