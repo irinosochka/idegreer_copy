@@ -24,7 +24,9 @@ const RightMenu: FC<Props> = ({getNotification, getCoursesOfUser, authUser, cour
     }, [])
 
     useEffect(() => {
-        courses.forEach(c => getNotification(c.course._id))
+        if (courses) {
+            courses.forEach(c => c.course && c.course._id && getNotification(c.course._id))
+        }
     }, [courses])
 
     return (

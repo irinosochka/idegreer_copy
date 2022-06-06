@@ -65,7 +65,7 @@ const LeftMenu: FC<UserPageProps> = ({authUser}) => {
                                     onClick={() => setSlideItem(UserPageSlidesItems.MANAGE_ROLE)}>Manage
                             roles</MenuButton>}
                     {authUser && authUser.roles && authUser.roles.includes('ADMIN') &&
-                        <MenuButton path={'/edit-course'}
+                        <MenuButton path={'/admin-courses-management'}
                                     isActive={slideItem === UserPageSlidesItems.EDIT_COURSE} icon={editIcon}
                                     onClick={() => setSlideItem(UserPageSlidesItems.EDIT_COURSE)}>Edit
                             course</MenuButton>}

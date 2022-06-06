@@ -16,11 +16,11 @@
 .message-success-wrapper {
     text-align: center;
     background-color: rgb(235, 252, 226);
-    padding: 15px 0;
+    padding: 15px 5px;
     border-radius: 10px;
     border-left: 4px solid rgb(34, 207, 115);
     border-right: 4px solid rgb(34, 207, 115);
-    margin-top: 15px;
+    margin: 15px 0 5px;
 }
 .message-success {
     width: 100%;
