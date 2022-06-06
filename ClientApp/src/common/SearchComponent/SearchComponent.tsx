@@ -4,8 +4,8 @@ import {IUser} from "../../models/IUser";
 
 interface SearchProps {
     getList: () => void,
-    list: Array<ICourse|IUser> ,
-    setSelected: (unit: any) => void
+    list: Array<ICourse|IUser>,
+    setSelected: (unit: any) => void,
 }
 
 const SearchComponent: React.FC<SearchProps> = ({list, getList, setSelected}) => {
@@ -21,6 +21,7 @@ const SearchComponent: React.FC<SearchProps> = ({list, getList, setSelected}) =>
     const handleSelecting = (unit: any) => {
         setSelected(unit);
         setActive(false);
+        console.log(unit);
     };
 
     return(
@@ -40,8 +41,8 @@ const SearchComponent: React.FC<SearchProps> = ({list, getList, setSelected}) =>
                     {list?.filter((unit: any ) => {
                         if (searchTerm == "") {
                             return unit;
-                        } else if(unit?.title?.toLowerCase().includes(searchTerm.toLowerCase()) || unit?.username?.toLowerCase().includes(searchTerm.toLowerCase())){
-                            return unit;
+                        } else if(unit?.course?.title?.toLowerCase().includes(searchTerm.toLowerCase()) || unit?.username?.toLowerCase().includes(searchTerm.toLowerCase())){
+                            return unit
                         }
                     }).map((unit: any) => {
                         return(
@@ -49,7 +50,7 @@ const SearchComponent: React.FC<SearchProps> = ({list, getList, setSelected}) =>
                                 onClick={() => {
                                     handleSelecting(unit)
                                 }}>
-                                {(unit?.title || unit?.username)}
+                                {(unit?.course?.title || unit?.username)}
                             </li>
                         )})}
                 </div>

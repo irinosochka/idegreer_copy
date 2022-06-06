@@ -8,7 +8,7 @@ const ManageRoles = () => {
     const [isAddCourse, setAddCourse] = useState(true);
 
     return (
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <div style={{display: 'inline-flex', width: '400px'}}>
                 <TwoButtons isFirst={isAddCourse} setFirst={() => setAddCourse(true)}>Add role</TwoButtons>
                 <TwoButtons isFirst={!isAddCourse} setFirst={() => setAddCourse(false)}>Role request</TwoButtons>

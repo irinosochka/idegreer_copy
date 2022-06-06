@@ -149,7 +149,7 @@ const UserCourse: FC<UserCourseProps> = ({
                         <hr/>
                         <div className="homework">
                             <div className='professor__icon' style={{marginRight: '10px'}}>
-                                <h2 style={{margin: 'auto', color: '#e6ebff', fontWeight: 400}}>
+                                <h2 style={{margin: 'auto', color: '#e6ebff', fontWeight: 400, width: '50px',display: 'flex', justifyContent: 'center'}}>
                                     {initial()}
                                 </h2>
                             </div>
@@ -192,8 +192,20 @@ const UserCourse: FC<UserCourseProps> = ({
                                 </div>
                             }
                         </div>}
-                        {homeworkResponse && <div className="add-homework">
-                            Your answer was: {homeworkResponse.response}. {homeworkResponse.mark ? `Work was checked by professor and you have got ${homeworkResponse.mark}` : `Work have not checked yet`}
+                        {homeworkResponse && <div>
+                            <div className="add-homework" style={{alignItems: 'center'}}>
+                                <div style={{marginRight: '10px'}}>
+                                    <PhotoMockup size={sizeTypes.small}/>
+                                </div>
+                                <div className="message-sentHomework" style={{padding: '15px'}}>
+                                    {homeworkResponse.response}
+                                </div>
+                            </div>
+                                <p style={{marginLeft: '115px',marginTop: '10px'}}>
+                                    {homeworkResponse.mark ? `Work was checked by professor and you have got ${homeworkResponse.mark}` : `Work have not checked yet`}
+                                </p>
+                                {/*Your answer was: {homeworkResponse.response}. {homeworkResponse.mark ? `Work was checked by professor and you have got ${homeworkResponse.mark}` : `Work have not checked yet`}*/}
+
                         </div> }
                     </div>}
             </div>
