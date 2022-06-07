@@ -29,7 +29,7 @@ const CourseCatalogPage: FC<CourseCatalogProps> = ({courses, getAllCourses}) => 
                         }
                     ) :
                     <div style={{marginTop: '40px', width: '100%'}}>
-                        <h3 className="no-courses__info">Failed to load courses. Please try again later.</h3>
+                        <h3 className="no-courses__info">No courses</h3>
                     </div>}
             </div>
         </div>
