@@ -8,6 +8,7 @@ import SearchComponent from "../../../common/SearchComponent/SearchComponent";
 import Message, {MessageType} from "../../../common/Messages/Message";
 import Button from "../../../common/button/Button";
 import EditCourse from "../ProfessorPanel/EditCourse";
+import {IUser} from "../../../models/IUser";
 
 
 interface ManageCourseProps {
@@ -16,10 +17,11 @@ interface ManageCourseProps {
     deleteCourseById: (courseId: string) => void,
     setDeleteCourseByIdSuccess: (bool: boolean) => void,
     deleteCourseByIdSuccess: boolean,
+
 }
 
 const ManageCourses: React.FC<ManageCourseProps> = ({courses, getAllCourses, deleteCourseById, setDeleteCourseByIdSuccess, deleteCourseByIdSuccess}) => {
-    const [selectedCourse, setSelectedCourse] = useState<ICourse>();
+    const [selectedCourse, setSelectedCourse] = useState<{ course: ICourse, author: IUser }>();
 
     const [isError, setError] = useState(false);
 
@@ -31,7 +33,7 @@ const ManageCourses: React.FC<ManageCourseProps> = ({courses, getAllCourses, del
     const handleDelete = (event: any) => {
         event.preventDefault();
         if(selectedCourse){
-            deleteCourseById(selectedCourse._id);
+            deleteCourseById(selectedCourse.course._id);
             setDeleteCourseByIdSuccess(true);
             setSelectedCourse(undefined);
         } else {
@@ -40,13 +42,13 @@ const ManageCourses: React.FC<ManageCourseProps> = ({courses, getAllCourses, del
     }
 
     return (
-            <div className="user__container">
+            <div className="user__container" style={{display: 'flex', flexDirection: 'column'}}>
                 <h1>Edit courses</h1>
                 <SearchComponent setSelected={setSelectedCourse} list={courses} getList={getAllCourses} />
                 {deleteCourseByIdSuccess && <Message type={MessageType.SUCCESS}>Course has been deleted</Message>}
-                {selectedCourse &&
+                {selectedCourse?.course &&
                 <div style={{width: '550px', marginTop: '10px',display: 'inline-block'}}>
-                    <EditCourse selectedCourseId={selectedCourse._id} />
+                    <EditCourse selectedCourseId={selectedCourse?.course?._id} />
                     <form onSubmit={handleDelete} style={{margin: '10px'}}>
                         <div>
                             <Button width={240}>Delete course</Button>

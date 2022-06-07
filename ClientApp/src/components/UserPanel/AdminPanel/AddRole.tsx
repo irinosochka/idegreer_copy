@@ -24,14 +24,13 @@ const AddRole: React.FC<AddRoleProps> = ({getAllUsers, usersList, setRoleToUser,
 
     useEffect(() => {
         getAllUsers()
-    }, [usersList]);
+    }, []);
 
     function handleAdding() {
         if(selectedUser && !selectedUser.roles.includes('PROFESSOR')){
             setRoleToUser(selectedUser, 'PROFESSOR')
         }
     }
-
 
 
     return (

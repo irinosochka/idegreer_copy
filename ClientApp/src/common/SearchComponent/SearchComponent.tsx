@@ -16,12 +16,11 @@ const SearchComponent: React.FC<SearchProps> = ({list, getList, setSelected}) =>
 
     useEffect(() => {
         getList();
-    }, [list]);
+    }, []);
 
     const handleSelecting = (unit: any) => {
         setSelected(unit);
         setActive(false);
-        console.log(unit);
     };
 
     return(
@@ -44,9 +43,9 @@ const SearchComponent: React.FC<SearchProps> = ({list, getList, setSelected}) =>
                         } else if(unit?.course?.title?.toLowerCase().includes(searchTerm.toLowerCase()) || unit?.username?.toLowerCase().includes(searchTerm.toLowerCase())){
                             return unit
                         }
-                    }).map((unit: any) => {
+                    }).map((unit: any ) => {
                         return(
-                            <li key={unit._id}
+                            <li key={unit._id || unit.course._id}
                                 onClick={() => {
                                     handleSelecting(unit)
                                 }}>
