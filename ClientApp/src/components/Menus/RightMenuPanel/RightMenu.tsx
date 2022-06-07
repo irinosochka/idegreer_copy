@@ -14,10 +14,11 @@ interface Props {
     getNotification: (id: string) => void,
     getCoursesOfUser: (userId: string) => void,
     userCourses: Array<{ course: ICourse, author: IUser }>
-    authUser: IUser
+    authUser: IUser,
+    notifications: Array<any>
 }
 
-const RightMenu: FC<Props> = ({getNotification, getCoursesOfUser, authUser, userCourses}) => {
+const RightMenu: FC<Props> = ({getNotification, notifications, getCoursesOfUser, authUser, userCourses}) => {
 
     useEffect(() => {
         getCoursesOfUser(authUser._id)
@@ -32,7 +33,7 @@ const RightMenu: FC<Props> = ({getNotification, getCoursesOfUser, authUser, user
     return (
         <>
             <ProfileSection />
-            <Notifications />
+            <Notifications notifications={notifications}/>
         </>
     );
 };
@@ -40,7 +41,8 @@ const RightMenu: FC<Props> = ({getNotification, getCoursesOfUser, authUser, user
 const mapStateToProps = (state: AppStateType) => {
     return {
         authUser: state.auth.authUser,
-        userCourses: state.course.userCourses
+        userCourses: state.course.userCourses,
+        notifications: state.user.userNotifications
     }
 }
 export default connect(mapStateToProps, {getNotification, getCoursesOfUser})(RightMenu);

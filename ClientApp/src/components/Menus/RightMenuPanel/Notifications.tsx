@@ -2,7 +2,6 @@ import React, {FC} from 'react';
 
 import "../../UserPanel/userPanel.css"
 
-import {AppStateType} from "../../../reduxStore/store";
 import {connect} from "react-redux";
 
 interface NotificationsProps {
@@ -23,10 +22,5 @@ const Notifications: FC<NotificationsProps> = ({ notifications}) => {
     );
 };
 
-const mapStateToProps = (state: AppStateType) => {
-    return {
-        notifications: state.user.userNotifications
-    }
-}
 
-export default connect(mapStateToProps, {}) (Notifications);
+export default connect(null, {}) (Notifications);
