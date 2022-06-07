@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const UserDto = require("../dtos/user-dto");
 const tokenService = require("./token-service");
 const authService = require("./auth-service");
+const {ObjectId} = require("mongodb");
 
 class UserService {
     async passwordChanging(username, lastPassword, newPassword) {
@@ -186,7 +187,7 @@ class UserService {
         if (!course) {
             throw new Error(`There is not exists course with id ${id}`)
         }
-        const notifications = await NotificationModel.find({courseId: id})
+        const notifications = await NotificationModel.find({'course._id': ObjectId(id)})
         return {
             notifications
         }

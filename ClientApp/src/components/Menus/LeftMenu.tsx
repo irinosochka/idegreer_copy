@@ -4,8 +4,6 @@ import {AppStateType} from "../../reduxStore/store";
 import {connect} from "react-redux";
 import {IUser} from "../../models/IUser";
 import './leftMenu.css';
-import {getCoursesOfUser} from "../../reduxStore/course-reducer";
-import {getNotification} from "../../reduxStore/user-reducer";
 import ManualWindow from "./ManualWindow/ManualWindow";
 
 /* IMG */
@@ -85,4 +83,4 @@ const mapStateToProps = (state: AppStateType) => {
     }
 }
 
-export default connect(mapStateToProps, {getCoursesOfUser, getNotification})(LeftMenu);
+export default connect(mapStateToProps, {})(LeftMenu);

@@ -142,6 +142,7 @@ export const getNotification = (courseId: string): ThunkType =>
         try {
             const response = await UserService.getNotification(courseId);
             if (response.data.resultCode === 1) {
+                console.log(response)
                 dispatch(actions.setNotifications(response.data.data.notifications))
                 return response.data.data;
             }

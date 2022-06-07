@@ -58,6 +58,7 @@ const courseReducer = (state: InitialStateType = INITIAL_STATE, action: ActionsT
         }
 
         case "ADD_NEW_COURSE": {
+            console.log(action.payload)
             return {
                 ...state,
                 courses: [...state.courses, action.payload]
